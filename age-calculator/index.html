@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
@@ -43,6 +44,7 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
@@ -94,11 +96,34 @@
         obs.observe(slot);
       })();
     </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Age Calculator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select your date of birth using the date picker above and click <strong>Calculate My Age</strong>. Your result appears instantly showing your exact age broken down into <strong>years</strong>, <strong>months</strong>, <strong>weeks</strong>, <strong>days</strong>, and even <strong>total hours</strong> lived. You'll also see a live countdown to your next birthday.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What the Results Mean</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Years, months, days:</strong> Your precise age — useful for official forms that ask for exact age.</li>
+          <li><strong>Total weeks:</strong> Helpful for milestone tracking — for example, knowing a baby's age in weeks during the first year.</li>
+          <li><strong>Total days lived:</strong> A fun number for birthday posts and life milestone celebrations.</li>
+          <li><strong>Hours lived:</strong> Calculated from your birth date to the current moment for curiosity and social sharing.</li>
+          <li><strong>Days until next birthday:</strong> Great for planning ahead or sending to friends as a fun reminder.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Common Uses</h3>
+        <p><strong>Parents tracking infant milestones</strong> often need a baby's age in exact weeks and months, not just years. <strong>Adults celebrating milestone birthdays</strong> (30th, 40th, 50th) use the total days figure for birthday posts. <strong>HR professionals</strong> sometimes need to verify an applicant's age for roles with minimum age requirements. <strong>Students</strong> completing forms that require their exact age in months use this to calculate it quickly without mental arithmetic.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How Age is Calculated</h3>
+        <p>Age is calculated from your date of birth to today's date on your device (no server is involved). The calculation accounts for leap years so the result is accurate to the day. The "hours lived" figure is approximate as it is calculated from midnight on your birth date rather than your exact birth time, which is typically unknown. The result updates correctly when you change the date — try entering different dates to compare ages.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date you enter is only held in memory for the duration of your visit and cleared when you press Clear or close the tab.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·

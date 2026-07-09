@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
@@ -21,12 +22,14 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
       <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
       <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+      <a class="nav-pill" href="/speed-test/">Speed Test</a>
     </div>
   </nav>
 
@@ -90,12 +93,15 @@
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·
       <a href="/qr-code-generator/">QR Code Generator</a> ·
-      <a href="/age-calculator/">Age Calculator</a>
+      <a href="/age-calculator/">Age Calculator</a> ·
+      <a href="/speed-test/">Speed Test</a>
     </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>

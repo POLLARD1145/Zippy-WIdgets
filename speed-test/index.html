@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
@@ -297,6 +298,7 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
@@ -481,11 +483,43 @@
         obs.observe(slot);
       })();
     </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Internet Speed Test</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select a test mode at the top — <strong>Quick Check</strong>, <strong>Standard Test</strong>, or <strong>Streamer / Gaming</strong> — then press the <strong>Start Test</strong> button. The tool measures ping and jitter first, then runs download and upload speed tests using Cloudflare's global network. Results appear in real time as each phase completes.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Choosing the Right Test Mode</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Quick Check (⚡):</strong> Uses smaller file sizes and fewer ping samples. Completes in about 10–15 seconds. Good for a fast snapshot when you suspect a problem.</li>
+          <li><strong>Standard Test (📶):</strong> The default. Balances accuracy and speed with medium-sized files. Best for everyday broadband checks.</li>
+          <li><strong>Streamer / Gaming (🎬):</strong> Uses large files up to 100MB and 15 ping samples. More accurate for high-speed connections like Gigabit fiber, Starlink, or cable 500+ Mbps plans. Takes 30–60 seconds.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Understanding Your Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Download speed (Mbps):</strong> How fast data arrives at your device. Affects streaming, browsing, and downloads.</li>
+          <li><strong>Upload speed (Mbps):</strong> How fast you can send data. Critical for video calls, live streaming, and cloud backups.</li>
+          <li><strong>Ping (ms):</strong> The round-trip time to the test server. Lower is better. Under 30ms is excellent for gaming and video calls.</li>
+          <li><strong>Jitter (ms):</strong> The variation in ping over multiple measurements. Low jitter means a stable connection. High jitter causes choppy video calls and rubber-banding in games even when ping is acceptable.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Tips for Accurate Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Close other tabs and pause any downloads or streaming before testing — other traffic lowers your measured speed.</li>
+          <li>For the most accurate reading, connect your device directly to your router via an ethernet cable and test on WiFi separately to measure wireless overhead.</li>
+          <li>Run the test 2–3 times and compare results. Speed naturally varies throughout the day due to network congestion.</li>
+          <li>The <strong>Connection Quality panel</strong> rates your connection against 8 real-world use cases — streaming, gaming, video calls, and more — so you don't need to interpret the numbers yourself.</li>
+          <li>Results are saved to <strong>Test History</strong> automatically so you can track performance over time without signing in.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How the Test Works</h3>
+        <p>Download speed is measured by fetching files of increasing size from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests to the Cloudflare endpoint and measuring the variance. All tests run entirely in your browser — no app, plugin, or server-side component is required.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·

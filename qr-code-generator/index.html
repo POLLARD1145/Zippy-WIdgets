@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
@@ -43,6 +44,7 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
@@ -146,11 +148,39 @@
         obs.observe(slot);
       })();
     </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the QR Code Generator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select a content type from the tabs at the top — <strong>URL</strong>, <strong>WiFi</strong>, <strong>Text</strong>, or <strong>Email</strong>. Fill in the relevant fields and click <strong>Generate QR Code</strong>. Your QR code appears immediately in the preview panel. Click <strong>Download PNG</strong> to save it to your device at the selected size.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Content Types Explained</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>URL:</strong> Encodes any web address. When scanned, the phone opens the URL in its browser. Use this for restaurant menus, product pages, social media profiles, or event landing pages.</li>
+          <li><strong>WiFi:</strong> Encodes your network name (SSID), password, and security type. When scanned by Android or iPhone, the device connects automatically without typing the password. Perfect for cafés, Airbnbs, offices, and home guests.</li>
+          <li><strong>Text:</strong> Encodes plain text up to several hundred characters. Useful for business card details, short messages, or instructions.</li>
+          <li><strong>Email:</strong> Opens the device's mail app with the To address and subject pre-filled. Great for contact cards and feedback forms.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Customisation Options</h3>
+        <p>Use the <strong>Foreground</strong> and <strong>Background</strong> colour pickers to match your brand colours. Choose from four sizes: 128px for small print, 256px for standard use, 512px for posters, and 1024px for large-format printing. Larger sizes are sharper when printed at scale. Keep enough contrast between foreground and background colours — QR scanners struggle with low-contrast codes.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Best Practices for Printing</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Download at <strong>512px or 1024px</strong> for anything that will be printed. Small sizes pixelate when scaled up.</li>
+          <li>Always test-scan your QR code before printing a large batch — use your phone's native camera app, not a third-party scanner.</li>
+          <li>Leave a white quiet zone (border) around the QR code. Most scanners need about 4 module widths of margin to read the code reliably.</li>
+          <li>Dark foreground on a light background scans most reliably. Inverted (light on dark) works but is less universally supported.</li>
+          <li>For Google Reviews QR codes, generate a URL code pointing to your Google Business review link for instant one-scan reviews.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>All QR codes are generated entirely in your browser using the QRCode.js library. Your URLs, WiFi passwords, and text content are never transmitted to any server. The PNG download is created locally on your device using the browser's Canvas API.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·

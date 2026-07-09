@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
@@ -43,6 +44,7 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill active" href="/font-generator/">Font Generator</a>
@@ -105,6 +107,28 @@
       })();
     </script>
 
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Fancy Text Generator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Type or paste your text into the input box at the top of the page. All 30 Unicode styles update instantly as you type — no button required. Scroll through the results to find the style that suits you, then click the <strong>Copy</strong> button next to it. The styled text is now on your clipboard and ready to paste anywhere.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Where Can You Paste These Fonts?</h3>
+        <p>Because all styles use standard Unicode characters rather than actual font files, the styled text works in any app or website that supports UTF-8 — which is virtually everything. Popular destinations include:</p>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Instagram bio</strong> — make your profile name or bio stand out with bold, cursive or aesthetic styles.</li>
+          <li><strong>TikTok username and bio</strong> — many creators use full-width or small caps to differentiate their brand.</li>
+          <li><strong>Discord username and server names</strong> — bold sans or fraktur styles are popular in gaming communities.</li>
+          <li><strong>Twitter / X display name</strong> — Unicode names display in timelines, giving your profile a unique look.</li>
+          <li><strong>WhatsApp and Telegram</strong> — paste into messages, group names, or status text.</li>
+          <li><strong>YouTube channel name</strong> — bold serif and script styles appear in channel headers.</li>
+          <li><strong>LinkedIn headline</strong> — subtle styles like double-struck or small caps add personality without looking unprofessional.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Understanding the Styles</h3>
+        <p><strong>Bold / Italic / Bold Italic</strong> styles use the Unicode Mathematical Alphanumeric block — these are the most widely supported and render correctly on virtually all devices. <strong>Fraktur / Gothic</strong> mimics old Germanic blackletter script. <strong>Vaporwave / Full-Width</strong> spaces out characters in the distinctive aesthetic style. <strong>Zalgo Glitch</strong> adds combining diacritic marks above and below each letter to create a corrupted-text effect — great for horror-themed content. <strong>Regional Indicators</strong> converts each letter to the emoji flag indicator blocks, giving a colourful boxed appearance.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Why Some Characters May Not Display</h3>
+        <p>A small number of Unicode blocks are not included in every system font. If you see a square box (□) instead of a character, it means your device's font does not include that Unicode glyph. This is increasingly rare on modern phones and computers. Most styles — bold, italic, cursive, bubble, circled, and vaporwave — render correctly on all major platforms.</p>
+      </div>
+    </section>
+
     <section class="faq-section card" style="margin-top:0;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
       <div class="faq-item">
@@ -129,6 +153,8 @@
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/word-counter/">Word Counter</a> ·

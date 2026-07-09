@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
   <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
   <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
@@ -43,6 +44,7 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
     <div class="nav-links" id="navLinks">
       <a class="nav-pill active" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
@@ -128,11 +130,34 @@ Eve</textarea>
         obs.observe(slot);
       })();
     </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Random Picker Wheel</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Using the wheel is simple. Type your entries into the text box on the right — one item per line. These can be names, options, food choices, tasks, or anything you want to randomise. Once you have at least two entries, click <strong>Update Wheel</strong> and the coloured segments will update instantly.</p>
+        <p>Press the <strong>Spin!</strong> button or click directly on the wheel to start spinning. The wheel decelerates naturally and lands on a random segment. The winner is displayed in large text beneath the wheel. You can spin as many times as you like — each spin is completely independent and fair.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Built-in Presets</h3>
+        <p>Don't have a list ready? Use one of the quick-load presets: <strong>What to eat?</strong> loads popular food options, <strong>Numbers 1–10</strong> is handy for random number picks, <strong>Yes or No</strong> settles binary decisions, <strong>Truth or Dare</strong> is perfect for parties, <strong>Giveaway Winner</strong> sets up a five-entry contest wheel, and <strong>Days of Week</strong> picks a random day.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Tips for Getting the Most Out of It</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Add up to 20 entries for the clearest wheel segments. Very long lists make segments small but still work.</li>
+          <li>For classroom use, paste your entire student roster from a spreadsheet — one name per line.</li>
+          <li>For giveaways, add each participant's name once per entry ticket to weight the chances fairly.</li>
+          <li>The wheel is animated and runs entirely in your browser — no data is sent anywhere, making it safe for student names and private lists.</li>
+          <li>Works on phones, tablets, and desktops. Share the page URL and the recipient gets the same wheel interface.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Why a Random Wheel Instead of Other Methods?</h3>
+        <p>A spinner wheel is more engaging and transparent than a random number generator. When used in classrooms, students can see the spin happen live, which feels fair. For streamers running giveaways, a visible spinning wheel builds anticipation and excitement among viewers. The result is harder to dispute than a behind-the-scenes random pick because the entire process is visible to everyone watching.</p>
+        <p>Unlike apps that require sign-in or subscriptions, this wheel saves your list locally and is ready the moment you open the page. No account, no ads blocking the spin, and no countdown timers — just a clean, fast, and honest random picker.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>
       <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·

@@ -1,6 +1,7 @@
 /* ─── Reset & Base ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Dark theme (default) ── */
 :root {
   --bg:        #0f1117;
   --surface:   #1a1d27;
@@ -12,9 +13,64 @@
   --muted:     #8b90a8;
   --radius:    14px;
   --shadow:    0 4px 24px rgba(0,0,0,.45);
+  --navbar-bg: rgba(15,17,23,.85);
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg:        #f4f5f9;
+  --surface:   #ffffff;
+  --surface2:  #eef0f6;
+  --border:    #d4d8e8;
+  --accent:    #5b4de0;
+  --accent2:   #f97316;
+  --text:      #1a1d27;
+  --muted:     #5a607a;
+  --shadow:    0 4px 24px rgba(0,0,0,.10);
+  --navbar-bg: rgba(244,245,249,.90);
+}
+
+/* ── System preference fallback (only if no data-theme set) ── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]):not([data-theme="light"]) {
+    --bg:        #f4f5f9;
+    --surface:   #ffffff;
+    --surface2:  #eef0f6;
+    --border:    #d4d8e8;
+    --accent:    #5b4de0;
+    --accent2:   #f97316;
+    --text:      #1a1d27;
+    --muted:     #5a607a;
+    --shadow:    0 4px 24px rgba(0,0,0,.10);
+    --navbar-bg: rgba(244,245,249,.90);
+  }
+}
+
+/* ── Smooth theme transition ── */
+body, .navbar, .card, .tool-card, .back-btn, input, textarea, select, .btn, .nav-pill, .footer {
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
 }
 
 html { scroll-behavior: smooth; }
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 99px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+  flex-shrink: 0;
+  padding: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(124,106,247,.08);
+}
 
 body {
   font-family: 'Inter', sans-serif;
@@ -31,7 +87,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 1.5rem;
   height: 60px;
-  background: rgba(15,17,23,.85);
+  background: var(--navbar-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
