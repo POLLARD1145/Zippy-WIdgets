@@ -170,20 +170,39 @@
     }
     .quality-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: .6rem;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: .65rem;
     }
     .quality-item {
       display: flex;
-      align-items: center;
-      gap: .5rem;
+      align-items: flex-start;
+      gap: .6rem;
       font-size: .85rem;
       color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .65rem .75rem;
     }
     .q-badge {
-      font-size: 1rem;
-      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: .28rem;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      border-radius: 99px;
+      padding: .18rem .55rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: .1rem;
     }
+    .q-badge.good  { background: rgba(34,197,94,.18);  color: #22c55e; }
+    .q-badge.ok    { background: rgba(249,115,22,.18); color: #f97316; }
+    .q-badge.poor  { background: rgba(239,68,68,.18);  color: #ef4444; }
+    .q-label { display: flex; flex-direction: column; gap: .15rem; }
+    .q-label .q-name { font-weight: 600; font-size: .85rem; }
+    .q-label .q-desc { font-size: .75rem; color: var(--muted); line-height: 1.35; }
 
     /* ── Network Info ── */
     .net-info-card {
@@ -699,21 +718,80 @@
     }
 
     function showQuality(down, up, ping, jitter) {
+      /* Each use-case returns 'good' | 'ok' | 'poor' plus a short descriptor */
+      function rate(level) {
+        const icons = { good: '✓', ok: '~', poor: '✗' };
+        const labels = { good: 'Good', ok: 'OK', poor: 'Poor' };
+        return { level, icon: icons[level], text: labels[level] };
+      }
+
       const checks = [
-        { label: '4K Streaming',      ok: down >= 25 },
-        { label: 'HD Streaming',      ok: down >= 5 },
-        { label: 'Video Calls',       ok: down >= 1.5 && up >= 1.5 && ping < 150 },
-        { label: 'Online Gaming',     ok: ping < 60 && jitter < 15 },
-        { label: 'Remote Work / VPN', ok: down >= 10 && up >= 5 },
-        { label: 'Music Streaming',   ok: down >= 0.5 },
-        { label: 'Fast Browsing',     ok: down >= 5 && ping < 100 },
-        { label: 'Smart Home IoT',    ok: down >= 1 },
+        {
+          name: '4K Streaming',
+          badge: down >= 25 ? rate('good') : down >= 10 ? rate('ok') : rate('poor'),
+          desc:  down >= 25 ? 'Ultra HD works smoothly' : down >= 10 ? 'May buffer on peak hours' : 'Stick to HD or lower',
+        },
+        {
+          name: 'HD Streaming',
+          badge: down >= 8 ? rate('good') : down >= 4 ? rate('ok') : rate('poor'),
+          desc:  down >= 8 ? '1080p without interruptions' : down >= 4 ? '720p reliable, 1080p may dip' : 'Standard definition only',
+        },
+        {
+          name: 'Video Calls',
+          badge: (ping < 80 && jitter < 20 && up >= 2) ? rate('good')
+               : (ping < 150 && jitter < 40 && up >= 1) ? rate('ok')
+               : rate('poor'),
+          desc:  (ping < 80 && jitter < 20 && up >= 2)  ? 'Crystal clear, no freezing'
+               : (ping < 150 && jitter < 40 && up >= 1) ? 'Usable but may stutter briefly'
+               : 'Likely choppy or frozen video',
+        },
+        {
+          name: 'Online Gaming',
+          badge: (ping < 40 && jitter < 10) ? rate('good')
+               : (ping < 100 && jitter < 30) ? rate('ok')
+               : rate('poor'),
+          desc:  (ping < 40 && jitter < 10)  ? 'Competitive-ready, low lag'
+               : (ping < 100 && jitter < 30) ? 'Fine for casual & turn-based'
+               : 'Too laggy for fast-paced games',
+        },
+        {
+          name: 'Remote Work / VPN',
+          badge: (down >= 25 && up >= 10 && ping < 80)  ? rate('good')
+               : (down >= 10 && up >= 3  && ping < 150) ? rate('ok')
+               : rate('poor'),
+          desc:  (down >= 25 && up >= 10 && ping < 80)  ? 'Fast file sync & calls'
+               : (down >= 10 && up >= 3  && ping < 150) ? 'Works for most tasks'
+               : 'VPN will feel slow or drop',
+        },
+        {
+          name: 'Music Streaming',
+          badge: down >= 1 ? rate('good') : down >= 0.5 ? rate('ok') : rate('poor'),
+          desc:  down >= 1 ? 'Lossless & HD audio fine' : down >= 0.5 ? 'Standard quality only' : 'May buffer frequently',
+        },
+        {
+          name: 'Fast Browsing',
+          badge: (ping < 50 && down >= 10)  ? rate('good')
+               : (ping < 120 && down >= 3)  ? rate('ok')
+               : rate('poor'),
+          desc:  (ping < 50 && down >= 10)  ? 'Pages load near-instantly'
+               : (ping < 120 && down >= 3)  ? 'Normal speed, slight delay'
+               : 'Noticeably slow page loads',
+        },
+        {
+          name: 'Smart Home / IoT',
+          badge: down >= 5 ? rate('good') : down >= 1 ? rate('ok') : rate('poor'),
+          desc:  down >= 5 ? 'Handles many devices at once' : down >= 1 ? 'Basic devices work fine' : 'May disconnect under load',
+        },
       ];
+
       const grid = document.getElementById('qualityGrid');
       grid.innerHTML = checks.map(c => `
         <div class="quality-item">
-          <span class="q-badge">${c.ok ? '✅' : '❌'}</span>
-          <span>${c.label}</span>
+          <span class="q-badge ${c.badge.level}">${c.badge.icon} ${c.badge.text}</span>
+          <div class="q-label">
+            <span class="q-name">${c.name}</span>
+            <span class="q-desc">${c.desc}</span>
+          </div>
         </div>`).join('');
       document.getElementById('qualityCard').style.display = 'block';
     }
