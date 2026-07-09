@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exact Age Calculator | Calculate Years, Months & Days Old</title>
-  <meta name="description" content="Find your exact chronological age in years, months, weeks, days, hours, and minutes. Simply enter a birthdate to calculate milestones instantly." />
+  <title>Age Calculator | How Many Days Old Am I? Days Until Birthday</title>
+  <meta name="description" content="How old am I? Enter your birthdate to find your exact age in years, months, weeks, and total days. See how many days old you are and days until your next birthday." />
+  <link rel="canonical" href="https://zippywidgets.online/age-calculator/" />
+  <meta property="og:title" content="Age Calculator | How Many Days Old Am I?" />
+  <meta property="og:description" content="Find your exact age in years, months, weeks, days and hours. See days until your next birthday instantly. Free, no sign-up." />
+  <meta property="og:url" content="https://zippywidgets.online/age-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Age Calculator | How Many Days Old Am I?" />
+  <meta name="twitter:description" content="How old am I in days, months and years? Find out instantly plus days until your next birthday." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -30,7 +39,10 @@
     <a class="nav-brand" href="/">
       <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
@@ -45,8 +57,8 @@
     <div class="tool-header">
       <span class="icon">🎂</span>
       <div>
-        <h1>Chronological Age & Milestone Calculator</h1>
-        <p>Find your exact age in years, months, weeks, days, and hours.</p>
+        <h1>Age Calculator — How Many Days Old Am I?</h1>
+        <p>Enter your date of birth to find your exact age in years, months, weeks, and total days. Includes days until your next birthday and age in months.</p>
       </div>
     </div>
 
@@ -60,22 +72,47 @@
       <div class="age-result" id="ageResult"></div>
       <div class="birthday-msg" id="birthdayMsg"></div>
     </div>
-    <div class="ad-slot">
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
   </main>
 
   <footer class="footer">
-    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
   <script>
     'use strict';
 

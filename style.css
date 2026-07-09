@@ -137,7 +137,8 @@ body {
 .back-btn {
   background: var(--surface2); border: 1px solid var(--border);
   color: var(--muted); padding: .4rem .9rem; border-radius: 8px;
-  font-size: .82rem; cursor: pointer; margin-bottom: 1.5rem;
+  font-size: .82rem; cursor: pointer; margin-bottom: 2rem;
+  display: inline-block;
   transition: color .2s, border-color .2s;
 }
 .back-btn:hover { color: var(--text); border-color: var(--muted); }
@@ -385,16 +386,74 @@ textarea { resize: vertical; }
   margin: 1.5rem auto;
   text-align: center;
   overflow: hidden;
+  min-height: 0;        /* never reserves space before AdSense fills it */
 }
 .ad-slot ins {
   display: block;
+  min-height: 0;
 }
-@media (max-width: 600px) {
+/* Only show the slot once AdSense has written content */
+.ad-slot:empty,
+.ad-slot ins:not([data-ad-status="filled"]) {
+  min-height: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
   .ad-slot {
     max-width: 100%;
     margin: 1rem auto;
   }
 }
+
+/* ─── Use-Case Grid (Picker Wheel) ──────────────────────────────────────── */
+.use-case-section {
+  margin-top: 1.25rem;
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .75rem;
+}
+
+.use-case-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .75rem .9rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.use-case-item span { font-size: 1.3rem; line-height: 1; }
+.use-case-item strong { font-size: .85rem; font-weight: 700; color: var(--text); }
+.use-case-item p { font-size: .78rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
+/* ─── Use-Case Chips (Font Generator / QR Code) ──────────────────────────── */
+.use-case-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: 1rem 0 .5rem;
+}
+
+.use-case-chips span {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: .3rem .75rem;
+  font-size: .78rem;
+  color: var(--muted);
+  cursor: default;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
+}
+
+.use-case-chips span[onclick] { cursor: pointer; }
+.use-case-chips span:hover { border-color: var(--accent); color: var(--text); }
 
 /* ─── Utilities ──────────────────────────────────────────────────────────── */
 .mt-1 { margin-top: .4rem; }
@@ -403,10 +462,96 @@ textarea { resize: vertical; }
 .text-muted { color: var(--muted); }
 .text-sm { font-size: .85rem; }
 
-@media (max-width: 600px) {
-  .nav-links { display: none; }
-  .tools-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
-  .tool-card { padding: 1rem; }
-  .tool-card p { display: none; }
+/* ─── Hamburger Menu ─────────────────────────────────────────────────────── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .4rem;
+  z-index: 200;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform .25s, opacity .25s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ─── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* Navbar */
+  .nav-toggle { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0; right: 0;
+    background: rgba(15,17,23,.97);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem 1.25rem 1.5rem;
+    gap: .5rem;
+    border-bottom: 1px solid var(--border);
+    z-index: 150;
+  }
+  .nav-links.open { display: flex; }
+
+  .nav-pill {
+    text-align: center;
+    padding: .7rem 1rem;
+    font-size: .9rem;
+  }
+
+  /* Hero */
+  .hero { padding: 1.75rem 1.25rem .75rem; }
+  .hero h1 { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .hero-sub { font-size: .95rem; }
+
+  /* Tools grid — single column on very small, 2-col on normal mobile */
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    padding: .75rem 1rem 3rem;
+  }
+
+  /* Tool cards — full info visible, just more compact */
+  .tool-card {
+    padding: 1rem 1.1rem;
+    flex-direction: row;
+    align-items: center;
+    gap: .9rem;
+  }
+  .tool-card .icon {
+    font-size: 1.8rem;
+    width: 46px; height: 46px;
+    flex-shrink: 0;
+  }
+  .tool-card h3 { font-size: .95rem; }
+  .tool-card p  { display: block; font-size: .8rem; color: var(--muted); }
+  .btn-open { font-size: .75rem; padding: .35rem .7rem; align-self: flex-start; }
+
+  /* Tool pages */
+  .tool-page { padding: 1.5rem 1rem 4rem; }
+  .tool-header { flex-wrap: wrap; gap: .6rem; margin-bottom: 1.25rem; }
+  .tool-header h2, .tool-header h1 { font-size: 1.35rem; }
+
+  /* Stats grid */
   .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Footer */
+  .footer { font-size: .75rem; padding: 1.25rem 1rem; line-height: 1.8; }
+  .footer p:first-child { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .6rem; }
+  .footer a { white-space: nowrap; }
 }

@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accurate Word Counter | Real-Time Character Limit Tool</title>
-  <meta name="description" content="Free online word counter that calculates exact word counts, character counts, sentences, and paragraphs in real time. Perfect for essays, blogs, and social media." />
+  <title>Word Counter | Essay Word Count & Tweet Character Limit Checker</title>
+  <meta name="description" content="Free word counter and character counter. Check essay word count, tweet character limit, and real-time limits for Instagram, LinkedIn, TikTok & SMS. No sign-up needed." />
+  <link rel="canonical" href="https://zippywidgets.online/word-counter/" />
+  <meta property="og:title" content="Word Counter | Essay Word Count & Character Limit Checker" />
+  <meta property="og:description" content="Count words, characters, sentences and check real-time limits for Twitter, Instagram, LinkedIn, TikTok and more. Free, instant, no sign-up." />
+  <meta property="og:url" content="https://zippywidgets.online/word-counter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Word Counter | Essay Word Count & Character Limit Checker" />
+  <meta name="twitter:description" content="Real-time word and character counter with platform limits for Twitter, Instagram, LinkedIn, TikTok and more." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -30,7 +39,10 @@
     <a class="nav-brand" href="/">
       <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill active" href="/word-counter/">Word Counter</a>
@@ -45,8 +57,8 @@
     <div class="tool-header">
       <span class="icon">📝</span>
       <div>
-        <h1>Live Word & Character Counter</h1>
-        <p>Paste or type your text and get instant stats.</p>
+        <h1>Word Counter — Essay Word Count &amp; Character Limit Checker</h1>
+        <p>Count words, characters, sentences and paragraphs. Instantly check tweet character limits, essay word counts, and platform limits for Instagram, LinkedIn, TikTok &amp; SMS.</p>
       </div>
     </div>
 
@@ -82,22 +94,47 @@
       </ul>
     </aside>
     </div>
-    <div class="ad-slot">
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
   </main>
 
   <footer class="footer">
-    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
   <script>
     'use strict';
 

@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Random Picker Wheel | Spin the Wheel Name Generator</title>
-  <meta name="description" content="Use our fast, free online picker wheel to make random decisions instantly. Perfect for picking names, raffle winners, dinner choices, or truth or dare." />
+  <title>Wheel of Names | Free Random Picker Wheel & Name Spinner</title>
+  <meta name="description" content="Free wheel of names spinner — pick a random name, giveaway winner, classroom student, or team. Spin the wheel for food, truth or dare, yes/no, and more. No sign-up." />
+  <link rel="canonical" href="https://zippywidgets.online/picker-wheel/" />
+  <meta property="og:title" content="Wheel of Names | Free Random Picker Wheel" />
+  <meta property="og:description" content="Free spin-the-wheel name picker. Use for classroom picks, giveaway winners, food decisions, truth or dare, and more." />
+  <meta property="og:url" content="https://zippywidgets.online/picker-wheel/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Wheel of Names | Free Random Picker Wheel" />
+  <meta name="twitter:description" content="Free spin-the-wheel name picker. Classroom, giveaways, food, truth or dare — spin and decide instantly." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -30,7 +39,10 @@
     <a class="nav-brand" href="/">
       <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill active" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
@@ -45,8 +57,8 @@
     <div class="tool-header">
       <span class="icon">🎡</span>
       <div>
-        <h1>Interactive Random Choice Picker Wheel</h1>
-        <p>Add your entries below, then spin to get a random result.</p>
+        <h1>Wheel of Names — Free Random Picker &amp; Spinner</h1>
+        <p>Add names or choices below and spin. Use as a classroom name picker, giveaway winner selector, team picker, or food decider.</p>
       </div>
     </div>
 
@@ -77,26 +89,64 @@ Eve</textarea>
           <button class="btn btn-secondary" onclick="loadPreset('numbers')">🔢 Numbers 1–10</button>
           <button class="btn btn-secondary" onclick="loadPreset('yesno')">✅ Yes or No</button>
           <button class="btn btn-secondary" onclick="loadPreset('dare')">🎭 Truth or Dare</button>
+          <button class="btn btn-secondary" onclick="loadPreset('giveaway')">🏆 Giveaway Winner</button>
+          <button class="btn btn-secondary" onclick="loadPreset('days')">📅 Days of Week</button>
         </div>
         <div class="entries-chips mt-2" id="wheelChips"></div>
       </div>
     </div>
-    <div class="ad-slot">
+    <section class="use-case-section card">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">Popular Uses</h2>
+      <div class="use-case-grid">
+        <div class="use-case-item"><span>🎓</span><strong>Classroom Name Picker</strong><p>Randomly call on students fairly — no bias, just spin.</p></div>
+        <div class="use-case-item"><span>🏆</span><strong>Giveaway Winner Picker</strong><p>Pick contest or raffle winners live on stream or at events.</p></div>
+        <div class="use-case-item"><span>👥</span><strong>Random Team Picker</strong><p>Split groups or assign tasks with a fair team selector.</p></div>
+        <div class="use-case-item"><span>🍕</span><strong>What Should I Eat?</strong><p>Can't decide on dinner? Let the wheel pick your next meal.</p></div>
+        <div class="use-case-item"><span>🎭</span><strong>Truth or Dare Game</strong><p>Spin for Truth or Dare at parties, sleepovers, or game nights.</p></div>
+        <div class="use-case-item"><span>✅</span><strong>Yes or No Wheel</strong><p>Make quick binary decisions — just spin for an instant answer.</p></div>
+      </div>
+    </section>
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
   </main>
 
   <footer class="footer">
-    <p>Try our other free tools: <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
   <script>
     'use strict';
 
@@ -254,7 +304,9 @@ Eve</textarea>
       eat:     ['Pizza','Sushi','Burger','Tacos','Pasta','Salad','Ramen','Steak','Curry','Sandwiches'],
       numbers: ['1','2','3','4','5','6','7','8','9','10'],
       yesno:   ['Yes','No'],
-      dare:    ['Truth','Dare','Skip','Double Dare']
+      dare:    ['Truth','Dare','Skip','Double Dare'],
+      giveaway:['Winner!','Try Again','Almost!','Next Time','You Win!'],
+      days:    ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     };
 
     function loadPreset(key) {

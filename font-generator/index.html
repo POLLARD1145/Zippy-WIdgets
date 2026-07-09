@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fancy Text Generator | Cool Fonts Copy and Paste</title>
-  <meta name="description" content="Transform plain text into 100+ stylish, aesthetic fonts instantly. Copy and paste fancy custom text directly into your Instagram, TikTok, or Discord bio." />
+  <title>Fancy Text Generator | Aesthetic Fonts, Glitch & Small Text Copy Paste</title>
+  <meta name="description" content="Free fancy text generator — create aesthetic fonts, small text, glitch text, vaporwave, and cursive styles. Copy and paste into Instagram bio, TikTok, Discord, or Twitter instantly." />
+  <link rel="canonical" href="https://zippywidgets.online/font-generator/" />
+  <meta property="og:title" content="Fancy Text Generator | Aesthetic Fonts Copy and Paste" />
+  <meta property="og:description" content="Generate aesthetic fonts, small text, glitch text, vaporwave and cursive styles. One-click copy for Instagram, TikTok, Discord & more." />
+  <meta property="og:url" content="https://zippywidgets.online/font-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fancy Text Generator | Aesthetic Fonts Copy and Paste" />
+  <meta name="twitter:description" content="Free aesthetic font generator. Small text, glitch, vaporwave, cursive — copy and paste anywhere." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -30,7 +39,10 @@
     <a class="nav-brand" href="/">
       <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill active" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
@@ -45,8 +57,8 @@
     <div class="tool-header">
       <span class="icon">✍️</span>
       <div>
-        <h1>Aesthetic Fancy Font Generator</h1>
-        <p>Type below and copy stylish Unicode text for Instagram, TikTok, Twitter, and more.</p>
+        <h1>Fancy Text &amp; Aesthetic Font Generator</h1>
+        <p>Generate small text, glitch text, vaporwave, cursive, and 10+ Unicode styles. One-click copy for Instagram bio, TikTok, Discord, and Twitter.</p>
       </div>
     </div>
 
@@ -56,15 +68,36 @@
         <p class="text-muted text-sm">Start typing above to see your text transformed.</p>
       </div>
     </div>
-    <div class="ad-slot">
+    <div class="use-case-chips">
+      <span>Instagram Bio Font</span>
+      <span>TikTok Aesthetic Text</span>
+      <span>Small Text Generator</span>
+      <span>Glitch Text Generator</span>
+      <span>Vaporwave Text</span>
+      <span>Cursive Font Copy Paste</span>
+      <span>Discord Username Fonts</span>
+      <span>Cool Fonts for Twitter</span>
+    </div>
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
 
     <section class="faq-section card" style="margin-top:0;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
@@ -88,10 +121,24 @@
   </main>
 
   <footer class="footer">
-    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
   <script>
     'use strict';
 

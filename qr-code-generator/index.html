@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free QR Code Generator | Create Custom Vector QR Codes</title>
-  <meta name="description" content="Instantly convert URLs, text, Wi-Fi passwords, or business links into clean, high-resolution QR codes. 100% free with unlimited downloads and no expiration." />
+  <title>Free QR Code Generator | Restaurant Menu, WiFi & URL QR Codes</title>
+  <meta name="description" content="Free QR code generator for restaurant menus, WiFi passwords, Google reviews, URLs, and business cards. Download high-resolution PNG instantly. No sign-up, no expiry." />
+  <link rel="canonical" href="https://zippywidgets.online/qr-code-generator/" />
+  <meta property="og:title" content="Free QR Code Generator | Restaurant Menu, WiFi & URL" />
+  <meta property="og:description" content="Make a QR code for restaurant menus, WiFi passwords, Google reviews, or any URL. Free, instant download, no sign-up." />
+  <meta property="og:url" content="https://zippywidgets.online/qr-code-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Free QR Code Generator | Restaurant Menu, WiFi & URL" />
+  <meta name="twitter:description" content="Create QR codes for restaurant menus, WiFi, Google reviews, URLs and more. Free instant download." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -30,7 +39,10 @@
     <a class="nav-brand" href="/">
       <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
@@ -45,8 +57,8 @@
     <div class="tool-header">
       <span class="icon">📷</span>
       <div>
-        <h1>Instant Custom QR Code Generator</h1>
-        <p>Enter a URL or any text to generate a free, downloadable QR code.</p>
+        <h1>Free QR Code Generator — Restaurant Menu, WiFi &amp; URL</h1>
+        <p>Paste any URL, WiFi password, or text to create a downloadable QR code instantly. Perfect for restaurant menus, business cards, and Google reviews.</p>
       </div>
     </div>
 
@@ -60,24 +72,56 @@
         <div id="qrcode"></div>
       </div>
       <p class="text-muted text-sm mt-2">Generated entirely in your browser — no data is sent to any server.</p>
+      <div class="use-case-chips" style="margin-top:1rem;">
+        <span onclick="document.getElementById('qrInput').value='https://';document.getElementById('qrInput').focus()">🌐 Website URL</span>
+        <span onclick="document.getElementById('qrInput').value='WIFI:T:WPA;S:NetworkName;P:Password;;';document.getElementById('qrInput').focus()">📶 WiFi Password</span>
+        <span onclick="document.getElementById('qrInput').value='https://g.page/r/';document.getElementById('qrInput').focus()">⭐ Google Review</span>
+        <span onclick="document.getElementById('qrInput').value='https://menu.';document.getElementById('qrInput').focus()">🍽️ Restaurant Menu</span>
+        <span onclick="document.getElementById('qrInput').value='';document.getElementById('qrInput').focus()">💼 Business Card</span>
+      </div>
     </div>
-    <div class="ad-slot">
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
   </main>
 
   <footer class="footer">
-    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/age-calculator/">Age Calculator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
   <script>
     'use strict';
 

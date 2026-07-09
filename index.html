@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZippyWidgets – Free Online Tools: Picker Wheel, Word Counter, Font Generator & More</title>
-  <meta name="description" content="ZippyWidgets offers free, instant online tools — Random Picker Wheel, Word Counter, Font Generator, QR Code Generator, and Age Calculator. No sign-up, 100% free." />
+  <title>ZippyWidgets – Free Online Tools: Wheel of Names, Word Counter, Font Generator & More</title>
+  <meta name="description" content="Free instant online tools — Wheel of Names spinner, word counter, fancy font generator, QR code maker, and age calculator. No sign-up, works in your browser." />
+  <link rel="canonical" href="https://zippywidgets.online/" />
+  <meta property="og:title" content="ZippyWidgets — Free Instant Online Tools" />
+  <meta property="og:description" content="Free browser tools: Wheel of Names, word counter, font generator, QR code maker, age calculator. No sign-up required." />
+  <meta property="og:url" content="https://zippywidgets.online/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ZippyWidgets — Free Instant Online Tools" />
+  <meta name="twitter:description" content="Free browser tools — Wheel of Names, word counter, font generator, QR code maker, age calculator." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="style.css" />
@@ -27,7 +36,10 @@
     <a class="nav-brand" href="/">
       <img src="ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
       <a class="nav-pill" href="/font-generator/">Font Generator</a>
       <a class="nav-pill" href="/word-counter/">Word Counter</a>
@@ -42,60 +54,103 @@
       <p class="hero-sub">No sign-up. No clutter. Just fast, useful widgets — right in your browser.</p>
     </section>
 
-    <div class="ad-slot">
+    <section class="tools-grid">
+
+      <a class="tool-card" href="/picker-wheel/">
+        <div class="icon">🎡</div>
+        <div>
+          <h3>Random Picker Wheel</h3>
+          <p>Spin the wheel to randomly pick from your custom list of names, items, or options.</p>
+          <span class="btn-open">Open Tool →</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="/font-generator/">
+        <div class="icon">✍️</div>
+        <div>
+          <h3>Font Generator</h3>
+          <p>Transform your text into stylish Unicode fonts for Instagram, TikTok, and Twitter bios.</p>
+          <span class="btn-open">Open Tool →</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="/word-counter/">
+        <div class="icon">📝</div>
+        <div>
+          <h3>Word & Character Counter</h3>
+          <p>Instantly count words, characters, sentences, and paragraphs as you type.</p>
+          <span class="btn-open">Open Tool →</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="/qr-code-generator/">
+        <div class="icon">📷</div>
+        <div>
+          <h3>QR Code Generator</h3>
+          <p>Turn any URL or text into a downloadable QR code in seconds — no sign-up needed.</p>
+          <span class="btn-open">Open Tool →</span>
+        </div>
+      </a>
+
+      <a class="tool-card" href="/age-calculator/">
+        <div class="icon">🎂</div>
+        <div>
+          <h3>Age Calculator</h3>
+          <p>Enter your date of birth and find your exact age in years, months, days, and hours.</p>
+          <span class="btn-open">Open Tool →</span>
+        </div>
+      </a>
+
+    </section>
+
+    <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6884221059402072"
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
-
-    <section class="tools-grid">
-
-      <a class="tool-card" href="/picker-wheel/">
-        <div class="icon">🎡</div>
-        <h3>Random Picker Wheel</h3>
-        <p>Spin the wheel to randomly pick from your custom list of names, items, or options.</p>
-        <span class="btn-open">Open Tool →</span>
-      </a>
-
-      <a class="tool-card" href="/font-generator/">
-        <div class="icon">✍️</div>
-        <h3>Font Generator</h3>
-        <p>Transform your text into stylish Unicode fonts for Instagram, TikTok, and Twitter bios.</p>
-        <span class="btn-open">Open Tool →</span>
-      </a>
-
-      <a class="tool-card" href="/word-counter/">
-        <div class="icon">📝</div>
-        <h3>Word & Character Counter</h3>
-        <p>Instantly count words, characters, sentences, and paragraphs as you type.</p>
-        <span class="btn-open">Open Tool →</span>
-      </a>
-
-      <a class="tool-card" href="/qr-code-generator/">
-        <div class="icon">📷</div>
-        <h3>QR Code Generator</h3>
-        <p>Turn any URL or text into a downloadable QR code in seconds — no sign-up needed.</p>
-        <span class="btn-open">Open Tool →</span>
-      </a>
-
-      <a class="tool-card" href="/age-calculator/">
-        <div class="icon">🎂</div>
-        <h3>Age Calculator</h3>
-        <p>Enter your date of birth and find your exact age in years, months, days, and hours.</p>
-        <span class="btn-open">Open Tool →</span>
-      </a>
-
-    </section>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
   </main>
 
   <footer class="footer">
-    <p>Free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a>
+    </p>
     <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </footer>
 
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+  </script>
 </body>
 </html>
