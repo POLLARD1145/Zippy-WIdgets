@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fancy Text Generator | Aesthetic Fonts, Glitch & Small Text Copy Paste</title>
-  <meta name="description" content="Free fancy text generator — create aesthetic fonts, small text, glitch text, vaporwave, and cursive styles. Copy and paste into Instagram bio, TikTok, Discord, or Twitter instantly." />
+  <meta name="description" content="Free fancy text generator — create aesthetic fonts, small text, glitch text, zalgo, vaporwave, cursive, subscript, wave text and 20+ Unicode styles. Copy and paste into Instagram bio, TikTok, Discord, or Twitter instantly." />
   <link rel="canonical" href="https://zippywidgets.online/font-generator/" />
   <meta property="og:title" content="Fancy Text Generator | Aesthetic Fonts Copy and Paste" />
   <meta property="og:description" content="Generate aesthetic fonts, small text, glitch text, vaporwave and cursive styles. One-click copy for Instagram, TikTok, Discord & more." />
@@ -60,7 +60,7 @@
       <span class="icon">✍️</span>
       <div>
         <h1>Fancy Text &amp; Aesthetic Font Generator</h1>
-        <p>Generate small text, glitch text, vaporwave, cursive, and 10+ Unicode styles. One-click copy for Instagram bio, TikTok, Discord, and Twitter.</p>
+        <p>Generate small text, glitch text, zalgo, vaporwave, cursive, subscript, wave text, mirror text and 20+ Unicode styles. One-click copy for Instagram bio, TikTok, Discord, and Twitter.</p>
       </div>
     </div>
 
@@ -75,8 +75,12 @@
       <span>TikTok Aesthetic Text</span>
       <span>Small Text Generator</span>
       <span>Glitch Text Generator</span>
+      <span>Zalgo Text</span>
       <span>Vaporwave Text</span>
       <span>Cursive Font Copy Paste</span>
+      <span>Mirror Text Generator</span>
+      <span>Subscript Text</span>
+      <span>Wave Text Generator</span>
       <span>Discord Username Fonts</span>
       <span>Cool Fonts for Twitter</span>
     </div>
@@ -165,7 +169,17 @@
       { name: 'Bubble Text',         fn: bubble },
       { name: 'Inverted',            fn: inverted },
       { name: 'Underline',           fn: underline },
+      { name: 'Double Underline',    fn: doubleUnderline },
+      { name: 'Wavy Underline',      fn: wavyUnderline },
       { name: 'Strikethrough',       fn: strikethrough },
+      { name: 'Bold Script',         fn: boldScript },
+      { name: 'Negative Squared',    fn: negativeSquared },
+      { name: 'Subscript',           fn: subscript },
+      { name: 'Aesthetic Spaced',    fn: aestheticSpaced },
+      { name: 'Wave / Alternating',  fn: waveCase },
+      { name: 'Mirror / Reversed',   fn: mirrored },
+      { name: 'Regional Indicators', fn: regionalIndicators },
+      { name: 'Zalgo Glitch',        fn: zalgo },
     ];
 
     function shiftStr(str, upper, lower, digits) {
@@ -231,7 +245,51 @@
 
     const TINY = {a:'ᴀ',b:'ʙ',c:'ᴄ',d:'ᴅ',e:'ᴇ',f:'ꜰ',g:'ɢ',h:'ʜ',i:'ɪ',j:'ᴊ',k:'ᴋ',l:'ʟ',m:'ᴍ',n:'ɴ',o:'ᴏ',p:'ᴘ',q:'Q',r:'ʀ',s:'ꜱ',t:'ᴛ',u:'ᴜ',v:'ᴠ',w:'ᴡ',x:'x',y:'ʏ',z:'ᴢ'};
     function tinyCaps(s) { return [...s].map(c => TINY[c.toLowerCase()] || c).join(''); }
-    function strikethrough(s) { return [...s].map(c => c + '\u0336').join(''); }
+    function strikethrough(s)    { return [...s].map(c => c + '\u0336').join(''); }
+    function doubleUnderline(s)  { return [...s].map(c => c + '\u0333').join(''); }
+    function wavyUnderline(s)    { return [...s].map(c => c + '\u0330').join(''); }
+
+    function boldScript(s)       { return shiftStr(s, 0x1D4D0, 0x1D4EA, 0x1D7CE); }
+
+    function negativeSquared(s) {
+      return [...s].map(c => {
+        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x1F170 + c.charCodeAt(0) - 65);
+        if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x1F170 + c.charCodeAt(0) - 97);
+        return c;
+      }).join('');
+    }
+
+    const SUB_MAP = {a:'ₐ',e:'ₑ',h:'ₕ',i:'ᵢ',j:'ⱼ',k:'ₖ',l:'ₗ',m:'ₘ',n:'ₙ',o:'ₒ',p:'ₚ',r:'ᵣ',s:'ₛ',t:'ₜ',u:'ᵤ',v:'ᵥ',x:'ₓ','0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+    function subscript(s) { return [...s].map(c => SUB_MAP[c.toLowerCase()] || c).join(''); }
+
+    function aestheticSpaced(s) { return [...s].join(' '); }
+
+    function waveCase(s) { return [...s].map((c,i) => i%2===0 ? c.toUpperCase() : c.toLowerCase()).join(''); }
+
+    function mirrored(s) {
+      const M={a:'ɐ',b:'d',c:'ɔ',d:'b',e:'ǝ',f:'ɟ',g:'ƃ',h:'ɥ',i:'ᴉ',j:'ɾ',k:'ʞ',l:'l',m:'ɯ',n:'u',o:'o',p:'q',q:'p',r:'ɹ',s:'s',t:'ʇ',u:'n',v:'ʌ',w:'ʍ',x:'x',y:'ʎ',z:'z'};
+      return [...s].map(c=>M[c.toLowerCase()]||(c>='A'&&c<='Z'?(M[c.toLowerCase()]||c).toUpperCase():c)).reverse().join('');
+    }
+
+    function regionalIndicators(s) {
+      return [...s].map(c => {
+        const l = c.toLowerCase();
+        if (l >= 'a' && l <= 'z') return String.fromCodePoint(0x1F1E6 + l.charCodeAt(0) - 97) + '\u200B';
+        return c;
+      }).join('');
+    }
+
+    const ZALGO_UP = ['\u030d','\u030e','\u0304','\u0305','\u033f','\u0311','\u0306','\u0310','\u0352','\u0357','\u0351','\u0307','\u0308','\u030a','\u0342'];
+    const ZALGO_DN = ['\u0316','\u0317','\u0318','\u0319','\u031c','\u031d','\u031e','\u031f','\u0320','\u0324','\u0325','\u0326','\u0329','\u032a','\u032b'];
+    function zalgo(s) {
+      return [...s].map(c => {
+        if (c === ' ') return c;
+        let r = c;
+        for (let i = 0; i < 2; i++) r += ZALGO_UP[Math.floor(Math.random()*ZALGO_UP.length)];
+        for (let i = 0; i < 2; i++) r += ZALGO_DN[Math.floor(Math.random()*ZALGO_DN.length)];
+        return r;
+      }).join('');
+    }
 
     function updateFonts() {
       const input = document.getElementById('fontInput').value || '';
