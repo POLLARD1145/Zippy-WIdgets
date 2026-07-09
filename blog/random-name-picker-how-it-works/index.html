@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Name Picker — How to Pick a Fair Winner With a Wheel Spinner | ZippyWidgets</title>
+  <meta name="description" content="How to pick a random name or winner fairly — wheel spinner vs manual draw vs RNG. Tips for teachers, giveaway hosts, streamers and event organisers. Free random picker wheel." />
+  <meta name="keywords" content="random name picker, wheel of names, random winner picker, spin the wheel names, classroom name picker, giveaway winner picker, random picker wheel, wheel spinner, pick a random name, random name generator, spin wheel online, name wheel picker, fair random draw, teacher name picker, random student picker, free wheel spinner" />
+  <link rel="canonical" href="https://zippywidgets.online/blog/random-name-picker-how-it-works/" />
+  <meta property="og:title" content="Random Name Picker — How to Pick a Fair Winner With a Wheel Spinner" />
+  <meta property="og:description" content="How to pick a random name or winner fairly — wheel spinner vs manual draw vs RNG, with tips for teachers, giveaway hosts and streamers. Free wheel picker included." />
+  <meta property="og:url" content="https://zippywidgets.online/blog/random-name-picker-how-it-works/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta property="article:published_time" content="2026-07-10" />
+  <meta property="article:section" content="Random Pickers & Games" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="../../theme.js"></script>
+  <link rel="icon" type="image/png" href="../../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Random Name Picker — How to Pick a Fair Winner With a Wheel Spinner",
+    "description": "How to pick a random name or winner fairly — wheel spinner vs manual draw vs RNG. Tips for teachers, giveaway hosts, streamers and event organisers.",
+    "url": "https://zippywidgets.online/blog/random-name-picker-how-it-works/",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "author": { "@type": "Organization", "name": "ZippyWidgets" },
+    "datePublished": "2026-07-10",
+    "dateModified": "2026-07-10",
+    "keywords": ["random name picker", "wheel of names", "spin the wheel", "giveaway winner picker", "classroom name picker", "random picker wheel", "fair random draw", "wheel spinner online"]
+  }
+  </script>
+  <style>
+    .article-body { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted); line-height: 1.8; font-size: .95rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-top: .5rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .article-body p { margin: 0; }
+    .article-body ul, .article-body ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: .5rem; }
+    .article-body table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .article-body th, .article-body td { padding: .6rem .8rem; border: 1px solid var(--border); text-align: left; }
+    .article-body th { background: var(--surface2); color: var(--text); font-weight: 700; }
+    .tip-box { background: var(--surface2); border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.2rem; }
+    .tip-box strong { color: var(--text); }
+    .cta-box { background: var(--surface2); border: 1px solid var(--accent); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+    .cta-box p { color: var(--text) !important; font-weight: 500; }
+    .cta-box a { color: var(--accent); font-weight: 700; }
+    .article-meta { font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
+    .use-case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin-top: .5rem; }
+    .use-case-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; }
+    .use-case-card .emoji { font-size: 1.4rem; display: block; margin-bottom: .3rem; }
+    .use-case-card strong { color: var(--text); font-size: .9rem; }
+    .use-case-card p { font-size: .82rem; color: var(--muted); margin-top: .25rem !important; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+      <a class="nav-pill" href="/speed-test/">Speed Test</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/blog/">← Back to Blog</a>
+
+    <div class="tool-header">
+      <span class="icon">🎡</span>
+      <div>
+        <h1>Random Name Picker — How to Pick a Fair Winner With a Wheel Spinner</h1>
+        <p class="article-meta">July 2026 · 5 min read · <a href="/blog/" style="color:var(--accent);">ZippyWidgets Blog</a></p>
+      </div>
+    </div>
+
+    <div class="card article-body">
+
+      <p>Whether you're a teacher calling on students, a streamer picking a giveaway winner, or a group of friends deciding what to eat — a random name picker solves the problem instantly and fairly. Here's everything you need to know about how wheel spinners work, why they're trusted, and how to get the most out of them.</p>
+
+      <h2>Why Random Matters (And Why Humans Are Bad at It)</h2>
+      <p>When a teacher says "I'll just pick someone," they unconsciously favour students who sit in the front row, make eye contact, or have already answered recently. When a streamer announces a giveaway winner from memory, viewers immediately suspect favouritism — even if there's none. Humans are notoriously bad at being truly random. We have biases we don't even notice.</p>
+      <p>A random picker wheel solves this by using a <strong>cryptographically seeded pseudo-random number generator</strong> (in the browser's <code>Math.random()</code> or <code>crypto.getRandomValues()</code>) to determine where the wheel stops. The result is genuinely unpredictable and unbiased — not influenced by who you want to win, who answered last, or who's watching.</p>
+
+      <h2>Wheel Spinner vs Other Methods</h2>
+
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Fairness</th><th>Transparency</th><th>Engagement</th><th>Speed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Spin-the-wheel picker</td><td>✅ Excellent</td><td>✅ Visible to all</td><td>✅ High (animated)</td><td>✅ Instant</td></tr>
+          <tr><td>Drawing names from a hat</td><td>✅ Good</td><td>✅ Physical proof</td><td>⚠️ Low</td><td>⚠️ Slow</td></tr>
+          <tr><td>Random number generator</td><td>✅ Excellent</td><td>❌ Abstract result</td><td>❌ None</td><td>✅ Instant</td></tr>
+          <tr><td>Manual "just picking someone"</td><td>❌ Biased</td><td>❌ No audit trail</td><td>❌ None</td><td>✅ Instant</td></tr>
+          <tr><td>Alphabetical order</td><td>❌ Not random</td><td>✅ Predictable</td><td>❌ None</td><td>✅ Instant</td></tr>
+        </tbody>
+      </table>
+
+      <p>The wheel spinner wins on nearly every dimension. The animation makes the selection feel exciting and believable — participants <em>see</em> the process, which builds trust in the result.</p>
+
+      <h2>Popular Uses for a Random Name Picker</h2>
+
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <span class="emoji">🎓</span>
+          <strong>Classroom Name Picker</strong>
+          <p>Call on students fairly without repetition bias. Add the full class roster and spin for cold-call questions, group assignments, or reading turns.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="emoji">🏆</span>
+          <strong>Giveaway Winner</strong>
+          <p>Pick raffle or contest winners live on Twitch, YouTube, or Instagram. The visible spin is proof of fairness that viewers and participants trust.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="emoji">👥</span>
+          <strong>Team Randomiser</strong>
+          <p>Split a group into teams by spinning each person into a team slot. Works for PE class, hackathons, corporate team-building and sports drafts.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="emoji">🍕</span>
+          <strong>What Should We Eat?</strong>
+          <p>Add your favourite restaurants or meal options and let the wheel decide. Ends the indecision loop in seconds.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="emoji">🎭</span>
+          <strong>Truth or Dare</strong>
+          <p>Load the preset or type custom dares. Spin to assign who goes next — keeps party games moving and unpredictable.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="emoji">✅</span>
+          <strong>Yes or No Decisions</strong>
+          <p>Add just two entries — "Yes" and "No" — for a coin-flip equivalent with visual flair. Good for settling small disagreements quickly.</p>
+        </div>
+      </div>
+
+      <h2>How to Use the ZippyWidgets Picker Wheel</h2>
+      <ol>
+        <li>Go to <a href="/picker-wheel/" style="color:var(--accent);">zippywidgets.online/picker-wheel/</a> — no sign-up needed.</li>
+        <li>Type your names or options into the text box — one entry per line. Minimum two entries required.</li>
+        <li>Click <strong>Update Wheel</strong> to see the coloured segments refresh instantly.</li>
+        <li>Press <strong>Spin!</strong> or click directly on the wheel to start. The wheel decelerates naturally and lands on a random segment.</li>
+        <li>The winner is shown in large text below the wheel. Spin again as many times as you like.</li>
+      </ol>
+
+      <div class="tip-box">
+        <strong>💡 Pro tip for classrooms:</strong> Paste your full student list directly from a spreadsheet — one name per line. The wheel handles up to 20+ entries clearly. For very large classes, split into two wheels and run a two-round spin.
+      </div>
+
+      <h2>Tips for Running a Transparent Giveaway</h2>
+      <ul>
+        <li><strong>Screen share the wheel</strong> — show the picker wheel on screen during your livestream so viewers see the spin happen live. This eliminates any doubt about the process.</li>
+        <li><strong>Add names as they arrive</strong> — for comment-based giveaways, update the wheel in real time by adding qualifying commenters to the list, then spin at the end.</li>
+        <li><strong>Weight entries fairly</strong> — if someone earns multiple entries (e.g. "tag a friend for extra entry"), add their name multiple times. Each entry has equal wheel segment size.</li>
+        <li><strong>Spin on video</strong> — record a short clip of the spin for participants who weren't watching live. It confirms the draw was genuine.</li>
+        <li><strong>Announce the URL</strong> — tell viewers the tool you're using so they can verify it's not a rigged custom page. Our wheel is publicly accessible at zippywidgets.online/picker-wheel/</li>
+      </ul>
+
+      <h2>Is the Picker Wheel Truly Random?</h2>
+      <p>Yes. The wheel uses the browser's built-in <code>Math.random()</code> function, which is seeded by the operating system's entropy source (mouse movements, timing events, hardware counters) at the time of each spin. The stopping position is calculated fresh every spin — it doesn't remember previous results, it doesn't favour any segment, and it cannot be influenced by the user. Each name has exactly a 1-in-N chance where N is the number of entries in the list.</p>
+      <p>All processing happens locally in your browser. Your list of names is never uploaded to any server. You can safely use real student names, employee names, or customer names without any privacy concern.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I remove a name after it's been picked?</h3>
+      <p>Yes — delete the name from the text box and click Update Wheel. The wheel will re-draw without that entry. This is useful in classroom settings where you want to cycle through every student before repeating.</p>
+      <h3>What's the maximum number of entries?</h3>
+      <p>There's no hard limit, but segments become very small above 30–40 entries. For very large lists, the wheel still functions correctly — it just becomes harder to read visually. The random selection remains fair regardless of segment size.</p>
+      <h3>Does it work on phones?</h3>
+      <p>Yes. The picker wheel is fully responsive and works on iOS and Android browsers. Tap the wheel or the Spin button to start. No app installation required.</p>
+
+      <div class="cta-box">
+        <p>Ready to spin? <a href="/picker-wheel/">Open the free Random Picker Wheel →</a> — no sign-up, works on any device, results in seconds.</p>
+      </div>
+
+    </div>
+
+    <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a> ·
+      <a href="/speed-test/">Speed Test</a>
+    </p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
+</body>
+</html>
