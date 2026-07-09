@@ -691,17 +691,30 @@
     }
 
     async function fetchNetInfo() {
-      try {
-        const res  = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        document.getElementById('niIp').textContent  = truncateIp(data.ip);
-        document.getElementById('niIp').title        = data.ip || '';
-        document.getElementById('niIsp').textContent = data.org ? '· ' + data.org : '';
-        document.getElementById('niLoc').textContent = [data.city, data.country_name].filter(Boolean).join(', ') || '—';
-      } catch (_) {
-        document.getElementById('niIp').textContent  = 'Unavailable';
-        document.getElementById('niIsp').textContent = '';
-        document.getElementById('niLoc').textContent = 'Unavailable';
+      const ipEl  = document.getElementById('niIp');
+      const ispEl = document.getElementById('niIsp');
+      const locEl = document.getElementById('niLoc');
+      let data = null;
+
+      const apis = [
+        async () => { const r = await fetch('https://ipwho.is/'); const d = await r.json(); return { ip: d.ip, org: d.connection?.isp || d.org, city: d.city, country: d.country }; },
+        async () => { const r = await fetch('https://ip-api.com/json/?fields=query,isp,city,country'); const d = await r.json(); return { ip: d.query, org: d.isp, city: d.city, country: d.country }; },
+        async () => { const r = await fetch('https://ipapi.co/json/'); const d = await r.json(); return { ip: d.ip, org: d.org, city: d.city, country: d.country_name }; },
+      ];
+
+      for (const api of apis) {
+        try { data = await api(); if (data && data.ip) break; } catch (_) {}
+      }
+
+      if (data && data.ip) {
+        ipEl.textContent  = truncateIp(data.ip);
+        ipEl.title        = data.ip;
+        ispEl.textContent = data.org ? '· ' + data.org : '';
+        locEl.textContent = [data.city, data.country].filter(Boolean).join(', ') || '—';
+      } else {
+        ipEl.textContent  = 'Unavailable';
+        ispEl.textContent = '';
+        locEl.textContent = 'Unavailable';
       }
       const conn = navigator.connection;
       document.getElementById('niConn').textContent =
@@ -739,11 +752,13 @@
       document.getElementById('historyCard').style.display = 'none';
     }
 
+    const SITE_URL = 'https://zippywidgets.online/speed-test/';
+
     function shareResult() {
       if (!lastResult) return;
-      const text = `My internet speed: ↓ ${lastResult.down.toFixed(1)} Mbps | ↑ ${lastResult.up.toFixed(1)} Mbps | Ping ${lastResult.ping.toFixed(0)} ms — tested at zippywidgets.online/speed-test/`;
+      const text = `My internet speed: ↓ ${lastResult.down.toFixed(1)} Mbps | ↑ ${lastResult.up.toFixed(1)} Mbps | Ping ${lastResult.ping.toFixed(0)} ms — tested at ${SITE_URL}`;
       if (navigator.share) {
-        navigator.share({ title: 'My Speed Test Result', text });
+        navigator.share({ title: 'My Speed Test Result', text, url: SITE_URL });
       } else {
         copyResult();
       }
@@ -751,7 +766,7 @@
 
     function copyResult() {
       if (!lastResult) return;
-      const text = `Download: ${lastResult.down.toFixed(1)} Mbps | Upload: ${lastResult.up.toFixed(1)} Mbps | Ping: ${lastResult.ping.toFixed(0)} ms | Jitter: ${lastResult.jitter.toFixed(0)} ms — zippywidgets.online/speed-test/`;
+      const text = `My internet speed: ↓ ${lastResult.down.toFixed(1)} Mbps | ↑ ${lastResult.up.toFixed(1)} Mbps | Ping ${lastResult.ping.toFixed(0)} ms | Jitter ${lastResult.jitter.toFixed(0)} ms — ${SITE_URL}`;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector('[onclick="copyResult()"]');
         if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy Result', 2000); }
