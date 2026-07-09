@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fancy Text Generator | Cool Fonts Copy and Paste</title>
+  <meta name="description" content="Transform plain text into 100+ stylish, aesthetic fonts instantly. Copy and paste fancy custom text directly into your Instagram, TikTok, or Discord bio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fancy Text Generator",
+    "url": "https://zippywidgets.online/font-generator/",
+    "description": "Free online fancy text generator. Convert any text into stylish Unicode fonts for Instagram, TikTok, Discord, and Twitter bios.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <div class="nav-links">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill active" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">✍️</span>
+      <div>
+        <h1>Aesthetic Fancy Font Generator</h1>
+        <p>Type below and copy stylish Unicode text for Instagram, TikTok, Twitter, and more.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <input type="text" id="fontInput" placeholder="Type your text here…" oninput="updateFonts()" />
+      <div class="font-output-list mt-3" id="fontOutputList">
+        <p class="text-muted text-sm">Start typing above to see your text transformed.</p>
+      </div>
+    </div>
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <section class="faq-section card" style="margin-top:0;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How does the fancy font generator work?</h3>
+        <p>It converts your text into Unicode character equivalents that look like different fonts — no special software needed. Because they’re standard Unicode, they paste anywhere: Instagram bios, TikTok profiles, Twitter, Discord, and more.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I change my font on Instagram bio?</h3>
+        <p>Type your text above, choose a style, click “Copy”, then paste directly into your Instagram bio editor. Instagram renders Unicode characters exactly as you see them here.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do these fonts work on TikTok and Discord?</h3>
+        <p>Yes. Because the characters are Unicode — not images or custom fonts — they display natively on every platform that supports UTF-8, including TikTok, Discord, Twitter/X, Facebook, and WhatsApp.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why do some characters appear as boxes?</h3>
+        <p>A small number of Unicode blocks (like some mathematical alphanumeric symbols) are not included in every device font. Most modern phones and computers display all styles correctly.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const FONTS = [
+      { name: 'Bold Serif',        fn: boldSerif },
+      { name: 'Italic Serif',      fn: italicSerif },
+      { name: 'Bold Italic Serif', fn: boldItalicSerif },
+      { name: 'Script / Cursive',  fn: script },
+      { name: 'Double-Struck',     fn: doubleStruck },
+      { name: 'Fraktur / Gothic',  fn: fraktur },
+      { name: 'Monospace',         fn: monospace },
+      { name: 'Circled',           fn: circled },
+      { name: 'Squared',           fn: squared },
+      { name: 'Full-Width',        fn: fullwidth },
+      { name: 'Tiny Caps',         fn: tinyCaps },
+      { name: 'Strikethrough',     fn: strikethrough },
+    ];
+
+    function shiftStr(str, upper, lower, digits) {
+      return [...str].map(c => {
+        const u = c.charCodeAt(0);
+        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(upper + u - 65);
+        if (c >= 'a' && c <= 'z') return String.fromCodePoint(lower + u - 97);
+        if (digits && c >= '0' && c <= '9') return String.fromCodePoint(digits + u - 48);
+        return c;
+      }).join('');
+    }
+
+    function boldSerif(s)        { return shiftStr(s, 0x1D400, 0x1D41A, 0x1D7CE); }
+    function italicSerif(s)      { return shiftStr(s, 0x1D434, 0x1D44E); }
+    function boldItalicSerif(s)  { return shiftStr(s, 0x1D468, 0x1D482); }
+    function script(s)           { return shiftStr(s, 0x1D4D0, 0x1D4EA); }
+    function doubleStruck(s)     { return shiftStr(s, 0x1D538, 0x1D552, 0x1D7D8); }
+    function fraktur(s)          { return shiftStr(s, 0x1D504, 0x1D51E); }
+    function monospace(s)        { return shiftStr(s, 0x1D670, 0x1D68A, 0x1D7F6); }
+
+    function circled(s) {
+      return [...s].map(c => {
+        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x24B6 + c.charCodeAt(0) - 65);
+        if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x24D0 + c.charCodeAt(0) - 97);
+        if (c >= '1' && c <= '9') return String.fromCodePoint(0x2460 + c.charCodeAt(0) - 49);
+        if (c === '0') return '⓪';
+        return c;
+      }).join('');
+    }
+
+    function squared(s) {
+      return [...s].map(c => {
+        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x1F130 + c.charCodeAt(0) - 65);
+        if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x1F130 + c.charCodeAt(0) - 97);
+        return c;
+      }).join('');
+    }
+
+    function fullwidth(s) {
+      return [...s].map(c => {
+        const u = c.charCodeAt(0);
+        if (u >= 33 && u <= 126) return String.fromCodePoint(0xFF01 + u - 33);
+        if (c === ' ') return '\u3000';
+        return c;
+      }).join('');
+    }
+
+    const TINY = {a:'ᴀ',b:'ʙ',c:'ᴄ',d:'ᴅ',e:'ᴇ',f:'ꜰ',g:'ɢ',h:'ʜ',i:'ɪ',j:'ᴊ',k:'ᴋ',l:'ʟ',m:'ᴍ',n:'ɴ',o:'ᴏ',p:'ᴘ',q:'Q',r:'ʀ',s:'ꜱ',t:'ᴛ',u:'ᴜ',v:'ᴠ',w:'ᴡ',x:'x',y:'ʏ',z:'ᴢ'};
+    function tinyCaps(s) { return [...s].map(c => TINY[c.toLowerCase()] || c).join(''); }
+    function strikethrough(s) { return [...s].map(c => c + '\u0336').join(''); }
+
+    function updateFonts() {
+      const input = document.getElementById('fontInput').value || '';
+      const list  = document.getElementById('fontOutputList');
+      if (!input) {
+        list.innerHTML = '<p class="text-muted text-sm">Start typing above to see your text transformed.</p>';
+        return;
+      }
+      list.innerHTML = FONTS.map(f => {
+        const out = f.fn(input);
+        return `
+          <div class="font-row">
+            <span class="label">${f.name}</span>
+            <span class="preview">${out}</span>
+            <button class="copy-btn" onclick="copyFont(this, ${JSON.stringify(out)})">Copy</button>
+          </div>`;
+      }).join('');
+    }
+
+    function copyFont(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

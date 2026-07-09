@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accurate Word Counter | Real-Time Character Limit Tool</title>
+  <meta name="description" content="Free online word counter that calculates exact word counts, character counts, sentences, and paragraphs in real time. Perfect for essays, blogs, and social media." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word & Character Counter",
+    "url": "https://zippywidgets.online/word-counter/",
+    "description": "Free real-time word counter and character counter tool. Count words, characters, sentences, and paragraphs instantly.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <div class="nav-links">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill active" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📝</span>
+      <div>
+        <h1>Live Word & Character Counter</h1>
+        <p>Paste or type your text and get instant stats.</p>
+      </div>
+    </div>
+
+    <div class="wc-layout">
+    <div class="card" style="flex:1;min-width:0;">
+      <textarea id="wcTextarea" rows="10" placeholder="Paste or type your text here…" oninput="updateWordCount()"></textarea>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="val" id="statWords">0</div><div class="lbl">Words</div></div>
+        <div class="stat-box"><div class="val" id="statChars">0</div><div class="lbl">Characters</div></div>
+        <div class="stat-box"><div class="val" id="statNoSpace">0</div><div class="lbl">No Spaces</div></div>
+        <div class="stat-box"><div class="val" id="statSentences">0</div><div class="lbl">Sentences</div></div>
+        <div class="stat-box"><div class="val" id="statParas">0</div><div class="lbl">Paragraphs</div></div>
+        <div class="stat-box"><div class="val" id="statLines">0</div><div class="lbl">Lines</div></div>
+      </div>
+      <p class="reading-time" id="readingTime">Reading time: —</p>
+      <div class="btn-group mt-2">
+        <button class="btn btn-secondary" onclick="document.getElementById('wcTextarea').value=''; updateWordCount();">Clear</button>
+        <button class="btn btn-secondary" onclick="copyText()">Copy Text</button>
+      </div>
+    </div>
+
+    <aside class="platform-limits card">
+      <h2 style="font-size:.9rem;font-weight:700;margin-bottom:.9rem;color:var(--text);">Platform Limits</h2>
+      <ul class="limit-list" id="limitList">
+        <li data-limit="280"><span class="plat-name">X / Twitter</span><span class="plat-limit"><span class="plat-used" id="lim-twitter">0</span> / 280</span></li>
+        <li data-limit="2200"><span class="plat-name">Instagram Caption</span><span class="plat-limit"><span class="plat-used" id="lim-instagram">0</span> / 2,200</span></li>
+        <li data-limit="3000"><span class="plat-name">LinkedIn Post</span><span class="plat-limit"><span class="plat-used" id="lim-linkedin">0</span> / 3,000</span></li>
+        <li data-limit="500"><span class="plat-name">Threads</span><span class="plat-limit"><span class="plat-used" id="lim-threads">0</span> / 500</span></li>
+        <li data-limit="63206"><span class="plat-name">Facebook Post</span><span class="plat-limit"><span class="plat-used" id="lim-facebook">0</span> / 63,206</span></li>
+        <li data-limit="100"><span class="plat-name">TikTok Caption</span><span class="plat-limit"><span class="plat-used" id="lim-tiktok">0</span> / 100</span></li>
+        <li data-limit="160"><span class="plat-name">SMS Message</span><span class="plat-limit"><span class="plat-used" id="lim-sms">0</span> / 160</span></li>
+        <li data-limit="160"><span class="plat-name">Meta Description</span><span class="plat-limit"><span class="plat-used" id="lim-meta">0</span> / 160</span></li>
+      </ul>
+    </aside>
+    </div>
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/qr-code-generator/">QR Code Generator</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const LIMITS = [
+      { id: 'lim-twitter',   limit: 280 },
+      { id: 'lim-instagram', limit: 2200 },
+      { id: 'lim-linkedin',  limit: 3000 },
+      { id: 'lim-threads',   limit: 500 },
+      { id: 'lim-facebook',  limit: 63206 },
+      { id: 'lim-tiktok',    limit: 100 },
+      { id: 'lim-sms',       limit: 160 },
+      { id: 'lim-meta',      limit: 160 },
+    ];
+
+    function updateWordCount() {
+      const text = document.getElementById('wcTextarea').value;
+
+      const words     = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const chars     = text.length;
+      const noSpace   = text.replace(/\s/g, '').length;
+      const sentences = text.trim() ? (text.match(/[^.!?]*[.!?]+/g) || []).length : 0;
+      const paras     = text.trim() ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+      const lines     = text ? text.split('\n').length : 0;
+
+      document.getElementById('statWords').textContent     = words.toLocaleString();
+      document.getElementById('statChars').textContent     = chars.toLocaleString();
+      document.getElementById('statNoSpace').textContent   = noSpace.toLocaleString();
+      document.getElementById('statSentences').textContent = sentences.toLocaleString();
+      document.getElementById('statParas').textContent     = paras.toLocaleString();
+      document.getElementById('statLines').textContent     = lines.toLocaleString();
+
+      const mins = Math.ceil(words / 200);
+      document.getElementById('readingTime').textContent =
+        words > 0 ? `Reading time: ~${mins} min${mins > 1 ? 's' : ''} (200 wpm)` : 'Reading time: —';
+
+      LIMITS.forEach(({ id, limit }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = chars.toLocaleString();
+        const li = el.closest('li');
+        li.classList.toggle('limit-over',  chars > limit);
+        li.classList.toggle('limit-warn',  chars > limit * 0.85 && chars <= limit);
+        li.classList.remove('limit-over',  chars > limit);
+        li.classList.remove('limit-warn',  chars > limit * 0.85 && chars <= limit);
+        if (chars > limit)          li.className = 'limit-over';
+        else if (chars > limit * 0.85) li.className = 'limit-warn';
+        else                            li.className = '';
+      });
+    }
+
+    function copyText() {
+      navigator.clipboard.writeText(document.getElementById('wcTextarea').value);
+    }
+  </script>
+</body>
+</html>

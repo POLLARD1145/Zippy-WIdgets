@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exact Age Calculator | Calculate Years, Months & Days Old</title>
+  <meta name="description" content="Find your exact chronological age in years, months, weeks, days, hours, and minutes. Simply enter a birthdate to calculate milestones instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Age Calculator",
+    "url": "https://zippywidgets.online/age-calculator/",
+    "description": "Free age calculator. Enter your birthdate to find your exact age in years, months, weeks, days, and hours with next birthday countdown.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <div class="nav-links">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill active" href="/age-calculator/">Age Calculator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🎂</span>
+      <div>
+        <h1>Chronological Age & Milestone Calculator</h1>
+        <p>Find your exact age in years, months, weeks, days, and hours.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <label style="color:var(--muted);font-size:.88rem;">Your date of birth</label>
+      <input type="date" id="dobInput" style="max-width:280px;margin-top:.4rem;" />
+      <div class="btn-group mt-2">
+        <button class="btn btn-primary" onclick="calculateAge()">Calculate My Age</button>
+        <button class="btn btn-secondary" onclick="clearAge()">Clear</button>
+      </div>
+      <div class="age-result" id="ageResult"></div>
+      <div class="birthday-msg" id="birthdayMsg"></div>
+    </div>
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/qr-code-generator/">QR Code Generator</a></p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    document.getElementById('dobInput').max = new Date().toISOString().split('T')[0];
+
+    function calculateAge() {
+      const val = document.getElementById('dobInput').value;
+      if (!val) { alert('Please select your date of birth.'); return; }
+
+      const dob = new Date(val);
+      const now = new Date();
+      if (dob > now) { alert('Date of birth cannot be in the future!'); return; }
+
+      let years  = now.getFullYear() - dob.getFullYear();
+      let months = now.getMonth()    - dob.getMonth();
+      let days   = now.getDate()     - dob.getDate();
+
+      if (days < 0) {
+        months--;
+        days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      }
+      if (months < 0) { years--; months += 12; }
+
+      const totalDays  = Math.floor((now - dob) / 864e5);
+      const totalWeeks = Math.floor(totalDays / 7);
+      const totalHours = Math.floor((now - dob) / 36e5);
+      const nextBday   = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday < now) nextBday.setFullYear(nextBday.getFullYear() + 1);
+      const daysUntil  = Math.ceil((nextBday - now) / 864e5);
+      const isBirthday = dob.getMonth() === now.getMonth() && dob.getDate() === now.getDate();
+
+      const rows = [
+        { lbl: 'Age',              val: `${years} years, ${months} months, ${days} days` },
+        { lbl: 'Total Days Lived', val: totalDays.toLocaleString() + ' days' },
+        { lbl: 'Total Weeks',      val: totalWeeks.toLocaleString() + ' weeks' },
+        { lbl: 'Total Hours',      val: totalHours.toLocaleString() + ' hours' },
+        { lbl: 'Next Birthday In', val: isBirthday ? '🎉 Today!' : daysUntil + ' days' },
+      ];
+
+      document.getElementById('ageResult').innerHTML = rows.map(r => `
+        <div class="age-row">
+          <span class="age-lbl">${r.lbl}</span>
+          <span class="age-val">${r.val}</span>
+        </div>`).join('');
+
+      document.getElementById('birthdayMsg').textContent = isBirthday ? '🎂 Happy Birthday! 🎉' : '';
+    }
+
+    function clearAge() {
+      document.getElementById('dobInput').value = '';
+      document.getElementById('ageResult').innerHTML = '';
+      document.getElementById('birthdayMsg').textContent = '';
+    }
+  </script>
+</body>
+</html>

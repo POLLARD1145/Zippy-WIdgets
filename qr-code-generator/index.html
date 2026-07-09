@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free QR Code Generator | Create Custom Vector QR Codes</title>
+  <meta name="description" content="Instantly convert URLs, text, Wi-Fi passwords, or business links into clean, high-resolution QR codes. 100% free with unlimited downloads and no expiration." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Generator",
+    "url": "https://zippywidgets.online/qr-code-generator/",
+    "description": "Free online QR code generator. Convert any URL, text, or Wi-Fi password into a downloadable QR code instantly.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <div class="nav-links">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill active" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📷</span>
+      <div>
+        <h1>Instant Custom QR Code Generator</h1>
+        <p>Enter a URL or any text to generate a free, downloadable QR code.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <input type="text" id="qrInput" placeholder="Enter a URL or any text…" />
+      <div class="btn-group mt-2">
+        <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
+        <button class="btn btn-secondary" onclick="downloadQR()">⬇ Download PNG</button>
+      </div>
+      <div id="qrOutput">
+        <div id="qrcode"></div>
+      </div>
+      <p class="text-muted text-sm mt-2">Generated entirely in your browser — no data is sent to any server.</p>
+    </div>
+    <div class="ad-slot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Try our other free tools: <a href="/picker-wheel/">Picker Wheel</a> · <a href="/font-generator/">Font Generator</a> · <a href="/word-counter/">Word Counter</a> · <a href="/age-calculator/">Age Calculator</a></p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    'use strict';
+
+    function generateQR() {
+      const val = document.getElementById('qrInput').value.trim();
+      if (!val) { alert('Please enter some text or a URL.'); return; }
+      const container = document.getElementById('qrcode');
+      container.innerHTML = '';
+      new QRCode(container, {
+        text: val,
+        width: 220,
+        height: 220,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function downloadQR() {
+      const canvas = document.querySelector('#qrcode canvas');
+      const img    = document.querySelector('#qrcode img');
+      if (!canvas && !img) { alert('Generate a QR code first!'); return; }
+      const link = document.createElement('a');
+      link.download = 'qrcode-zippywidgets.png';
+      link.href = canvas ? canvas.toDataURL('image/png') : img.src;
+      link.click();
+    }
+
+    document.getElementById('qrInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') generateQR();
+    });
+  </script>
+</body>
+</html>
