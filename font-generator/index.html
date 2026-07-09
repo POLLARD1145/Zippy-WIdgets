@@ -144,18 +144,26 @@
     'use strict';
 
     const FONTS = [
-      { name: 'Bold Serif',        fn: boldSerif },
-      { name: 'Italic Serif',      fn: italicSerif },
-      { name: 'Bold Italic Serif', fn: boldItalicSerif },
-      { name: 'Script / Cursive',  fn: script },
-      { name: 'Double-Struck',     fn: doubleStruck },
-      { name: 'Fraktur / Gothic',  fn: fraktur },
-      { name: 'Monospace',         fn: monospace },
-      { name: 'Circled',           fn: circled },
-      { name: 'Squared',           fn: squared },
-      { name: 'Full-Width',        fn: fullwidth },
-      { name: 'Tiny Caps',         fn: tinyCaps },
-      { name: 'Strikethrough',     fn: strikethrough },
+      { name: 'Bold Serif',          fn: boldSerif },
+      { name: 'Italic Serif',        fn: italicSerif },
+      { name: 'Bold Italic Serif',   fn: boldItalicSerif },
+      { name: 'Script / Cursive',    fn: script },
+      { name: 'Bold Sans',           fn: boldSans },
+      { name: 'Italic Sans',         fn: italicSans },
+      { name: 'Bold Italic Sans',    fn: boldItalicSans },
+      { name: 'Double-Struck',       fn: doubleStruck },
+      { name: 'Fraktur / Gothic',    fn: fraktur },
+      { name: 'Bold Fraktur',        fn: boldFraktur },
+      { name: 'Monospace',           fn: monospace },
+      { name: 'Circled',             fn: circled },
+      { name: 'Squared',             fn: squared },
+      { name: 'Full-Width / Vaporwave', fn: fullwidth },
+      { name: 'Tiny Caps',           fn: tinyCaps },
+      { name: 'Superscript',         fn: superscript },
+      { name: 'Bubble Text',         fn: bubble },
+      { name: 'Inverted',            fn: inverted },
+      { name: 'Underline',           fn: underline },
+      { name: 'Strikethrough',       fn: strikethrough },
     ];
 
     function shiftStr(str, upper, lower, digits) {
@@ -172,9 +180,25 @@
     function italicSerif(s)      { return shiftStr(s, 0x1D434, 0x1D44E); }
     function boldItalicSerif(s)  { return shiftStr(s, 0x1D468, 0x1D482); }
     function script(s)           { return shiftStr(s, 0x1D4D0, 0x1D4EA); }
+    function boldSans(s)         { return shiftStr(s, 0x1D5D4, 0x1D5EE, 0x1D7EC); }
+    function italicSans(s)       { return shiftStr(s, 0x1D608, 0x1D622); }
+    function boldItalicSans(s)   { return shiftStr(s, 0x1D63C, 0x1D656); }
     function doubleStruck(s)     { return shiftStr(s, 0x1D538, 0x1D552, 0x1D7D8); }
     function fraktur(s)          { return shiftStr(s, 0x1D504, 0x1D51E); }
+    function boldFraktur(s)      { return shiftStr(s, 0x1D56C, 0x1D586); }
     function monospace(s)        { return shiftStr(s, 0x1D670, 0x1D68A, 0x1D7F6); }
+
+    const SUP_MAP = {a:'ᵃ',b:'ᵇ',c:'ᶜ',d:'ᵈ',e:'ᵉ',f:'ᶠ',g:'ᵍ',h:'ʰ',i:'ⁱ',j:'ʲ',k:'ᵏ',l:'ˡ',m:'ᵐ',n:'ⁿ',o:'ᵒ',p:'ᵖ',q:'q',r:'ʳ',s:'ˢ',t:'ᵗ',u:'ᵘ',v:'ᵛ',w:'ʷ',x:'ˣ',y:'ʸ',z:'ᶻ','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+    function superscript(s) { return [...s].map(c => SUP_MAP[c.toLowerCase()] || c).join(''); }
+
+    const BUBBLE_UPPER = ['Ⓐ','Ⓑ','Ⓒ','Ⓓ','Ⓔ','Ⓕ','Ⓖ','Ⓗ','Ⓘ','Ⓙ','Ⓚ','Ⓛ','Ⓜ','Ⓝ','Ⓞ','Ⓟ','Ⓠ','Ⓡ','Ⓢ','Ⓣ','Ⓤ','Ⓥ','Ⓦ','Ⓧ','Ⓨ','Ⓩ'];
+    const BUBBLE_LOWER = ['ⓐ','ⓑ','ⓒ','ⓓ','ⓔ','ⓕ','ⓖ','ⓗ','ⓘ','ⓙ','ⓚ','ⓛ','ⓜ','ⓝ','ⓞ','ⓟ','ⓠ','ⓡ','ⓢ','ⓣ','ⓤ','ⓥ','ⓦ','ⓧ','ⓨ','ⓩ'];
+    function bubble(s) { return [...s].map(c => { const u=c.charCodeAt(0); if(c>='A'&&c<='Z') return BUBBLE_UPPER[u-65]; if(c>='a'&&c<='z') return BUBBLE_LOWER[u-97]; return c; }).join(''); }
+
+    const INV_MAP = {a:'ɐ',b:'q',c:'ɔ',d:'p',e:'ǝ',f:'ɟ',g:'ƃ',h:'ɥ',i:'ᴉ',j:'ɾ',k:'ʞ',l:'l',m:'ɯ',n:'u',o:'o',p:'d',q:'b',r:'ɹ',s:'s',t:'ʇ',u:'n',v:'ʌ',w:'ʍ',x:'x',y:'ʎ',z:'z'};
+    function inverted(s) { return [...s].map(c => INV_MAP[c.toLowerCase()] || c).join('').split('').reverse().join(''); }
+
+    function underline(s) { return [...s].map(c => c + '\u0332').join(''); }
 
     function circled(s) {
       return [...s].map(c => {

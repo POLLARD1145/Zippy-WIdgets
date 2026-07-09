@@ -407,6 +407,71 @@ textarea { resize: vertical; }
   }
 }
 
+/* ─── QR Code Tool ───────────────────────────────────────────────────────── */
+.qr-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0 .25rem;
+  align-items: flex-end;
+}
+
+.qr-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.qr-option-group label {
+  font-size: .78rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.qr-option-group input[type="color"] {
+  width: 48px;
+  height: 36px;
+  padding: 2px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+}
+
+.qr-option-group select {
+  width: auto;
+  min-width: 150px;
+}
+
+#qrOutput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  min-height: 260px;
+  background: var(--surface2);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+#qrOutput:empty::after,
+#qrcode:empty::after {
+  content: 'Your QR code will appear here';
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+#qrcode {
+  border: 6px solid #fff;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  line-height: 0;
+}
+
 /* ─── Use-Case Grid (Picker Wheel) ──────────────────────────────────────── */
 .use-case-section {
   margin-top: 1.25rem;

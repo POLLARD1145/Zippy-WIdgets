@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free QR Code Generator | Restaurant Menu, WiFi & URL QR Codes</title>
-  <meta name="description" content="Free QR code generator for restaurant menus, WiFi passwords, Google reviews, URLs, and business cards. Download high-resolution PNG instantly. No sign-up, no expiry." />
+  <title>Free QR Code Generator | WiFi, URL, Menu & Custom Color QR Codes</title>
+  <meta name="description" content="Free QR code generator — create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs and business cards. Choose size, foreground and background color. Download PNG instantly. No sign-up." />
   <link rel="canonical" href="https://zippywidgets.online/qr-code-generator/" />
-  <meta property="og:title" content="Free QR Code Generator | Restaurant Menu, WiFi & URL" />
-  <meta property="og:description" content="Make a QR code for restaurant menus, WiFi passwords, Google reviews, or any URL. Free, instant download, no sign-up." />
+  <meta property="og:title" content="Free QR Code Generator | WiFi, URL, Menu & Custom Color" />
+  <meta property="og:description" content="Create custom color QR codes for WiFi, restaurant menus, Google reviews, URLs and more. Pick size and colors. Free instant PNG download." />
   <meta property="og:url" content="https://zippywidgets.online/qr-code-generator/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Free QR Code Generator | Restaurant Menu, WiFi & URL" />
-  <meta name="twitter:description" content="Create QR codes for restaurant menus, WiFi, Google reviews, URLs and more. Free instant download." />
+  <meta name="twitter:title" content="Free QR Code Generator | WiFi, URL, Menu & Custom Color" />
+  <meta name="twitter:description" content="Custom color QR codes for WiFi, menus, Google reviews, URLs. Pick size and colors. Free PNG download." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="../style.css" />
@@ -58,28 +58,72 @@
     <div class="tool-header">
       <span class="icon">📷</span>
       <div>
-        <h1>Free QR Code Generator — Restaurant Menu, WiFi &amp; URL</h1>
-        <p>Paste any URL, WiFi password, or text to create a downloadable QR code instantly. Perfect for restaurant menus, business cards, and Google reviews.</p>
+        <h1>Free QR Code Generator — WiFi, URL, Menu &amp; Custom Color</h1>
+        <p>Create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs, and business cards. Choose size and colors — download PNG instantly. No sign-up.</p>
       </div>
     </div>
 
     <div class="card">
-      <input type="text" id="qrInput" placeholder="Enter a URL or any text…" />
+
+      <div class="use-case-chips" style="margin-bottom:1rem;">
+        <span onclick="setMode('url')">🌐 Website URL QR Code</span>
+        <span onclick="setMode('wifi')">📶 WiFi Password QR Code</span>
+        <span onclick="setMode('review')">⭐ Google Review QR Code</span>
+        <span onclick="setMode('menu')">🍽️ Restaurant Menu QR Code</span>
+        <span onclick="setMode('text')">💬 Plain Text</span>
+      </div>
+
+      <div id="modeUrl">
+        <input type="text" id="qrInput" placeholder="https://example.com" />
+      </div>
+
+      <div id="modeWifi" style="display:none;">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+          <input type="text" id="wifiSsid" placeholder="Network name (SSID)" style="flex:1;min-width:140px;" />
+          <input type="text" id="wifiPass" placeholder="WiFi password" style="flex:1;min-width:140px;" />
+        </div>
+        <select id="wifiSec" style="margin-top:.6rem;max-width:200px;">
+          <option value="WPA">WPA / WPA2</option>
+          <option value="WEP">WEP</option>
+          <option value="nopass">No Password</option>
+        </select>
+      </div>
+
+      <div id="modeText" style="display:none;">
+        <textarea id="qrTextarea" rows="3" placeholder="Enter any text…"></textarea>
+      </div>
+
+      <div class="qr-options">
+        <div class="qr-option-group">
+          <label>Size</label>
+          <select id="qrSize">
+            <option value="180">Small (180px)</option>
+            <option value="240" selected>Medium (240px)</option>
+            <option value="320">Large (320px)</option>
+          </select>
+        </div>
+        <div class="qr-option-group">
+          <label>Foreground</label>
+          <input type="color" id="qrDark" value="#000000" />
+        </div>
+        <div class="qr-option-group">
+          <label>Background</label>
+          <input type="color" id="qrLight" value="#ffffff" />
+        </div>
+      </div>
+
       <div class="btn-group mt-2">
         <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
-        <button class="btn btn-secondary" onclick="downloadQR()">⬇ Download PNG</button>
+        <button class="btn btn-secondary" id="downloadBtn" onclick="downloadQR()" style="display:none;">⬇ Download PNG</button>
       </div>
+
       <div id="qrOutput">
-        <div id="qrcode"></div>
+        <img id="qrPreview" alt="QR Code preview" style="display:none;border-radius:4px;" />
       </div>
+
+      <div id="qrScratch" style="position:absolute;left:-9999px;top:-9999px;"></div>
+
       <p class="text-muted text-sm mt-2">Generated entirely in your browser — no data is sent to any server.</p>
-      <div class="use-case-chips" style="margin-top:1rem;">
-        <span onclick="document.getElementById('qrInput').value='https://';document.getElementById('qrInput').focus()">🌐 Website URL</span>
-        <span onclick="document.getElementById('qrInput').value='WIFI:T:WPA;S:NetworkName;P:Password;;';document.getElementById('qrInput').focus()">📶 WiFi Password</span>
-        <span onclick="document.getElementById('qrInput').value='https://g.page/r/';document.getElementById('qrInput').focus()">⭐ Google Review</span>
-        <span onclick="document.getElementById('qrInput').value='https://menu.';document.getElementById('qrInput').focus()">🍽️ Restaurant Menu</span>
-        <span onclick="document.getElementById('qrInput').value='';document.getElementById('qrInput').focus()">💼 Business Card</span>
-      </div>
     </div>
     <div class="ad-slot" id="adSlot">
       <ins class="adsbygoogle"
@@ -126,28 +170,93 @@
   <script>
     'use strict';
 
+    let currentMode = 'url';
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('modeUrl').style.display  = 'none';
+      document.getElementById('modeWifi').style.display = 'none';
+      document.getElementById('modeText').style.display = 'none';
+
+      if (mode === 'url' || mode === 'review' || mode === 'menu') {
+        document.getElementById('modeUrl').style.display = 'block';
+        const placeholders = {
+          url:    'https://example.com',
+          review: 'https://g.page/r/YOUR_REVIEW_ID/review',
+          menu:   'https://your-restaurant.com/menu'
+        };
+        document.getElementById('qrInput').placeholder = placeholders[mode];
+        document.getElementById('qrInput').value = '';
+        document.getElementById('qrInput').focus();
+      } else if (mode === 'wifi') {
+        document.getElementById('modeWifi').style.display = 'block';
+        document.getElementById('wifiSsid').focus();
+      } else if (mode === 'text') {
+        document.getElementById('modeText').style.display = 'block';
+        document.getElementById('qrTextarea').focus();
+      }
+    }
+
+    function getQRValue() {
+      if (currentMode === 'wifi') {
+        const ssid = document.getElementById('wifiSsid').value.trim();
+        const pass = document.getElementById('wifiPass').value.trim();
+        const sec  = document.getElementById('wifiSec').value;
+        if (!ssid) { alert('Please enter the WiFi network name.'); return null; }
+        return `WIFI:T:${sec};S:${ssid};P:${pass};;`;
+      } else if (currentMode === 'text') {
+        const val = document.getElementById('qrTextarea').value.trim();
+        if (!val) { alert('Please enter some text.'); return null; }
+        return val;
+      } else {
+        const val = document.getElementById('qrInput').value.trim();
+        if (!val) { alert('Please enter a URL or value.'); return null; }
+        return val;
+      }
+    }
+
     function generateQR() {
-      const val = document.getElementById('qrInput').value.trim();
-      if (!val) { alert('Please enter some text or a URL.'); return; }
-      const container = document.getElementById('qrcode');
-      container.innerHTML = '';
-      new QRCode(container, {
+      const val = getQRValue();
+      if (!val) return;
+
+      const size  = parseInt(document.getElementById('qrSize').value, 10);
+      const dark  = document.getElementById('qrDark').value;
+      const light = document.getElementById('qrLight').value;
+
+      const scratch = document.getElementById('qrScratch');
+      scratch.innerHTML = '';
+
+      new QRCode(scratch, {
         text: val,
-        width: 220,
-        height: 220,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
+        width: size,
+        height: size,
+        colorDark: dark,
+        colorLight: light,
         correctLevel: QRCode.CorrectLevel.H
       });
+
+      setTimeout(() => {
+        const canvas = scratch.querySelector('canvas');
+        const preview = document.getElementById('qrPreview');
+        if (canvas) {
+          preview.src = canvas.toDataURL('image/png');
+        } else {
+          const img = scratch.querySelector('img');
+          preview.src = img ? img.src : '';
+        }
+        preview.style.display = 'block';
+        preview.style.width  = size + 'px';
+        preview.style.height = size + 'px';
+        document.getElementById('downloadBtn').style.display = 'inline-flex';
+      }, 100);
     }
 
     function downloadQR() {
-      const canvas = document.querySelector('#qrcode canvas');
-      const img    = document.querySelector('#qrcode img');
-      if (!canvas && !img) { alert('Generate a QR code first!'); return; }
+      const preview = document.getElementById('qrPreview');
+      if (!preview.src || preview.style.display === 'none') { alert('Generate a QR code first!'); return; }
       const link = document.createElement('a');
       link.download = 'qrcode-zippywidgets.png';
-      link.href = canvas ? canvas.toDataURL('image/png') : img.src;
+      link.href = preview.src;
       link.click();
     }
 
