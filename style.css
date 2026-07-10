@@ -350,6 +350,7 @@ body {
   border-radius: var(--radius);
   padding: 1.5rem;
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 /* ─── Inputs / Buttons ───────────────────────────────────────────────────── */
