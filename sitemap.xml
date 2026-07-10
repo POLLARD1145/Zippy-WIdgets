@@ -123,4 +123,22 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://zippywidgets.online/games/emoji-memory/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://zippywidgets.online/games/emoji-geography/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://zippywidgets.online/games/rock-paper-scissors/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
