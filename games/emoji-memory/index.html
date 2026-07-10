@@ -442,7 +442,7 @@ const DIFFS = {
 };
 
 /* ── State ── */
-let seed, rng, currentDiff, cards, flipped, matched, flips, locked, gameOver, startTime;
+let seed, rng, currentDiff, cards, flipped, matched, flips, locked, gameOver, startTime, playCount;
 
 /* ── DOM refs ── */
 const grid        = document.getElementById('cardGrid');
@@ -477,11 +477,18 @@ function setSaved(key, val) {
 
 /* ── Init ── */
 function init() {
+  playCount = 0;
   seed = todaySeed();
-  dailySeedEl.textContent = seed;
   currentDiff = 'easy';
+  updateSeedBadge();
   updateStreakDisplay();
   buildGame();
+}
+
+function updateSeedBadge() {
+  dailySeedEl.textContent = playCount === 0
+    ? seed + ' (daily)'
+    : 'Bonus #' + playCount;
 }
 
 function buildGame(diff) {
@@ -640,9 +647,10 @@ function onWin() {
   /* Share text */
   const streakVal = getSaved('emm_streak', 0);
   const gridEmoji = buildShareGrid(pairs);
+  const roundLabel = playCount === 0 ? seed + ' (daily)' : 'Bonus #' + playCount;
   shareBox.textContent =
     '🃏 Emoji Memory Match — ' + cfg.label + '\n' +
-    '📅 ' + seed + ' | ' + flips + ' flips\n' +
+    '📅 ' + roundLabel + ' | ' + flips + ' flips\n' +
     (isNewBest ? '🏆 New best!\n' : '') +
     '🔥 Streak: ' + streakVal + ' day' + (streakVal !== 1 ? 's' : '') + '\n\n' +
     gridEmoji + '\n\n' +
@@ -719,7 +727,12 @@ document.querySelectorAll('.diff-btn').forEach(btn => {
 });
 
 /* ── Play again ── */
-document.getElementById('playAgainBtn').addEventListener('click', () => buildGame());
+document.getElementById('playAgainBtn').addEventListener('click', () => {
+  playCount++;
+  seed = todaySeed() + playCount * 999983;
+  updateSeedBadge();
+  buildGame();
+});
 
 /* ── Share ── */
 document.getElementById('shareBtn').addEventListener('click', () => {
