@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors — Play vs Smart CPU | ZippyWidgets</title>
+  <meta name="description" content="Play Rock Paper Scissors against a smart CPU. Best of 5 rounds. Easy or Hard mode — the hard CPU learns your patterns. Free, no login, works on any phone." />
+  <meta name="keywords" content="rock paper scissors online, rock paper scissors game, rps game free, play rock paper scissors cpu, rock paper scissors no login" />
+  <link rel="canonical" href="https://zippywidgets.online/games/rock-paper-scissors/" />
+  <meta property="og:title" content="Rock Paper Scissors — vs Smart CPU" />
+  <meta property="og:description" content="Best of 5 vs a smart CPU that learns your patterns. Free, no login." />
+  <meta property="og:url" content="https://zippywidgets.online/games/rock-paper-scissors/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Rock Paper Scissors — vs Smart CPU" />
+  <meta name="twitter:description" content="Best of 5. Easy or Hard CPU. Free, no login." />
+  <link rel="icon" type="image/png" href="../../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Rock Paper Scissors",
+    "description": "Play Rock Paper Scissors against a smart CPU in a best-of-5 series. Hard mode CPU tracks your patterns and adapts. Free, no login required.",
+    "url": "https://zippywidgets.online/games/rock-paper-scissors/",
+    "applicationCategory": "Game",
+    "gamePlatform": "Web Browser",
+    "genre": ["Casual", "Strategy"],
+    "playMode": "SinglePlayer",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <script src="../../theme.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Dark theme ── */
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --surface2:  #22263a;
+      --border:    #2e3452;
+      --text:      #e8eaff;
+      --muted:     #7b82b0;
+      --navbar-bg: rgba(15,17,23,.88);
+      --accent:    #7c6af7;
+      --green:     #4ade80;
+      --yellow:    #fbbf24;
+      --red:       #f87171;
+      --radius:    12px;
+    }
+    /* ── Light theme ── */
+    [data-theme="light"] {
+      --bg:        #f4f6fb;
+      --surface:   #ffffff;
+      --surface2:  #e8edf6;
+      --border:    #c5cce0;
+      --text:      #1a1d2e;
+      --muted:     #5a6080;
+      --navbar-bg: rgba(244,246,251,.92);
+      --accent:    #5b4de0;
+    }
+    body, .navbar, .arena, .score-board, .result-banner, .round-log, .result-card, .seo-card {
+      transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+    }
+    html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; }
+
+    /* ══ NAVBAR ══ */
+    .navbar { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: .5rem; padding: 0 1.25rem; height: 60px; background: var(--navbar-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-size: 1.05rem; font-weight: 800; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: .4rem; flex-shrink: 0; }
+    .nav-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
+    .nav-search-spacer { flex: 1; }
+    .nav-links { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; }
+    .nav-pill { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; padding: .3rem .85rem; font-size: .8rem; font-weight: 500; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; }
+    .nav-pill:hover, .nav-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .theme-toggle { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; padding: 0; }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: .4rem; flex-shrink: 0; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--navbar-bg); backdrop-filter: blur(16px); flex-direction: column; align-items: stretch; padding: 1rem 1.25rem 1.5rem; gap: .5rem; border-bottom: 1px solid var(--border); z-index: 150; }
+      .nav-links.open { display: flex; }
+      .nav-pill { text-align: center; padding: .7rem 1rem; font-size: .9rem; }
+    }
+
+    /* ══ MOBILE-FIRST LAYOUT ══ */
+    .game-page { width: 100%; max-width: 480px; margin: 0 auto; padding: 1rem .75rem 3rem; display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+
+    /* ── Header ── */
+    .game-title { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; text-align: center; }
+    .game-title span { color: var(--accent); }
+
+    /* ── Difficulty tabs ── */
+    .diff-tabs { display: flex; gap: .4rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 99px; padding: .25rem; }
+    .diff-tab { flex: 1; text-align: center; padding: .35rem .9rem; border-radius: 99px; font-size: .78rem; font-weight: 700; cursor: pointer; border: none; background: none; color: var(--muted); font-family: inherit; transition: background .2s, color .2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .diff-tab.active { background: var(--accent); color: #fff; }
+
+    /* ── Score board ── */
+    .score-board { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .9rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .score-side { display: flex; flex-direction: column; align-items: center; gap: .2rem; min-width: 64px; }
+    .score-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; font-weight: 700; }
+    .score-val { font-size: 2rem; font-weight: 900; line-height: 1; }
+    .score-val.you  { color: var(--accent); }
+    .score-val.cpu  { color: var(--red); }
+    .score-mid { display: flex; flex-direction: column; align-items: center; gap: .2rem; }
+    .score-sep { font-size: 1.1rem; color: var(--muted); font-weight: 700; }
+    .best-of { font-size: .68rem; color: var(--muted); }
+    /* Win pips */
+    .win-pips { display: flex; gap: .3rem; }
+    .pip { width: 10px; height: 10px; border-radius: 50%; background: var(--surface2); border: 1.5px solid var(--border); transition: background .25s, border-color .25s; }
+    .pip.won  { background: var(--green);  border-color: var(--green); }
+    .pip.lost { background: var(--red);    border-color: var(--red); }
+    .pip.draw { background: var(--yellow); border-color: var(--yellow); }
+
+    /* ── Arena ── */
+    .arena { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem .75rem 1rem; display: flex; flex-direction: column; align-items: center; gap: .85rem; }
+    .combatants { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .combatant { display: flex; flex-direction: column; align-items: center; gap: .35rem; flex: 1; }
+    .combatant-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; font-weight: 700; }
+    .combatant-emoji {
+      font-size: clamp(2.8rem, 14vw, 4rem);
+      line-height: 1;
+      min-height: 1.2em;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+      user-select: none;
+    }
+    .combatant-emoji.pop { animation: pop .35s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.35); }
+      100% { transform: scale(1); }
+    }
+    .combatant-emoji.shake { animation: cshake .4s ease; }
+    @keyframes cshake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-6px); }
+      40%     { transform: translateX(6px); }
+      60%     { transform: translateX(-4px); }
+      80%     { transform: translateX(4px); }
+    }
+    .vs-badge { font-size: .78rem; font-weight: 900; color: var(--muted); flex-shrink: 0; }
+
+    /* ── Result banner ── */
+    .result-banner {
+      font-size: .95rem; font-weight: 800; padding: .5rem 1.1rem;
+      border-radius: 99px; letter-spacing: .02em;
+      min-height: 2.2rem; display: flex; align-items: center; justify-content: center;
+      transition: background .2s, color .2s;
+    }
+    .result-banner.win  { background: rgba(74,222,128,.15);  color: var(--green); }
+    .result-banner.lose { background: rgba(248,113,113,.12); color: var(--red); }
+    .result-banner.draw { background: rgba(251,191,36,.12);  color: var(--yellow); }
+    .result-banner.idle { background: transparent; color: var(--muted); }
+
+    /* ── CPU thinking indicator ── */
+    .thinking { display: none; font-size: .75rem; color: var(--muted); font-style: italic; }
+    .thinking.visible { display: block; }
+
+    /* ── Pick buttons ── */
+    .pick-row { display: flex; gap: .6rem; width: 100%; justify-content: center; }
+    .pick-btn {
+      flex: 1;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: .75rem .5rem;
+      display: flex; flex-direction: column; align-items: center; gap: .3rem;
+      cursor: pointer; font-family: inherit;
+      transition: border-color .15s, transform .1s, background .15s, box-shadow .15s;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      min-height: 80px;
+    }
+    .pick-btn:active:not(:disabled) { transform: scale(.94); }
+    .pick-btn:hover:not(:disabled)  { border-color: var(--accent); box-shadow: 0 4px 16px rgba(124,106,247,.2); }
+    .pick-btn:disabled { opacity: .4; cursor: default; }
+    .pick-btn .pb-emoji { font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1; }
+    .pick-btn .pb-label { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .pick-btn.rock:hover:not(:disabled)     { border-color: #f87171; }
+    .pick-btn.scissors:hover:not(:disabled) { border-color: #fbbf24; }
+    .pick-btn.paper:hover:not(:disabled)    { border-color: #4ade80; }
+
+    /* ── Round log ── */
+    .round-log { width: 100%; display: flex; flex-direction: column; gap: .3rem; max-height: 160px; overflow-y: auto; }
+    .log-item { display: flex; align-items: center; gap: .5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .4rem .75rem; font-size: .78rem; }
+    .log-round { color: var(--muted); font-size: .68rem; font-weight: 700; min-width: 20px; }
+    .log-moves { flex: 1; display: flex; align-items: center; gap: .3rem; }
+    .log-outcome { font-weight: 700; font-size: .72rem; }
+    .log-outcome.win  { color: var(--green); }
+    .log-outcome.lose { color: var(--red); }
+    .log-outcome.draw { color: var(--yellow); }
+
+    /* ── All-time stats ── */
+    .lifetime-stats { width: 100%; display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+    .ls-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .45rem .75rem; display: flex; flex-direction: column; align-items: center; gap: .1rem; min-width: 60px; }
+    .ls-chip .lv { font-size: 1.1rem; font-weight: 900; color: var(--accent); }
+    .ls-chip .ll { font-size: .6rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── Series result card ── */
+    .result-card { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; width: 100%; flex-direction: column; gap: .85rem; align-items: center; text-align: center; }
+    .result-card.visible { display: flex; }
+    .rc-trophy { font-size: 3rem; }
+    .result-card h2 { font-size: 1.1rem; font-weight: 900; }
+    .result-card p { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+    .share-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .7rem .85rem; font-family: monospace; font-size: .8rem; color: var(--text); white-space: pre-wrap; word-break: break-word; line-height: 1.75; width: 100%; }
+    .btn { cursor: pointer; border: none; border-radius: 10px; font-family: inherit; font-weight: 700; transition: opacity .15s, transform .1s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .btn:active { opacity: .75; transform: scale(.97); }
+    .btn-primary   { background: linear-gradient(135deg, var(--accent), #a78bfa); color: #fff; padding: .8rem 1.5rem; font-size: .9rem; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: .65rem 1.2rem; font-size: .83rem; }
+    .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+
+    /* ── Difficulty badge ── */
+    .diff-badge { display: inline-flex; align-items: center; gap: .3rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: .25rem .7rem; font-size: .7rem; color: var(--muted); }
+    .diff-badge b { color: var(--accent); }
+
+    /* ── SEO ── */
+    .seo-section { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1rem; padding: 0 .75rem; }
+    .seo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: flex; flex-direction: column; gap: .65rem; color: var(--muted); font-size: .85rem; line-height: 1.75; }
+    .seo-card h2 { font-size: .95rem; font-weight: 800; color: var(--text); }
+    .seo-card h3 { font-size: .85rem; font-weight: 700; color: var(--text); }
+
+    /* ── Ads ── */
+    .ad-slot-game { width: 100%; max-width: 480px; margin: 0 auto; padding: .5rem 0; min-height: 90px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ad-slot-game ins { display: block; width: 100%; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--border); padding: 1.25rem 1rem; text-align: center; font-size: .75rem; color: var(--muted); line-height: 1.9; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--text); }
+
+    /* ── Scale up ── */
+    @media (min-width: 400px) {
+      .game-title { font-size: 1.5rem; }
+      .pick-btn { min-height: 90px; }
+    }
+    @media (min-width: 480px) {
+      .game-page { padding: 1.25rem 1rem 3rem; gap: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="/">
+    <img src="../../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+  </a>
+  <div class="nav-search-spacer"></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-pill" href="/">Tools</a>
+    <a class="nav-pill active" href="/games/">Games</a>
+    <a class="nav-pill" href="/games/emoji-geography/">Geography</a>
+    <a class="nav-pill" href="/games/emoji-memory/">Memory</a>
+  </div>
+</nav>
+
+<!-- Ad: above game — deferred -->
+<div class="ad-slot-game" id="ad-top-rps" style="padding:0 1rem; margin-bottom:-.25rem;">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s=document.getElementById('ad-top-rps');
+    var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
+    o.observe(s);
+  })();
+</script>
+
+<main>
+<div class="game-page">
+
+  <h1 class="game-title">Rock <span>Paper</span> Scissors</h1>
+
+  <!-- Difficulty -->
+  <div class="diff-tabs" id="diffTabs">
+    <button class="diff-tab active" data-diff="easy" id="tab-easy">😌 Easy</button>
+    <button class="diff-tab" data-diff="hard" id="tab-hard">🧠 Hard CPU</button>
+  </div>
+  <div class="diff-badge" id="diffBadge">🎯 <b>Easy</b> — CPU picks randomly</div>
+
+  <!-- Score board -->
+  <div class="score-board" id="scoreBoard">
+    <div class="score-side">
+      <div class="score-label">You</div>
+      <div class="score-val you" id="scoreYou">0</div>
+      <div class="win-pips" id="pipsYou"></div>
+    </div>
+    <div class="score-mid">
+      <span class="score-sep">—</span>
+      <span class="best-of">Best of 5</span>
+      <span class="best-of" id="roundLabel">Round 1</span>
+    </div>
+    <div class="score-side">
+      <div class="score-label">CPU</div>
+      <div class="score-val cpu" id="scoreCpu">0</div>
+      <div class="win-pips" id="pipsCpu"></div>
+    </div>
+  </div>
+
+  <!-- Arena -->
+  <div class="arena" id="arena">
+    <div class="combatants">
+      <div class="combatant">
+        <div class="combatant-label">You</div>
+        <div class="combatant-emoji" id="emojiYou">❓</div>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="combatant">
+        <div class="combatant-label">CPU</div>
+        <div class="combatant-emoji" id="emojiCpu">❓</div>
+      </div>
+    </div>
+    <div class="thinking" id="thinking">🤔 CPU is thinking…</div>
+    <div class="result-banner idle" id="resultBanner">Pick your move!</div>
+  </div>
+
+  <!-- Pick buttons -->
+  <div class="pick-row" id="pickRow">
+    <button class="pick-btn rock"     data-move="rock"     aria-label="Rock">
+      <span class="pb-emoji">✊</span><span class="pb-label">Rock</span>
+    </button>
+    <button class="pick-btn paper"    data-move="paper"    aria-label="Paper">
+      <span class="pb-emoji">✋</span><span class="pb-label">Paper</span>
+    </button>
+    <button class="pick-btn scissors" data-move="scissors" aria-label="Scissors">
+      <span class="pb-emoji">✌️</span><span class="pb-label">Scissors</span>
+    </button>
+  </div>
+
+  <!-- Round log -->
+  <div class="round-log" id="roundLog"></div>
+
+  <!-- All-time stats -->
+  <div class="lifetime-stats" id="lifetimeStats">
+    <div class="ls-chip"><span class="lv" id="ltWins">0</span><span class="ll">Wins</span></div>
+    <div class="ls-chip"><span class="lv" id="ltLosses">0</span><span class="ll">Losses</span></div>
+    <div class="ls-chip"><span class="lv" id="ltDraws">0</span><span class="ll">Draws</span></div>
+    <div class="ls-chip"><span class="lv" id="ltWinPct">—</span><span class="ll">Win %</span></div>
+    <div class="ls-chip"><span class="lv" id="ltStreak">0</span><span class="ll">🔥 Streak</span></div>
+  </div>
+
+  <!-- Series result card -->
+  <div class="result-card" id="resultCard">
+    <div class="rc-trophy" id="rcTrophy">🏆</div>
+    <h2 id="rcTitle">Series over!</h2>
+    <p id="rcDesc"></p>
+    <div class="share-box" id="shareBox"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary"   id="playAgainBtn">▶ Play Again</button>
+      <button class="btn btn-secondary" id="shareBtn">📋 Copy Result</button>
+    </div>
+  </div>
+
+</div><!-- .game-page -->
+
+<!-- Ad: below game -->
+<div class="ad-slot-game" id="ad-bot-rps" style="padding:0 1rem;">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s=document.getElementById('ad-bot-rps');
+    var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
+    o.observe(s);
+  })();
+</script>
+
+<section class="seo-section">
+  <div class="seo-card">
+    <h2>How to Play</h2>
+    <p>Tap Rock, Paper, or Scissors to make your move. The CPU responds instantly. First to win 3 rounds wins the series (best of 5). Draws don't count toward the series total.</p>
+    <h3>Easy vs Hard CPU</h3>
+    <p><strong>Easy</strong> — the CPU picks completely at random. Pure 50/50 luck.<br>
+       <strong>Hard</strong> — the CPU tracks which moves you've played and uses a frequency-weighted counter to predict your next move and pick the one that beats it. It's not unbeatable, but it will punish patterns and habits. Mix up your moves!</p>
+    <h3>Rules</h3>
+    <p>✊ Rock beats ✌️ Scissors &nbsp;·&nbsp; ✌️ Scissors beats ✋ Paper &nbsp;·&nbsp; ✋ Paper beats ✊ Rock</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <p>
+    <a href="/games/">Games</a> ·
+    <a href="/games/rock-paper-scissors/">Rock Paper Scissors</a> ·
+    <a href="/games/emoji-geography/">Emoji Geography</a> ·
+    <a href="/games/emoji-memory/">Emoji Memory</a> ·
+    <a href="/games/word-scramble/">Word Scramble</a> ·
+    <a href="/games/aetherforge/">AetherForge</a> ·
+    <a href="/picker-wheel/">Picker Wheel</a> ·
+    <a href="/about/">About</a> ·
+    <a href="/privacy-policy/">Privacy</a>
+  </p>
+  <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — Runs 100% in your browser. No data sent to a server.</p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   ROCK PAPER SCISSORS — Single Player vs CPU
+   Easy: truly random. Hard: frequency-based pattern prediction.
+════════════════════════════════════════════════════════════════ */
+
+const MOVES   = ['rock', 'paper', 'scissors'];
+const EMOJI   = { rock: '✊', paper: '✋', scissors: '✌️' };
+const BEATS   = { rock: 'scissors', paper: 'rock', scissors: 'paper' };
+const LOSES_TO = { rock: 'paper', paper: 'scissors', scissors: 'rock' };
+const BEST_OF = 5;
+const WIN_AT  = 3;
+
+/* ── State ── */
+let difficulty = 'easy';
+let scoreYou, scoreCpu, roundNum, seriesOver, roundLog;
+let playerHistory; /* for Hard CPU pattern tracking */
+let currentStreak;
+
+/* ── DOM refs ── */
+const emojiYou     = document.getElementById('emojiYou');
+const emojiCpu     = document.getElementById('emojiCpu');
+const resultBanner = document.getElementById('resultBanner');
+const thinkingEl   = document.getElementById('thinking');
+const scoreYouEl   = document.getElementById('scoreYou');
+const scoreCpuEl   = document.getElementById('scoreCpu');
+const roundLabelEl = document.getElementById('roundLabel');
+const pipsYouEl    = document.getElementById('pipsYou');
+const pipsCpuEl    = document.getElementById('pipsCpu');
+const roundLogEl   = document.getElementById('roundLog');
+const pickBtns     = document.querySelectorAll('.pick-btn');
+const resultCard   = document.getElementById('resultCard');
+const diffBadge    = document.getElementById('diffBadge');
+
+/* ── Storage helpers ── */
+function getSaved(k, fb) { try { const v=localStorage.getItem(k); return v!==null?JSON.parse(v):fb; } catch(e){return fb;} }
+function setSaved(k, v)  { try { localStorage.setItem(k,JSON.stringify(v)); } catch(e){} }
+
+/* ── Init / new series ── */
+function newSeries() {
+  scoreYou     = 0;
+  scoreCpu     = 0;
+  roundNum     = 1;
+  seriesOver   = false;
+  roundLog     = [];
+  playerHistory = { rock: 0, paper: 0, scissors: 0 };
+  currentStreak = getSaved('rps_streak', 0);
+
+  scoreYouEl.textContent = 0;
+  scoreCpuEl.textContent = 0;
+  roundLabelEl.textContent = 'Round 1';
+  emojiYou.textContent = '❓';
+  emojiCpu.textContent = '❓';
+  roundLogEl.innerHTML = '';
+  resultCard.classList.remove('visible');
+  setResult('Pick your move!', 'idle');
+  renderPips();
+  setPicksDisabled(false);
+  updateLifetimeStats();
+}
+
+/* ── CPU move logic ── */
+function cpuMove() {
+  if (difficulty === 'easy') {
+    return MOVES[Math.floor(Math.random() * 3)];
+  }
+
+  /* Hard: frequency-weighted prediction */
+  const total = playerHistory.rock + playerHistory.paper + playerHistory.scissors;
+  if (total < 3) {
+    /* Not enough data yet — random */
+    return MOVES[Math.floor(Math.random() * 3)];
+  }
+
+  /* Weight each of the player's moves by frequency + recency bias */
+  /* Find the player's most likely next move */
+  let maxCount = -1, predicted = MOVES[Math.floor(Math.random() * 3)];
+  MOVES.forEach(m => {
+    if (playerHistory[m] > maxCount) {
+      maxCount = playerHistory[m];
+      predicted = m;
+    }
+  });
+
+  /* 80% of the time counter the predicted move; 20% random (so it's beatable) */
+  if (Math.random() < 0.80) {
+    return LOSES_TO[predicted]; /* the move that beats what player tends to throw */
+  }
+  return MOVES[Math.floor(Math.random() * 3)];
+}
+
+/* ── Resolve round ── */
+function resolveRound(playerMove) {
+  const cpu = cpuMove();
+  playerHistory[playerMove]++;
+
+  let outcome; /* 'win' | 'lose' | 'draw' */
+  if (playerMove === cpu)               outcome = 'draw';
+  else if (BEATS[playerMove] === cpu)   outcome = 'win';
+  else                                  outcome = 'lose';
+
+  return { playerMove, cpu, outcome };
+}
+
+/* ── Handle pick ── */
+function onPick(playerMove) {
+  if (seriesOver) return;
+  setPicksDisabled(true);
+
+  /* Show player choice immediately */
+  triggerEmojiAnim(emojiYou, EMOJI[playerMove]);
+
+  /* Show thinking briefly then reveal */
+  thinkingEl.classList.add('visible');
+  emojiCpu.textContent = '🤔';
+
+  setTimeout(() => {
+    thinkingEl.classList.remove('visible');
+    const { cpu, outcome } = resolveRound(playerMove);
+
+    triggerEmojiAnim(emojiCpu, EMOJI[cpu]);
+
+    /* Update scores (draws don't count) */
+    if (outcome === 'win')  scoreYou++;
+    if (outcome === 'lose') scoreCpu++;
+
+    scoreYouEl.textContent = scoreYou;
+    scoreCpuEl.textContent = scoreCpu;
+
+    /* Result banner */
+    const msgs = {
+      win:  ['🎉 You win!', '✅ Nice!', '💪 Well played!', '🔥 Got em!'],
+      lose: ['❌ CPU wins', '😤 Outsmarted!', '🤖 CPU got you', '💀 Rekt!'],
+      draw: ['🤝 Draw!', '😐 Tie!', '🔄 Same move!'],
+    };
+    const pool = msgs[outcome];
+    setResult(pool[Math.floor(Math.random() * pool.length)], outcome);
+
+    /* Round log */
+    roundLog.push({ round: roundNum, playerMove, cpu, outcome });
+    addLogItem(roundNum, playerMove, cpu, outcome);
+    renderPips();
+
+    /* Check series end */
+    if (scoreYou >= WIN_AT || scoreCpu >= WIN_AT) {
+      seriesOver = true;
+      setTimeout(() => endSeries(), 700);
+      return;
+    }
+
+    roundNum++;
+    roundLabelEl.textContent = 'Round ' + roundNum;
+
+    /* Re-enable picks after short pause */
+    setTimeout(() => setPicksDisabled(false), 600);
+
+  }, 500);
+}
+
+/* ── End series ── */
+function endSeries() {
+  const won = scoreYou > scoreCpu;
+  const tied = scoreYou === scoreCpu; /* shouldn't happen in best-of-5 but guard anyway */
+
+  /* Update lifetime stats */
+  const ltW = getSaved('rps_lt_wins',   0) + (won ? 1 : 0);
+  const ltL = getSaved('rps_lt_losses', 0) + (!won && !tied ? 1 : 0);
+  const ltD = getSaved('rps_lt_draws',  0) + (tied ? 1 : 0);
+  setSaved('rps_lt_wins',   ltW);
+  setSaved('rps_lt_losses', ltL);
+  setSaved('rps_lt_draws',  ltD);
+
+  /* Streak */
+  let streak = getSaved('rps_streak', 0);
+  streak = won ? streak + 1 : 0;
+  setSaved('rps_streak', streak);
+
+  updateLifetimeStats();
+
+  /* Trophy */
+  let trophy, title, desc;
+  if (won) {
+    const trophies = ['🏆','🥇','👑','🎉'];
+    trophy = trophies[Math.min(streak - 1, trophies.length - 1)];
+    title  = streak >= 3 ? '🔥 ' + streak + '-series streak!' : 'You won the series!';
+    desc   = 'You beat the CPU ' + scoreYou + '–' + scoreCpu + ' on ' + (difficulty === 'hard' ? 'Hard' : 'Easy') + ' difficulty.' +
+             (streak >= 2 ? ' Win streak: ' + streak + '!' : '');
+  } else {
+    trophy = ['😢','🤖','💀'][Math.floor(Math.random()*3)];
+    title  = 'CPU wins the series';
+    desc   = 'CPU beat you ' + scoreCpu + '–' + scoreYou + ' on ' + (difficulty === 'hard' ? 'Hard' : 'Easy') + ' mode. Try again!';
+  }
+
+  document.getElementById('rcTrophy').textContent = trophy;
+  document.getElementById('rcTitle').textContent  = title;
+  document.getElementById('rcDesc').textContent   = desc;
+
+  /* Share text */
+  const gridLine = roundLog.map(r => {
+    if (r.outcome === 'win')  return '🟩';
+    if (r.outcome === 'lose') return '🟥';
+    return '🟨';
+  }).join('');
+
+  document.getElementById('shareBox').textContent =
+    '✊✋✌️ Rock Paper Scissors\n' +
+    '🤖 vs CPU (' + (difficulty === 'hard' ? 'Hard' : 'Easy') + ')\n' +
+    (won ? '🏆 ' : '💀 ') + (won ? 'Won' : 'Lost') + ' ' + scoreYou + '–' + scoreCpu + '\n' +
+    (streak >= 2 ? '🔥 Streak: ' + streak + '\n' : '') +
+    '\n' + gridLine + '\n\n' +
+    'zippywidgets.online/games/rock-paper-scissors/';
+
+  resultCard.classList.add('visible');
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ── UI helpers ── */
+function setResult(text, cls) {
+  resultBanner.textContent = text;
+  resultBanner.className   = 'result-banner ' + cls;
+}
+
+function setPicksDisabled(disabled) {
+  pickBtns.forEach(b => b.disabled = disabled);
+}
+
+function triggerEmojiAnim(el, emoji) {
+  el.textContent = emoji;
+  el.classList.remove('pop', 'shake');
+  void el.offsetWidth; /* reflow */
+  el.classList.add('pop');
+}
+
+function renderPips() {
+  const renderSide = (el, wins, maxWins) => {
+    el.innerHTML = '';
+    for (let i = 0; i < WIN_AT; i++) {
+      const pip = document.createElement('div');
+      pip.className = 'pip' + (i < wins ? ' won' : '');
+      el.appendChild(pip);
+    }
+  };
+  renderSide(pipsYouEl, scoreYou, WIN_AT);
+  renderSide(pipsCpuEl, scoreCpu, WIN_AT);
+}
+
+function addLogItem(round, playerMove, cpu, outcome) {
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.innerHTML =
+    '<span class="log-round">' + round + '</span>' +
+    '<span class="log-moves">' +
+      EMOJI[playerMove] + ' <span style="color:var(--muted)">vs</span> ' + EMOJI[cpu] +
+    '</span>' +
+    '<span class="log-outcome ' + outcome + '">' +
+      (outcome === 'win' ? 'Win' : outcome === 'lose' ? 'Loss' : 'Draw') +
+    '</span>';
+  roundLogEl.insertBefore(item, roundLogEl.firstChild);
+}
+
+function updateLifetimeStats() {
+  const w  = getSaved('rps_lt_wins',   0);
+  const l  = getSaved('rps_lt_losses', 0);
+  const d  = getSaved('rps_lt_draws',  0);
+  const st = getSaved('rps_streak',    0);
+  const total = w + l;
+  document.getElementById('ltWins').textContent    = w;
+  document.getElementById('ltLosses').textContent  = l;
+  document.getElementById('ltDraws').textContent   = d;
+  document.getElementById('ltWinPct').textContent  = total > 0 ? Math.round(w/total*100) + '%' : '—';
+  document.getElementById('ltStreak').textContent  = st;
+}
+
+/* ── Difficulty tabs ── */
+document.querySelectorAll('.diff-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.diff-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    difficulty = tab.dataset.diff;
+    diffBadge.innerHTML = difficulty === 'hard'
+      ? '🧠 <b>Hard</b> — CPU learns your patterns'
+      : '🎯 <b>Easy</b> — CPU picks randomly';
+    newSeries();
+  });
+});
+
+/* ── Pick buttons ── */
+pickBtns.forEach(btn => {
+  btn.addEventListener('click', () => onPick(btn.dataset.move));
+});
+
+/* ── Play again ── */
+document.getElementById('playAgainBtn').addEventListener('click', () => newSeries());
+
+/* ── Share ── */
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const text = document.getElementById('shareBox').textContent;
+  if (navigator.share) {
+    navigator.share({ title: 'Rock Paper Scissors', text }).catch(() => copyFallback(text));
+  } else { copyFallback(text); }
+});
+function copyFallback(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Result', 1800);
+  }).catch(()=>{});
+}
+
+/* ── Hamburger nav ── */
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}));
+
+/* ── Boot ── */
+newSeries();
+</script>
+</body>
+</html>
