@@ -38,6 +38,12 @@
     <a class="nav-brand" href="/">
       <img src="ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
     </a>
+    <div class="nav-search" id="navSearch">
+      <span class="nav-search-icon" aria-hidden="true">🔍</span>
+      <input class="nav-search-input" id="navSearchInput" type="search" placeholder="Search tools &amp; games…" autocomplete="off" aria-label="Search tools and games" aria-controls="searchResults" aria-expanded="false" />
+      <button class="nav-search-btn" id="navSearchBtn" aria-label="Open search" aria-expanded="false">🔍</button>
+      <div class="search-results" id="searchResults" role="listbox" aria-label="Search results"></div>
+    </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -176,6 +182,7 @@
   </footer>
 
   <script>
+    /* ── Hamburger nav ── */
     const toggle = document.getElementById('navToggle');
     const links  = document.getElementById('navLinks');
     toggle.addEventListener('click', () => {
@@ -188,6 +195,112 @@
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
     }));
+
+    /* ── Site Search ── */
+    const SITE_INDEX = [
+      { icon: '🎡', name: 'Picker Wheel',          desc: 'Spin a wheel to randomly pick names or items', url: '/picker-wheel/',        tags: 'random spinner wheel names picker' },
+      { icon: '✍️', name: 'Font Generator',         desc: 'Stylish Unicode fonts for Instagram, TikTok, Twitter', url: '/font-generator/',   tags: 'fancy text font style unicode copy paste' },
+      { icon: '📝', name: 'Word Counter',           desc: 'Count words, characters, sentences, paragraphs', url: '/word-counter/',      tags: 'word count character counter text' },
+      { icon: '📷', name: 'QR Code Generator',      desc: 'Turn any URL or text into a QR code',        url: '/qr-code-generator/',  tags: 'qr code scanner url link' },
+      { icon: '🎂', name: 'Age Calculator',          desc: 'Find your exact age in years, months, days',  url: '/age-calculator/',     tags: 'age birthday calculator date' },
+      { icon: '⚡', name: 'Internet Speed Test',    desc: 'Check download, upload speed, ping & jitter', url: '/speed-test/',         tags: 'speed internet wifi ping download upload' },
+      { icon: '🎮', name: 'Games Hub',              desc: 'Free browser games — no login, no download',  url: '/games/',              tags: 'games free online browser play' },
+      { icon: '🃏', name: 'AetherForge: Chrono-Deck', desc: 'Daily roguelike deckbuilder — 5 bosses, global seed', url: '/games/aetherforge/', tags: 'card game deck builder roguelike daily strategy' },
+      { icon: '📖', name: 'Daily Word Scramble',    desc: 'Unscramble the daily word — same puzzle worldwide', url: '/games/word-scramble/', tags: 'word scramble puzzle daily wordle letters' },
+      { icon: '📰', name: 'Blog',                   desc: 'Guides, tips and tool deep-dives',             url: '/blog/',               tags: 'blog articles guides tips' },
+    ];
+
+    const searchWrap  = document.getElementById('navSearch');
+    const searchInput = document.getElementById('navSearchInput');
+    const searchBtn   = document.getElementById('navSearchBtn');
+    const resultsBox  = document.getElementById('searchResults');
+    let focusIdx = -1;
+
+    function openSearch() {
+      searchWrap.classList.add('open');
+      searchBtn.setAttribute('aria-expanded', 'true');
+      searchInput.setAttribute('aria-expanded', 'true');
+      setTimeout(() => searchInput.focus(), 30);
+    }
+    function closeSearch() {
+      searchWrap.classList.remove('open');
+      searchBtn.setAttribute('aria-expanded', 'false');
+      searchInput.setAttribute('aria-expanded', 'false');
+      resultsBox.classList.remove('visible');
+      resultsBox.innerHTML = '';
+      searchInput.value = '';
+      focusIdx = -1;
+    }
+
+    searchBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      searchWrap.classList.contains('open') ? closeSearch() : openSearch();
+    });
+
+    function highlight(str, q) {
+      if (!q) return str;
+      const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      return str.replace(re, '<mark>$1</mark>');
+    }
+
+    function runSearch(q) {
+      q = q.trim().toLowerCase();
+      resultsBox.innerHTML = '';
+      focusIdx = -1;
+      if (!q) { resultsBox.classList.remove('visible'); return; }
+
+      const hits = SITE_INDEX.filter(item =>
+        item.name.toLowerCase().includes(q) ||
+        item.desc.toLowerCase().includes(q) ||
+        item.tags.toLowerCase().includes(q)
+      ).slice(0, 6);
+
+      if (!hits.length) {
+        resultsBox.innerHTML = '<div class="search-empty">No results for "' + q + '"</div>';
+      } else {
+        hits.forEach((item, i) => {
+          const a = document.createElement('a');
+          a.className = 'search-result-item';
+          a.href = item.url;
+          a.setAttribute('role', 'option');
+          a.innerHTML =
+            '<span class="sri-icon">' + item.icon + '</span>' +
+            '<span class="sri-text">' +
+              '<span class="sri-name">' + highlight(item.name, q) + '</span>' +
+              '<span class="sri-desc">' + item.desc + '</span>' +
+            '</span>';
+          a.addEventListener('mousedown', (e) => { e.preventDefault(); window.location = item.url; });
+          resultsBox.appendChild(a);
+        });
+      }
+      resultsBox.classList.add('visible');
+    }
+
+    searchInput.addEventListener('input', () => runSearch(searchInput.value));
+    searchInput.addEventListener('focus',  () => { if (searchInput.value.trim()) resultsBox.classList.add('visible'); });
+
+    searchInput.addEventListener('keydown', (e) => {
+      const items = resultsBox.querySelectorAll('.search-result-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        focusIdx = Math.min(focusIdx + 1, items.length - 1);
+        items.forEach((el, i) => el.classList.toggle('focused', i === focusIdx));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        focusIdx = Math.max(focusIdx - 1, 0);
+        items.forEach((el, i) => el.classList.toggle('focused', i === focusIdx));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (focusIdx >= 0 && items[focusIdx]) window.location = items[focusIdx].href;
+        else if (items.length === 1) window.location = items[0].href;
+      } else if (e.key === 'Escape') {
+        closeSearch();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchWrap.contains(e.target)) closeSearch();
+    });
   </script>
 </body>
 </html>
