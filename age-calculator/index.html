@@ -34,6 +34,34 @@
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is my exact age calculated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Your age is calculated from your date of birth to today's date using your device's local clock. The calculation accounts for leap years, giving an accurate count of years, months, weeks, days, hours, and minutes lived." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do leap years affect age calculations?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Leap years add an extra day (February 29) every 4 years, with exceptions for century years not divisible by 400. The age calculator accounts for these correctly. If you were born on February 29, your birthday is treated as March 1 in non-leap years for the day-count calculation." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my date of birth stored anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date is only held in memory for the duration of your visit." }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is the 'hours lived' figure?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The hours lived figure is calculated from midnight on your date of birth, not your exact birth time (which is typically unknown). It is therefore an approximation accurate to within 24 hours." }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -125,6 +153,7 @@
       <a href="/blog/">Blog</a> ·
       <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·

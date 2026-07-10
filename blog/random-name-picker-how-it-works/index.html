@@ -187,6 +187,36 @@
         <p>Ready to spin? <a href="/picker-wheel/">Open the free Random Picker Wheel →</a> — no sign-up, works on any device, results in seconds.</p>
       </div>
 
+      <h2>The Statistics Behind a Fair Wheel Spin</h2>
+      <p>A common misconception is that the wheel "learns" from previous spins and starts favouring certain segments. This is not how it works. Each spin is a completely independent random event — statistically equivalent to rolling a fair die with N faces, where N is the number of entries in your list. The previous result has zero influence on the next spin. This property is called <strong>statistical independence</strong> and is a fundamental requirement for any fair random selection process.</p>
+      <p>To understand why this matters: suppose you're using the wheel to call on 20 students over 20 days. You might notice that some students get picked twice while others haven't been picked at all after 10 spins. This feels unfair, but it is mathematically correct — with independent draws, some repetition is expected and some names will cluster. It's the same reason you can flip a fair coin and get heads five times in a row. If you want to guarantee that each student is picked exactly once before any repeats, delete each name after they've been selected. This converts the wheel from a random draw with replacement to a random draw without replacement.</p>
+      <p>The browser's <code>Math.random()</code> function — which underlies the wheel — uses a PRNG (pseudo-random number generator) seeded by OS-level entropy sources including hardware interrupt timing, mouse movement, and system clock sub-millisecond variations. The output passes standard randomness statistical tests (including the NIST SP 800-22 test suite) and is suitable for all fairness-critical applications outside formally audited lottery systems.</p>
+
+      <h2>Classroom Strategies: Getting the Most from a Name Picker</h2>
+      <p>Teachers are one of the most active user groups for random name pickers, and experienced educators have developed several effective techniques:</p>
+      <h3>Cold-Call Questioning</h3>
+      <p>Load the full class roster at the start of the school year and save it as your default list. Spin before asking a question to select a student. This eliminates the psychological pattern where the same confident front-row students answer every question. Research in educational psychology (notably Rosenshine's Principles of Instruction) consistently finds that random cold-calling distributes practice more evenly and improves recall for all students — not just those who self-select to answer.</p>
+      <p>Practical tip: display the wheel on your classroom projector or smartboard so students can see it spin. The anticipation is itself a pedagogical tool — when any student might be called, <em>all</em> students prepare an answer. This is the "active processing" effect.</p>
+      <h3>Group Formation</h3>
+      <p>For group assignments, spin each student's name and assign them to groups sequentially (student 1 to group 1, student 2 to group 2, etc.). This produces random groups without the social dynamics of students self-selecting into friend groups, which educational research consistently shows leads to more equitable participation and broader peer-to-peer learning.</p>
+      <h3>Managing the "Already Called" Problem</h3>
+      <p>If you want to ensure all students are called before any are repeated (a round-robin approach), remove each name after they've been selected and click Update Wheel. Keep a second copy of the full list in a text file to reload at the start of each round. Alternatively, use two columns in a spreadsheet: one with the full list, one tracking who has been called. Remove called names from the wheel list and repopulate at the end of each round.</p>
+
+      <h2>Running a Transparent Streamer Giveaway: A Step-by-Step Protocol</h2>
+      <p>For content creators running giveaways on Twitch, YouTube, or Instagram Live, transparency is everything. Here's a professional protocol that eliminates doubt:</p>
+      <ol>
+        <li><strong>Announce the tool and URL before the giveaway.</strong> Tell your viewers: "I'm using zippywidgets.online/picker-wheel/ — you can open the same page and verify it's not custom-coded." This pre-empts claims of a rigged wheel.</li>
+        <li><strong>Add names live on screen.</strong> As participants comment or enter, paste their names into the wheel input on-stream with your screen shared. Viewers see the list being built in real time.</li>
+        <li><strong>Confirm the entry count.</strong> Before spinning, show the entry count and optionally read out some entries to confirm the list is complete and accurate.</li>
+        <li><strong>Spin without cutting away.</strong> Do not cut to a different camera or a screen transition. Spin with the wheel visible the entire time. Cutting away — even briefly — creates reasonable doubt.</li>
+        <li><strong>Record a clip of the spin.</strong> Most streaming platforms automatically create a VOD. Timestamp the spin in your VOD description and link to it in your winner announcement post. This serves as a permanent audit trail.</li>
+        <li><strong>Contact the winner publicly.</strong> Announce the winner in the stream chat and via a public post. Ask them to respond in public (chat or comments) before moving to DMs. This creates a verifiable winner confirmation chain.</li>
+      </ol>
+
+      <h2>Random Picker Wheels vs. Dedicated Giveaway Platforms</h2>
+      <p>Purpose-built giveaway platforms (e.g., Gleam, Rafflecopter, Woorise) offer features like eligibility verification, duplicate entry detection, and formal audit logs. For large commercial giveaways with legal requirements — particularly those with prizes valued above your country's competition law threshold — these platforms provide compliance tools that a general-purpose wheel does not.</p>
+      <p>For the vast majority of creator giveaways, classroom selections, office decision-making, and party games, however, a browser-based wheel is the fastest and most transparent option. It requires no account from participants, no data collection, and no third-party terms of service that participants must accept. For a prize worth under a few hundred dollars/pounds, a transparent wheel spin with a recorded stream clip provides all the fairness evidence you need.</p>
+
     </div>
 
     <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
@@ -217,6 +247,7 @@
       <a href="/blog/">Blog</a> ·
       <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·

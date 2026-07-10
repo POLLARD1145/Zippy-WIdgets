@@ -158,6 +158,41 @@
         <li>If a style looks fine on your phone but followers report seeing boxes, switch to Bold Sans or Script which have near-universal support.</li>
       </ul>
 
+      <h2>How Unicode Font Styles Actually Work (The Technical Explanation)</h2>
+      <p>Most people assume these are custom fonts applied by Instagram. They're not. Here's the actual mechanism:</p>
+      <p>The Unicode standard is a global character encoding system maintained by the Unicode Consortium. It assigns a unique numeric code point to every character used in every human writing system. The standard Latin alphabet (A–Z, a–z) occupies code points U+0041 through U+007A. But Unicode also contains several parallel alphabets in the <strong>Mathematical Alphanumeric Symbols block</strong> (U+1D400–U+1D7FF), which was originally intended for mathematical notation — to distinguish, for example, an italic <em>x</em> (the variable) from a roman x (the letter). These mathematical variants happen to visually resemble bold, italic, script, and double-struck typography.</p>
+      <p>When you type "Hello" and our generator converts it to "𝗛𝗲𝗹𝗹𝗼", it replaces each standard Latin character with its Mathematical Bold Sans-Serif equivalent. The text is still five characters — it's just five <em>different</em> characters, each stored as a 4-byte UTF-8 sequence rather than the 1-byte ASCII sequence of the original. Instagram stores and displays these characters exactly as submitted because Instagram's backend treats all valid Unicode text identically — it has no awareness that some characters are visually "bold" and others are not.</p>
+      <p>This also explains why you can copy the styled text out of Instagram and paste it anywhere else, and it retains the appearance. It's not a style applied by Instagram — it's the actual characters, rendered by whatever system font your device uses.</p>
+
+      <h2>Platform Compatibility Matrix</h2>
+      <p>Not every Unicode style renders identically on every platform. Here's a practical guide to which styles are safe for which platforms:</p>
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.5rem;">
+        <thead>
+          <tr style="background:var(--surface2);">
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:left;">Style</th>
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:center;">Instagram</th>
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:center;">TikTok</th>
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:center;">Twitter/X</th>
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:center;">Discord</th>
+            <th style="padding:.5rem .7rem;border:1px solid var(--border);text-align:center;">LinkedIn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Bold Sans (𝗔𝗕𝗖)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td></tr>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Script / Cursive (𝒜𝐵𝒞)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td></tr>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Double-Struck (𝔸𝔹ℂ)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">⚠️</td></tr>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Fraktur / Gothic (𝔄𝔅ℭ)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">⚠️</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">⚠️</td></tr>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Small Caps (ᴀʙᴄ)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td></tr>
+          <tr><td style="padding:.45rem .7rem;border:1px solid var(--border);">Zalgo Glitch (Z̴a̵l̷g̸o̶)</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">⚠️</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">❌</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">⚠️</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">✅</td><td style="padding:.45rem .7rem;border:1px solid var(--border);text-align:center;">❌</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.8rem;margin-top:.5rem;">✅ Renders correctly on most devices · ⚠️ Partial rendering, some devices may show □ · ❌ Often stripped or broken</p>
+
+      <h2>Accessibility Considerations</h2>
+      <p>One important caveat: Unicode styled text is <strong>not accessible to screen readers</strong>. A screen reader that encounters 𝗛𝗲𝗹𝗹𝗼 will read it as "Mathematical Bold Sans-Serif Capital H, Mathematical Bold Sans-Serif Small E…" rather than simply "Hello." This is because the characters are technically different code points, and screen readers announce their Unicode names.</p>
+      <p>For most social media bio use, this is an acceptable trade-off — the audience is primarily sighted. However, if accessibility is a priority for your brand, keep your primary informational text in standard characters and limit Unicode styling to decorative elements only (a styled name or header, not a styled paragraph). This approach gives sighted users the visual differentiation they see while ensuring screen reader users receive the core information accurately.</p>
+      <p>Additionally, some text search and indexing systems cannot index Unicode styled characters correctly. Instagram's own search, for example, does not match styled text against standard search queries — a user searching for your name will not find it if it's written entirely in Mathematical Bold script. Always keep your actual @username in standard characters; use styling only in your display name or bio body.</p>
+
     </div>
 
     <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
@@ -188,6 +223,7 @@
       <a href="/blog/">Blog</a> ·
       <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·

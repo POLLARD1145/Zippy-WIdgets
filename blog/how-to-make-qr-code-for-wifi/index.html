@@ -131,6 +131,28 @@
       <h2>What if My Network Name Has Special Characters?</h2>
       <p>Enter the SSID exactly as it appears, including spaces, hyphens, and special characters. The QR code format handles these correctly. The password field also supports all characters including symbols. If you're unsure of your exact SSID, check your router's settings page (usually at 192.168.1.1 or 192.168.0.1) or look at the label on the back of your router.</p>
 
+      <h2>How the WiFi QR Code Format Works Internally</h2>
+      <p>Understanding what's inside a WiFi QR code helps you troubleshoot problems and make informed choices about security. A WiFi QR code encodes a plain-text string in a standardised format called <strong>Wi-Fi Network Config (WIFI:)</strong>, originally defined by the ZXing (Zebra Crossing) project and later formally adopted by the Wi-Fi Alliance. The encoded string looks like this:</p>
+      <p style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;font-family:monospace;font-size:.82rem;word-break:break-all;color:var(--text);">WIFI:T:WPA;S:MyNetworkName;P:MyPassword123;;</p>
+      <p>The fields are: <strong>T</strong> = security type (WPA, WEP, or nopass), <strong>S</strong> = SSID (network name), <strong>P</strong> = password. Special characters in the SSID or password must be escaped with a backslash — for example, a semicolon in the password becomes <code>\;</code>. Our generator handles this escaping automatically, which is why you should always generate a new QR code rather than trying to hand-encode a complex password.</p>
+      <p>The resulting string is then encoded using the standard QR code matrix format (ISO/IEC 18004). WiFi QR codes typically use Error Correction Level M (15% of codewords recoverable), which balances data density with damage resilience — enough to survive minor print wear or a small crease in the paper.</p>
+
+      <h2>Why Your Phone Might Not Scan the QR Code (And How to Fix It)</h2>
+      <p>If a phone's camera isn't recognising your WiFi QR code, work through these checks in order:</p>
+      <ol>
+        <li><strong>Check iOS version / Android version.</strong> Native WiFi QR scanning requires iOS 11+ and Android 10+. On older devices, users need a third-party QR scanner app like Google Lens or QR & Barcode Scanner. QR codes still work — the phone just can't trigger the automatic WiFi join prompt natively.</li>
+        <li><strong>Check contrast.</strong> QR scanners need a clear difference between the dark foreground modules and the light background. If you've chosen custom colours, make sure the foreground is significantly darker than the background. Light-on-dark codes (e.g., white on black) work on most modern scanners but have lower compatibility with older firmware. When in doubt, use black on white.</li>
+        <li><strong>Check the quiet zone.</strong> QR codes require a clear white margin (called a "quiet zone") of at least 4 module widths on all sides. If you're embedding the QR code in a document or poster without padding, add explicit white space around it. Trimming into the quiet zone breaks the finder patterns and makes the code unscannable.</li>
+        <li><strong>Check the print size.</strong> A QR code printed at 1cm × 1cm is too small for most phone cameras to resolve at a comfortable arm's length. The recommended minimum print size is 2.5cm × 2.5cm (about 1 inch square). For a poster or wall sign, aim for at least 5cm × 5cm.</li>
+        <li><strong>Verify the data.</strong> Scan the QR code yourself using Google Lens to read the raw text. If the SSID or password looks wrong (wrong capitalisation, missing character), regenerate the code from scratch with corrected details.</li>
+        <li><strong>Check the security type.</strong> If your router uses WPA3-only mode, some older QR scanners may not recognise the join prompt even if the code scans correctly. Setting the router to WPA2/WPA3 mixed mode resolves this while maintaining security.</li>
+      </ol>
+
+      <h2>iOS vs Android: Differences in WiFi QR Behaviour</h2>
+      <p><strong>iPhone (iOS 11+):</strong> Point the native Camera app at the QR code. A notification banner appears at the top of the screen: "Join network [SSID]?" — tap it to connect. You do not need to open the Camera app's shutter; simply pointing it at the code while it's visible is enough. If the banner doesn't appear, ensure QR code scanning is enabled in Settings → Camera → Scan QR Codes.</p>
+      <p><strong>Android (10+):</strong> The behaviour varies slightly by manufacturer. On stock Android (Pixel), open the Camera app and point it at the code — a WiFi icon and the network name appear in a chip at the bottom of the screen. Tap it to join. On Samsung Galaxy devices, you can also use the built-in QR Scanner in the Quick Settings panel (swipe down twice and look for the QR Scanner tile). On older Android versions (8 or 9), use Google Lens or a dedicated QR scanner — the code will still decode and allow manual connection.</p>
+      <p><strong>Sharing the QR code digitally:</strong> You can also share the downloaded PNG via WhatsApp, email, or Airdrop. Recipients can scan it from their screen — most phone cameras can scan a QR code displayed on another phone's screen at close range in good lighting.</p>
+
       <div class="cta-box">
         <p>Create your WiFi QR code now — free, no sign-up, password never leaves your device. <a href="/qr-code-generator/">Open QR Code Generator →</a></p>
       </div>
@@ -165,6 +187,7 @@
       <a href="/blog/">Blog</a> ·
       <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·

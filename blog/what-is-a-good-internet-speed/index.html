@@ -139,6 +139,39 @@
         <li><strong>Use the 5 GHz band</strong> — faster but shorter range than 2.4 GHz. Better for devices close to the router.</li>
       </ul>
 
+      <h2>How to Fix High Jitter on a Fibre Connection</h2>
+      <p>High jitter on a fibre connection is almost always a local problem, not an ISP backbone issue — fibre optic cables have negligible inherent jitter. Here's how to diagnose and fix it step by step:</p>
+      <ol>
+        <li><strong>Test wired first.</strong> Connect your computer directly to the router with an ethernet cable and run a speed test. If jitter drops dramatically, the problem is entirely in your WiFi environment — proceed to step 3. If jitter remains high on ethernet, the problem is in your router or the ISP handoff — proceed to step 2.</li>
+        <li><strong>Isolate the router.</strong> Log into your router's admin panel (usually 192.168.1.1) and check for firmware updates. An out-of-date router OS is a common cause of packet scheduling inconsistencies that manifest as jitter. Also check for QoS (Quality of Service) settings that may be incorrectly deprioritising traffic.</li>
+        <li><strong>Identify WiFi interference.</strong> Use a free WiFi analyser app (e.g., WiFi Analyzer on Android, Wireless Diagnostics on Mac) to see what channels neighbouring networks are using. If your router is on the same channel as three neighbours, collisions cause jitter. Switch to a less congested channel — channels 1, 6, or 11 on 2.4 GHz do not overlap.</li>
+        <li><strong>Check your cable infrastructure.</strong> Older homes with daisy-chained ethernet switches or long cable runs can introduce jitter even on a fibre plan. Replace any Cat5 cables with Cat5e or Cat6. Avoid powerline network adapters — they are notorious jitter sources.</li>
+        <li><strong>Contact your ISP.</strong> If you have high jitter with a direct ethernet connection to your router at multiple times of day, the fault is in the ISP's aggregation network or the optical network terminal (ONT) at your premises. Request a line quality test — not just a speed test — from your ISP.</li>
+      </ol>
+
+      <h2>Step-by-Step Router Optimisation for WFH Latency</h2>
+      <p>Remote workers are uniquely sensitive to latency and jitter because video calls (Zoom, Teams, Google Meet) and VPNs are real-time bidirectional streams. Here's a systematic optimisation process:</p>
+      <h3>Step 1: Enable QoS for your work device</h3>
+      <p>Most modern routers support Quality of Service (QoS), which lets you prioritise traffic from specific devices or applications. Log into your router admin panel, find the QoS or Traffic Priority section, and set your work computer to Highest priority. This ensures that when a family member starts a 4K YouTube stream, your Zoom call's packets take precedence.</p>
+      <h3>Step 2: Use a wired connection for calls</h3>
+      <p>Even on WiFi 6, concurrent calls while other devices are active on the same band can introduce 20–60ms of additional jitter. A USB-C to ethernet adapter costs under £15 and virtually eliminates WiFi-related call instability. Keep the WiFi connection as a backup but conduct all calls wired.</p>
+      <h3>Step 3: Configure your VPN split tunnelling</h3>
+      <p>Many corporate VPNs route <em>all</em> traffic through the company server, including Netflix and YouTube. This dramatically increases effective latency for non-work traffic and adds unnecessary load to the VPN tunnel. If your IT department permits it, enable split tunnelling so only company intranet traffic routes through the VPN while general browsing goes direct. This typically reduces VPN-induced latency by 40–70%.</p>
+      <h3>Step 4: Schedule bandwidth-heavy tasks</h3>
+      <p>Cloud backups (Backblaze, Time Machine over network, OneDrive), Windows Update downloads, and large file syncs consume upload bandwidth that competes directly with your video call stream. Schedule these for off-hours using your backup software's built-in scheduler. On Windows, you can limit Windows Update bandwidth in Settings → Windows Update → Advanced Options → Delivery Optimisation.</p>
+      <h3>Step 5: Test at different times</h3>
+      <p>Run your speed test at 9am, 12pm, 6pm, and 10pm over several days. ISP congestion typically peaks between 6pm–11pm when residential broadband users are most active. If your jitter is low in the morning but high in the evening, the problem is ISP network congestion — something a router upgrade won't fix. Document the results and present them to your ISP to request a network investigation.</p>
+
+      <h2>Understanding Your Speed Test Results vs. Your ISP's Advertised Speed</h2>
+      <p>It is normal — and legal — for your measured speed to be lower than your plan's advertised speed. Here's why:</p>
+      <ul>
+        <li><strong>"Up to" speeds are peak laboratory conditions.</strong> ISPs advertise the theoretical maximum throughput of the network technology, not the average delivered speed. Ofcom in the UK requires ISPs to provide average speeds during peak hours (8pm–10pm), which is more representative.</li>
+        <li><strong>WiFi overhead reduces throughput.</strong> Even WiFi 6 introduces 10–30% overhead compared to the raw ethernet connection speed. A 1Gbps fibre plan tested over WiFi 5 on a 2019 laptop may show 400–600 Mbps — this is normal, not an ISP problem.</li>
+        <li><strong>The test server matters.</strong> Speed tests route traffic to the nearest test server. If that server is congested or geographically distant, your result will be lower than your true capability. Our Speed Test uses Cloudflare's global edge network, which has one of the largest infrastructure footprints in the world, minimising this variable.</li>
+        <li><strong>Time of day affects real-world results.</strong> Broadband is a shared medium. During peak hours, available bandwidth per user decreases as more subscribers are active simultaneously on the same exchange or cable node.</li>
+      </ul>
+      <p>If your measured speed is consistently below 50% of your advertised speed during off-peak hours on a wired connection, you have grounds to formally complain to your ISP and, if unresolved, to your national communications regulator (Ofcom in the UK, FCC in the US).</p>
+
     </div>
 
     <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
@@ -169,6 +202,7 @@
       <a href="/blog/">Blog</a> ·
       <a href="/contact/">Contact</a> ·
       <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
       <a href="/picker-wheel/">Picker Wheel</a> ·
       <a href="/font-generator/">Font Generator</a> ·
       <a href="/word-counter/">Word Counter</a> ·
