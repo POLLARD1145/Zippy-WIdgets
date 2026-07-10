@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Word Scramble — Free Online Word Puzzle (No Login) | ZippyWidgets</title>
+  <meta name="description" content="Unscramble the daily word in 6 attempts. Free browser word puzzle with no login required. Same scrambled word worldwide every day — compare your result with anyone!" />
+  <meta name="keywords" content="word scramble online, daily word scramble, free word puzzle no login, unscramble words game, word unscrambler game, daily word game online, browser word puzzle no signup" />
+  <link rel="canonical" href="https://zippywidgets.online/games/word-scramble/" />
+  <meta property="og:title" content="Daily Word Scramble — Free Online Word Puzzle (No Login)" />
+  <meta property="og:description" content="Unscramble the daily word in 6 tries. No signup. Same puzzle worldwide every day." />
+  <meta property="og:url" content="https://zippywidgets.online/games/word-scramble/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Daily Word Scramble — Free Word Puzzle No Login" />
+  <meta name="twitter:description" content="Unscramble the daily word in 6 attempts. Same puzzle for everyone worldwide. No account needed." />
+  <link rel="canonical" href="https://zippywidgets.online/games/word-scramble/" />
+  <link rel="icon" type="image/png" href="../../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Daily Word Scramble",
+    "description": "A free daily word unscrambling puzzle. Players have 6 attempts to identify the hidden word from its scrambled letters. Same puzzle for all players worldwide each day.",
+    "url": "https://zippywidgets.online/games/word-scramble/",
+    "applicationCategory": "Game",
+    "gamePlatform": "Web Browser",
+    "genre": ["Word Game", "Puzzle"],
+    "playMode": "SinglePlayer",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0f1117;
+      --surface: #1a1d27;
+      --surface2:#22263a;
+      --border:  #2e3452;
+      --text:    #e8eaff;
+      --muted:   #7b82b0;
+      --accent:  #38bdf8;
+      --green:   #4ade80;
+      --yellow:  #fbbf24;
+      --red:     #f87171;
+      --radius:  12px;
+    }
+    html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; }
+
+    /* ── Navbar ── */
+    .navbar { display: flex; align-items: center; gap: .75rem; padding: .75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 50; }
+    .nav-brand { display: flex; align-items: center; gap: .5rem; font-weight: 800; font-size: 1rem; text-decoration: none; color: var(--text); }
+    .nav-logo { width: 26px; height: 26px; border-radius: 6px; }
+    .nav-links { display: flex; gap: .4rem; margin-left: auto; flex-wrap: wrap; }
+    .nav-pill { padding: .35rem .8rem; border-radius: 20px; font-size: .8rem; font-weight: 600; text-decoration: none; color: var(--muted); background: transparent; border: 1px solid transparent; transition: all .15s; }
+    .nav-pill:hover, .nav-pill.active { background: var(--surface2); border-color: var(--border); color: var(--text); }
+    .nav-toggle { display: none; }
+
+    /* ── Layout ── */
+    .game-page { max-width: 540px; margin: 0 auto; padding: 1.5rem 1rem 3rem; display: flex; flex-direction: column; gap: 1.25rem; align-items: center; }
+
+    /* ── Header ── */
+    .game-header { text-align: center; display: flex; flex-direction: column; gap: .4rem; align-items: center; }
+    .game-title { font-size: 1.6rem; font-weight: 900; letter-spacing: -.02em; }
+    .game-title span { color: var(--accent); }
+    .seed-badge { display: inline-flex; align-items: center; gap: .4rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: .3rem .85rem; font-size: .75rem; color: var(--muted); }
+    .seed-badge b { color: var(--accent); }
+
+    /* ── Scramble display ── */
+    .scramble-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.25rem; width: 100%; text-align: center; display: flex; flex-direction: column; gap: .75rem; }
+    .scramble-label { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+    .scramble-letters { display: flex; gap: .45rem; justify-content: center; flex-wrap: wrap; }
+    .s-tile { width: 48px; height: 54px; background: var(--surface2); border: 2px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 900; color: var(--accent); letter-spacing: 0; transition: transform .2s; }
+    .s-tile.pop { animation: pop .25s ease; }
+    @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+    .hint-text { font-size: .8rem; color: var(--muted); min-height: 1.2em; }
+
+    /* ── Attempts grid ── */
+    .attempts-wrap { width: 100%; display: flex; flex-direction: column; gap: .5rem; }
+    .attempt-row { display: flex; gap: .4rem; justify-content: center; }
+    .a-tile { width: 46px; height: 50px; background: var(--surface2); border: 2px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; transition: background .3s, border-color .3s; }
+    .a-tile.correct  { background: #14532d; border-color: var(--green);  color: var(--green); }
+    .a-tile.present  { background: #713f12; border-color: var(--yellow); color: var(--yellow); }
+    .a-tile.absent   { background: #1e1e2e; border-color: #3a3a5c;      color: #3a3a5c; }
+    .a-tile.active-cur { border-color: var(--accent); }
+
+    /* ── Keyboard ── */
+    .keyboard { display: flex; flex-direction: column; gap: .45rem; align-items: center; width: 100%; }
+    .kb-row { display: flex; gap: .35rem; }
+    .kb-key { min-width: 34px; height: 52px; padding: 0 .4rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; font-family: inherit; font-size: .82rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s; user-select: none; }
+    .kb-key:hover { background: var(--border); }
+    .kb-key.wide  { min-width: 52px; font-size: .72rem; }
+    .kb-key.correct { background: #14532d; border-color: var(--green);  color: var(--green); }
+    .kb-key.present { background: #713f12; border-color: var(--yellow); color: var(--yellow); }
+    .kb-key.absent  { background: #111; border-color: #222; color: #444; }
+
+    /* ── Message ── */
+    .message-bar { min-height: 32px; font-size: .88rem; font-weight: 700; text-align: center; color: var(--muted); transition: color .2s; }
+    .message-bar.good { color: var(--green); }
+    .message-bar.bad  { color: var(--red); }
+    .message-bar.info { color: var(--yellow); }
+
+    /* ── Result card ── */
+    .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; width: 100%; display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center; }
+    .result-emoji { font-size: 3rem; }
+    .result-card h2 { font-size: 1.2rem; font-weight: 900; }
+    .result-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+    .share-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .75rem 1rem; font-family: monospace; font-size: .85rem; color: var(--text); white-space: pre; letter-spacing: .05em; line-height: 1.6; }
+    .btn { cursor: pointer; border: none; border-radius: 10px; font-family: inherit; font-weight: 700; transition: opacity .15s, transform .1s; }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, #38bdf8, #818cf8); color: #000; padding: .8rem 2rem; font-size: .95rem; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: .65rem 1.4rem; font-size: .85rem; }
+    .btn-row { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
+
+    /* ── SEO section ── */
+    .seo-section { max-width: 540px; width: 100%; display: flex; flex-direction: column; gap: 1rem; margin-top: .5rem; }
+    .seo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: .75rem; color: var(--muted); font-size: .88rem; line-height: 1.8; }
+    .seo-card h2 { font-size: 1rem; font-weight: 800; color: var(--text); }
+    .seo-card h3 { font-size: .88rem; font-weight: 700; color: var(--text); }
+
+    /* ── Ad slots — outside play area only — */
+    .ad-slot-game { width: 100%; max-width: 540px; margin: 0 auto; padding: .5rem 0; min-height: 90px; display: flex; align-items: center; justify-content: center; }
+    .ad-slot-game ins { display: block; width: 100%; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--border); padding: 1.5rem 1rem; text-align: center; font-size: .78rem; color: var(--muted); line-height: 2; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--text); }
+
+    @media (max-width: 420px) {
+      .s-tile { width: 40px; height: 46px; font-size: 1.2rem; }
+      .a-tile { width: 38px; height: 44px; font-size: .95rem; }
+      .kb-key { min-width: 28px; height: 46px; font-size: .72rem; }
+      .kb-key.wide { min-width: 42px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Ad: above game, below nav — deferred until first interaction -->
+<div class="ad-slot-game" id="ad-top-ws" style="padding:0 1rem;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6884221059402072"
+       data-ad-slot="auto"
+       data-ad-format="horizontal"
+       data-full-width-responsive="true"></ins>
+</div>
+
+<nav class="navbar">
+  <a class="nav-brand" href="/">
+    <img src="../../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+  </a>
+  <div class="nav-links">
+    <a class="nav-pill" href="/games/">Games</a>
+    <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+    <a class="nav-pill" href="/word-counter/">Word Counter</a>
+  </div>
+</nav>
+
+<main>
+<div class="game-page">
+
+  <!-- Header -->
+  <div class="game-header">
+    <div class="game-title">Daily Word <span>Scramble</span></div>
+    <div class="seed-badge">🌐 Puzzle <b id="seed-display">—</b> · Resets midnight UTC</div>
+  </div>
+
+  <!-- Message -->
+  <div class="message-bar" id="message-bar">Unscramble the letters to find the hidden word</div>
+
+  <!-- Scrambled word tiles -->
+  <div class="scramble-card">
+    <div class="scramble-label">Today's scramble</div>
+    <div class="scramble-letters" id="scramble-tiles"></div>
+    <div class="hint-text" id="hint-text"></div>
+  </div>
+
+  <!-- Attempt rows -->
+  <div class="attempts-wrap" id="attempts-wrap"></div>
+
+  <!-- Keyboard -->
+  <div class="keyboard" id="keyboard">
+    <div class="kb-row" id="kb-row-0"></div>
+    <div class="kb-row" id="kb-row-1"></div>
+    <div class="kb-row" id="kb-row-2"></div>
+  </div>
+
+  <!-- Result card (hidden until game over) -->
+  <div class="result-card" id="result-card" style="display:none;">
+    <div class="result-emoji" id="result-emoji">🎉</div>
+    <h2 id="result-heading">—</h2>
+    <p id="result-body">—</p>
+    <div class="share-box" id="share-box"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="copyShare()">📋 Copy Result</button>
+      <button class="btn btn-secondary" onclick="window.location.href='/games/'">🎮 More Games</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SEO below-the-fold -->
+<div class="game-page seo-section" style="padding-top:0;">
+
+  <div class="seo-card">
+    <h2>How to Play Daily Word Scramble</h2>
+    <p>Each day a new word is chosen using a <strong style="color:var(--text);">globally synchronized seed</strong> — the same word for every player worldwide. The letters are shuffled and displayed above. You have <strong style="color:var(--text);">6 attempts</strong> to guess the correct word.</p>
+    <h3>Colour Clues</h3>
+    <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem;">
+      <li><strong style="color:#4ade80;">Green</strong> — correct letter, correct position</li>
+      <li><strong style="color:#fbbf24;">Yellow</strong> — letter is in the word but wrong position</li>
+      <li><strong style="color:#555;">Grey</strong> — letter not in the word</li>
+    </ul>
+    <p>After you finish, copy your spoiler-free emoji result and share it with friends to compare without revealing the answer.</p>
+  </div>
+
+  <div class="seo-card">
+    <h2>Frequently Asked Questions</h2>
+    <div style="display:flex;flex-direction:column;gap:.9rem;">
+      <div><h3>Is this free to play?</h3><p>Yes — completely free, no login required. Open the page and play instantly.</p></div>
+      <div><h3>How is it different from Wordle?</h3><p>You can see all the letters in the word upfront — they're just scrambled. This makes it a different skill: pattern recognition and anagramming rather than pure deduction.</p></div>
+      <div><h3>Does it reset daily?</h3><p>Yes. Every day at midnight UTC the seed advances to the new date, generating a fresh word for everyone worldwide.</p></div>
+      <div><h3>Is progress saved?</h3><p>Yes — your current game state is saved in your browser's localStorage so you can close the tab and come back.</p></div>
+      <div><h3>Can I play at school or work?</h3><p>Yes. It's an <strong style="color:var(--text);">unblocked browser word game</strong> — no installation, no external content, runs offline after first load.</p></div>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-size:.8rem;color:var(--muted);">← <a href="/games/" style="color:#38bdf8;">All Games</a> &nbsp;·&nbsp; <a href="/" style="color:#38bdf8;">ZippyWidgets</a></p>
+
+  <!-- Ad: below SEO section, above footer -->
+  <div class="ad-slot-game" id="ad-bottom-ws">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6884221059402072"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <p>
+    <a href="/about/">About</a> ·
+    <a href="/blog/">Blog</a> ·
+    <a href="/games/">Games</a> ·
+    <a href="/games/aetherforge/">AetherForge</a> ·
+    <a href="/picker-wheel/">Picker Wheel</a> ·
+    <a href="/font-generator/">Font Generator</a> ·
+    <a href="/word-counter/">Word Counter</a> ·
+    <a href="/privacy-policy/">Privacy Policy</a>
+  </p>
+  <p style="margin-top:.4rem;">© 2026 ZippyWidgets.online — Runs 100% in your browser. No data sent to any server.</p>
+</footer>
+
+<script>
+"use strict";
+
+// ── PRNG (Mulberry32) ─────────────────────────────────────────────────────
+function seededRandom(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function getDailySeed() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.has('customSeed')) return parseInt(p.get('customSeed'), 10);
+  const d = new Date();
+  return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth() + 1) * 100) + d.getUTCDate();
+}
+
+// ── Word list (common 4–6 letter words) ──────────────────────────────────
+const WORD_LIST = [
+  'FLAME','CRANE','BLAZE','STONE','SWORD','MAGIC','QUEST','TOWER','BRAVE','CLOUD',
+  'DRIFT','EMBER','FORGE','GRACE','HAVEN','IVORY','JEWEL','KNACK','LEMON','MAPLE',
+  'NOBLE','OCEAN','PLACE','QUIRK','RADIO','SOLAR','TIGER','ULTRA','VIVID','WALTZ',
+  'XEROX','YACHT','ZESTY','AMBER','BLOOM','CHIME','DAISY','ELBOW','FLAIR','GLOOM',
+  'HAZEL','INLET','JOKER','KUDOS','LUNAR','MIXER','NOTCH','ORBIT','PETAL','QUOTA',
+  'REBEL','SCOUT','THORN','UMBRA','VAPOR','WEDGE','PIXEL','FROST','CHESS','DELTA',
+  'EPOCH','FAUNA','GLYPH','HEIST','INDEX','JOUST','KARMA','LATCH','MARSH','NEXUS',
+  'OXIDE','PLAZA','QUILL','RAVEN','SHELF','TROVE','UNITY','VENOM','WHEAT','XENON',
+  'YIELD','ZEBRA','AGILE','BRINE','CORAL','DRIVE','EAGLE','FLINT','GROVE','HINGE',
+  'IRONY','JUDGE','KNEEL','LANCE','MIRTH','NERVE','OLIVE','PRISM','RIVET','STEAK',
+  'SCALP','CLOAK','BRAID','SWAMP','GRAIN','FLESH','DWARF','CREST','GLIDE','FROTH',
+  'PLUME','CRISP','BLUNT','QUIRK','SHAFT','BRISK','CHESS','CLEFT','DRAPE','FLUKE',
+  'GNOME','HORDE','INGOT','JOUST','KNAVE','LODGE','MOURN','NOTCH','OUNCE','PARCH',
+  'RHYME','SLICK','TRUCE','UNTIE','VERGE','WRATH','EXPEL','FEAST','GROAN','HATCH',
+  'ADORN','BRAWN','CHANT','DEPOT','ENVOY','FABLE','GUILE','HASTE','IDEAL','JEWEL'
+];
+
+// ── Hints (optional flavour, matched by index mod hints.length) ────────────
+const HINTS = [
+  'Think: heat & light 🔥','Think: structure or tool 🏗️','Think: nature 🌿',
+  'Think: movement 🌊','Think: abstract concept 💡','Think: strength 💪',
+  'Think: colour or appearance 🎨','Think: journey or quest ⚔️',
+];
+
+// ── Pick today's word ─────────────────────────────────────────────────────
+const SEED = getDailySeed();
+const rng  = seededRandom(SEED);
+const WORD_INDEX   = Math.floor(rng() * WORD_LIST.length);
+const TARGET_WORD  = WORD_LIST[WORD_INDEX];
+const WORD_LENGTH  = TARGET_WORD.length;
+const HINT_TEXT    = HINTS[WORD_INDEX % HINTS.length];
+
+// Scramble deterministically (Fisher-Yates with rng)
+function scramble(word) {
+  const arr = word.split('');
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  // Ensure scramble is different from the original
+  return arr.join('') === word ? arr.reverse().join('') : arr.join('');
+}
+const SCRAMBLED = scramble(TARGET_WORD);
+
+// ── Game State ────────────────────────────────────────────────────────────
+const MAX_ATTEMPTS = 6;
+let attempts   = [];   // array of strings
+let currentRow = 0;
+let currentInput = '';
+let gameOver   = false;
+let keyStates  = {};   // letter -> 'correct'|'present'|'absent'
+
+const SAVE_KEY = 'ws_game_' + SEED;
+
+// ── Keyboard rows ─────────────────────────────────────────────────────────
+const KB_ROWS = [
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L'],
+  ['ENTER','Z','X','C','V','B','N','M','⌫'],
+];
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderScramble() {
+  const wrap = document.getElementById('scramble-tiles');
+  wrap.innerHTML = '';
+  SCRAMBLED.split('').forEach(ch => {
+    const d = document.createElement('div');
+    d.className = 's-tile';
+    d.textContent = ch;
+    wrap.appendChild(d);
+  });
+  document.getElementById('hint-text').textContent = HINT_TEXT;
+  document.getElementById('seed-display').textContent = SEED;
+}
+
+function renderAttempts() {
+  const wrap = document.getElementById('attempts-wrap');
+  wrap.innerHTML = '';
+  for (let r = 0; r < MAX_ATTEMPTS; r++) {
+    const row = document.createElement('div');
+    row.className = 'attempt-row';
+    row.id = 'row-' + r;
+    for (let c = 0; c < WORD_LENGTH; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'a-tile';
+      tile.id = `tile-${r}-${c}`;
+      // Fill submitted attempts
+      if (r < attempts.length) {
+        const ch  = attempts[r][c] || '';
+        const cls = getTileClass(attempts[r], c);
+        tile.textContent  = ch;
+        tile.className   += ' ' + cls;
+      } else if (r === currentRow) {
+        const ch = currentInput[c] || '';
+        tile.textContent = ch;
+        if (c === currentInput.length && !gameOver) tile.classList.add('active-cur');
+      }
+      row.appendChild(tile);
+    }
+    wrap.appendChild(row);
+  }
+}
+
+function getTileClass(word, col) {
+  const ch     = word[col];
+  const target = TARGET_WORD;
+  if (ch === target[col]) return 'correct';
+  if (target.includes(ch)) return 'present';
+  return 'absent';
+}
+
+function renderKeyboard() {
+  KB_ROWS.forEach((keys, ri) => {
+    const rowEl = document.getElementById('kb-row-' + ri);
+    rowEl.innerHTML = '';
+    keys.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (k.length > 1 ? ' wide' : '');
+      btn.textContent = k;
+      btn.dataset.key = k;
+      const state = keyStates[k];
+      if (state) btn.classList.add(state);
+      btn.addEventListener('click', () => handleKey(k));
+      rowEl.appendChild(btn);
+    });
+  });
+}
+
+function updateKeyboard() {
+  KB_ROWS.flat().forEach(k => {
+    const el = document.querySelector(`.kb-key[data-key="${k}"]`);
+    if (!el) return;
+    const state = keyStates[k];
+    el.className = 'kb-key' + (k.length > 1 ? ' wide' : '') + (state ? ' ' + state : '');
+  });
+}
+
+function setMessage(msg, cls = '') {
+  const el = document.getElementById('message-bar');
+  el.textContent = msg;
+  el.className   = 'message-bar' + (cls ? ' ' + cls : '');
+}
+
+// ── Input handling ────────────────────────────────────────────────────────
+function handleKey(key) {
+  if (gameOver) return;
+  if (key === '⌫' || key === 'BACKSPACE') {
+    currentInput = currentInput.slice(0, -1);
+    setMessage('Unscramble the letters to find the hidden word');
+    renderAttempts();
+    return;
+  }
+  if (key === 'ENTER') {
+    submitGuess();
+    return;
+  }
+  if (/^[A-Z]$/.test(key) && currentInput.length < WORD_LENGTH) {
+    currentInput += key;
+    renderAttempts();
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = e.key.toUpperCase();
+  if (k === 'BACKSPACE') { handleKey('⌫'); return; }
+  if (k === 'ENTER')     { handleKey('ENTER'); return; }
+  if (/^[A-Z]$/.test(k)) handleKey(k);
+});
+
+// ── Submit guess ──────────────────────────────────────────────────────────
+function submitGuess() {
+  if (currentInput.length < WORD_LENGTH) {
+    setMessage(`Need ${WORD_LENGTH} letters`, 'bad');
+    shakeRow(currentRow);
+    return;
+  }
+
+  const guess = currentInput.toUpperCase();
+  attempts.push(guess);
+
+  // Update key states (correct > present > absent priority)
+  guess.split('').forEach((ch, i) => {
+    const newState = getTileClass(guess, i);
+    const cur = keyStates[ch];
+    if (!cur || (cur === 'absent' && newState !== 'absent') || (cur === 'present' && newState === 'correct')) {
+      keyStates[ch] = newState;
+    }
+  });
+
+  currentInput = '';
+  currentRow++;
+  renderAttempts();
+  updateKeyboard();
+  flipRow(currentRow - 1);
+  saveState();
+
+  if (guess === TARGET_WORD) {
+    gameOver = true;
+    setTimeout(() => showResult(true), 600);
+    return;
+  }
+  if (currentRow >= MAX_ATTEMPTS) {
+    gameOver = true;
+    setTimeout(() => showResult(false), 600);
+    return;
+  }
+  setMessage(`${MAX_ATTEMPTS - currentRow} attempt${MAX_ATTEMPTS - currentRow > 1 ? 's' : ''} left`, 'info');
+}
+
+// ── Animations ────────────────────────────────────────────────────────────
+function shakeRow(r) {
+  const row = document.getElementById('row-' + r);
+  if (!row) return;
+  row.style.animation = 'none';
+  row.offsetHeight;
+  row.style.animation = 'shake .4s ease';
+}
+
+function flipRow(r) {
+  for (let c = 0; c < WORD_LENGTH; c++) {
+    const tile = document.getElementById(`tile-${r}-${c}`);
+    if (!tile) continue;
+    setTimeout(() => {
+      tile.style.transform = 'rotateX(90deg)';
+      setTimeout(() => { tile.style.transform = ''; }, 150);
+    }, c * 80);
+  }
+}
+
+// Add shake animation to CSS dynamically
+const styleEl = document.createElement('style');
+styleEl.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }`;
+document.head.appendChild(styleEl);
+
+// ── Result ────────────────────────────────────────────────────────────────
+const RESULT_EMOJIS = ['🏆','🌟','🎯','👍','😅','😬'];
+
+function buildShareText(won) {
+  const d = new Date();
+  const dateStr = `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+  let grid = `ZippyWidgets Daily Scramble ${dateStr}\n`;
+  grid += won ? `${attempts.length}/${MAX_ATTEMPTS}\n\n` : `X/${MAX_ATTEMPTS}\n\n`;
+  attempts.forEach(guess => {
+    grid += guess.split('').map((ch, i) => {
+      if (ch === TARGET_WORD[i]) return '🟩';
+      if (TARGET_WORD.includes(ch)) return '🟨';
+      return '⬛';
+    }).join('') + '\n';
+  });
+  grid += `\nplay: zippywidgets.online/games/word-scramble/`;
+  return grid.trim();
+}
+
+function showResult(won) {
+  const card = document.getElementById('result-card');
+  card.style.display = '';
+
+  document.getElementById('result-emoji').textContent =
+    won ? RESULT_EMOJIS[attempts.length - 1] : '💀';
+  document.getElementById('result-heading').textContent =
+    won ? `Solved in ${attempts.length}!` : `The word was ${TARGET_WORD}`;
+  document.getElementById('result-body').textContent =
+    won
+      ? `Nice work! You unscrambled "${TARGET_WORD}" in ${attempts.length} of ${MAX_ATTEMPTS} attempts.`
+      : `Better luck tomorrow. Come back at midnight UTC for a new word.`;
+
+  document.getElementById('share-box').textContent = buildShareText(won);
+  setMessage(won ? '🎉 Well done!' : '💀 Out of attempts', won ? 'good' : 'bad');
+  document.getElementById('keyboard').style.opacity = '.4';
+  document.getElementById('keyboard').style.pointerEvents = 'none';
+}
+
+let _shareText = '';
+function copyShare() {
+  const text = document.getElementById('share-box').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    setMessage('Result copied — paste it anywhere!', 'good');
+  }).catch(() => {
+    prompt('Copy your result:', text);
+  });
+}
+
+// ── Persistence ───────────────────────────────────────────────────────────
+function saveState() {
+  localStorage.setItem(SAVE_KEY, JSON.stringify({ attempts, currentRow, keyStates, gameOver }));
+}
+
+function loadState() {
+  const raw = localStorage.getItem(SAVE_KEY);
+  if (!raw) return false;
+  try {
+    const s = JSON.parse(raw);
+    attempts    = s.attempts   || [];
+    currentRow  = s.currentRow || 0;
+    keyStates   = s.keyStates  || {};
+    gameOver    = s.gameOver   || false;
+    return true;
+  } catch { return false; }
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+renderScramble();
+renderKeyboard();
+loadState();
+renderAttempts();
+updateKeyboard();
+
+if (gameOver) {
+  const won = attempts.length > 0 && attempts[attempts.length - 1] === TARGET_WORD;
+  setTimeout(() => showResult(won), 100);
+} else if (currentRow > 0) {
+  setMessage(`${MAX_ATTEMPTS - currentRow} attempt${MAX_ATTEMPTS - currentRow > 1 ? 's' : ''} left`, 'info');
+}
+
+// Lazy-load ads — deferred until first interaction, never blocking gameplay
+(function() {
+  function loadTopAd() {
+    const el = document.getElementById('ad-top-ws');
+    if (el && el.querySelector('ins:not([data-adsbygoogle-status])')) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+    document.removeEventListener('pointerdown', loadTopAd);
+    document.removeEventListener('keydown', loadTopAd);
+  }
+  document.addEventListener('pointerdown', loadTopAd, { once: true });
+  document.addEventListener('keydown', loadTopAd, { once: true });
+  // Bottom ad loads on scroll into view
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      const el = document.getElementById('ad-bottom-ws');
+      if (el && el.querySelector('ins:not([data-adsbygoogle-status])')) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
+      obs.disconnect();
+    }
+  }, { rootMargin: '200px' });
+  const bottom = document.getElementById('ad-bottom-ws');
+  if (bottom) obs.observe(bottom);
+})();
+</script>
+
+</body>
+</html>
