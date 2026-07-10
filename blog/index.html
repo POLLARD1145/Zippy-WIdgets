@@ -21,7 +21,8 @@
   <meta name="google-adsense-account" content="ca-pub-6884221059402072">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
   <style>
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.25rem; margin-top: 1.5rem; overflow-x: hidden; }
+    @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
     .blog-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: .6rem; transition: transform .2s, border-color .2s, box-shadow .2s; }
     .blog-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 28px rgba(124,106,247,.15); }
     .blog-tag { display: inline-block; font-size: .72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }

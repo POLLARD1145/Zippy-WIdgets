@@ -37,7 +37,7 @@
   }
   </script>
   <style>
-    .article-body { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted); line-height: 1.8; font-size: .95rem; }
+    .article-body { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted); line-height: 1.8; font-size: .95rem; overflow-x: hidden; }
     .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-top: .5rem; }
     .article-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
     .article-body p { margin: 0; }
@@ -56,6 +56,9 @@
     .use-case-card .emoji { font-size: 1.4rem; display: block; margin-bottom: .3rem; }
     .use-case-card strong { color: var(--text); font-size: .9rem; }
     .use-case-card p { font-size: .82rem; color: var(--muted); margin-top: .25rem !important; line-height: 1.5; }
+    @media (max-width: 640px) {
+      .use-case-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
