@@ -1,10 +1,21 @@
-# Zippy Widgets — Free Online Tools & Browser Games
+<div align="center">
 
-![Zippy Widgets Logo](ZippyWidgets%20Logo.png)
+<img src="ZippyWidgets%20Logo.png" alt="Zippy Widgets Logo" width="280" />
 
-**🌐 Live site → [zippywidgets.online](https://zippywidgets.online)**
+# Zippy Widgets
 
-Zippy Widgets is a free collection of browser-based tools and mini games that work instantly — no sign-up, no downloads, no data sent to any server. Everything runs 100% in your browser using vanilla HTML, CSS, and JavaScript.
+### Free Online Tools & Browser Games
+
+[![Live Site](https://img.shields.io/badge/🌐%20Live%20Site-zippywidgets.online-38bdf8?style=for-the-badge)](https://zippywidgets.online)
+[![No Sign-up](https://img.shields.io/badge/No%20Sign--up-Required-4ade80?style=for-the-badge)](#)
+[![100% Client-side](https://img.shields.io/badge/100%25-Client--side-a78bfa?style=for-the-badge)](#)
+[![Privacy Friendly](https://img.shields.io/badge/Privacy-Friendly-f97316?style=for-the-badge)](#)
+
+*A free collection of browser-based tools and mini games that work instantly — no sign-up, no downloads, no data ever sent to a server. Everything runs 100% in your browser.*
+
+</div>
+
+---
 
 Whether you need a **free QR code generator**, a **word counter for essays**, a **random name picker wheel**, or just want to play a quick **daily word scramble**, Zippy Widgets has you covered.
 
