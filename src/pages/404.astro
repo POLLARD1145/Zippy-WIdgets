@@ -5,6 +5,25 @@ import Footer from '@components/Footer.astro';
 
 const title = '404 — Page Not Found | ZippyWidgets';
 const description = 'Sorry, the page you are looking for does not exist. Explore our free online tools, games and blog.';
+
+const toolModules = import.meta.glob('/src/pages/tool/*/index.astro', { eager: true });
+const gameModules = import.meta.glob('/src/pages/game/*/index.astro', { eager: true });
+const blogModules = import.meta.glob('/src/pages/blog/*/index.astro', { eager: true });
+
+const validPaths: string[] = [
+  '/',
+  '/about/',
+  '/contact/',
+  '/disclaimer/',
+  '/privacy-policy/',
+  '/blog/',
+  '/game/',
+  ...Object.keys(toolModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')),
+  ...Object.keys(gameModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')),
+  ...Object.keys(blogModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')).filter(p => p !== '/blog/'),
+];
+
+const validPathsJson = JSON.stringify(validPaths);
 ---
 <Layout title={title} description={description}>
   <Nav />
@@ -14,13 +33,92 @@ const description = 'Sorry, the page you are looking for does not exist. Explore
       <div style="font-size:4rem;line-height:1;margin-bottom:1rem;">🚧</div>
       <h1 style="font-size:1.8rem;font-weight:800;margin-bottom:.5rem;">404 — Page Not Found</h1>
       <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">We couldn't find the page you were looking for. It might have been moved, deleted, or the URL could be misspelled.</p>
+
+      <div id="suggestion" style="display:none;margin-bottom:1.5rem;">
+        <p style="color:var(--muted);margin-bottom:.5rem;">Did you mean this?</p>
+        <a id="suggestionLink" class="btn btn-primary" href="/" style="margin-bottom:.5rem;"></a>
+        <p id="suggestionPath" style="font-size:.8rem;color:var(--muted);"></p>
+      </div>
+
       <div class="btn-group" style="justify-content:center;flex-wrap:wrap;">
-        <a class="btn btn-primary" href="/">Back to homepage</a>
-        <a class="btn btn-secondary" href="/tool/">Browse tools</a>
+        <a class="btn btn-secondary" href="/">Back to homepage</a>
         <a class="btn btn-secondary" href="/game/">Play games</a>
+        <a class="btn btn-secondary" href="/blog/">Read the blog</a>
       </div>
     </div>
   </main>
 
   <Footer />
+
+  <script is:inline define:vars={{ validPaths: validPathsJson }}>
+    (function(){
+      const paths = JSON.parse(validPaths);
+      const requested = window.location.pathname.replace(/\/$/, '') || '/';
+      const requestedSegments = requested.split('/').filter(Boolean);
+      const requestedLast = requestedSegments[requestedSegments.length - 1] || '';
+
+      function levenshtein(a, b) {
+        const m = a.length, n = b.length;
+        if (!m) return n;
+        if (!n) return m;
+        const prev = new Array(n + 1);
+        for (let j = 0; j <= n; j++) prev[j] = j;
+        for (let i = 1; i <= m; i++) {
+          const curr = new Array(n + 1);
+          curr[0] = i;
+          for (let j = 1; j <= n; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
+          }
+          for (let j = 0; j <= n; j++) prev[j] = curr[j];
+        }
+        return prev[n];
+      }
+
+      function segmentSimilarity(req, target) {
+        const reqSegs = req.split('/').filter(Boolean);
+        const targetSegs = target.split('/').filter(Boolean);
+        const reqLast = reqSegs[reqSegs.length - 1] || '';
+        const targetLast = targetSegs[targetSegs.length - 1] || '';
+        if (!reqLast || !targetLast) return Infinity;
+
+        // Exact last-segment match wins
+        if (reqLast === targetLast) return 0;
+
+        // Check if one contains the other
+        if (targetLast.includes(reqLast) || reqLast.includes(targetLast)) {
+          return Math.abs(targetLast.length - reqLast.length) * 0.3;
+        }
+
+        return levenshtein(reqLast, targetLast);
+      }
+
+      let best = null;
+      let bestScore = Infinity;
+
+      for (const path of paths) {
+        const normalized = path.replace(/\/$/, '') || '/';
+        if (normalized === requested) continue;
+        const score = segmentSimilarity(requested, normalized);
+        if (score < bestScore) {
+          bestScore = score;
+          best = path;
+        }
+      }
+
+      // Only suggest if the last segment is close enough (allow typo length)
+      const threshold = Math.max(2, Math.floor(requestedLast.length / 3));
+      if (best && bestScore <= threshold && requestedLast.length > 1) {
+        const suggestion = document.getElementById('suggestion');
+        const link = document.getElementById('suggestionLink');
+        const path = document.getElementById('suggestionPath');
+        if (suggestion && link && path) {
+          suggestion.style.display = 'block';
+          link.href = best;
+          link.textContent = 'Open ' + best.replace(/\//g, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+          path.textContent = best;
+        }
+      }
+    })();
+  </script>
 </Layout>
