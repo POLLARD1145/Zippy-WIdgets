@@ -32,18 +32,12 @@ const validPathsJson = JSON.stringify(validPaths);
     <div class="card" style="max-width:520px;width:100%;">
       <div style="font-size:4rem;line-height:1;margin-bottom:1rem;">🚧</div>
       <h1 style="font-size:1.8rem;font-weight:800;margin-bottom:.5rem;">404 — Page Not Found</h1>
-      <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">We couldn't find the page you were looking for. It might have been moved, deleted, or the URL could be misspelled.</p>
-
-      <div id="suggestion" style="display:none;margin-bottom:1.5rem;">
-        <p style="color:var(--muted);margin-bottom:.5rem;">Did you mean this?</p>
-        <a id="suggestionLink" class="btn btn-primary" href="/" style="margin-bottom:.5rem;"></a>
-        <p id="suggestionPath" style="font-size:.8rem;color:var(--muted);"></p>
-      </div>
+      <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">We couldn't find the page you were looking for. It might have been moved, deleted, or the URL could be misspelled.<span id="suggestion" style="display:none;"> Did you mean <a id="suggestionLink" href="/" style="color:var(--accent);font-weight:700;text-decoration:underline;">Yes</a>?</span></p>
 
       <div class="btn-group" style="justify-content:center;flex-wrap:wrap;">
-        <a class="btn btn-secondary" href="/">Back to homepage</a>
+        <a class="btn btn-primary" href="/">Back to homepage</a>
+        <a class="btn btn-secondary" href="/tool/">Browse tools</a>
         <a class="btn btn-secondary" href="/game/">Play games</a>
-        <a class="btn btn-secondary" href="/blog/">Read the blog</a>
       </div>
     </div>
   </main>
@@ -111,12 +105,9 @@ const validPathsJson = JSON.stringify(validPaths);
       if (best && bestScore <= threshold && requestedLast.length > 1) {
         const suggestion = document.getElementById('suggestion');
         const link = document.getElementById('suggestionLink');
-        const path = document.getElementById('suggestionPath');
-        if (suggestion && link && path) {
-          suggestion.style.display = 'block';
+        if (suggestion && link) {
+          suggestion.style.display = 'inline';
           link.href = best;
-          link.textContent = 'Open ' + best.replace(/\//g, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-          path.textContent = best;
         }
       }
     })();
