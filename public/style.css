@@ -244,9 +244,19 @@ body {
 
 /* Mobile: search fills space between brand and icon buttons */
 @media (max-width: 640px) {
-  .nav-search { margin: 0; }
+  .nav-search { margin: 0; position: static; }
   .nav-search.open .nav-search-input {
-    width: clamp(140px, calc(100vw - 9rem), 280px);
+    position: absolute;
+    left: 1rem;
+    right: calc(36px * 4 + 1rem + .5rem);
+    width: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  .nav-search.open .nav-search-icon {
+    left: 1.55rem;
+    z-index: 11;
   }
   .search-results {
     right: auto;

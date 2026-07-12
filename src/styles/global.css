@@ -30,4 +30,23 @@
     color: var(--text);
     min-height: 100vh;
   }
+  img, video, canvas, svg, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  pre, code {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
+}
+
+@layer components {
+  .ad-slot,
+  .ad-slot-game,
+  .ad-slot ins,
+  .ad-slot-game ins,
+  [class*="ad-slot"] iframe {
+    max-width: 100% !important;
+    overflow: hidden;
+  }
 }

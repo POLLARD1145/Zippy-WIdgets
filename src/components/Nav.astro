@@ -1,5 +1,6 @@
 ---
 import { tools } from '@data/tools.ts';
+import { posts, postUrl } from '@data/posts.ts';
 
 const pathname = Astro.url.pathname;
 const toolLinks = tools.filter(t => t.href !== '/game/');
@@ -20,13 +21,44 @@ function isToolsActive() {
   return pathname.startsWith('/tool/');
 }
 
-const searchIndex = tools.map(t => ({
-  icon: t.icon,
-  name: t.name,
-  desc: t.description,
-  url: t.href,
-  tags: t.tags,
+const gameItems = [
+  { icon: '🎮', name: 'Games Hub', desc: 'Browse all free browser games.', url: '/game/', tags: 'games hub' },
+  { icon: '⚔️', name: 'AetherForge', desc: 'Daily roguelike deckbuilder card game.', url: '/game/aetherforge/', tags: 'aetherforge card game roguelike deckbuilder daily' },
+  { icon: '🧩', name: 'Daily Word Scramble', desc: 'Unscramble the daily word puzzle.', url: '/game/word-scramble/', tags: 'word scramble puzzle daily' },
+  { icon: '🌍', name: 'Emoji Geography', desc: 'Guess countries from flag emojis.', url: '/game/emoji-geography/', tags: 'emoji geography flags quiz country' },
+  { icon: '🧠', name: 'Emoji Memory', desc: 'Match emoji pairs in a memory game.', url: '/game/emoji-memory/', tags: 'emoji memory match game' },
+  { icon: '✊', name: 'Rock Paper Scissors', desc: 'Classic hand game against the computer.', url: '/game/rock-paper-scissors/', tags: 'rock paper scissors rps game' },
+];
+
+const tagIcons: Record<string, string> = {
+  'PDF Tools': '📄',
+  'Image Tools': '🖼️',
+  'QR Code': '📷',
+  'Speed Test': '📶',
+  'Font Generator': '🔤',
+  'Picker Wheel': '🎯',
+  'Technology & AI': '🤖',
+};
+
+const blogItems = posts.map(p => ({
+  icon: tagIcons[p.tag] || '📝',
+  name: p.title,
+  desc: p.description,
+  url: postUrl(p.slug),
+  tags: `${p.tag} ${p.title} ${p.description}`.toLowerCase(),
 }));
+
+const searchIndex = [
+  ...tools.map(t => ({
+    icon: t.icon,
+    name: t.name,
+    desc: t.description,
+    url: t.href,
+    tags: t.tags,
+  })),
+  ...gameItems,
+  ...blogItems,
+];
 
 const isGamePage = pathname.startsWith('/game/') && pathname !== '/game/';
 ---

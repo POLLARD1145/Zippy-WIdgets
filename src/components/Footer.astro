@@ -1,6 +1,5 @@
 ---
 import { tools } from '@data/tools.ts';
-import { posts, postUrl } from '@data/posts.ts';
 
 const toolLinks = tools.filter(t => t.href !== '/game/');
 const gameLinks = [
@@ -13,53 +12,45 @@ const gameLinks = [
 ];
 ---
 <footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <h4>Tools</h4>
-      <ul>
-        {toolLinks.map(tool => (
-          <li><a href={tool.href}>{tool.name}</a></li>
-        ))}
-      </ul>
+  <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 text-left mb-6">
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          {toolLinks.map(tool => (
+            <li><a href={tool.href}>{tool.name}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Games</h4>
+        <ul>
+          {gameLinks.map(link => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <ul>
+          <li><a href="/blog/">All posts</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Games</h4>
-      <ul>
-        {gameLinks.map(link => (
-          <li><a href={link.href}>{link.label}</a></li>
-        ))}
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Blog</h4>
-      <ul>
-        <li><a href="/blog/">All posts</a></li>
-        {posts.slice(0, 4).map(post => (
-          <li><a href={postUrl(post.slug)}>{post.title}</a></li>
-        ))}
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/contact/">Contact</a></li>
-        <li><a href="/privacy-policy/">Privacy Policy</a></li>
-        <li><a href="/disclaimer/">Disclaimer</a></li>
-      </ul>
-    </div>
+    <p class="footer-copy">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
   </div>
-  <p class="footer-copy">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
 </footer>
 
 <style>
-  .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.5rem;
-    text-align: left;
-    margin-bottom: 1.5rem;
-  }
   .footer-col h4 {
     font-size: .9rem;
     font-weight: 700;
@@ -79,6 +70,8 @@ const gameLinks = [
     text-decoration: none;
     font-size: .85rem;
     line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
   .footer-col a:hover { color: var(--accent); }
   .footer-copy {
@@ -88,8 +81,5 @@ const gameLinks = [
     margin: 0;
     padding-top: 1rem;
     border-top: 1px solid var(--border);
-  }
-  @media (max-width: 480px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
