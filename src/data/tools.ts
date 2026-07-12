@@ -97,7 +97,7 @@ export const tools: Tool[] = [
     tags: 'favicon generator ico icon website logo',
   },
   {
-    href: '/games/',
+    href: '/game/',
     icon: '🎮',
     name: 'Free Online Games',
     description: 'Daily browser games — no login, no download. AetherForge deckbuilder, Daily Word Scramble, and more. Same challenge worldwide every day.',

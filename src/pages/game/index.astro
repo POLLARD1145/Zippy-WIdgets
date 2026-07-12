@@ -1,0 +1,214 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Best Free Online Games — No Login, No Download | ZippyWidgets';
+const description = 'Play the best free online games instantly — no login, no signup, no download. Mini games online including word puzzles, memory, flag quizzes, card games and more. Same daily challenge worldwide.';
+const canonical = 'https://zippywidgets.online/game/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+  <meta name="keywords" content='best free online games, free online games, online games free, free games online, mini games online, best online games, card games online free, word games online free, multiplayer online games, online games no download, free games no login, instant play games, unblocked games' />
+  <meta property="og:title" content='Best Free Online Games — No Login | ZippyWidgets' />
+  <meta property="og:description" content='The best free online games — no login, no download. Mini games, word puzzles, card games and more. Daily challenges same worldwide.' />
+  <meta property="og:type" content='website' />
+  <meta property="og:image" content='https://zippywidgets.online/ZippyWidgets Logo.png' />
+  <meta name="twitter:card" content='summary' />
+  <meta name="twitter:title" content='Best Free Online Games No Login — ZippyWidgets' />
+  <meta name="twitter:description" content='Best free online games — no signup, no download. Mini games, word puzzles, card games. Same daily challenge worldwide.' />
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Free Online Games — No Login Required",
+    "description": "A collection of free instant-play browser games with no login or download required. Daily synchronized challenges for players worldwide.",
+    "url": "https://zippywidgets.online/game/",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "VideoGame",
+          "name": "AetherForge: Chrono-Deck",
+          "description": "Free daily roguelike deckbuilder. Forge elemental combos to defeat 5 bosses. Same seed worldwide every day.",
+          "url": "https://zippywidgets.online/game/aetherforge/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Roguelike", "Deckbuilder", "Card Game"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "VideoGame",
+          "name": "Daily Word Scramble",
+          "description": "Unscramble the daily seeded word before your attempts run out. Same puzzle for everyone worldwide.",
+          "url": "https://zippywidgets.online/game/word-scramble/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Word Game", "Puzzle"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "VideoGame",
+          "name": "Emoji Geography",
+          "description": "A daily flag guessing quiz. Identify 10 countries from their flag emoji. Same 10 questions for all players worldwide.",
+          "url": "https://zippywidgets.online/game/emoji-geography/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Quiz", "Geography", "Puzzle"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "VideoGame",
+          "name": "Rock Paper Scissors",
+          "description": "Play Rock Paper Scissors against a smart CPU. Best of 5. Hard mode learns your patterns.",
+          "url": "https://zippywidgets.online/game/rock-paper-scissors/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Casual", "Strategy"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "VideoGame",
+          "name": "Emoji Memory Match",
+          "description": "Flip and match emoji card pairs in the fewest moves. Daily seed — same puzzle worldwide every day.",
+          "url": "https://zippywidgets.online/game/emoji-memory/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Puzzle", "Memory Game"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      }
+    ]
+  }
+  </script>
+  </Fragment>
+
+  <Nav />
+
+<main class="tool-page" style="max-width:900px;">
+
+    <div class="games-hero">
+      <div class="daily-pill">🌐 Daily seed: <span id="today-seed">—</span> · Resets midnight UTC</div>
+      <h1>Free Online Games — <span class="gradient-text">No Login</span></h1>
+      <p>Instant-play browser games. No accounts, no downloads, no ads during gameplay. Every daily challenge is synchronized worldwide — you and a player in Tokyo get the exact same puzzle today.</p>
+    </div>
+
+    <div class="games-grid">
+
+      <!-- AetherForge -->
+      <a class="game-card" href="/game/aetherforge/" style="--card-color:#7c6af7;">
+        <div class="game-icon">⚗️</div>
+        <h2>AetherForge: Chrono-Deck</h2>
+        <p>A roguelike deckbuilder with elemental combos. Defeat 5 daily bosses by forging Fire, Water, Earth, Volt and Void cards into powerful combos. Same seed for every player worldwide.</p>
+        <div class="game-meta">
+          <span class="game-tag tag-daily">Daily</span>
+          <span class="game-tag tag-card">Card Game</span>
+          <span class="game-tag tag-puzzle">Roguelike</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
+
+      <!-- Word Scramble -->
+      <a class="game-card" href="/game/word-scramble/" style="--card-color:#38bdf8;">
+        <div class="game-icon">🔤</div>
+        <h2>Daily Word Scramble</h2>
+        <p>Unscramble the hidden word before your 6 attempts run out. A new seeded puzzle every day — the same word for every player on the planet. Share your result without spoilers.</p>
+        <div class="game-meta">
+          <span class="game-tag tag-daily">Daily</span>
+          <span class="game-tag tag-word">Word Game</span>
+          <span class="game-tag tag-puzzle">Puzzle</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
+
+      <!-- Emoji Geography -->
+      <a class="game-card" href="/game/emoji-geography/" style="--card-color:#4ade80;">
+        <div class="game-icon">🌍</div>
+        <h2>Emoji Geography</h2>
+        <p>Guess the country from its flag emoji. 10 daily questions — the same 10 flags for every player worldwide. Use a hint for a clue but it costs a star. How many can you get perfect?</p>
+        <div class="game-meta">
+          <span class="game-tag tag-daily">Daily</span>
+          <span class="game-tag tag-puzzle">Geography</span>
+          <span class="game-tag tag-word">Quiz</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
+
+      <!-- Rock Paper Scissors -->
+      <a class="game-card" href="/game/rock-paper-scissors/" style="--card-color:#f87171;">
+        <div class="game-icon">✊</div>
+        <h2>Rock Paper Scissors</h2>
+        <p>Play best-of-5 against a CPU opponent. Easy mode picks randomly — Hard mode tracks your patterns and adapts. How long can you keep your win streak?</p>
+        <div class="game-meta">
+          <span class="game-tag tag-puzzle">Strategy</span>
+          <span class="game-tag tag-word">vs CPU</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
+
+      <!-- Emoji Memory Match -->
+      <a class="game-card" href="/game/emoji-memory/" style="--card-color:#fbbf24;">
+        <div class="game-icon">🃏</div>
+        <h2>Emoji Memory Match</h2>
+        <p>Flip and match emoji card pairs in the fewest moves. A new daily emoji set every day — same for every player worldwide. Track your best score and keep your streak alive.</p>
+        <div class="game-meta">
+          <span class="game-tag tag-daily">Daily</span>
+          <span class="game-tag tag-puzzle">Memory</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
+
+    </div>
+
+    <div class="section-intro">
+      <h2>Why ZippyWidgets Games?</h2>
+      <p>Every game on this page shares the same philosophy as our tools: <strong>zero friction</strong>. No account creation, no email address, no app store, no paywalls. Open the page and play — your progress is saved locally in your browser.</p>
+      <p>What makes our games different is the <strong>global daily seed</strong>. Using a deterministic pseudo-random number generator (PRNG) driven by today's UTC date, every player in the world gets an identical daily challenge. This creates an organic community without a backend server — share your result on Reddit or Twitter and you're comparing apples to apples with everyone else.</p>
+      <p>All games are <strong>unblocked</strong> — they run entirely in the browser after first load, require no external connections, and work on any device.</p>
+    </div>
+
+  </main>
+
+  <Footer />
+
+  <style>
+    .games-hero { text-align: center; padding: 2.5rem 1rem 1.5rem; }
+        .games-hero h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; line-height: 1.2; margin-bottom: .6rem; }
+        .games-hero p  { color: var(--muted); font-size: .95rem; max-width: 520px; margin: 0 auto 1.25rem; line-height: 1.7; }
+        .daily-pill { display: inline-flex; align-items: center; gap: .4rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: .35rem .9rem; font-size: .78rem; color: var(--muted); margin-bottom: 1rem; }
+        .daily-pill span { color: var(--accent); font-weight: 700; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+        .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: .75rem; transition: transform .2s, border-color .2s, box-shadow .2s; position: relative; overflow: hidden; }
+        .game-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--card-color, #7c6af7) 0%, transparent 60%); opacity: .06; pointer-events: none; }
+        .game-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 10px 32px rgba(124,106,247,.18); }
+        .game-icon { font-size: 2.5rem; line-height: 1; }
+        .game-card h2 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+        .game-card p  { font-size: .85rem; color: var(--muted); line-height: 1.65; flex: 1; }
+        .game-meta { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .game-tag { font-size: .68rem; font-weight: 700; padding: .2rem .55rem; border-radius: 20px; text-transform: uppercase; letter-spacing: .05em; }
+        .tag-daily  { background: rgba(124,106,247,.15); color: var(--accent); border: 1px solid rgba(124,106,247,.3); }
+        .tag-word   { background: rgba(56,189,248,.12); color: #38bdf8; border: 1px solid rgba(56,189,248,.25); }
+        .tag-card   { background: rgba(251,191,36,.12); color: #fbbf24; border: 1px solid rgba(251,191,36,.25); }
+        .tag-puzzle { background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25); }
+        .play-btn { display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; font-weight: 700; color: var(--accent); margin-top: .25rem; }
+        .coming-soon { opacity: .5; pointer-events: none; cursor: default; }
+        .coming-soon .play-btn { color: var(--muted); }
+        .cs-badge { position: absolute; top: 1rem; right: 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; font-size: .65rem; font-weight: 700; padding: .2rem .5rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+        .section-intro { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; display: flex; flex-direction: column; gap: .75rem; color: var(--muted); font-size: .9rem; line-height: 1.8; margin-top: 2rem; }
+        .section-intro h2 { font-size: 1rem; font-weight: 700; color: var(--text); }
+        @media (max-width: 640px) { .games-grid { grid-template-columns: 1fr; } }
+  </style>
+</Layout>

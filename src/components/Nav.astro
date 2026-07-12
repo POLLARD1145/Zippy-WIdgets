@@ -2,9 +2,9 @@
 import { tools } from '@data/tools.ts';
 
 const pathname = Astro.url.pathname;
-const toolLinks = tools.filter(t => t.href !== '/games/');
+const toolLinks = tools.filter(t => t.href !== '/game/');
 const topLinks = [
-  { href: '/games/', label: 'Games' },
+  { href: '/game/', label: 'Games' },
   { href: '/blog/', label: 'Blog' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' },
