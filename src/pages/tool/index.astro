@@ -1,0 +1,175 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { tools } from '@data/tools.ts';
+
+const title = 'All Free Online Tools | ZippyWidgets';
+const description = 'Browse every free ZippyWidgets tool in one place — PDF merger, image compressor, QR code generator, word counter, password generator, and more. No sign-up.';
+
+// Optional grouping: only rendered if your tool objects actually define a `category` field.
+const categories = [...new Set(tools.map((t: any) => t.category).filter(Boolean))] as string[];
+
+const toolsJson = JSON.stringify(
+  tools.map((t: any) => ({
+    name: t.name,
+    description: t.description,
+    href: t.href,
+    category: t.category ?? null,
+  }))
+);
+---
+<Layout title={title} description={description}>
+  <Nav />
+
+  <main class="flex flex-col items-center w-full">
+    <div class="max-w-7xl w-full px-4 sm:px-6 lg:px-8">
+
+      <section class="hero py-8 md:py-12 lg:py-16">
+        <h1>All <span class="gradient-text">Tools.</span></h1>
+        <p class="hero-sub">Every ZippyWidgets tool, in one place. No sign-up, no clutter — just pick one and go.</p>
+
+        <div style="max-width:480px;margin:1.5rem auto 0;">
+          <label for="toolSearch" class="sr-only">Search tools</label>
+          <input
+            id="toolSearch"
+            type="text"
+            autocomplete="off"
+            placeholder="Search tools…"
+            class="w-full bg-surface2 border border-border rounded-lg px-4 py-3 text-text placeholder:text-muted focus:outline-none focus:ring-2"
+            style="font-size:0.95rem;"
+          />
+        </div>
+
+        {categories.length > 0 && (
+          <div id="categoryFilters" class="flex flex-wrap justify-center gap-2" style="margin-top:1rem;">
+            <button type="button" class="filter-chip is-active" data-category="all">All</button>
+            {categories.map((cat) => (
+              <button type="button" class="filter-chip" data-category={cat}>{cat}</button>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <p id="emptyState" class="text-center text-muted" style="display:none;padding:2rem 0;">
+        No tools match your search. Try a different keyword.
+      </p>
+
+      <section
+        class="tools-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 py-6 md:py-8 lg:py-10"
+        id="toolsGrid"
+      >
+        {tools.map((tool: any) => (
+          <a
+            class="tool-card"
+            href={tool.href}
+            data-name={tool.name.toLowerCase()}
+            data-desc={tool.description.toLowerCase()}
+            data-category={tool.category ?? 'all'}
+          >
+            <div class="icon">{tool.icon}</div>
+            <div>
+              <h3>{tool.name}</h3>
+              <p>{tool.description}</p>
+              <span class="btn-open">{tool.cta}</span>
+            </div>
+          </a>
+        ))}
+      </section>
+
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+  </main>
+
+  <Footer />
+
+  <style>
+    .filter-chip {
+      font-size: .8rem;
+      font-weight: 600;
+      padding: .4rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .filter-chip:hover {
+      background: var(--surface);
+      color: var(--text);
+    }
+    .filter-chip.is-active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+  </style>
+
+  <script is:inline define:vars={{ toolsJson }}>
+    (function () {
+      const searchInput = document.getElementById('toolSearch');
+      const grid = document.getElementById('toolsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const cards = Array.from(grid.querySelectorAll('.tool-card'));
+      const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
+
+      let activeCategory = 'all';
+
+      function applyFilters() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const matchesQuery =
+            !query ||
+            card.dataset.name.includes(query) ||
+            card.dataset.desc.includes(query);
+          const matchesCategory =
+            activeCategory === 'all' || card.dataset.category === activeCategory;
+
+          const visible = matchesQuery && matchesCategory;
+          card.style.display = visible ? '' : 'none';
+          if (visible) visibleCount++;
+        });
+
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      let debounceTimer;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(applyFilters, 100);
+      });
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          activeCategory = btn.dataset.category;
+          applyFilters();
+        });
+      });
+    })();
+  </script>
+</Layout>
