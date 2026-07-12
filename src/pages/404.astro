@@ -10,52 +10,165 @@ const toolModules = import.meta.glob('/src/pages/tool/*/index.astro', { eager: t
 const gameModules = import.meta.glob('/src/pages/game/*/index.astro', { eager: true });
 const blogModules = import.meta.glob('/src/pages/blog/*/index.astro', { eager: true });
 
-const validPaths: string[] = [
-  '/',
-  '/about/',
-  '/contact/',
-  '/disclaimer/',
-  '/privacy-policy/',
-  '/blog/',
-  '/game/',
-  ...Object.keys(toolModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')),
-  ...Object.keys(gameModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')),
-  ...Object.keys(blogModules).map(p => p.replace('/src/pages', '').replace('/index.astro', '/')).filter(p => p !== '/blog/'),
+// Static, non-collection pages. Note: the tool *listing* lives at "/" (not "/tool/"),
+// while individual tools live at "/tool/some-tool/". Only the pages that actually
+// resolve to a route belong here.
+const staticPages = [
+  { path: '/', label: 'Home — Browse all tools', type: 'page' },
+  { path: '/about/', label: 'About', type: 'page' },
+  { path: '/contact/', label: 'Contact', type: 'page' },
+  { path: '/disclaimer/', label: 'Disclaimer', type: 'page' },
+  { path: '/privacy-policy/', label: 'Privacy Policy', type: 'page' },
+  { path: '/blog/', label: 'Blog — All articles', type: 'page' },
+  { path: '/game/', label: 'Games — All games', type: 'page' },
 ];
 
-const validPathsJson = JSON.stringify(validPaths);
+function slugToLabel(slug: string) {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+function toEntries(modules: Record<string, unknown>, type: 'tool' | 'game' | 'blog') {
+  return Object.keys(modules).map((p) => {
+    const cleaned = p.replace('/src/pages', '').replace('/index.astro', '/');
+    const segments = cleaned.split('/').filter(Boolean);
+    const slug = segments[segments.length - 1] || '';
+    return { path: cleaned, label: slugToLabel(slug), type };
+  });
+}
+
+const allEntries = [
+  ...staticPages,
+  ...toEntries(toolModules, 'tool'),
+  ...toEntries(gameModules, 'game'),
+  ...toEntries(blogModules, 'blog'),
+];
+
+const entriesJson = JSON.stringify(allEntries);
 ---
 <Layout title={title} description={description}>
   <Nav />
 
-  <main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8" style="text-align:center;min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-    <div class="card" style="max-width:520px;width:100%;">
-      <div style="font-size:4rem;line-height:1;margin-bottom:1rem;">🚧</div>
-      <h1 style="font-size:1.8rem;font-weight:800;margin-bottom:.5rem;">404 — Page Not Found</h1>
-      <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">We couldn't find the page you were looking for. It might have been moved, deleted, or the URL could be misspelled.<span id="suggestion" style="display:none;"> Did you mean <a id="suggestionLink" href="/" style="color:var(--accent);font-weight:700;text-decoration:underline;">Yes</a>?</span></p>
+  <main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12" style="min-height:60vh;">
+    <div class="card mx-auto" style="max-width:640px;width:100%;" id="notFoundCard">
+
+      <!-- Signature: a "disconnected route" icon rather than a generic magnifying glass -->
+      <div class="flex justify-center mb-2">
+        <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="48" cy="48" r="44" stroke="var(--border)" stroke-width="2" stroke-dasharray="4 6"/>
+          <path d="M28 40 L44 40" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M52 40 L68 40" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="48" cy="40" r="5" fill="var(--surface2)" stroke="var(--accent)" stroke-width="2.5"/>
+          <path d="M32 58 Q48 70 64 58" stroke="var(--accent2)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="32" cy="58" r="2.5" fill="var(--accent2)"/>
+          <circle cx="64" cy="58" r="2.5" fill="var(--accent2)"/>
+        </svg>
+      </div>
+
+      <h1 class="text-center font-extrabold" style="font-size:1.8rem;margin-bottom:.4rem;">Page not found</h1>
+      <p class="text-center text-muted" style="line-height:1.7;margin-bottom:1.5rem;">
+        The link is broken or the address was mistyped. Search for what you need below, or check the suggestions we found.
+      </p>
+
+      <!-- Live search -->
+      <div style="margin-bottom:1.25rem;">
+        <label for="pathSearch" class="sr-only">Search tools, games and articles</label>
+        <input
+          id="pathSearch"
+          type="text"
+          placeholder="Search tools, games, articles…"
+          autocomplete="off"
+          class="w-full bg-surface2 border border-border rounded-lg px-4 py-3 text-text placeholder:text-muted focus:outline-none focus:ring-2"
+          style="font-size:0.95rem;"
+        />
+        <ul id="searchResults" class="mt-2 rounded-lg border border-border overflow-hidden" style="display:none;"></ul>
+      </div>
+
+      <!-- "Did you mean" suggestions, only shown when a good match exists -->
+      <div id="suggestionsBlock" style="display:none;margin-bottom:1.5rem;">
+        <p class="text-muted" style="font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem;">
+          Did you mean
+        </p>
+        <ul id="suggestionsList" class="rounded-lg border border-border overflow-hidden"></ul>
+      </div>
 
       <div class="btn-group" style="justify-content:center;flex-wrap:wrap;">
         <a class="btn btn-primary" href="/">Back to homepage</a>
-        <a class="btn btn-secondary" href="/tool/">Browse tools</a>
+        <a class="btn btn-secondary" href="/">Browse tools</a>
         <a class="btn btn-secondary" href="/game/">Play games</a>
+        <a class="btn btn-secondary" href="/blog/">Read the blog</a>
       </div>
     </div>
   </main>
 
   <Footer />
 
-  <script is:inline define:vars={{ validPaths: validPathsJson }}>
-    (function(){
-      const paths = JSON.parse(validPaths);
-      const requested = window.location.pathname.replace(/\/$/, '') || '/';
-      const requestedSegments = requested.split('/').filter(Boolean);
-      const requestedLast = requestedSegments[requestedSegments.length - 1] || '';
+  <style>
+    #searchResults li a,
+    #suggestionsList li a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      padding: .7rem 1rem;
+      background: var(--surface2);
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s ease;
+    }
+    #searchResults li:last-child a,
+    #suggestionsList li:last-child a {
+      border-bottom: none;
+    }
+    #searchResults li a:hover,
+    #suggestionsList li a:hover,
+    #searchResults li a:focus-visible,
+    #suggestionsList li a:focus-visible {
+      background: var(--surface);
+    }
+    .type-badge {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding: .15rem .5rem;
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+    .type-badge.tool { color: var(--accent); border: 1px solid var(--accent); }
+    .type-badge.game { color: var(--accent2); border: 1px solid var(--accent2); }
+    .type-badge.blog,
+    .type-badge.page { color: var(--muted); border: 1px solid var(--border); }
+
+    #notFoundCard {
+      animation: fadeInUp .35s ease both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #notFoundCard { animation: none; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <script is:inline define:vars={{ entriesJson }}>
+    (function () {
+      const entries = JSON.parse(entriesJson);
+      const requestedPath = (window.location.pathname.replace(/\/$/, '') || '/');
+      const requestedSegments = requestedPath.split('/').filter(Boolean);
+      const requestedLast = (requestedSegments[requestedSegments.length - 1] || '').toLowerCase();
+      const requestedCategory = ['tool', 'game', 'blog'].includes(requestedSegments[0]) ? requestedSegments[0] : null;
 
       function levenshtein(a, b) {
         const m = a.length, n = b.length;
         if (!m) return n;
         if (!n) return m;
-        const prev = new Array(n + 1);
+        let prev = new Array(n + 1);
         for (let j = 0; j <= n; j++) prev[j] = j;
         for (let i = 1; i <= m; i++) {
           const curr = new Array(n + 1);
@@ -64,52 +177,121 @@ const validPathsJson = JSON.stringify(validPaths);
             const cost = a[i - 1] === b[j - 1] ? 0 : 1;
             curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
           }
-          for (let j = 0; j <= n; j++) prev[j] = curr[j];
+          prev = curr;
         }
         return prev[n];
       }
 
-      function segmentSimilarity(req, target) {
-        const reqSegs = req.split('/').filter(Boolean);
-        const targetSegs = target.split('/').filter(Boolean);
-        const reqLast = reqSegs[reqSegs.length - 1] || '';
-        const targetLast = targetSegs[targetSegs.length - 1] || '';
-        if (!reqLast || !targetLast) return Infinity;
-
-        // Exact last-segment match wins
-        if (reqLast === targetLast) return 0;
-
-        // Check if one contains the other
-        if (targetLast.includes(reqLast) || reqLast.includes(targetLast)) {
-          return Math.abs(targetLast.length - reqLast.length) * 0.3;
-        }
-
-        return levenshtein(reqLast, targetLast);
+      // Normalized distance in [0, 1], 0 = identical
+      function normDistance(a, b) {
+        if (!a.length && !b.length) return 0;
+        return levenshtein(a, b) / Math.max(a.length, b.length);
       }
 
-      let best = null;
-      let bestScore = Infinity;
+      function scoreEntry(entry) {
+        const normalized = entry.path.replace(/\/$/, '') || '/';
+        if (normalized === requestedPath) return null; // skip exact self-match
 
-      for (const path of paths) {
-        const normalized = path.replace(/\/$/, '') || '/';
-        if (normalized === requested) continue;
-        const score = segmentSimilarity(requested, normalized);
-        if (score < bestScore) {
-          bestScore = score;
-          best = path;
+        const segs = normalized.split('/').filter(Boolean);
+        const last = (segs[segs.length - 1] || '').toLowerCase();
+        if (!last || !requestedLast) return null;
+
+        // Compare last path segment (typical case: /tool/pdf-mreger/ vs /tool/pdf-merger/)
+        let lastScore = normDistance(requestedLast, last);
+        if (last.includes(requestedLast) || requestedLast.includes(last)) {
+          lastScore = Math.min(lastScore, Math.abs(last.length - requestedLast.length) * 0.06);
         }
+
+        // Also compare full joined path, catches cases like missing "/tool/" prefix
+        const requestedJoined = requestedSegments.join('-').toLowerCase();
+        const candidateJoined = segs.join('-').toLowerCase();
+        const fullScore = normDistance(requestedJoined, candidateJoined);
+
+        let score = Math.min(lastScore, fullScore);
+
+        // Prefer same-category matches (tool/tool, game/game, blog/blog)
+        if (requestedCategory && entry.type === requestedCategory) {
+          score *= 0.7;
+        }
+
+        return score;
       }
 
-      // Only suggest if the last segment is close enough (allow typo length)
-      const threshold = Math.max(2, Math.floor(requestedLast.length / 3));
-      if (best && bestScore <= threshold && requestedLast.length > 1) {
-        const suggestion = document.getElementById('suggestion');
-        const link = document.getElementById('suggestionLink');
-        if (suggestion && link) {
-          suggestion.style.display = 'inline';
-          link.href = best;
-        }
+      const scored = entries
+        .map((entry) => ({ entry, score: scoreEntry(entry) }))
+        .filter((s) => s.score !== null)
+        .sort((a, b) => a.score - b.score);
+
+      const THRESHOLD = 0.55;
+      const topMatches = scored.filter((s) => s.score <= THRESHOLD).slice(0, 3);
+
+      if (topMatches.length && requestedLast.length > 1) {
+        const block = document.getElementById('suggestionsBlock');
+        const list = document.getElementById('suggestionsList');
+        topMatches.forEach(({ entry }) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = entry.path;
+          a.innerHTML =
+            '<span>' + entry.label + '</span>' +
+            '<span class="type-badge ' + entry.type + '">' + entry.type + '</span>';
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+        block.style.display = 'block';
       }
+
+      // Live search
+      const input = document.getElementById('pathSearch');
+      const resultsBox = document.getElementById('searchResults');
+
+      function renderResults(matches) {
+        resultsBox.innerHTML = '';
+        if (!matches.length) {
+          resultsBox.style.display = 'none';
+          return;
+        }
+        matches.forEach((entry) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = entry.path;
+          a.innerHTML =
+            '<span>' + entry.label + '</span>' +
+            '<span class="type-badge ' + entry.type + '">' + entry.type + '</span>';
+          li.appendChild(a);
+          resultsBox.appendChild(li);
+        });
+        resultsBox.style.display = 'block';
+      }
+
+      let debounceTimer;
+      input.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          const query = input.value.trim().toLowerCase();
+          if (!query) {
+            renderResults([]);
+            return;
+          }
+          const ranked = entries
+            .map((entry) => {
+              const label = entry.label.toLowerCase();
+              const slug = entry.path.toLowerCase();
+              let score;
+              if (label.includes(query) || slug.includes(query)) {
+                score = 0; // substring match always wins
+              } else {
+                score = normDistance(query, label);
+              }
+              return { entry, score };
+            })
+            .sort((a, b) => a.score - b.score)
+            .filter((s) => s.score <= 0.6)
+            .slice(0, 6)
+            .map((s) => s.entry);
+          renderResults(ranked);
+        }, 120);
+      });
     })();
   </script>
 </Layout>
