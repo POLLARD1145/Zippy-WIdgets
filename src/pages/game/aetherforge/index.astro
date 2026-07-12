@@ -235,7 +235,7 @@ const canonical = 'https://zippywidgets.online/game/aetherforge/';
 <!-- ════════════════════════════════════
      GAME ENGINE
 ════════════════════════════════════ -->
-<script>
+<script is:inline>
 "use strict";
 
 // ── PRNG (Mulberry32) ──────────────────────────────────────────────────────
@@ -904,7 +904,7 @@ checkVictoryParam();
 
   <Footer />
 
-  <style>
+  <style is:global>
     /* ── Reset & Base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         /* ── Dark theme (default) ── */

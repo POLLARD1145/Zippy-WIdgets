@@ -41,7 +41,7 @@ const canonical = 'https://zippywidgets.online/game/rock-paper-scissors/';
 <div class="ad-slot-game" id="ad-top-rps" style="padding:0 1rem; margin-bottom:-.25rem;">
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
-<script>
+<script is:inline>
   (function(){
     var s=document.getElementById('ad-top-rps');
     var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
@@ -140,7 +140,7 @@ const canonical = 'https://zippywidgets.online/game/rock-paper-scissors/';
 <div class="ad-slot-game" id="ad-bot-rps" style="padding:0 1rem;">
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
-<script>
+<script is:inline>
   (function(){
     var s=document.getElementById('ad-bot-rps');
     var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
@@ -163,7 +163,7 @@ const canonical = 'https://zippywidgets.online/game/rock-paper-scissors/';
 
 
 
-<script>
+<script is:inline>
 /* ════════════════════════════════════════════════════════════════
    ROCK PAPER SCISSORS — Single Player vs CPU
    Easy: truly random. Hard: frequency-based pattern prediction.
@@ -531,7 +531,7 @@ function toggleMute() {
 
   <Footer />
 
-  <style>
+  <style is:global>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
         /* ── Dark theme ── */
