@@ -99,7 +99,10 @@ const isGamePage = pathname.startsWith('/game/') && pathname !== '/game/';
   .nav-dropdown:hover .dropdown-menu,
   .nav-dropdown.open .dropdown-menu { display: flex; }
   .nav-dropdown:hover .nav-pill,
-  .nav-dropdown.open .nav-pill { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-dropdown.open .nav-pill,
+  .nav-dropdown .nav-pill.active,
+  .nav-pill:hover,
+  .nav-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   @media (max-width: 640px) {
     .dropdown-menu {
