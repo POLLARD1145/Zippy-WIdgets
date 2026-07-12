@@ -1,0 +1,97 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'About ZippyWidgets – Free Instant Browser Tools';
+const description = 'ZippyWidgets is a collection of free, instant, no-sign-up browser tools. Learn about our mission to make everyday utility tasks fast and accessible to everyone.';
+---
+
+<Layout title={title} description={description}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ZippyWidgets",
+    "url": "https://zippywidgets.online/",
+    "description": "Free instant browser-based utility tools. No sign-up required.",
+    "sameAs": []
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">⚡</span>
+      <div>
+        <h1>About ZippyWidgets</h1>
+        <p>Fast, free tools for everyday tasks — no fluff, no accounts.</p>
+      </div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">What is ZippyWidgets?</h2>
+        <p style="color:var(--muted);line-height:1.7;">ZippyWidgets is a growing collection of free, instant utility tools that run entirely in your browser. No downloads, no sign-ups, no subscriptions — just open a tool and use it. Every widget is built to be fast, mobile-friendly, and accessible to anyone.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Our Mission</h2>
+        <p style="color:var(--muted);line-height:1.7;">The web is full of tools that make you create an account just to count words or generate a QR code. We built ZippyWidgets because useful tools should be instant and friction-free. Everything runs client-side — your data never leaves your device.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Our Tools</h2>
+        <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.3rem;">
+          <a href="/tool/picker-wheel/" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.5rem;">🎡</span>
+            <div><strong>Random Picker Wheel</strong><br /><span style="color:var(--muted);font-size:.85rem;">Spin to randomly select from any custom list of names or options.</span></div>
+          </a>
+          <a href="/tool/font-generator/" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.5rem;">✍️</span>
+            <div><strong>Fancy Font Generator</strong><br /><span style="color:var(--muted);font-size:.85rem;">Convert text into stylish Unicode fonts for Instagram, TikTok, and Discord.</span></div>
+          </a>
+          <a href="/tool/word-counter/" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.5rem;">📝</span>
+            <div><strong>Word & Character Counter</strong><br /><span style="color:var(--muted);font-size:.85rem;">Real-time word count, character count, and social media platform limits.</span></div>
+          </a>
+          <a href="/tool/qr-code-generator/" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.5rem;">📷</span>
+            <div><strong>QR Code Generator</strong><br /><span style="color:var(--muted);font-size:.85rem;">Turn any URL or text into a downloadable QR code in seconds.</span></div>
+          </a>
+          <a href="/tool/age-calculator/" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.5rem;">🎂</span>
+            <div><strong>Age Calculator</strong><br /><span style="color:var(--muted);font-size:.85rem;">Find your exact age in years, months, weeks, days, and hours.</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Contact Us</h2>
+        <p style="color:var(--muted);line-height:1.7;">Have a suggestion, found a bug, or just want to say hi? We'd love to hear from you.<br />Email us at <a href="mailto:support@zippywidgets.online" style="color:var(--accent);font-weight:600;">support@zippywidgets.online</a></p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Privacy & Transparency</h2>
+        <p style="color:var(--muted);line-height:1.7;">We are transparent about how the site is funded. ZippyWidgets displays Google AdSense advertisements to keep the tools free. We never sell your data. All tool computation happens locally in your browser. Read our full <a href="/privacy-policy/" style="color:var(--accent);">Privacy Policy</a>.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ZippyWidgets",
+        "url": "https://zippywidgets.online/",
+        "description": "Free instant browser-based utility tools. No sign-up required.",
+        "sameAs": []
+      }
+  </script>
+</Layout>

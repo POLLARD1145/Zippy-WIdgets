@@ -1,0 +1,197 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'What Is a Good Internet Speed? Mbps Guide for Streaming, Gaming & Working From Home | ZippyWidgets';
+const description = 'How fast should your internet be? Learn what Mbps, ping and jitter mean, how much speed you need for 4K streaming, gaming, Zoom calls and Starlink — with a handy reference table.';
+const canonical = 'https://zippywidgets.online/blog/what-is-a-good-internet-speed/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Is a Good Internet Speed? Mbps Guide for Streaming, Gaming & Working From Home",
+    "description": "How fast should your internet be? Learn what Mbps, ping and jitter mean, and how much speed you need for 4K streaming, online gaming, Zoom calls, Starlink and working from home.",
+    "url": "https://zippywidgets.online/blog/what-is-a-good-internet-speed/",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "author": { "@type": "Organization", "name": "ZippyWidgets" },
+    "datePublished": "2026-07-10",
+    "dateModified": "2026-07-10",
+    "keywords": ["internet speed", "Mbps", "ping", "jitter", "broadband speed", "streaming speed", "gaming internet", "Starlink speed", "download speed", "upload speed"]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/blog/">← Back to Blog</a>
+
+    <div class="tool-header">
+      <span class="icon">⚡</span>
+      <div>
+        <h1>What Is a Good Internet Speed? (Mbps Guide for Streaming, Gaming &amp; WFH)</h1>
+        <p class="article-meta">July 2026 · 5 min read · <a href="/blog/" style="color:var(--accent);">ZippyWidgets Blog</a></p>
+      </div>
+    </div>
+
+    <div class="card article-body">
+
+      <p>Whether you're buffering on Netflix, lagging in a game, or frozen on a Zoom call, the culprit usually comes down to one of four numbers: <strong>download speed</strong>, <strong>upload speed</strong>, <strong>ping</strong>, or <strong>jitter</strong>. Here's exactly what each one means and how much you actually need.</p>
+
+      <h2>The Four Numbers That Matter</h2>
+
+      <h3>Download Speed (Mbps)</h3>
+      <p>Download speed is how fast data flows <em>to</em> your device — from the internet to you. This covers streaming video, loading web pages, downloading files, and receiving emails with attachments. It's the number most ISPs advertise and the one most people think of when they say "internet speed."</p>
+
+      <h3>Upload Speed (Mbps)</h3>
+      <p>Upload speed is how fast data flows <em>from</em> your device to the internet. This affects video calls (your camera feed), live streaming on Twitch or YouTube, uploading files to Google Drive or Dropbox, and sending large email attachments. Most home broadband plans have asymmetric speeds — upload is much lower than download. This is usually fine for browsing but becomes a bottleneck for streamers and remote workers.</p>
+
+      <h3>Ping (ms)</h3>
+      <p>Ping is the round-trip time for a small data packet to travel from your device to a server and back, measured in milliseconds (ms). Lower ping means faster response times. This matters most in online gaming and video calls where real-time interaction is critical. A 50ms ping feels different from a 150ms ping in a fast-paced shooter.</p>
+
+      <h3>Jitter (ms)</h3>
+      <p>Jitter measures the <em>consistency</em> of your ping — how much it varies from measurement to measurement. A connection with 30ms ping and 2ms jitter is very stable. A connection with 30ms ping and 25ms jitter will feel erratic: your game will rubber-band and your video call will stutter even though the average ping looks acceptable. High jitter is often caused by WiFi interference, congested network equipment, or a poor ISP connection.</p>
+
+      <h2>How Much Speed Do You Need?</h2>
+
+      <table>
+        <thead>
+          <tr><th>Activity</th><th>Min Download</th><th>Recommended Download</th><th>Min Upload</th><th>Max Ping</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Standard Definition Streaming (720p)</td><td>3 Mbps</td><td>5 Mbps</td><td>—</td><td>—</td></tr>
+          <tr><td>Full HD Streaming (1080p)</td><td>5 Mbps</td><td>15 Mbps</td><td>—</td><td>—</td></tr>
+          <tr><td>4K Streaming (Netflix, YouTube)</td><td>15 Mbps</td><td>25 Mbps</td><td>—</td><td>—</td></tr>
+          <tr><td>Video Calls (Zoom / Teams)</td><td>3 Mbps</td><td>10 Mbps</td><td>3 Mbps</td><td>150 ms</td></tr>
+          <tr><td>Online Gaming (casual)</td><td>3 Mbps</td><td>10 Mbps</td><td>1 Mbps</td><td>80 ms</td></tr>
+          <tr><td>Competitive Gaming (FPS / Battle Royale)</td><td>10 Mbps</td><td>25 Mbps</td><td>3 Mbps</td><td>30 ms</td></tr>
+          <tr><td>Live Streaming (Twitch 1080p 60fps)</td><td>—</td><td>—</td><td>6 Mbps</td><td>60 ms</td></tr>
+          <tr><td>Working from Home (general)</td><td>10 Mbps</td><td>25 Mbps</td><td>3 Mbps</td><td>100 ms</td></tr>
+          <tr><td>Starlink / Satellite Internet</td><td>50–200 Mbps typical</td><td>—</td><td>10–20 Mbps typical</td><td>20–60 ms</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What About Gigabit (1000 Mbps)?</h2>
+      <p>Gigabit broadband delivers 1,000 Mbps download. For a single user, this is overkill for almost every activity — 4K streaming needs only 25 Mbps. Where Gigabit shines is <strong>multi-user households</strong>: when four people are simultaneously streaming, gaming, and on video calls, having headroom means nobody experiences slowdowns. It also dramatically speeds up large file transfers, cloud backups, and software downloads.</p>
+
+      <h2>Why Standard Speed Tests May Underreport Your Speed</h2>
+      <p>Standard speed tests (including older versions of Fast.com) measure speed using small files. On a Gigabit connection, these small files transfer so quickly that the measurement window is too short to accurately capture the true throughput. For accurate readings on fast connections, use larger test files — our Speed Test's <strong>Streamer / Gaming mode</strong> tests with files up to 100MB specifically to solve this problem.</p>
+
+      <div class="cta-box">
+        <p>Ready to check your actual speeds? <a href="/tool/speed-test/">Run a free speed test →</a> — no app, no sign-up, results in under a minute.</p>
+      </div>
+
+      <h2>How to Improve Your Speed</h2>
+      <ul>
+        <li><strong>Switch from WiFi to ethernet</strong> — a wired connection eliminates wireless interference and typically adds 20–50% throughput.</li>
+        <li><strong>Restart your router</strong> — clears memory leaks and reconnects to the ISP at full speed.</li>
+        <li><strong>Move closer to your router</strong> — WiFi speed drops sharply with distance and through walls.</li>
+        <li><strong>Upgrade your router</strong> — older routers cap speeds even on fast broadband plans. WiFi 6 (802.11ax) routers handle congested households much better.</li>
+        <li><strong>Check for ISP throttling</strong> — some ISPs reduce speeds during peak hours. Compare your test results at different times of day.</li>
+        <li><strong>Use the 5 GHz band</strong> — faster but shorter range than 2.4 GHz. Better for devices close to the router.</li>
+      </ul>
+
+      <h2>How to Fix High Jitter on a Fibre Connection</h2>
+      <p>High jitter on a fibre connection is almost always a local problem, not an ISP backbone issue — fibre optic cables have negligible inherent jitter. Here's how to diagnose and fix it step by step:</p>
+      <ol>
+        <li><strong>Test wired first.</strong> Connect your computer directly to the router with an ethernet cable and run a speed test. If jitter drops dramatically, the problem is entirely in your WiFi environment — proceed to step 3. If jitter remains high on ethernet, the problem is in your router or the ISP handoff — proceed to step 2.</li>
+        <li><strong>Isolate the router.</strong> Log into your router's admin panel (usually 192.168.1.1) and check for firmware updates. An out-of-date router OS is a common cause of packet scheduling inconsistencies that manifest as jitter. Also check for QoS (Quality of Service) settings that may be incorrectly deprioritising traffic.</li>
+        <li><strong>Identify WiFi interference.</strong> Use a free WiFi analyser app (e.g., WiFi Analyzer on Android, Wireless Diagnostics on Mac) to see what channels neighbouring networks are using. If your router is on the same channel as three neighbours, collisions cause jitter. Switch to a less congested channel — channels 1, 6, or 11 on 2.4 GHz do not overlap.</li>
+        <li><strong>Check your cable infrastructure.</strong> Older homes with daisy-chained ethernet switches or long cable runs can introduce jitter even on a fibre plan. Replace any Cat5 cables with Cat5e or Cat6. Avoid powerline network adapters — they are notorious jitter sources.</li>
+        <li><strong>Contact your ISP.</strong> If you have high jitter with a direct ethernet connection to your router at multiple times of day, the fault is in the ISP's aggregation network or the optical network terminal (ONT) at your premises. Request a line quality test — not just a speed test — from your ISP.</li>
+      </ol>
+
+      <h2>Step-by-Step Router Optimisation for WFH Latency</h2>
+      <p>Remote workers are uniquely sensitive to latency and jitter because video calls (Zoom, Teams, Google Meet) and VPNs are real-time bidirectional streams. Here's a systematic optimisation process:</p>
+      <h3>Step 1: Enable QoS for your work device</h3>
+      <p>Most modern routers support Quality of Service (QoS), which lets you prioritise traffic from specific devices or applications. Log into your router admin panel, find the QoS or Traffic Priority section, and set your work computer to Highest priority. This ensures that when a family member starts a 4K YouTube stream, your Zoom call's packets take precedence.</p>
+      <h3>Step 2: Use a wired connection for calls</h3>
+      <p>Even on WiFi 6, concurrent calls while other devices are active on the same band can introduce 20–60ms of additional jitter. A USB-C to ethernet adapter costs under £15 and virtually eliminates WiFi-related call instability. Keep the WiFi connection as a backup but conduct all calls wired.</p>
+      <h3>Step 3: Configure your VPN split tunnelling</h3>
+      <p>Many corporate VPNs route <em>all</em> traffic through the company server, including Netflix and YouTube. This dramatically increases effective latency for non-work traffic and adds unnecessary load to the VPN tunnel. If your IT department permits it, enable split tunnelling so only company intranet traffic routes through the VPN while general browsing goes direct. This typically reduces VPN-induced latency by 40–70%.</p>
+      <h3>Step 4: Schedule bandwidth-heavy tasks</h3>
+      <p>Cloud backups (Backblaze, Time Machine over network, OneDrive), Windows Update downloads, and large file syncs consume upload bandwidth that competes directly with your video call stream. Schedule these for off-hours using your backup software's built-in scheduler. On Windows, you can limit Windows Update bandwidth in Settings → Windows Update → Advanced Options → Delivery Optimisation.</p>
+      <h3>Step 5: Test at different times</h3>
+      <p>Run your speed test at 9am, 12pm, 6pm, and 10pm over several days. ISP congestion typically peaks between 6pm–11pm when residential broadband users are most active. If your jitter is low in the morning but high in the evening, the problem is ISP network congestion — something a router upgrade won't fix. Document the results and present them to your ISP to request a network investigation.</p>
+
+      <h2>Understanding Your Speed Test Results vs. Your ISP's Advertised Speed</h2>
+      <p>It is normal — and legal — for your measured speed to be lower than your plan's advertised speed. Here's why:</p>
+      <ul>
+        <li><strong>"Up to" speeds are peak laboratory conditions.</strong> ISPs advertise the theoretical maximum throughput of the network technology, not the average delivered speed. Ofcom in the UK requires ISPs to provide average speeds during peak hours (8pm–10pm), which is more representative.</li>
+        <li><strong>WiFi overhead reduces throughput.</strong> Even WiFi 6 introduces 10–30% overhead compared to the raw ethernet connection speed. A 1Gbps fibre plan tested over WiFi 5 on a 2019 laptop may show 400–600 Mbps — this is normal, not an ISP problem.</li>
+        <li><strong>The test server matters.</strong> Speed tests route traffic to the nearest test server. If that server is congested or geographically distant, your result will be lower than your true capability. Our Speed Test uses Cloudflare's global edge network, which has one of the largest infrastructure footprints in the world, minimising this variable.</li>
+        <li><strong>Time of day affects real-world results.</strong> Broadband is a shared medium. During peak hours, available bandwidth per user decreases as more subscribers are active simultaneously on the same exchange or cable node.</li>
+      </ul>
+      <p>If your measured speed is consistently below 50% of your advertised speed during off-peak hours on a wired connection, you have grounds to formally complain to your ISP and, if unresolved, to your national communications regulator (Ofcom in the UK, FCC in the US).</p>
+
+    </div>
+
+    <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+  </main>
+
+  <Footer />
+
+  <style>
+    .article-body { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted); line-height: 1.8; font-size: .95rem; }
+        .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-top: .5rem; }
+        .article-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+        .article-body p { margin: 0; }
+        .article-body ul { padding-left: 1.3rem; display: flex; flex-direction: column; gap: .4rem; }
+        .article-body table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+        .article-body th, .article-body td { padding: .6rem .8rem; border: 1px solid var(--border); text-align: left; }
+        .article-body th { background: var(--surface2); color: var(--text); font-weight: 700; }
+        .cta-box { background: var(--surface2); border: 1px solid var(--accent); border-radius: var(--radius); padding: 1.2rem 1.4rem; margin-top: .5rem; }
+        .cta-box p { color: var(--text) !important; font-weight: 500; }
+        .cta-box a { color: var(--accent); font-weight: 700; }
+        .article-meta { font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
+  </style>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "What Is a Good Internet Speed? Mbps Guide for Streaming, Gaming & Working From Home",
+        "description": "How fast should your internet be? Learn what Mbps, ping and jitter mean, and how much speed you need for 4K streaming, online gaming, Zoom calls, Starlink and working from home.",
+        "url": "https://zippywidgets.online/blog/what-is-a-good-internet-speed/",
+        "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+        "author": { "@type": "Organization", "name": "ZippyWidgets" },
+        "datePublished": "2026-07-10",
+        "dateModified": "2026-07-10",
+        "keywords": ["internet speed", "Mbps", "ping", "jitter", "broadband speed", "streaming speed", "gaming internet", "Starlink speed", "download speed", "upload speed"]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+</Layout>

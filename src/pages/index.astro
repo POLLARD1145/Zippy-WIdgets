@@ -1,0 +1,62 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { tools } from '@data/tools.ts';
+
+const title = 'ZippyWidgets – Free Online Tools: PDF Merger, Image Compressor, QR Code, Word Counter & More';
+const description = 'Free instant online tools — PDF merger, image compressor, QR code generator, word counter, font generator, password generator, and more. No sign-up, works in your browser.';
+---
+<Layout title={title} description={description}>
+  <Nav />
+
+  <main>
+    <section class="hero">
+      <h1>Free Tools, <span class="gradient-text">Instantly.</span></h1>
+      <p class="hero-sub">No sign-up. No clutter. Just fast, useful widgets — right in your browser.</p>
+    </section>
+
+    <section class="tools-grid">
+      {tools.map(tool => (
+        <a class="tool-card" href={tool.href}>
+          <div class="icon">{tool.icon}</div>
+          <div>
+            <h3>{tool.name}</h3>
+            <p>{tool.description}</p>
+            <span class="btn-open">{tool.cta}</span>
+          </div>
+        </a>
+      ))}
+    </section>
+
+    <section class="card" style="margin-top:1.25rem;display:flex;flex-direction:column;gap:.9rem;color:var(--muted);line-height:1.8;font-size:.93rem;">
+      <h2 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0;">Why ZippyWidgets?</h2>
+      <p>Every tool on ZippyWidgets is built around one principle: <strong>no friction</strong>. There are no accounts to create, no email addresses to hand over, no paywalls to navigate, and no apps to download. Open the page, use the tool, done. All processing happens directly in your browser — your text, your dates, your WiFi passwords, your PDFs, and your images never leave your device.</p>
+      <p>The tools here cover the tasks that come up repeatedly in everyday digital life. The <strong>PDF Merger</strong> combines multiple PDFs into one file with no limits, no watermarks, and no uploads. The <strong>Image Compressor</strong> shrinks JPG, PNG and WebP images for faster websites and social media uploads. The <strong>Password Generator</strong> creates cryptographically random passwords with a live strength meter. The <strong>JSON Formatter</strong> formats, validates and converts JSON and CSV data for developers. The <strong>Favicon Generator</strong> turns any logo into a multi-size favicon.ico file. The <strong>Random Picker Wheel</strong> is used by teachers, streamers, and event hosts worldwide for fair, transparent selections. The <strong>Font Generator</strong> produces over 30 Unicode text styles that paste directly into Instagram, TikTok, Discord, and Twitter. The <strong>Word Counter</strong> tracks not just words but platform-specific character limits for Twitter, LinkedIn, TikTok, SMS, and more. The <strong>QR Code Generator</strong> creates WiFi, URL, email, and plain-text QR codes with custom colours and high-resolution PNG export. The <strong>Age Calculator</strong> gives precise results down to hours lived and days until the next birthday. The <strong>Speed Test</strong> measures download, upload, ping and jitter against Cloudflare's global network — with plain-English connection quality ratings for gaming, streaming, video calls and more.</p>
+      <p>All tools are free. All tools work offline after first load. <a href="/blog/" style="color:var(--accent);">Read the blog</a> for in-depth guides on getting the most out of each one.</p>
+    </section>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+  </main>
+
+  <Footer />
+</Layout>

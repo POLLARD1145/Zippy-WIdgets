@@ -1,0 +1,68 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Contact Us | ZippyWidgets';
+const description = 'Get in touch with ZippyWidgets. Report a bug, suggest a new tool, or just say hello. We read every message.';
+const canonical = 'https://zippywidgets.online/contact/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">✉️</span>
+      <div>
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you — bug reports, suggestions, or just a hello.</p>
+      </div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Get in Touch</h2>
+        <p style="color:var(--muted);line-height:1.7;">The best way to reach us is by email. We read every message and aim to respond within 2 business days.</p>
+        <p style="margin-top:.75rem;">
+          <a href="mailto:support@zippywidgets.online" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;padding:.65rem 1.4rem;border-radius:9px;font-weight:600;text-decoration:none;font-size:.95rem;">
+            ✉️ support@zippywidgets.online
+          </a>
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.75rem;">What Can You Contact Us About?</h2>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;">
+            <strong style="color:var(--text);">🐛 Bug Reports</strong>
+            <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">Found something broken? Tell us the tool, what you were doing, and what device and browser you're using. Screenshots are very helpful.</p>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;">
+            <strong style="color:var(--text);">💡 Feature Suggestions</strong>
+            <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">Have an idea for improving an existing tool or a new tool we should build? We're always looking for what would genuinely be useful.</p>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;">
+            <strong style="color:var(--text);">🤝 Partnership & Collaboration</strong>
+            <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">Interested in working together or featuring ZippyWidgets? Reach out and we'll get back to you.</p>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;">
+            <strong style="color:var(--text);">🔒 Privacy Enquiries</strong>
+            <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">Questions about data handling, advertising, or our <a href="/privacy-policy/" style="color:var(--accent);">Privacy Policy</a>? We're happy to clarify.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">About ZippyWidgets</h2>
+        <p style="color:var(--muted);line-height:1.7;">ZippyWidgets is a small independent project building free, fast, browser-based utility tools. All tools run entirely client-side — no servers, no data collection, no accounts. Read more on our <a href="/about/" style="color:var(--accent);">About page</a>.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

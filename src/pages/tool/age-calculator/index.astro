@@ -1,0 +1,229 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Age Calculator | How Many Days Old Am I? Days Until Birthday';
+const description = 'How old am I? Enter your birthdate to find your exact age in years, months, weeks, and total days. See how many days old you are and days until your next birthday.';
+const canonical = 'https://zippywidgets.online/tool/age-calculator/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Age Calculator",
+    "url": "https://zippywidgets.online/age-calculator/",
+    "description": "Free age calculator. Enter your birthdate to find your exact age in years, months, weeks, days, and hours with next birthday countdown.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is my exact age calculated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Your age is calculated from your date of birth to today's date using your device's local clock. The calculation accounts for leap years, giving an accurate count of years, months, weeks, days, hours, and minutes lived." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do leap years affect age calculations?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Leap years add an extra day (February 29) every 4 years, with exceptions for century years not divisible by 400. The age calculator accounts for these correctly. If you were born on February 29, your birthday is treated as March 1 in non-leap years for the day-count calculation." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my date of birth stored anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date is only held in memory for the duration of your visit." }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is the 'hours lived' figure?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The hours lived figure is calculated from midnight on your date of birth, not your exact birth time (which is typically unknown). It is therefore an approximation accurate to within 24 hours." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🎂</span>
+      <div>
+        <h1>Age Calculator — How Many Days Old Am I?</h1>
+        <p>Enter your date of birth to find your exact age in years, months, weeks, and total days. Includes days until your next birthday and age in months.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <label style="color:var(--muted);font-size:.88rem;">Your date of birth</label>
+      <input type="date" id="dobInput" style="max-width:280px;margin-top:.4rem;" />
+      <div class="btn-group mt-2">
+        <button class="btn btn-primary" onclick="calculateAge()">Calculate My Age</button>
+        <button class="btn btn-secondary" onclick="clearAge()">Clear</button>
+      </div>
+      <div class="age-result" id="ageResult"></div>
+      <div class="birthday-msg" id="birthdayMsg"></div>
+    </div>
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Age Calculator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select your date of birth using the date picker above and click <strong>Calculate My Age</strong>. Your result appears instantly showing your exact age broken down into <strong>years</strong>, <strong>months</strong>, <strong>weeks</strong>, <strong>days</strong>, and even <strong>total hours</strong> lived. You'll also see a live countdown to your next birthday.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What the Results Mean</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Years, months, days:</strong> Your precise age — useful for official forms that ask for exact age.</li>
+          <li><strong>Total weeks:</strong> Helpful for milestone tracking — for example, knowing a baby's age in weeks during the first year.</li>
+          <li><strong>Total days lived:</strong> A fun number for birthday posts and life milestone celebrations.</li>
+          <li><strong>Hours lived:</strong> Calculated from your birth date to the current moment for curiosity and social sharing.</li>
+          <li><strong>Days until next birthday:</strong> Great for planning ahead or sending to friends as a fun reminder.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Common Uses</h3>
+        <p><strong>Parents tracking infant milestones</strong> often need a baby's age in exact weeks and months, not just years. <strong>Adults celebrating milestone birthdays</strong> (30th, 40th, 50th) use the total days figure for birthday posts. <strong>HR professionals</strong> sometimes need to verify an applicant's age for roles with minimum age requirements. <strong>Students</strong> completing forms that require their exact age in months use this to calculate it quickly without mental arithmetic.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How Age is Calculated</h3>
+        <p>Age is calculated from your date of birth to today's date on your device (no server is involved). The calculation accounts for leap years so the result is accurate to the day. The "hours lived" figure is approximate as it is calculated from midnight on your birth date rather than your exact birth time, which is typically unknown. The result updates correctly when you change the date — try entering different dates to compare ages.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date you enter is only held in memory for the duration of your visit and cleared when you press Clear or close the tab.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Age Calculator",
+        "url": "https://zippywidgets.online/age-calculator/",
+        "description": "Free age calculator. Enter your birthdate to find your exact age in years, months, weeks, days, and hours with next birthday countdown.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How is my exact age calculated?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your age is calculated from your date of birth to today's date using your device's local clock. The calculation accounts for leap years, giving an accurate count of years, months, weeks, days, hours, and minutes lived." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do leap years affect age calculations?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Leap years add an extra day (February 29) every 4 years, with exceptions for century years not divisible by 400. The age calculator accounts for these correctly. If you were born on February 29, your birthday is treated as March 1 in non-leap years for the day-count calculation." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my date of birth stored anywhere?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date is only held in memory for the duration of your visit." }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is the 'hours lived' figure?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The hours lived figure is calculated from midnight on your date of birth, not your exact birth time (which is typically unknown). It is therefore an approximation accurate to within 24 hours." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline>
+    'use strict';
+    
+        document.getElementById('dobInput').max = new Date().toISOString().split('T')[0];
+    
+        function calculateAge() {
+          const val = document.getElementById('dobInput').value;
+          if (!val) { alert('Please select your date of birth.'); return; }
+    
+          const dob = new Date(val);
+          const now = new Date();
+          if (dob > now) { alert('Date of birth cannot be in the future!'); return; }
+    
+          let years  = now.getFullYear() - dob.getFullYear();
+          let months = now.getMonth()    - dob.getMonth();
+          let days   = now.getDate()     - dob.getDate();
+    
+          if (days < 0) {
+            months--;
+            days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+          }
+          if (months < 0) { years--; months += 12; }
+    
+          const totalDays  = Math.floor((now - dob) / 864e5);
+          const totalWeeks = Math.floor(totalDays / 7);
+          const totalHours = Math.floor((now - dob) / 36e5);
+          const nextBday   = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+          if (nextBday < now) nextBday.setFullYear(nextBday.getFullYear() + 1);
+          const daysUntil  = Math.ceil((nextBday - now) / 864e5);
+          const isBirthday = dob.getMonth() === now.getMonth() && dob.getDate() === now.getDate();
+    
+          const rows = [
+            { lbl: 'Age',              val: `${years} years, ${months} months, ${days} days` },
+            { lbl: 'Total Days Lived', val: totalDays.toLocaleString() + ' days' },
+            { lbl: 'Total Weeks',      val: totalWeeks.toLocaleString() + ' weeks' },
+            { lbl: 'Total Hours',      val: totalHours.toLocaleString() + ' hours' },
+            { lbl: 'Next Birthday In', val: isBirthday ? '🎉 Today!' : daysUntil + ' days' },
+          ];
+    
+          document.getElementById('ageResult').innerHTML = rows.map(r => `
+            <div class="age-row">
+              <span class="age-lbl">${r.lbl}</span>
+              <span class="age-val">${r.val}</span>
+            </div>`).join('');
+    
+          document.getElementById('birthdayMsg').textContent = isBirthday ? '🎂 Happy Birthday! 🎉' : '';
+        }
+    
+        function clearAge() {
+          document.getElementById('dobInput').value = '';
+          document.getElementById('ageResult').innerHTML = '';
+          document.getElementById('birthdayMsg').textContent = '';
+        }
+  </script>
+</Layout>

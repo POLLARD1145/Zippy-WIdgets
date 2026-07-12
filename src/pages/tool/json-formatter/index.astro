@@ -1,0 +1,358 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'JSON Formatter & Validator — Pretty Print, Minify, Convert to CSV';
+const description = 'Free online JSON formatter, validator, and CSV converter. Pretty-print, minify, validate, and convert JSON to CSV or CSV to JSON — all in your browser.';
+const canonical = 'https://zippywidgets.online/tool/json-formatter/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON Formatter & Validator",
+    "url": "https://zippywidgets.online/json-formatter/",
+    "description": "Free online JSON formatter, validator, minifier and CSV converter. Format, validate, and convert JSON and CSV entirely in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this JSON formatter free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets JSON Formatter is completely free. There are no file size limits, no usage limits, and no sign-up required." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my JSON data uploaded to a server?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. All formatting, validation, and conversion happens locally in your browser using JavaScript. Your data is never sent to any server." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I convert JSON to CSV?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Paste a JSON array of objects and click JSON to CSV. The tool flattens the objects into rows and generates a downloadable CSV file." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">{ }</span>
+      <div>
+        <h1>JSON Formatter & Validator — Pretty Print, Minify, Convert to CSV</h1>
+        <p>Format, validate, minify and convert JSON data instantly. Paste your JSON or CSV below and transform it in your browser — no server, no sign-up.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="editor-wrap">
+        <div class="editor-box">
+          <label for="inputArea">Input</label>
+          <textarea id="inputArea" placeholder='Paste JSON or CSV here...
+
+Example JSON:
+{
+  "name": "ZippyWidgets",
+  "tools": ["QR", "PDF", "Image"]
+}
+
+Example CSV:
+name,tools
+ZippyWidgets,"QR,PDF,Image"'></textarea>
+        </div>
+        <div class="editor-box">
+          <label for="outputArea">Output</label>
+          <textarea id="outputArea" readonly placeholder="Result appears here..."></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="formatJson()">Format JSON</button>
+        <button class="btn btn-primary" onclick="minifyJson()">Minify JSON</button>
+        <button class="btn btn-primary" onclick="validateJson()">Validate</button>
+        <button class="btn btn-secondary" onclick="jsonToCsv()">JSON → CSV</button>
+        <button class="btn btn-secondary" onclick="csvToJson()">CSV → JSON</button>
+        <button class="btn btn-secondary" onclick="copyOutput()">Copy Output</button>
+        <button class="btn btn-secondary" onclick="downloadOutput()">Download</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+
+      <div class="status-msg" id="statusMsg">&nbsp;</div>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the JSON Formatter</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>JSON (JavaScript Object Notation) is the most common data format used by APIs, configuration files, and modern databases. This tool helps developers and non-developers alike read, validate, and convert JSON data without installing anything.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What Each Button Does</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Format JSON:</strong> Adds indentation and line breaks so nested data is easy to read.</li>
+          <li><strong>Minify JSON:</strong> Removes all unnecessary whitespace to create the smallest possible JSON file.</li>
+          <li><strong>Validate:</strong> Checks whether your input is valid JSON and reports the exact location of any syntax error.</li>
+          <li><strong>JSON → CSV:</strong> Converts a JSON array of objects into a comma-separated values file.</li>
+          <li><strong>CSV → JSON:</strong> Converts a CSV file into a JSON array of objects using the first row as headers.</li>
+        </ul>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Common Use Cases</h3>
+        <p><strong>Developers debugging API responses</strong> paste raw JSON into the formatter to make it readable. <strong>Data analysts</strong> convert JSON exports from web apps into CSV for Excel or Google Sheets. <strong>Web admins</strong> minify JSON configuration files to reduce file size. <strong>Students learning APIs</strong> use the validator to understand why a JSON payload is rejected.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>All processing is done locally in your browser. Your JSON or CSV data is never uploaded, stored, or logged. This makes the tool safe for sensitive data such as API keys, customer records, or configuration secrets.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    .editor-wrap { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 768px) { .editor-wrap { grid-template-columns: 1fr 1fr; } }
+        .editor-box { display: flex; flex-direction: column; gap: .5rem; }
+        .editor-box label { font-size: .85rem; font-weight: 600; color: var(--text); }
+        textarea {
+          width: 100%; min-height: 280px; resize: vertical;
+          padding: .75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border);
+          background: var(--surface2); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+          font-size: .85rem; line-height: 1.6;
+        }
+        .btn-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .25rem; }
+        .status-msg { font-size: .85rem; min-height: 1.25rem; margin-top: .5rem; }
+        .status-msg.error { color: var(--red); }
+        .status-msg.success { color: var(--green); }
+        .status-msg.warn { color: #f59e0b; }
+        .json-tree {
+          background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+          padding: .75rem 1rem; min-height: 280px; max-height: 500px; overflow: auto;
+          font-family: ui-monospace, monospace; font-size: .85rem; line-height: 1.6; white-space: pre-wrap;
+        }
+        .json-key { color: #a78bfa; }
+        .json-string { color: #4ade80; }
+        .json-number { color: #38bdf8; }
+        .json-bool { color: #f97316; }
+        .json-null { color: #f97316; }
+  </style>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Formatter & Validator",
+        "url": "https://zippywidgets.online/json-formatter/",
+        "description": "Free online JSON formatter, validator, minifier and CSV converter. Format, validate, and convert JSON and CSV entirely in your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is this JSON formatter free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets JSON Formatter is completely free. There are no file size limits, no usage limits, and no sign-up required." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my JSON data uploaded to a server?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. All formatting, validation, and conversion happens locally in your browser using JavaScript. Your data is never sent to any server." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I convert JSON to CSV?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Paste a JSON array of objects and click JSON to CSV. The tool flattens the objects into rows and generates a downloadable CSV file." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline>
+    'use strict';
+    
+        const inputArea = document.getElementById('inputArea');
+        const outputArea = document.getElementById('outputArea');
+        const statusMsg = document.getElementById('statusMsg');
+    
+        function setStatus(msg, type) {
+          statusMsg.textContent = msg;
+          statusMsg.className = 'status-msg' + (type ? ' ' + type : '');
+        }
+    
+        function formatJson() {
+          try {
+            const obj = JSON.parse(inputArea.value.trim() || '{}');
+            outputArea.value = JSON.stringify(obj, null, 2);
+            setStatus('✅ JSON formatted successfully.', 'success');
+          } catch (e) {
+            outputArea.value = '';
+            setStatus('❌ Invalid JSON: ' + e.message, 'error');
+          }
+        }
+    
+        function minifyJson() {
+          try {
+            const obj = JSON.parse(inputArea.value.trim() || '{}');
+            outputArea.value = JSON.stringify(obj);
+            setStatus('✅ JSON minified successfully.', 'success');
+          } catch (e) {
+            outputArea.value = '';
+            setStatus('❌ Invalid JSON: ' + e.message, 'error');
+          }
+        }
+    
+        function validateJson() {
+          try {
+            JSON.parse(inputArea.value.trim() || '{}');
+            outputArea.value = 'Valid JSON';
+            setStatus('✅ Valid JSON.', 'success');
+          } catch (e) {
+            outputArea.value = '';
+            setStatus('❌ Invalid JSON: ' + e.message, 'error');
+          }
+        }
+    
+        function jsonToCsv() {
+          try {
+            const data = JSON.parse(inputArea.value.trim() || '[]');
+            if (!Array.isArray(data)) throw new Error('JSON must be an array of objects to convert to CSV.');
+            if (data.length === 0) { outputArea.value = ''; setStatus('⚠️ Empty array.', 'warn'); return; }
+    
+            const headers = Array.from(new Set(data.flatMap(Object.keys)));
+            const escape = (str) => {
+              const s = String(str ?? '').replace(/"/g, '""');
+              return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s}"` : s;
+            };
+            const rows = data.map(row => headers.map(h => escape(row[h])).join(','));
+            outputArea.value = [headers.join(','), ...rows].join('\n');
+            setStatus('✅ JSON converted to CSV.', 'success');
+          } catch (e) {
+            outputArea.value = '';
+            setStatus('❌ ' + e.message, 'error');
+          }
+        }
+    
+        function csvToJson() {
+          try {
+            const text = inputArea.value.trim();
+            if (!text) throw new Error('Please paste CSV data first.');
+            const lines = parseCsv(text);
+            if (lines.length < 2) throw new Error('CSV must have a header row and at least one data row.');
+    
+            const headers = lines[0];
+            const out = [];
+            for (let i = 1; i < lines.length; i++) {
+              const row = lines[i];
+              if (row.length === 1 && row[0] === '') continue;
+              const obj = {};
+              headers.forEach((h, idx) => { obj[h] = row[idx] ?? ''; });
+              out.push(obj);
+            }
+            outputArea.value = JSON.stringify(out, null, 2);
+            setStatus('✅ CSV converted to JSON.', 'success');
+          } catch (e) {
+            outputArea.value = '';
+            setStatus('❌ ' + e.message, 'error');
+          }
+        }
+    
+        function parseCsv(text) {
+          const rows = [];
+          let row = [];
+          let cell = '';
+          let inQuotes = false;
+          for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            const next = text[i + 1];
+            if (inQuotes) {
+              if (char === '"' && next === '"') { cell += '"'; i++; }
+              else if (char === '"') { inQuotes = false; }
+              else { cell += char; }
+            } else {
+              if (char === '"') { inQuotes = true; }
+              else if (char === ',') { row.push(cell); cell = ''; }
+              else if (char === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+              else if (char === '\r') { continue; }
+              else { cell += char; }
+            }
+          }
+          row.push(cell);
+          if (row.length > 1 || (row.length === 1 && row[0] !== '')) rows.push(row);
+          return rows;
+        }
+    
+        function copyOutput() {
+          if (!outputArea.value) { setStatus('Nothing to copy.', 'warn'); return; }
+          navigator.clipboard.writeText(outputArea.value).then(() => setStatus('✅ Copied to clipboard.', 'success'));
+        }
+    
+        function downloadOutput() {
+          if (!outputArea.value) { setStatus('Nothing to download.', 'warn'); return; }
+          const isCsv = outputArea.value.trim().includes(',') && !outputArea.value.trim().startsWith('{') && !outputArea.value.trim().startsWith('[');
+          const isJson = outputArea.value.trim().startsWith('{') || outputArea.value.trim().startsWith('[');
+          const filename = isJson ? 'data.json' : (isCsv ? 'data.csv' : 'data.txt');
+          const blob = new Blob([outputArea.value], { type: isJson ? 'application/json' : 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = filename;
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+    
+        function clearAll() {
+          inputArea.value = '';
+          outputArea.value = '';
+          setStatus('', '');
+        }
+  </script>
+</Layout>

@@ -1,0 +1,95 @@
+---
+import { tools } from '@data/tools.ts';
+import { posts, postUrl } from '@data/posts.ts';
+
+const toolLinks = tools.filter(t => t.href !== '/game/');
+const gameLinks = [
+  { href: '/game/', label: 'Games Hub' },
+  { href: '/game/aetherforge/', label: 'AetherForge' },
+  { href: '/game/word-scramble/', label: 'Word Scramble' },
+  { href: '/game/emoji-memory/', label: 'Emoji Memory' },
+  { href: '/game/emoji-geography/', label: 'Emoji Geography' },
+  { href: '/game/rock-paper-scissors/', label: 'Rock Paper Scissors' },
+];
+---
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        {toolLinks.map(tool => (
+          <li><a href={tool.href}>{tool.name}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Games</h4>
+      <ul>
+        {gameLinks.map(link => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Blog</h4>
+      <ul>
+        <li><a href="/blog/">All posts</a></li>
+        {posts.slice(0, 4).map(post => (
+          <li><a href={postUrl(post.slug)}>{post.title}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+        <li><a href="/disclaimer/">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+</footer>
+
+<style>
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+  .footer-col h4 {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: .75rem;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .footer-col a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .85rem;
+    line-height: 1.5;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-copy {
+    text-align: center;
+    color: var(--muted);
+    font-size: .85rem;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>

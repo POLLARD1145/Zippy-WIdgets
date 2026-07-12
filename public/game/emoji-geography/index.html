@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Geography — Free Flag Quiz Online (No Login) | ZippyWidgets</title>
+  <meta name="description" content="Guess the country from its flag emoji. 10 daily questions — same quiz for every player worldwide. Free mini game online, no login, works on any phone. One of the best free online games!" />
+  <meta name="keywords" content="flag quiz game, emoji geography, guess the flag, best free online games, mini games online, free online games, online games free, country flag quiz, daily geography quiz, free flag game no login, world flags quiz online, online games no download" />
+  <link rel="canonical" href="https://zippywidgets.online/game/emoji-geography/" />
+  <meta property="og:title" content="Emoji Geography — Free Flag Quiz Online" />
+  <meta property="og:description" content="Free mini game online — 10 flags, 4 choices each. Same daily quiz worldwide. No login needed." />
+  <meta property="og:url" content="https://zippywidgets.online/game/emoji-geography/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Emoji Geography — Free Flag Quiz Online" />
+  <meta name="twitter:description" content="Free mini game online — guess the country from its flag. 10 questions, same daily quiz worldwide. No login." />
+  <link rel="icon" type="image/png" href="../../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Emoji Geography",
+    "description": "A free daily flag guessing quiz. Identify 10 countries from their flag emoji. Same 10 questions for all players worldwide each day.",
+    "url": "https://zippywidgets.online/game/emoji-geography/",
+    "applicationCategory": "Game",
+    "gamePlatform": "Web Browser",
+    "genre": ["Quiz", "Geography", "Puzzle"],
+    "playMode": "SinglePlayer",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <script src="../../theme.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Dark theme (default) ── */
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --surface2:  #22263a;
+      --border:    #2e3452;
+      --text:      #e8eaff;
+      --muted:     #7b82b0;
+      --navbar-bg: rgba(15,17,23,.88);
+      --accent:    #7c6af7;
+      --green:     #4ade80;
+      --yellow:    #fbbf24;
+      --red:       #f87171;
+      --radius:    12px;
+    }
+    /* ── Light theme ── */
+    [data-theme="light"] {
+      --bg:        #f4f6fb;
+      --surface:   #ffffff;
+      --surface2:  #e8edf6;
+      --border:    #c5cce0;
+      --text:      #1a1d2e;
+      --muted:     #5a6080;
+      --navbar-bg: rgba(244,246,251,.92);
+      --accent:    #5b4de0;
+    }
+    /* ── Transitions ── */
+    body, .navbar, .question-card, .option-btn, .result-card, .seo-card {
+      transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+    }
+
+    html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; }
+
+    /* ══ NAVBAR ══ */
+    .navbar { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: .5rem; padding: 0 1.25rem; height: 60px; background: var(--navbar-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-size: 1.05rem; font-weight: 800; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: .4rem; flex-shrink: 0; }
+    .nav-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
+    .nav-search-spacer { flex: 1; }
+    .nav-links { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; }
+    .nav-pill { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; padding: .3rem .85rem; font-size: .8rem; font-weight: 500; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; }
+    .nav-pill:hover, .nav-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .theme-toggle { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; padding: 0; }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: .4rem; flex-shrink: 0; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--navbar-bg); backdrop-filter: blur(16px); flex-direction: column; align-items: stretch; padding: 1rem 1.25rem 1.5rem; gap: .5rem; border-bottom: 1px solid var(--border); z-index: 150; }
+      .nav-links.open { display: flex; }
+      .nav-pill { text-align: center; padding: .7rem 1rem; font-size: .9rem; }
+    }
+
+    /* ══ MOBILE-FIRST LAYOUT ══ */
+    .game-page { width: 100%; max-width: 540px; margin: 0 auto; padding: 1rem .75rem 3rem; display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+
+    /* ── Header ── */
+    .game-header { width: 100%; text-align: center; display: flex; flex-direction: column; gap: .35rem; align-items: center; }
+    .game-title { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; }
+    .game-title span { color: var(--accent); }
+    .seed-badge { display: inline-flex; align-items: center; gap: .3rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: .25rem .7rem; font-size: .7rem; color: var(--muted); }
+    .seed-badge b { color: var(--accent); }
+
+    /* ── Progress bar ── */
+    .progress-wrap { width: 100%; display: flex; flex-direction: column; gap: .4rem; }
+    .progress-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--muted); }
+    .progress-track { width: 100%; height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #a78bfa); border-radius: 99px; transition: width .4s ease; }
+    .pip-row { display: flex; gap: .3rem; justify-content: center; flex-wrap: wrap; }
+    .q-pip { width: 26px; height: 26px; border-radius: 50%; background: var(--surface2); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .7rem; transition: background .3s, border-color .3s; }
+    .q-pip.correct  { background: rgba(74,222,128,.2);  border-color: var(--green);  }
+    .q-pip.wrong    { background: rgba(248,113,113,.2); border-color: var(--red);    }
+    .q-pip.hint     { background: rgba(251,191,36,.15); border-color: var(--yellow); }
+    .q-pip.active   { border-color: var(--accent); background: rgba(124,106,247,.15); }
+
+    /* ── Question card ── */
+    .question-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; display: flex; flex-direction: column; gap: .85rem; align-items: center; text-align: center; }
+    .flag-display { font-size: clamp(4rem, 20vw, 6rem); line-height: 1; user-select: none; }
+    .question-text { font-size: .88rem; color: var(--muted); font-weight: 600; }
+    .question-num { font-size: .72rem; color: var(--muted); }
+
+    /* ── Options grid ── */
+    /* 2×2 grid — big touch targets */
+    .options-grid { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .option-btn {
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem .5rem;
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, transform .1s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .option-btn:active:not(:disabled) { transform: scale(.97); }
+    .option-btn:hover:not(:disabled)  { border-color: var(--accent); }
+    .option-btn.correct { background: rgba(74,222,128,.15); border-color: var(--green);  color: var(--green); }
+    .option-btn.wrong   { background: rgba(248,113,113,.12); border-color: var(--red);   color: var(--red); }
+    .option-btn.reveal  { background: rgba(74,222,128,.08); border-color: var(--green);  color: var(--green); opacity: .7; }
+    .option-btn:disabled { cursor: default; }
+
+    /* ── Hint / feedback row ── */
+    .hint-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: .5rem; }
+    .hint-btn { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; padding: .3rem .85rem; font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .2s; touch-action: manipulation; flex-shrink: 0; }
+    .hint-btn:active { opacity: .7; }
+    .hint-btn:disabled { opacity: .35; cursor: default; }
+    .hint-text { font-size: .78rem; color: var(--yellow); font-style: italic; min-height: 1.1em; text-align: right; flex: 1; }
+
+    /* ── Feedback banner ── */
+    .feedback-bar { width: 100%; min-height: 28px; font-size: .85rem; font-weight: 700; text-align: center; border-radius: 8px; padding: .4rem .75rem; transition: background .2s, color .2s; }
+    .feedback-bar.good  { background: rgba(74,222,128,.1);  color: var(--green); }
+    .feedback-bar.bad   { background: rgba(248,113,113,.1); color: var(--red); }
+    .feedback-bar.empty { background: transparent; color: transparent; }
+
+    /* ── Next button ── */
+    .next-btn { width: 100%; background: linear-gradient(135deg, var(--accent), #a78bfa); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: .95rem; font-weight: 800; padding: .9rem; cursor: pointer; transition: opacity .2s, transform .1s; touch-action: manipulation; display: none; min-height: 52px; }
+    .next-btn:active { opacity: .8; transform: scale(.98); }
+    .next-btn.visible { display: block; }
+
+    /* ── Stars display ── */
+    .stars-row { display: flex; gap: .2rem; justify-content: center; font-size: 1.1rem; }
+
+    /* ── Result card ── */
+    .result-card { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; width: 100%; flex-direction: column; gap: .85rem; align-items: center; text-align: center; }
+    .result-card.visible { display: flex; }
+    .result-trophy { font-size: 3rem; }
+    .result-card h2 { font-size: 1.15rem; font-weight: 900; }
+    .result-score { font-size: 2.2rem; font-weight: 900; color: var(--accent); }
+    .result-card p { font-size: .83rem; color: var(--muted); line-height: 1.65; }
+    .share-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .7rem .85rem; font-family: monospace; font-size: .8rem; color: var(--text); white-space: pre-wrap; word-break: break-word; line-height: 1.75; width: 100%; }
+    .btn { cursor: pointer; border: none; border-radius: 10px; font-family: inherit; font-weight: 700; transition: opacity .15s, transform .1s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .btn:active { opacity: .75; transform: scale(.97); }
+    .btn-primary   { background: linear-gradient(135deg, var(--accent), #a78bfa); color: #fff; padding: .8rem 1.5rem; font-size: .9rem; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: .65rem 1.2rem; font-size: .83rem; }
+    .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+
+    /* Streak ribbon */
+    .streak-ribbon { display: flex; align-items: center; gap: .35rem; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.35); border-radius: 8px; padding: .45rem .85rem; font-size: .78rem; color: var(--yellow); font-weight: 700; }
+
+    /* ── Answer review ── */
+    .review-list { width: 100%; display: flex; flex-direction: column; gap: .4rem; }
+    .review-item { display: flex; align-items: center; gap: .6rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: .55rem .85rem; font-size: .8rem; }
+    .review-flag { font-size: 1.4rem; flex-shrink: 0; }
+    .review-text { flex: 1; min-width: 0; }
+    .review-country { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .review-stars { font-size: .9rem; flex-shrink: 0; }
+
+    /* ── SEO ── */
+    .seo-section { max-width: 540px; width: 100%; display: flex; flex-direction: column; gap: 1rem; padding: 0 .75rem; }
+    .seo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: flex; flex-direction: column; gap: .65rem; color: var(--muted); font-size: .85rem; line-height: 1.75; }
+    .seo-card h2 { font-size: .95rem; font-weight: 800; color: var(--text); }
+    .seo-card h3 { font-size: .85rem; font-weight: 700; color: var(--text); }
+
+    /* ── Ad slots ── */
+    .ad-slot-game { width: 100%; max-width: 540px; margin: 0 auto; padding: .5rem 0; min-height: 90px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ad-slot-game ins { display: block; width: 100%; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--border); padding: 1.25rem 1rem; text-align: center; font-size: .75rem; color: var(--muted); line-height: 1.9; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--text); }
+
+    /* ── Scale up ── */
+    @media (min-width: 400px) {
+      .game-title { font-size: 1.5rem; }
+    }
+    @media (min-width: 480px) {
+      .game-page { padding: 1.25rem 1rem 3rem; gap: 1.15rem; }
+      .option-btn { font-size: .9rem; min-height: 58px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="/">
+    <img src="../../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+  </a>
+  <div class="nav-search-spacer"></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+  <button class="theme-toggle" id="muteToggle" onclick="toggleMute()" aria-label="Toggle sound" style="margin-left:.25rem;">🔊</button>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-pill" href="/">Tools</a>
+    <a class="nav-pill active" href="/game/">Games</a>
+    <a class="nav-pill" href="/game/emoji-memory/">Memory</a>
+    <a class="nav-pill" href="/game/word-scramble/">Word Scramble</a>
+  </div>
+</nav>
+
+<!-- Ad: above game — deferred -->
+<div class="ad-slot-game" id="ad-top-eg" style="padding:0 1rem; margin-bottom:-.25rem;">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s=document.getElementById('ad-top-eg');
+    var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
+    o.observe(s);
+  })();
+</script>
+
+<main>
+<div class="game-page">
+
+  <div class="game-header">
+    <div class="seed-badge">🌐 Daily seed: <b id="dailySeed">—</b> · Resets midnight UTC</div>
+    <h1 class="game-title">Emoji <span>Geography</span></h1>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span id="progressLabel">Question 1 of 10</span>
+      <span id="scoreLabel">⭐ 0 pts</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="pip-row" id="pipRow"></div>
+  </div>
+
+  <!-- Question -->
+  <div class="question-card" id="questionCard">
+    <div class="flag-display" id="flagDisplay">🏳️</div>
+    <div class="question-text">Which country does this flag belong to?</div>
+    <div class="stars-row" id="starsRow">⭐⭐⭐</div>
+  </div>
+
+  <!-- Options -->
+  <div class="options-grid" id="optionsGrid"></div>
+
+  <!-- Hint row -->
+  <div class="hint-row">
+    <button class="hint-btn" id="hintBtn">💡 Hint (−1 ⭐)</button>
+    <span class="hint-text" id="hintText"></span>
+  </div>
+
+  <!-- Feedback -->
+  <div class="feedback-bar empty" id="feedbackBar"></div>
+
+  <!-- Next -->
+  <button class="next-btn" id="nextBtn">Next →</button>
+
+  <!-- Result -->
+  <div class="result-card" id="resultCard">
+    <div class="result-trophy" id="resultTrophy">🏆</div>
+    <h2 id="resultTitle">Quiz complete!</h2>
+    <div class="result-score" id="resultScore"></div>
+    <div class="stars-row" id="resultStars"></div>
+    <p id="resultDesc"></p>
+    <div class="streak-ribbon" id="streakRibbon">🔥 Streak: <span id="streakVal">0</span> day</div>
+    <div class="share-box" id="shareBox"></div>
+    <div class="review-list" id="reviewList"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="playAgainBtn">▶ Play Again</button>
+      <button class="btn btn-secondary" id="shareBtn">📋 Copy Result</button>
+    </div>
+  </div>
+
+</div><!-- .game-page -->
+
+<!-- Ad: below game -->
+<div class="ad-slot-game" id="ad-bot-eg" style="padding:0 1rem;">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6884221059402072" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s=document.getElementById('ad-bot-eg');
+    var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});o.disconnect();}},{rootMargin:'200px'});
+    o.observe(s);
+  })();
+</script>
+
+<section class="seo-section">
+  <div class="seo-card">
+    <h2>How to Play Emoji Geography</h2>
+    <p>Each round shows you a flag emoji. Choose the correct country from four options. You have three stars per question — use the hint button to reveal a clue (continent, capital, or population size) but it costs one star. Get it right first try for the full 3 stars.</p>
+    <h3>Scoring</h3>
+    <p><strong>3 ⭐</strong> — correct on first try, no hint used.<br>
+       <strong>2 ⭐</strong> — correct on first try, hint used.<br>
+       <strong>1 ⭐</strong> — correct after a wrong answer.<br>
+       <strong>0 ⭐</strong> — incorrect on all attempts.</p>
+    <h3>Daily seed</h3>
+    <p>The 10 flags you get today are the same 10 flags every player in the world gets today. Share your result and compare scores with anyone — it's always a fair comparison.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <p>
+    <a href="/game/">Games</a> ·
+    <a href="/game/emoji-geography/">Emoji Geography</a> ·
+    <a href="/game/emoji-memory/">Emoji Memory</a> ·
+    <a href="/game/word-scramble/">Word Scramble</a> ·
+    <a href="/game/aetherforge/">AetherForge</a> ·
+    <a href="/tool/picker-wheel/">Picker Wheel</a> ·
+    <a href="/about/">About</a> ·
+    <a href="/privacy-policy/">Privacy</a>
+  </p>
+  <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — Runs 100% in your browser. No data sent to a server.</p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   EMOJI GEOGRAPHY — Game Logic
+   Mobile-first. Daily PRNG seed. No external deps.
+════════════════════════════════════════════════════════════════ */
+
+/* ── Seeded PRNG (mulberry32) ── */
+function mulberry32(seed) {
+  return function() {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function todaySeed() {
+  const d = new Date();
+  return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth()+1) * 100) + d.getUTCDate();
+}
+function shuffle(arr, rng) {
+  const a = arr.slice();
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(rng() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ── Country database ── */
+/* format: [flag, name, continent, capital, hint] */
+const COUNTRIES = [
+  ['🇦🇫','Afghanistan','Asia','Kabul','Pop. ~40M, landlocked'],
+  ['🇦🇱','Albania','Europe','Tirana','Small Balkan nation'],
+  ['🇩🇿','Algeria','Africa','Algiers','Largest country in Africa'],
+  ['🇦🇩','Andorra','Europe','Andorra la Vella','Tiny Pyrenees microstate'],
+  ['🇦🇴','Angola','Africa','Luanda','Oil-rich southern Africa'],
+  ['🇦🇷','Argentina','South America','Buenos Aires','2nd largest in S. America'],
+  ['🇦🇲','Armenia','Asia','Yerevan','Landlocked Caucasus nation'],
+  ['🇦🇺','Australia','Oceania','Canberra','Continent-country, kangaroos'],
+  ['🇦🇹','Austria','Europe','Vienna','Alpine central Europe'],
+  ['🇦🇿','Azerbaijan','Asia','Baku','Caspian Sea, Caucasus'],
+  ['🇧🇸','Bahamas','North America','Nassau','Caribbean island nation'],
+  ['🇧🇭','Bahrain','Asia','Manama','Small Gulf island state'],
+  ['🇧🇩','Bangladesh','Asia','Dhaka','Pop. ~170M, Bay of Bengal'],
+  ['🇧🇧','Barbados','North America','Bridgetown','Eastern Caribbean island'],
+  ['🇧🇾','Belarus','Europe','Minsk','Eastern Europe, landlocked'],
+  ['🇧🇪','Belgium','Europe','Brussels','EU headquarters country'],
+  ['🇧🇿','Belize','North America','Belmopan','Only Central American English speaker'],
+  ['🇧🇯','Benin','Africa','Porto-Novo','West Africa, birthplace of Vodou'],
+  ['🇧🇹','Bhutan','Asia','Thimphu','Himalayan Buddhist kingdom'],
+  ['🇧🇴','Bolivia','South America','Sucre','Two capitals, landlocked'],
+  ['🇧🇦','Bosnia and Herzegovina','Europe','Sarajevo','Balkans, 1990s conflict'],
+  ['🇧🇼','Botswana','Africa','Gaborone','Diamond-rich southern Africa'],
+  ['🇧🇷','Brazil','South America','Brasília','Largest in South America'],
+  ['🇧🇳','Brunei','Asia','Bandar Seri Begawan','Tiny oil-rich sultanate, Borneo'],
+  ['🇧🇬','Bulgaria','Europe','Sofia','Eastern Europe, Black Sea coast'],
+  ['🇧🇫','Burkina Faso','Africa','Ouagadougou','Landlocked West Africa'],
+  ['🇧🇮','Burundi','Africa','Gitega','Small Great Lakes nation'],
+  ['🇨🇻','Cape Verde','Africa','Praia','Atlantic island nation off W. Africa'],
+  ['🇰🇭','Cambodia','Asia','Phnom Penh','Angkor Wat, Southeast Asia'],
+  ['🇨🇲','Cameroon','Africa','Yaoundé','Central Africa, bilingual'],
+  ['🇨🇦','Canada','North America','Ottawa','2nd largest country by area'],
+  ['🇨🇫','Central African Republic','Africa','Bangui','Landlocked central Africa'],
+  ['🇹🇩','Chad','Africa','N\'Djamena','Landlocked, Lake Chad'],
+  ['🇨🇱','Chile','South America','Santiago','Long thin Pacific coast country'],
+  ['🇨🇳','China','Asia','Beijing','Most populous nation, Great Wall'],
+  ['🇨🇴','Colombia','South America','Bogotá','NW corner of South America'],
+  ['🇰🇲','Comoros','Africa','Moroni','Indian Ocean island archipelago'],
+  ['🇨🇬','Republic of the Congo','Africa','Brazzaville','Central Africa, Congo River'],
+  ['🇨🇩','DR Congo','Africa','Kinshasa','Largest in sub-Saharan Africa'],
+  ['🇨🇷','Costa Rica','North America','San José','No standing army since 1948'],
+  ['🇭🇷','Croatia','Europe','Zagreb','Adriatic coast, 1000 islands'],
+  ['🇨🇺','Cuba','North America','Havana','Largest Caribbean island'],
+  ['🇨🇾','Cyprus','Europe','Nicosia','Mediterranean island, divided capital'],
+  ['🇨🇿','Czech Republic','Europe','Prague','Central Europe, historic beer culture'],
+  ['🇩🇰','Denmark','Europe','Copenhagen','Scandinavian monarchy, LEGO'],
+  ['🇩🇯','Djibouti','Africa','Djibouti City','Strategic Horn of Africa port'],
+  ['🇩🇴','Dominican Republic','North America','Santo Domingo','Eastern Hispaniola island'],
+  ['🇪🇨','Ecuador','South America','Quito','Equator runs through it'],
+  ['🇪🇬','Egypt','Africa','Cairo','Pyramids, Nile, Suez Canal'],
+  ['🇸🇻','El Salvador','North America','San Salvador','Smallest in Central America'],
+  ['🇬🇶','Equatorial Guinea','Africa','Malabo','Only Spanish-speaking sub-Saharan nation'],
+  ['🇪🇷','Eritrea','Africa','Asmara','Northeast Africa, Red Sea coast'],
+  ['🇪🇪','Estonia','Europe','Tallinn','Smallest Baltic state, digital nation'],
+  ['🇸🇿','Eswatini','Africa','Mbabane','Southern Africa, absolute monarchy'],
+  ['🇪🇹','Ethiopia','Africa','Addis Ababa','Pop. ~120M, ancient history'],
+  ['🇫🇯','Fiji','Oceania','Suva','South Pacific island nation'],
+  ['🇫🇮','Finland','Europe','Helsinki','1000 lakes, saunas, northern lights'],
+  ['🇫🇷','France','Europe','Paris','Eiffel Tower, wine, most visited country'],
+  ['🇬🇦','Gabon','Africa','Libreville','Central Africa, 88% rainforest'],
+  ['🇬🇲','Gambia','Africa','Banjul','Smallest mainland African country'],
+  ['🇬🇪','Georgia','Asia','Tbilisi','Caucasus, ancient wine culture'],
+  ['🇩🇪','Germany','Europe','Berlin','Largest EU economy, cars'],
+  ['🇬🇭','Ghana','Africa','Accra','West Africa, first sub-Saharan independence'],
+  ['🇬🇷','Greece','Europe','Athens','Birthplace of democracy, 6000 islands'],
+  ['🇬🇹','Guatemala','North America','Guatemala City','Largest in Central America by pop.'],
+  ['🇬🇳','Guinea','Africa','Conakry','West Africa, bauxite deposits'],
+  ['🇬🇼','Guinea-Bissau','Africa','Bissau','Tiny West African nation'],
+  ['🇬🇾','Guyana','South America','Georgetown','Only English-speaking S. American nation'],
+  ['🇭🇹','Haiti','North America','Port-au-Prince','Western Hispaniola island'],
+  ['🇭🇳','Honduras','North America','Tegucigalpa','Central America, Mayan ruins'],
+  ['🇭🇺','Hungary','Europe','Budapest','Central Europe, paprika'],
+  ['🇮🇸','Iceland','Europe','Reykjavík','Geysers, northern lights, no mosquitoes'],
+  ['🇮🇳','India','Asia','New Delhi','Pop. ~1.4B, diverse, democracy'],
+  ['🇮🇩','Indonesia','Asia','Jakarta','World\'s largest archipelago, ~17000 islands'],
+  ['🇮🇷','Iran','Asia','Tehran','Ancient Persia, Persian Gulf'],
+  ['🇮🇶','Iraq','Asia','Baghdad','Mesopotamia, Tigris & Euphrates'],
+  ['🇮🇪','Ireland','Europe','Dublin','Emerald Isle, Atlantic coast'],
+  ['🇮🇱','Israel','Asia','Jerusalem','Middle East, Holy Land'],
+  ['🇮🇹','Italy','Europe','Rome','Boot-shaped, pizza, pasta, Vatican'],
+  ['🇯🇲','Jamaica','North America','Kingston','Caribbean, reggae, Usain Bolt'],
+  ['🇯🇵','Japan','Asia','Tokyo','Rising Sun, Mount Fuji, sushi'],
+  ['🇯🇴','Jordan','Asia','Amman','Middle East, Petra, Dead Sea'],
+  ['🇰🇿','Kazakhstan','Asia','Astana','World\'s largest landlocked country'],
+  ['🇰🇪','Kenya','Africa','Nairobi','East Africa, Maasai Mara safari'],
+  ['🇰🇮','Kiribati','Oceania','South Tarawa','Pacific atolls, 3 time zones'],
+  ['🇽🇰','Kosovo','Europe','Pristina','Europe\'s newest country (2008)'],
+  ['🇰🇼','Kuwait','Asia','Kuwait City','Oil-rich small Gulf state'],
+  ['🇰🇬','Kyrgyzstan','Asia','Bishkek','Central Asia, mountainous'],
+  ['🇱🇦','Laos','Asia','Vientiane','Only landlocked SE Asian country'],
+  ['🇱🇻','Latvia','Europe','Riga','Baltic state, medieval old town'],
+  ['🇱🇧','Lebanon','Asia','Beirut','Middle East, Cedar trees'],
+  ['🇱🇸','Lesotho','Africa','Maseru','Enclave entirely within South Africa'],
+  ['🇱🇷','Liberia','Africa','Monrovia','Founded by freed US slaves'],
+  ['🇱🇾','Libya','Africa','Tripoli','North Africa, Sahara desert'],
+  ['🇱🇮','Liechtenstein','Europe','Vaduz','Tiny alpine microstate, no army'],
+  ['🇱🇹','Lithuania','Europe','Vilnius','Largest Baltic state'],
+  ['🇱🇺','Luxembourg','Europe','Luxembourg City','Tiny, wealthy EU microstate'],
+  ['🇲🇬','Madagascar','Africa','Antananarivo','World\'s 4th largest island'],
+  ['🇲🇼','Malawi','Africa','Lilongwe','Warm Heart of Africa'],
+  ['🇲🇾','Malaysia','Asia','Kuala Lumpur','SE Asia, Petronas Towers'],
+  ['🇲🇻','Maldives','Asia','Malé','Lowest-lying country, Indian Ocean atolls'],
+  ['🇲🇱','Mali','Africa','Bamako','2nd largest in West Africa, Sahara'],
+  ['🇲🇹','Malta','Europe','Valletta','Smallest EU nation, Mediterranean'],
+  ['🇲🇭','Marshall Islands','Oceania','Majuro','Pacific nuclear test site history'],
+  ['🇲🇷','Mauritania','Africa','Nouakchott','Northwest Africa, mostly Sahara'],
+  ['🇲🇺','Mauritius','Africa','Port Louis','Indian Ocean island, no native land mammals'],
+  ['🇲🇽','Mexico','North America','Mexico City','Aztec heritage, largest Spanish-speaking nation'],
+  ['🇫🇲','Micronesia','Oceania','Palikir','600+ Pacific islands'],
+  ['🇲🇩','Moldova','Europe','Chișinău','Eastern Europe, wine capital'],
+  ['🇲🇨','Monaco','Europe','Monaco','2nd smallest country, F1 Grand Prix'],
+  ['🇲🇳','Mongolia','Asia','Ulaanbookmark','Landlocked, Gobi Desert, nomads'],
+  ['🇲🇪','Montenegro','Europe','Podgorica','Adriatic Balkans, name means Black Mountain'],
+  ['🇲🇦','Morocco','Africa','Rabat','Northwest Africa, Sahara meets Atlas Mtns'],
+  ['🇲🇿','Mozambique','Africa','Maputo','Southeast Africa, Indian Ocean coast'],
+  ['🇲🇲','Myanmar','Asia','Naypyidaw','SE Asia, pagodas, Irrawaddy River'],
+  ['🇳🇦','Namibia','Africa','Windhoek','Southwest Africa, Namib Desert'],
+  ['🇳🇷','Nauru','Oceania','Yaren','World\'s smallest island nation'],
+  ['🇳🇵','Nepal','Asia','Kathmandu','Himalayas, Mount Everest'],
+  ['🇳🇱','Netherlands','Europe','Amsterdam','Windmills, tulips, below sea level'],
+  ['🇳🇿','New Zealand','Oceania','Wellington','Land of the Long White Cloud, kiwis'],
+  ['🇳🇮','Nicaragua','North America','Managua','Largest Central American country by area'],
+  ['🇳🇪','Niger','Africa','Niamey','Largest in West Africa, Sahara'],
+  ['🇳🇬','Nigeria','Africa','Abuja','Most populous in Africa, ~220M'],
+  ['🇲🇰','North Macedonia','Europe','Skopje','Landlocked Balkans, renamed in 2019'],
+  ['🇳🇴','Norway','Europe','Oslo','Fjords, oil wealth, Nobel Peace Prize'],
+  ['🇴🇲','Oman','Asia','Muscat','Arabian Peninsula, fjords of the Middle East'],
+  ['🇵🇰','Pakistan','Asia','Islamabad','Pop. ~230M, K2 mountain'],
+  ['🇵🇼','Palau','Oceania','Ngerulmud','Pacific, world-famous diving'],
+  ['🇵🇦','Panama','North America','Panama City','Canal connecting Atlantic & Pacific'],
+  ['🇵🇬','Papua New Guinea','Oceania','Port Moresby','800+ languages, eastern New Guinea'],
+  ['🇵🇾','Paraguay','South America','Asunción','Double landlocked S. American nation'],
+  ['🇵🇪','Peru','South America','Lima','Machu Picchu, Inca Empire'],
+  ['🇵🇭','Philippines','Asia','Manila','7000+ islands, Pacific Ring of Fire'],
+  ['🇵🇱','Poland','Europe','Warsaw','Central Europe, pierogies'],
+  ['🇵🇹','Portugal','Europe','Lisbon','Westernmost European mainland country'],
+  ['🇶🇦','Qatar','Asia','Doha','World Cup 2022, richest per capita'],
+  ['🇷🇴','Romania','Europe','Bucharest','Eastern Europe, Transylvania, Dracula'],
+  ['🇷🇺','Russia','Europe','Moscow','Largest country on Earth by area'],
+  ['🇷🇼','Rwanda','Africa','Kigali','Land of a Thousand Hills, gorillas'],
+  ['🇼🇸','Samoa','Oceania','Apia','South Pacific, first to greet New Year'],
+  ['🇸🇲','San Marino','Europe','San Marino','Oldest republic in the world'],
+  ['🇸🇹','São Tomé and Príncipe','Africa','São Tomé','Small island nation, Gulf of Guinea'],
+  ['🇸🇦','Saudi Arabia','Asia','Riyadh','Birthplace of Islam, oil superpower'],
+  ['🇸🇳','Senegal','Africa','Dakar','Westernmost point of mainland Africa'],
+  ['🇷🇸','Serbia','Europe','Belgrade','Central Balkans, Danube River'],
+  ['🇸🇨','Seychelles','Africa','Victoria','Indian Ocean island paradise'],
+  ['🇸🇱','Sierra Leone','Africa','Freetown','West Africa, diamond deposits'],
+  ['🇸🇬','Singapore','Asia','Singapore','City-state, one of richest per capita'],
+  ['🇸🇰','Slovakia','Europe','Bratislava','Central Europe, Carpathian Mountains'],
+  ['🇸🇮','Slovenia','Europe','Ljubljana','Alpine central Europe, youngest EU member at time'],
+  ['🇸🇧','Solomon Islands','Oceania','Honiara','WWII battleground, Pacific'],
+  ['🇸🇴','Somalia','Africa','Mogadishu','Horn of Africa, longest coastline in Africa'],
+  ['🇿🇦','South Africa','Africa','Pretoria','3 capitals, Cape of Good Hope'],
+  ['🇸🇸','South Sudan','Africa','Juba','World\'s newest country (2011)'],
+  ['🇪🇸','Spain','Europe','Madrid','Flamenco, bullfighting, Gaudi'],
+  ['🇱🇰','Sri Lanka','Asia','Sri Jayawardenepura Kotte','Teardrop island, Indian Ocean'],
+  ['🇸🇩','Sudan','Africa','Khartoum','3rd largest in Africa, Nile'],
+  ['🇸🇷','Suriname','South America','Paramaribo','Most forested country, Dutch-speaking'],
+  ['🇸🇪','Sweden','Europe','Stockholm','Nobel Prize, IKEA, Volvo'],
+  ['🇨🇭','Switzerland','Europe','Bern','Alps, chocolate, banking, neutral'],
+  ['🇸🇾','Syria','Asia','Damascus','One of world\'s oldest cities'],
+  ['🇹🇼','Taiwan','Asia','Taipei','Island democracy, semiconductor hub'],
+  ['🇹🇯','Tajikistan','Asia','Dushanbe','90% mountainous, Central Asia'],
+  ['🇹🇿','Tanzania','Africa','Dodoma','Kilimanjaro, Serengeti, Zanzibar'],
+  ['🇹🇭','Thailand','Asia','Bangkok','Land of Smiles, Buddhist temples'],
+  ['🇹🇱','Timor-Leste','Asia','Dili','Southeast Asia\'s youngest nation (2002)'],
+  ['🇹🇬','Togo','Africa','Lomé','Narrow West African nation'],
+  ['🇹🇴','Tonga','Oceania','Nukuʻalofa','Only Pacific monarchy'],
+  ['🇹🇹','Trinidad and Tobago','North America','Port of Spain','Caribbean, calypso & steel pan'],
+  ['🇹🇳','Tunisia','Africa','Tunis','North Africa, Star Wars filming location'],
+  ['🇹🇷','Turkey','Asia','Ankara','Straddles Europe & Asia, Bosphorus'],
+  ['🇹🇲','Turkmenistan','Asia','Ashgabat','Central Asia, "Door to Hell" gas crater'],
+  ['🇹🇻','Tuvalu','Oceania','Funafuti','4th smallest country, sinking atolls'],
+  ['🇺🇬','Uganda','Africa','Kampala','Pearl of Africa, mountain gorillas'],
+  ['🇺🇦','Ukraine','Europe','Kyiv','Largest entirely in Europe'],
+  ['🇦🇪','United Arab Emirates','Asia','Abu Dhabi','Dubai, Burj Khalifa, desert'],
+  ['🇬🇧','United Kingdom','Europe','London','Big Ben, NHS, tea'],
+  ['🇺🇸','United States','North America','Washington D.C.','Statue of Liberty, 50 states'],
+  ['🇺🇾','Uruguay','South America','Montevideo','Most progressive in S. America'],
+  ['🇺🇿','Uzbekistan','Asia','Tashkent','Silk Road, Central Asia'],
+  ['🇻🇺','Vanuatu','Oceania','Port Vila','Pacific archipelago, happiest country polls'],
+  ['🇻🇦','Vatican City','Europe','Vatican City','World\'s smallest country, Pope\'s home'],
+  ['🇻🇪','Venezuela','South America','Caracas','Angel Falls, oil, Andes'],
+  ['🇻🇳','Vietnam','Asia','Hanoi','Long S-shaped SE Asian nation'],
+  ['🇾🇪','Yemen','Asia','Sanaa','Arabian Peninsula, ancient history'],
+  ['🇿🇲','Zambia','Africa','Lusaka','Victoria Falls, landlocked southern Africa'],
+  ['🇿🇼','Zimbabwe','Africa','Harare','Victoria Falls, Great Zimbabwe ruins'],
+];
+
+/* ── Config ── */
+const QUESTIONS_PER_ROUND = 10;
+const DISTRACTORS_COUNT   = 3; /* wrong choices per question */
+const STARS_PER_Q         = 3;
+const MAX_SCORE = QUESTIONS_PER_ROUND * STARS_PER_Q;
+
+/* ── State ── */
+let seed, rng, questions, qIdx, answers, currentStars, hintUsed, answered, score, playCount;
+
+/* ── DOM refs ── */
+const flagDisplay   = document.getElementById('flagDisplay');
+const starsRow      = document.getElementById('starsRow');
+const optionsGrid   = document.getElementById('optionsGrid');
+const hintBtn       = document.getElementById('hintBtn');
+const hintText      = document.getElementById('hintText');
+const feedbackBar   = document.getElementById('feedbackBar');
+const nextBtn       = document.getElementById('nextBtn');
+const progressFill  = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const scoreLabel    = document.getElementById('scoreLabel');
+const pipRow        = document.getElementById('pipRow');
+const resultCard    = document.getElementById('resultCard');
+const dailySeedEl   = document.getElementById('dailySeed');
+
+/* ── Storage helpers ── */
+function getSaved(key, fb) { try { const v=localStorage.getItem(key); return v!==null?JSON.parse(v):fb; } catch(e){return fb;} }
+function setSaved(key, val){ try { localStorage.setItem(key,JSON.stringify(val)); } catch(e){} }
+
+/* ── Boot ── */
+function init() {
+  playCount = 0;
+  seed = todaySeed();
+  dailySeedEl.textContent = seed;
+  updateSeedBadge();
+  buildRound();
+  updateStreakDisplay();
+}
+
+function updateSeedBadge() {
+  dailySeedEl.textContent = playCount === 0
+    ? seed + ' (daily)'
+    : 'Bonus #' + playCount;
+}
+
+function buildRound() {
+  rng       = mulberry32(seed);
+  answers   = [];
+  qIdx      = 0;
+  score     = 0;
+
+  /* Pick 10 countries for today */
+  const shuffled = shuffle(COUNTRIES, mulberry32(seed * 7));
+  questions = shuffled.slice(0, QUESTIONS_PER_ROUND).map(c => {
+    /* Pick 3 distractors from the remaining pool */
+    const distractors = shuffle(
+      COUNTRIES.filter(x => x[1] !== c[1]),
+      mulberry32(seed + c[1].charCodeAt(0))
+    ).slice(0, DISTRACTORS_COUNT).map(x => x[1]);
+    const options = shuffle([c[1], ...distractors], mulberry32(seed ^ c[1].charCodeAt(0)));
+    return { flag: c[0], name: c[1], continent: c[2], capital: c[3], hint: c[4], options };
+  });
+
+  /* Build pip row */
+  pipRow.innerHTML = '';
+  questions.forEach((_, i) => {
+    const pip = document.createElement('div');
+    pip.className = 'q-pip' + (i === 0 ? ' active' : '');
+    pip.id = 'pip-' + i;
+    pip.textContent = i + 1;
+    pipRow.appendChild(pip);
+  });
+
+  resultCard.classList.remove('visible');
+  renderQuestion();
+}
+
+/* ── Render question ── */
+function renderQuestion() {
+  const q = questions[qIdx];
+  currentStars = STARS_PER_Q;
+  hintUsed     = false;
+  answered     = false;
+
+  flagDisplay.textContent = q.flag;
+  updateStars(currentStars);
+  hintText.textContent    = '';
+  hintBtn.disabled        = false;
+  setFeedback('', 'empty');
+  nextBtn.classList.remove('visible');
+
+  progressLabel.textContent = 'Question ' + (qIdx+1) + ' of ' + QUESTIONS_PER_ROUND;
+  progressFill.style.width  = (qIdx / QUESTIONS_PER_ROUND * 100) + '%';
+  scoreLabel.textContent    = '⭐ ' + score + ' pts';
+
+  /* Options */
+  optionsGrid.innerHTML = '';
+  q.options.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className   = 'option-btn';
+    btn.textContent = name;
+    btn.addEventListener('click', () => onAnswer(name, btn));
+    optionsGrid.appendChild(btn);
+  });
+}
+
+/* ── Answer ── */
+function onAnswer(name, btn) {
+  if (answered) return;
+  const q = questions[qIdx];
+
+  if (name === q.name) {
+    /* Correct */
+    answered = true;
+    btn.classList.add('correct');
+    playSound('correct');
+    /* Reveal correct if they had a wrong guess before — not applicable on first correct */
+    /* Disable all */
+    optionsGrid.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+    const earned = currentStars;
+    score += earned;
+    answers.push({ q, stars: earned, correct: true });
+
+    const msgs = ['🎉 Correct!', '✅ Well done!', '🌍 Right answer!', '⭐ Spot on!'];
+    setFeedback(msgs[Math.floor(rng() * msgs.length)] + ' +' + earned + '⭐', 'good');
+    updatePip(qIdx, 'correct');
+    nextBtn.classList.add('visible');
+
+  } else {
+    /* Wrong */
+    playSound('wrong');
+    btn.classList.add('wrong');
+    btn.disabled = true;
+    currentStars = Math.max(currentStars - 1, 0);
+    updateStars(currentStars);
+
+    if (currentStars === 0) {
+      /* Out of stars — reveal answer */
+      answered = true;
+      optionsGrid.querySelectorAll('.option-btn').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === q.name) b.classList.add('reveal');
+      });
+      answers.push({ q, stars: 0, correct: false });
+      setFeedback('❌ It was ' + q.flag + ' ' + q.name, 'bad');
+      updatePip(qIdx, 'wrong');
+      nextBtn.classList.add('visible');
+    } else {
+      setFeedback('❌ Not quite — try again!', 'bad');
+    }
+  }
+
+  scoreLabel.textContent = '⭐ ' + score + ' pts';
+}
+
+/* ── Hint ── */
+hintBtn.addEventListener('click', () => {
+  if (answered || hintUsed) return;
+  hintUsed = true;
+  currentStars = Math.max(currentStars - 1, 1); /* min 1 star if using hint */
+  updateStars(currentStars);
+  hintBtn.disabled = true;
+  const q = questions[qIdx];
+  hintText.textContent = '💡 ' + q.continent + ' · Capital: ' + q.capital + ' · ' + q.hint;
+});
+
+/* ── Next ── */
+nextBtn.addEventListener('click', () => {
+  qIdx++;
+  if (qIdx >= QUESTIONS_PER_ROUND) {
+    showResult();
+  } else {
+    updatePip(qIdx, 'active');
+    renderQuestion();
+  }
+});
+
+/* ── Result ── */
+function showResult() {
+  progressFill.style.width = '100%';
+  progressLabel.textContent = 'Complete!';
+  scoreLabel.textContent = '⭐ ' + score + ' pts';
+
+  /* Streak */
+  updateStreak();
+  updateStreakDisplay();
+  const streak = getSaved('eg_streak', 0);
+
+  /* Trophy & title */
+  const pct = score / MAX_SCORE;
+  let trophy, title, desc;
+  if (pct === 1)       { trophy='🏆'; title='Perfect score!';      desc='Flawless — a true geography expert!'; }
+  else if (pct >= .8)  { trophy='🥇'; title='Excellent!';          desc='You really know your flags!'; }
+  else if (pct >= .6)  { trophy='🥈'; title='Good job!';           desc='Solid geography knowledge!'; }
+  else if (pct >= .4)  { trophy='🥉'; title='Not bad!';            desc='Keep exploring the world!'; }
+  else                  { trophy='🌍'; title='Keep learning!';      desc='The world is big — come back tomorrow!'; }
+
+  document.getElementById('resultTrophy').textContent = trophy;
+  document.getElementById('resultTitle').textContent  = title;
+  document.getElementById('resultScore').textContent  = score + ' / ' + MAX_SCORE;
+  document.getElementById('resultDesc').textContent   = desc;
+  document.getElementById('streakVal').textContent    = streak;
+  document.getElementById('streakRibbon').lastChild.textContent = streak + ' day' + (streak !== 1 ? 's' : '');
+
+  /* Stars display */
+  const totalStarsEarned = answers.reduce((a,x)=>a+x.stars,0);
+  const maxStars = QUESTIONS_PER_ROUND * STARS_PER_Q;
+  document.getElementById('resultStars').textContent = '⭐'.repeat(Math.round(totalStarsEarned / maxStars * 5));
+
+  /* Share text */
+  const gridLines = answers.map(a => {
+    if (a.stars === 3) return '🟩🟩🟩';
+    if (a.stars === 2) return '🟨🟩🟩';
+    if (a.stars === 1) return '🟥🟩⬜';
+    return '🟥🟥🟥';
+  });
+  const roundLabel = playCount === 0 ? seed + ' (daily)' : 'Bonus #' + playCount;
+  document.getElementById('shareBox').textContent =
+    '🌍 Emoji Geography — ' + roundLabel + '\n' +
+    '⭐ ' + score + '/' + MAX_SCORE + ' pts\n' +
+    '🔥 Streak: ' + streak + ' day' + (streak !== 1 ? 's' : '') + '\n\n' +
+    gridLines.join('\n') + '\n\n' +
+    'zippywidgets.online/game/emoji-geography/';
+
+  /* Review list */
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = '<div style="font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:.25rem;">Your answers</div>';
+  answers.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    item.innerHTML =
+      '<span class="review-flag">' + a.q.flag + '</span>' +
+      '<span class="review-text"><span class="review-country">' + a.q.name + '</span></span>' +
+      '<span class="review-stars">' + '⭐'.repeat(a.stars) + (a.stars===0?'❌':'') + '</span>';
+    reviewList.appendChild(item);
+  });
+
+  resultCard.classList.add('visible');
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ── Streak ── */
+function updateStreak() {
+  const today = seed;
+  const yesterday = (() => {
+    const d = new Date(); d.setUTCDate(d.getUTCDate()-1);
+    return (d.getUTCFullYear()*10000)+((d.getUTCMonth()+1)*100)+d.getUTCDate();
+  })();
+  const lastDay = getSaved('eg_last_day', null);
+  if (lastDay === today) return;
+  let streak = getSaved('eg_streak', 0);
+  streak = (lastDay === yesterday) ? streak + 1 : 1;
+  setSaved('eg_streak', streak);
+  setSaved('eg_last_day', today);
+}
+function updateStreakDisplay() {
+  const streak = getSaved('eg_streak', 0);
+  if (document.getElementById('streakVal')) document.getElementById('streakVal').textContent = streak;
+}
+
+/* ── UI helpers ── */
+function updateStars(n) {
+  starsRow.textContent = '⭐'.repeat(n) + '☆'.repeat(STARS_PER_Q - n);
+}
+function setFeedback(text, cls) {
+  feedbackBar.textContent = text;
+  feedbackBar.className = 'feedback-bar ' + cls;
+}
+function updatePip(idx, state) {
+  const pip = document.getElementById('pip-' + idx);
+  if (!pip) return;
+  pip.className = 'q-pip ' + state;
+  pip.textContent = state === 'correct' ? '✓' : state === 'wrong' ? '✗' : (idx+1);
+}
+
+/* ── Play again ── */
+document.getElementById('playAgainBtn').addEventListener('click', () => {
+  playCount++;
+  /* New seed each replay — different from daily, different from previous replays */
+  seed = todaySeed() + playCount * 999983;
+  updateSeedBadge();
+  resultCard.classList.remove('visible');
+  buildRound();
+});
+
+/* ── Share ── */
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const text = document.getElementById('shareBox').textContent;
+  if (navigator.share) {
+    navigator.share({ title: 'Emoji Geography', text }).catch(() => copyFallback(text));
+  } else { copyFallback(text); }
+});
+function copyFallback(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Result', 1800);
+  }).catch(()=>{});
+}
+
+/* ── Hamburger nav ── */
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}));
+
+/* ── Audio engine ── */
+let _audioCtx = null;
+let _muted = (localStorage.getItem('zw_mute') === '1');
+(function(){ document.getElementById('muteToggle').textContent = _muted ? '🔇' : '🔊'; })();
+
+function _ctx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+function _tone(freq, dur, type, vol) {
+  if (_muted) return;
+  try {
+    const c = _ctx(), o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = type || 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || 0.22, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+    o.start(); o.stop(c.currentTime + dur);
+  } catch(e){}
+}
+function playSound(name) {
+  if (_muted) return;
+  if (name === 'correct') { _tone(520, 0.08, 'sine'); setTimeout(() => _tone(780, 0.14, 'sine'), 80); }
+  if (name === 'wrong')   { _tone(200, 0.12, 'sawtooth', 0.16); }
+  if (name === 'win') {
+    [523,659,784,1047].forEach((f,i) => setTimeout(() => _tone(f, 0.15, 'sine', 0.2), i*80));
+  }
+}
+function toggleMute() {
+  _muted = !_muted;
+  localStorage.setItem('zw_mute', _muted ? '1' : '0');
+  document.getElementById('muteToggle').textContent = _muted ? '🔇' : '🔊';
+}
+
+/* ── Boot ── */
+init();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3a836cffee324682bf1554f0e4288871"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

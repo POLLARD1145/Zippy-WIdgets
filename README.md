@@ -60,19 +60,19 @@ Test your broadband download and upload speed directly in the browser. No Flash,
 
 ## 🎮 Free Browser Games
 
-### [Daily Word Scramble](https://zippywidgets.online/games/word-scramble/)
+### [Daily Word Scramble](https://zippywidgets.online/game/word-scramble/)
 A free daily word unscramble puzzle — similar to Wordle but you rearrange scrambled letters to find the hidden word. New puzzle every day at midnight UTC. Choose from Easy (4-letter), Medium (5-letter), or Hard (6-7 letter) difficulty. Play unlimited bonus rounds after you finish the daily.
 
-### [Emoji Memory Game](https://zippywidgets.online/games/emoji-memory/)
+### [Emoji Memory Game](https://zippywidgets.online/game/emoji-memory/)
 A free online memory card matching game using emoji pairs. Flip cards, find matches, and beat your best time. Works great on mobile and desktop.
 
-### [Rock Paper Scissors](https://zippywidgets.online/games/rock-paper-scissors/)
+### [Rock Paper Scissors](https://zippywidgets.online/game/rock-paper-scissors/)
 Play rock paper scissors against the computer in a best-of series. Tracks your wins, losses, and draws with sound effects and a mute toggle.
 
-### [Emoji Geography Quiz](https://zippywidgets.online/games/emoji-geography/)
+### [Emoji Geography Quiz](https://zippywidgets.online/game/emoji-geography/)
 Guess the country from emoji clues — a fun free geography trivia game. Earn stars for correct answers with fewer hints.
 
-### [AetherForge](https://zippywidgets.online/games/aetherforge/)
+### [AetherForge](https://zippywidgets.online/game/aetherforge/)
 A browser-based crafting and alchemy puzzle game. Combine elements to discover new ones and build your way up the crafting tree.
 
 ---
@@ -90,8 +90,9 @@ Tips, guides, and explainers on internet tools and everyday tech topics:
 
 ## Tech Stack
 
-- **Pure HTML/CSS/JS** — no frameworks, no build step, no dependencies
-- **Hosted on GitHub Pages** with a custom domain via CNAME
+- **Astro** — static site generator with shared layouts, components and automatic sitemap
+- **Pure client-side tool logic** — every utility tool is still vanilla HTML/CSS/JS that runs in the browser
+- **Hosted on GitHub Pages** with a custom domain via `public/CNAME`
 - **Analytics**: Cloudflare Web Analytics (cookie-free, no consent banner required)
 - **Ads**: Google AdSense (deferred, non-blocking)
 - **Audio**: Web Audio API for in-game sound effects with persistent mute toggle
@@ -101,38 +102,91 @@ Tips, guides, and explainers on internet tools and everyday tech topics:
 
 ```
 /
-├── index.html              # Homepage
-├── style.css               # Global styles
-├── theme.js                # Dark/light mode toggle
-├── games/
-│   ├── word-scramble/      # Daily word unscramble puzzle
-│   ├── emoji-memory/       # Card matching game
-│   ├── rock-paper-scissors/
-│   ├── emoji-geography/    # Country emoji quiz
-│   └── aetherforge/        # Crafting puzzle game
-├── qr-code-generator/
-├── pdf-merger/
-├── image-compressor/
-├── password-generator/
-├── json-formatter/
-├── favicon-generator/
-├── font-generator/
-├── picker-wheel/
-├── age-calculator/
-├── word-counter/
-├── speed-test/
-└── blog/
+├── .github/workflows/       # GitHub Actions deployment workflow
+├── public/                  # Static assets copied as-is to dist/
+│   ├── style.css
+│   ├── theme.js
+│   ├── ZippyWidgets Logo.png
+│   ├── CNAME
+│   └── games/               # Game pages remain static HTML
+├── src/
+│   ├── layouts/
+│   │   └── Layout.astro     # Shared <head>, analytics, AdSense
+│   ├── components/
+│   │   ├── Nav.astro        # Shared navigation + site search
+│   │   └── Footer.astro     # Shared footer
+│   ├── data/
+│   │   ├── tools.ts         # Central tools list (homepage, nav, search)
+│   │   └── posts.ts         # Central blog posts list
+│   └── pages/
+│       ├── index.astro      # Homepage
+│       ├── about/
+│       ├── contact/
+│       ├── privacy-policy/
+│       ├── disclaimer/
+│       ├── tool/           # All utility tools live under /tool/*
+│       │   ├── pdf-merger/
+│       │   ├── image-compressor/
+│       │   ├── password-generator/
+│       │   ├── json-formatter/
+│       │   ├── favicon-generator/
+│       │   ├── picker-wheel/
+│       │   ├── font-generator/
+│       │   ├── word-counter/
+│       │   ├── qr-code-generator/
+│       │   ├── age-calculator/
+│       │   └── speed-test/
+│       └── blog/           # All blog posts live under /blog/*
+├── astro.config.mjs         # Astro config: static output, trailing slashes, sitemap
+├── package.json
+├── tsconfig.json
+└── dist/                    # Build output (gitignored)
 ```
 
 ## Local Development
 
-No build process required — open any `index.html` directly in a browser, or serve the folder with any static server:
+Install dependencies once:
 
 ```bash
-npx serve .
-# or
-python3 -m http.server 8080
+npm install
 ```
+
+Start the Astro dev server:
+
+```bash
+npm run dev
+```
+
+Open the URL shown in your terminal (usually `http://localhost:4321`).
+
+## Build
+
+Generate the static site in `dist/`:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Deployment
+
+Deployment is handled automatically by GitHub Actions:
+
+1. Push to `main`
+2. The workflow in `.github/workflows/deploy.yml` installs dependencies, runs `npm run build`, and deploys the `dist/` folder to GitHub Pages.
+3. Make sure your repository **Settings → Pages → Source** is set to **GitHub Actions**.
+
+## Adding a New Tool
+
+1. Add the tool to `src/data/tools.ts` with a `/tool/<tool-slug>/` href.
+2. Create `src/pages/tool/<tool-slug>/index.astro` (or migrate the existing HTML page using the migration helper).
+3. The tool automatically appears in the homepage grid, navigation dropdown, search, and sitemap.
+4. Rebuild and deploy.
 
 ---
 

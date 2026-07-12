@@ -1,0 +1,65 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { posts, postUrl } from '@data/posts.ts';
+
+const title = 'ZippyWidgets Blog — Free Tool Guides & Tips';
+const description = 'Practical guides, tips and how-tos for ZippyWidgets free browser-based tools.';
+---
+<Layout title={title} description={description}>
+  <Nav />
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📰</span>
+      <div>
+        <h1>ZippyWidgets Blog</h1>
+        <p>Practical guides, tips and how-tos for everyday online tools.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.9rem;color:var(--muted);line-height:1.8;font-size:.93rem;">
+      <p>The ZippyWidgets blog is an independent resource dedicated to helping everyday users get more out of free, browser-based tools. Whether you're a teacher picking student names fairly in class, a café owner creating a WiFi QR code for customers, a remote worker troubleshooting a slow VPN connection, or a content creator styling your Instagram bio with copy-paste fonts — this blog covers the practical knowledge that sits behind each tool.</p>
+      <p>Every article is written with a single goal: to give you the clearest, most complete answer on the internet for that specific question. We avoid padding and filler. Each guide explains the <strong>how</strong>, the <strong>why</strong>, and the <strong>what to do when it goes wrong</strong> — all without requiring you to create an account, download software, or sit through a video. All tools covered here run entirely in your browser, process data locally, and never transmit your content to any server.</p>
+      <p>New guides are published regularly. If you have a topic you'd like us to cover, <a href="/contact/" style="color:var(--accent);">get in touch</a>.</p>
+    </div>
+
+    <div class="blog-grid">
+      {posts.map(post => (
+        <a class="blog-card" href={postUrl(post.slug)}>
+          <span class="blog-tag">{post.tag}</span>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
+          <span class="blog-date">{post.date}</span>
+          <span class="read-more">Read article →</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="ad-slot" id="adSlot" style="margin-top:2rem;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+  </main>
+
+  <Footer />
+</Layout>

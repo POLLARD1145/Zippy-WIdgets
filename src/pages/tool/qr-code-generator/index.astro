@@ -1,0 +1,741 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Free QR Code Generator | WiFi, URL, Menu & Custom Color QR Codes';
+const description = 'Free QR code generator — create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs and business cards. Choose size, foreground and background color. Download PNG instantly. No sign-up.';
+const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Generator",
+    "url": "https://zippywidgets.online/qr-code-generator/",
+    "description": "Free online QR code generator. Convert any URL, text, or Wi-Fi password into a downloadable QR code instantly.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I create a QR code for my website?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Select the URL tab, paste your website address into the input field, and click Generate QR Code. The QR code appears instantly and can be downloaded as a PNG file. No sign-up is required." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I make a QR code for my WiFi password?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the WiFi tab, enter your network name (SSID), password, and security type, then click Generate. Guests scan the code and connect automatically — no password typing required." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the QR code free to download and use commercially?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. All QR codes generated on ZippyWidgets are free with no watermark. You can use them for personal or commercial purposes — on websites, print materials, menus, business cards, or signage." }
+      },
+      {
+        "@type": "Question",
+        "name": "What size should I print my QR code?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The minimum recommended print size is 2.5cm × 2.5cm (about 1 inch square) for scanning at arm's length. For posters or wall signs, print at least 5cm × 5cm for reliable scanning from 1–2 metres away." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe when generating a QR code?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. All QR codes are generated entirely in your browser. Your URLs, WiFi passwords, and text content are never sent to any server. The PNG download is created locally using the browser's Canvas API." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📷</span>
+      <div>
+        <h1>Free QR Code Generator — WiFi, URL, Menu &amp; Custom Color</h1>
+        <p>Create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs, and business cards. Choose size and colors — download PNG instantly. No sign-up.</p>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="use-case-chips" style="margin-bottom:1rem;">
+        <span onclick="setMode('url')">🌐 Website URL QR Code</span>
+        <span onclick="setMode('wifi')">📶 WiFi Password QR Code</span>
+        <span onclick="setMode('review')">⭐ Google Review QR Code</span>
+        <span onclick="setMode('menu')">🍽️ Restaurant Menu QR Code</span>
+        <span onclick="setMode('text')">💬 Plain Text</span>
+      </div>
+
+      <div id="modeUrl">
+        <input type="text" id="qrInput" placeholder="https://example.com" />
+      </div>
+
+      <div id="modeWifi" style="display:none;">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+          <input type="text" id="wifiSsid" placeholder="Network name (SSID)" style="flex:1;min-width:140px;" />
+          <input type="text" id="wifiPass" placeholder="WiFi password" style="flex:1;min-width:140px;" />
+        </div>
+        <select id="wifiSec" style="margin-top:.6rem;max-width:200px;">
+          <option value="WPA">WPA / WPA2</option>
+          <option value="WEP">WEP</option>
+          <option value="nopass">No Password</option>
+        </select>
+      </div>
+
+      <div id="modeText" style="display:none;">
+        <textarea id="qrTextarea" rows="3" placeholder="Enter any text…"></textarea>
+      </div>
+
+      <!-- ══ DESIGN PANEL ══ -->
+      <style>
+        .design-section { margin-top: 1.1rem; }
+        .design-section > .ds-title { font-size: .78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .09em; margin-bottom: .55rem; }
+        .style-tiles { display: flex; gap: .4rem; flex-wrap: wrap; }
+        .style-tile {
+          width: 48px; height: 48px; border-radius: 8px;
+          border: 2px solid var(--border); background: var(--surface2);
+          cursor: pointer; display: flex; align-items: center; justify-content: center;
+          transition: border-color .15s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .style-tile:hover  { border-color: var(--accent); }
+        .style-tile.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,106,247,.25); }
+        .style-tile svg { width: 28px; height: 28px; }
+        .ds-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: flex-end; margin-top: .5rem; }
+        .ds-col { display: flex; flex-direction: column; gap: .3rem; }
+        .ds-col label { font-size: .72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+        .ds-check { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); cursor: pointer; }
+        .ds-check input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+        .grad-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-top: .4rem; }
+        .grad-row label { font-size: .7rem; color: var(--muted); }
+        .color-swatch { display: flex; align-items: center; gap: .3rem; }
+        .color-swatch input[type=color] { width: 32px; height: 28px; border: 1px solid var(--border); border-radius: 6px; padding: 1px; cursor: pointer; background: none; }
+        .color-hex { font-size: .7rem; color: var(--muted); font-family: monospace; }
+        .grad-dir { display: flex; gap: .3rem; }
+        .grad-dir-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: .25rem .55rem; font-size: .72rem; color: var(--muted); cursor: pointer; font-family: inherit; transition: all .15s; }
+        .grad-dir-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .warn-note { font-size: .7rem; color: var(--yellow, #fbbf24); margin-top: .5rem; }
+        /* ── Mobile responsive fixes ── */
+        #qrOutput { display:flex; justify-content:center; margin-top:1rem; overflow:hidden; }
+        #qrPreview { max-width:100%; width:100%; height:auto !important; border-radius:8px; display:block; }
+        .style-tiles { gap:.35rem; }
+        .style-tile  { width:clamp(40px,11vw,52px); height:clamp(40px,11vw,52px); flex-shrink:0; }
+        .style-tile svg { width:clamp(22px,6vw,30px); height:clamp(22px,6vw,30px); }
+        .ds-row  { gap:.5rem; }
+        .grad-dir { flex-wrap:wrap; }
+        .grad-dir-btn { padding:.22rem .45rem; font-size:.68rem; }
+        .qr-options { flex-wrap:wrap; }
+        .qr-option-group { min-width:0 !important; flex:1 1 140px; }
+        @media (max-width:480px) {
+          .ds-col label { font-size:.68rem; }
+          .color-hex    { display:none; }
+          .qr-options   { flex-direction:column; gap:.5rem; }
+          .qr-option-group { flex:1 1 100%; }
+        }
+      </style>
+
+      <!-- Size -->
+      <div class="qr-options" style="margin-top:.75rem;">
+        <div class="qr-option-group">
+          <label>Size</label>
+          <select id="qrSize">
+            <option value="200">Small (200px)</option>
+            <option value="300" selected>Medium (300px)</option>
+            <option value="400">Large (400px)</option>
+          </select>
+        </div>
+        <div class="qr-option-group" style="flex:1;min-width:160px;">
+          <label>Center Logo <span style="font-size:.7rem;color:var(--muted);">(optional)</span></label>
+          <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">
+            <label style="cursor:pointer;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.3rem .7rem;font-size:.78rem;font-weight:600;white-space:nowrap;" for="logoUpload">📁 Choose image</label>
+            <input type="file" id="logoUpload" accept="image/*" style="display:none;" />
+            <span id="logoName" style="font-size:.75rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px;">None</span>
+            <button id="logoClear" onclick="clearLogo()" style="display:none;background:none;border:none;color:var(--red,#f87171);cursor:pointer;font-size:.8rem;padding:0;" aria-label="Remove logo">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pattern style -->
+      <div class="design-section">
+        <div class="ds-title">Pattern style</div>
+        <div class="style-tiles" id="patternTiles">
+          <div class="style-tile active" data-pattern="square" title="Square">
+            <svg viewBox="0 0 28 28"><rect x="3" y="3" width="8" height="8"/><rect x="17" y="3" width="8" height="8"/><rect x="3" y="17" width="8" height="8"/><rect x="17" y="17" width="8" height="8"/></svg>
+          </div>
+          <div class="style-tile" data-pattern="dots" title="Dots">
+            <svg viewBox="0 0 28 28"><circle cx="7" cy="7" r="4"/><circle cx="21" cy="7" r="4"/><circle cx="7" cy="21" r="4"/><circle cx="21" cy="21" r="4"/></svg>
+          </div>
+          <div class="style-tile" data-pattern="rounded" title="Rounded">
+            <svg viewBox="0 0 28 28"><rect x="3" y="3" width="8" height="8" rx="2.5"/><rect x="17" y="3" width="8" height="8" rx="2.5"/><rect x="3" y="17" width="8" height="8" rx="2.5"/><rect x="17" y="17" width="8" height="8" rx="2.5"/></svg>
+          </div>
+          <div class="style-tile" data-pattern="classy" title="Classy">
+            <svg viewBox="0 0 28 28"><rect x="3" y="3" width="8" height="8" rx="4"/><rect x="17" y="3" width="8" height="8" rx="4"/><rect x="3" y="17" width="8" height="8" rx="4"/><rect x="17" y="17" width="8" height="8" rx="4"/></svg>
+          </div>
+          <div class="style-tile" data-pattern="classy-rounded" title="Classy Rounded">
+            <svg viewBox="0 0 28 28"><rect x="3" y="3" width="8" height="8" rx="3" ry="3"/><rect x="17" y="3" width="8" height="8" rx="3" ry="3"/><rect x="3" y="17" width="8" height="8" rx="3" ry="3"/><rect x="17" y="17" width="8" height="8" rx="3" ry="3"/></svg>
+          </div>
+          <div class="style-tile" data-pattern="extra-rounded" title="Extra Rounded">
+            <svg viewBox="0 0 28 28"><circle cx="7" cy="7" r="5"/><circle cx="21" cy="7" r="5"/><circle cx="7" cy="21" r="5"/><circle cx="21" cy="21" r="5"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pattern color -->
+      <div class="design-section">
+        <div class="ds-title">Pattern color</div>
+        <label class="ds-check"><input type="checkbox" id="patternGradient" /> Use gradient pattern color</label>
+        <div class="ds-row" id="patternSolidRow">
+          <div class="ds-col"><label>Color</label>
+            <div class="color-swatch"><input type="color" id="patternColor1" value="#000000" /><span class="color-hex" id="patternColor1Hex">#000000</span></div>
+          </div>
+        </div>
+        <div id="patternGradRow" style="display:none;">
+          <div class="ds-row" style="margin-top:.4rem;">
+            <div class="ds-col"><label>Gradient style</label>
+              <div class="grad-dir" id="gradDirPat">
+                <button class="grad-dir-btn active" data-dir="vertical">Vertical</button>
+                <button class="grad-dir-btn" data-dir="horizontal">Horizontal</button>
+                <button class="grad-dir-btn" data-dir="diagonal">Diagonal</button>
+              </div>
+            </div>
+          </div>
+          <div class="ds-row">
+            <div class="ds-col"><label>Color 1</label>
+              <div class="color-swatch"><input type="color" id="patternGrad1" value="#000000" /><span class="color-hex" id="patternGrad1Hex">#000000</span></div>
+            </div>
+            <div class="ds-col"><label>Color 2</label>
+              <div class="color-swatch"><input type="color" id="patternGrad2" value="#7c6af7" /><span class="color-hex" id="patternGrad2Hex">#7c6af7</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Background color -->
+      <div class="design-section">
+        <div class="ds-title">Pattern background color</div>
+        <label class="ds-check"><input type="checkbox" id="bgTransparent" /> Transparent background</label>
+        <label class="ds-check" style="margin-top:.35rem;"><input type="checkbox" id="bgGradient" /> Use gradient background color</label>
+        <div class="ds-row" id="bgSolidRow" style="margin-top:.4rem;">
+          <div class="ds-col"><label>Background color</label>
+            <div class="color-swatch"><input type="color" id="bgColor1" value="#ffffff" /><span class="color-hex" id="bgColor1Hex">#ffffff</span></div>
+          </div>
+        </div>
+        <div id="bgGradRow" style="display:none;">
+          <div class="ds-row">
+            <div class="ds-col"><label>Color 1</label>
+              <div class="color-swatch"><input type="color" id="bgGrad1" value="#ffffff" /><span class="color-hex" id="bgGrad1Hex">#ffffff</span></div>
+            </div>
+            <div class="ds-col"><label>Color 2</label>
+              <div class="color-swatch"><input type="color" id="bgGrad2" value="#e8edf6" /><span class="color-hex" id="bgGrad2Hex">#e8edf6</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="warn-note">⚠️ For optimal scanning use high-contrast colors.</p>
+      </div>
+
+      <!-- Corners: frame style -->
+      <div class="design-section">
+        <div class="ds-title">Corners — Frame style</div>
+        <div class="style-tiles" id="cornerFrameTiles">
+          <div class="style-tile active" data-cframe="square" title="Square">
+            <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="22" height="22"/></svg>
+          </div>
+          <div class="style-tile" data-cframe="extra-rounded" title="Rounded">
+            <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="22" height="22" rx="8"/></svg>
+          </div>
+          <div class="style-tile" data-cframe="dot" title="Dot">
+            <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="14" cy="14" r="11"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corners: dot style -->
+      <div class="design-section">
+        <div class="ds-title">Corner dots style</div>
+        <div class="style-tiles" id="cornerDotTiles">
+          <div class="style-tile active" data-cdot="square" title="Square">
+            <svg viewBox="0 0 28 28"><rect x="8" y="8" width="12" height="12"/></svg>
+          </div>
+          <div class="style-tile" data-cdot="dot" title="Dot">
+            <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corner colors -->
+      <div class="design-section">
+        <div class="ds-title">Corner colors</div>
+        <div class="ds-row">
+          <div class="ds-col"><label>Frame color</label>
+            <div class="color-swatch"><input type="color" id="cornerFrameColor" value="#000000" /><span class="color-hex" id="cornerFrameColorHex">#000000</span></div>
+          </div>
+          <div class="ds-col"><label>Dot color</label>
+            <div class="color-swatch"><input type="color" id="cornerDotColor" value="#000000" /><span class="color-hex" id="cornerDotColorHex">#000000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group mt-2">
+        <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
+        <button class="btn btn-secondary" id="downloadBtn" onclick="downloadQR()" style="display:none;">⬇ Download PNG</button>
+      </div>
+
+      <div id="qrOutput">
+        <img id="qrPreview" alt="QR Code preview" style="display:none;border-radius:4px;" />
+      </div>
+
+      <div id="qrScratch" style="position:absolute;left:-9999px;top:-9999px;"></div>
+
+      <p class="text-muted text-sm mt-2">Generated entirely in your browser — no data is sent to any server.</p>
+    </div>
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the QR Code Generator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select a content type from the tabs at the top — <strong>URL</strong>, <strong>WiFi</strong>, <strong>Text</strong>, or <strong>Email</strong>. Fill in the relevant fields and click <strong>Generate QR Code</strong>. Your QR code appears immediately in the preview panel. Click <strong>Download PNG</strong> to save it to your device at the selected size.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Content Types Explained</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>URL:</strong> Encodes any web address. When scanned, the phone opens the URL in its browser. Use this for restaurant menus, product pages, social media profiles, or event landing pages.</li>
+          <li><strong>WiFi:</strong> Encodes your network name (SSID), password, and security type. When scanned by Android or iPhone, the device connects automatically without typing the password. Perfect for cafés, Airbnbs, offices, and home guests.</li>
+          <li><strong>Text:</strong> Encodes plain text up to several hundred characters. Useful for business card details, short messages, or instructions.</li>
+          <li><strong>Email:</strong> Opens the device's mail app with the To address and subject pre-filled. Great for contact cards and feedback forms.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Customisation Options</h3>
+        <p>Use the <strong>Foreground</strong> and <strong>Background</strong> colour pickers to match your brand colours. Choose from four sizes: 128px for small print, 256px for standard use, 512px for posters, and 1024px for large-format printing. Larger sizes are sharper when printed at scale. Keep enough contrast between foreground and background colours — QR scanners struggle with low-contrast codes.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Best Practices for Printing</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Download at <strong>512px or 1024px</strong> for anything that will be printed. Small sizes pixelate when scaled up.</li>
+          <li>Always test-scan your QR code before printing a large batch — use your phone's native camera app, not a third-party scanner.</li>
+          <li>Leave a white quiet zone (border) around the QR code. Most scanners need about 4 module widths of margin to read the code reliably.</li>
+          <li>Dark foreground on a light background scans most reliably. Inverted (light on dark) works but is less universally supported.</li>
+          <li>For Google Reviews QR codes, generate a URL code pointing to your Google Business review link for instant one-scan reviews.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>All QR codes are generated entirely in your browser using the QRCode.js library. Your URLs, WiFi passwords, and text content are never transmitted to any server. The PNG download is created locally on your device using the browser's Canvas API.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    .design-section { margin-top: 1.1rem; }
+            .design-section > .ds-title { font-size: .78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .09em; margin-bottom: .55rem; }
+            .style-tiles { display: flex; gap: .4rem; flex-wrap: wrap; }
+            .style-tile {
+              width: 48px; height: 48px; border-radius: 8px;
+              border: 2px solid var(--border); background: var(--surface2);
+              cursor: pointer; display: flex; align-items: center; justify-content: center;
+              transition: border-color .15s;
+              -webkit-tap-highlight-color: transparent;
+            }
+            .style-tile:hover  { border-color: var(--accent); }
+            .style-tile.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,106,247,.25); }
+            .style-tile svg { width: 28px; height: 28px; }
+            .ds-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: flex-end; margin-top: .5rem; }
+            .ds-col { display: flex; flex-direction: column; gap: .3rem; }
+            .ds-col label { font-size: .72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+            .ds-check { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); cursor: pointer; }
+            .ds-check input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+            .grad-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-top: .4rem; }
+            .grad-row label { font-size: .7rem; color: var(--muted); }
+            .color-swatch { display: flex; align-items: center; gap: .3rem; }
+            .color-swatch input[type=color] { width: 32px; height: 28px; border: 1px solid var(--border); border-radius: 6px; padding: 1px; cursor: pointer; background: none; }
+            .color-hex { font-size: .7rem; color: var(--muted); font-family: monospace; }
+            .grad-dir { display: flex; gap: .3rem; }
+            .grad-dir-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: .25rem .55rem; font-size: .72rem; color: var(--muted); cursor: pointer; font-family: inherit; transition: all .15s; }
+            .grad-dir-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+            .warn-note { font-size: .7rem; color: var(--yellow, #fbbf24); margin-top: .5rem; }
+            /* ── Mobile responsive fixes ── */
+            #qrOutput { display:flex; justify-content:center; margin-top:1rem; overflow:hidden; }
+            #qrPreview { max-width:100%; width:100%; height:auto !important; border-radius:8px; display:block; }
+            .style-tiles { gap:.35rem; }
+            .style-tile  { width:clamp(40px,11vw,52px); height:clamp(40px,11vw,52px); flex-shrink:0; }
+            .style-tile svg { width:clamp(22px,6vw,30px); height:clamp(22px,6vw,30px); }
+            .ds-row  { gap:.5rem; }
+            .grad-dir { flex-wrap:wrap; }
+            .grad-dir-btn { padding:.22rem .45rem; font-size:.68rem; }
+            .qr-options { flex-wrap:wrap; }
+            .qr-option-group { min-width:0 !important; flex:1 1 140px; }
+            @media (max-width:480px) {
+              .ds-col label { font-size:.68rem; }
+              .color-hex    { display:none; }
+              .qr-options   { flex-direction:column; gap:.5rem; }
+              .qr-option-group { flex:1 1 100%; }
+            }
+  </style>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "QR Code Generator",
+        "url": "https://zippywidgets.online/qr-code-generator/",
+        "description": "Free online QR code generator. Convert any URL, text, or Wi-Fi password into a downloadable QR code instantly.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I create a QR code for my website?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Select the URL tab, paste your website address into the input field, and click Generate QR Code. The QR code appears instantly and can be downloaded as a PNG file. No sign-up is required." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I make a QR code for my WiFi password?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the WiFi tab, enter your network name (SSID), password, and security type, then click Generate. Guests scan the code and connect automatically — no password typing required." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the QR code free to download and use commercially?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. All QR codes generated on ZippyWidgets are free with no watermark. You can use them for personal or commercial purposes — on websites, print materials, menus, business cards, or signage." }
+          },
+          {
+            "@type": "Question",
+            "name": "What size should I print my QR code?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The minimum recommended print size is 2.5cm × 2.5cm (about 1 inch square) for scanning at arm's length. For posters or wall signs, print at least 5cm × 5cm for reliable scanning from 1–2 metres away." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data safe when generating a QR code?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. All QR codes are generated entirely in your browser. Your URLs, WiFi passwords, and text content are never sent to any server. The PNG download is created locally using the browser's Canvas API." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+
+  <script is:inline>
+    'use strict';
+    
+        let currentMode = 'url';
+    
+        function setMode(mode) {
+          currentMode = mode;
+          document.getElementById('modeUrl').style.display  = 'none';
+          document.getElementById('modeWifi').style.display = 'none';
+          document.getElementById('modeText').style.display = 'none';
+    
+          if (mode === 'url' || mode === 'review' || mode === 'menu') {
+            document.getElementById('modeUrl').style.display = 'block';
+            const placeholders = {
+              url:    'https://example.com',
+              review: 'https://g.page/r/YOUR_REVIEW_ID/review',
+              menu:   'https://your-restaurant.com/menu'
+            };
+            document.getElementById('qrInput').placeholder = placeholders[mode];
+            document.getElementById('qrInput').value = '';
+            document.getElementById('qrInput').focus();
+          } else if (mode === 'wifi') {
+            document.getElementById('modeWifi').style.display = 'block';
+            document.getElementById('wifiSsid').focus();
+          } else if (mode === 'text') {
+            document.getElementById('modeText').style.display = 'block';
+            document.getElementById('qrTextarea').focus();
+          }
+        }
+    
+        function getQRValue() {
+          if (currentMode === 'wifi') {
+            const ssid = document.getElementById('wifiSsid').value.trim();
+            const pass = document.getElementById('wifiPass').value.trim();
+            const sec  = document.getElementById('wifiSec').value;
+            if (!ssid) { alert('Please enter the WiFi network name.'); return null; }
+            return `WIFI:T:${sec};S:${ssid};P:${pass};;`;
+          } else if (currentMode === 'text') {
+            const val = document.getElementById('qrTextarea').value.trim();
+            if (!val) { alert('Please enter some text.'); return null; }
+            return val;
+          } else {
+            const val = document.getElementById('qrInput').value.trim();
+            if (!val) { alert('Please enter a URL or value.'); return null; }
+            return val;
+          }
+        }
+    
+        /* ── Design state ── */
+        let logoDataUrl = null;
+        let patternStyle     = 'square';
+        let cornerFrameStyle = 'square';
+        let cornerDotStyle   = 'square';
+        let patGradDir       = 'vertical';
+    
+        /* ── Tile pickers ── */
+        function makeTilePicker(containerId, onChange) {
+          document.getElementById(containerId).querySelectorAll('.style-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+              document.getElementById(containerId).querySelectorAll('.style-tile').forEach(t => t.classList.remove('active'));
+              tile.classList.add('active');
+              onChange(tile.dataset.pattern || tile.dataset.cframe || tile.dataset.cdot);
+            });
+          });
+        }
+        makeTilePicker('patternTiles',    v => patternStyle = v);
+        makeTilePicker('cornerFrameTiles',v => cornerFrameStyle = v);
+        makeTilePicker('cornerDotTiles',  v => cornerDotStyle = v);
+    
+        /* ── Gradient direction buttons ── */
+        document.getElementById('gradDirPat').querySelectorAll('.grad-dir-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('gradDirPat').querySelectorAll('.grad-dir-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            patGradDir = btn.dataset.dir;
+          });
+        });
+    
+        /* ── Color hex labels ── */
+        function bindColorHex(inputId, hexId) {
+          const inp = document.getElementById(inputId);
+          const hex = document.getElementById(hexId);
+          inp.addEventListener('input', () => hex.textContent = inp.value);
+        }
+        bindColorHex('patternColor1','patternColor1Hex');
+        bindColorHex('patternGrad1', 'patternGrad1Hex');
+        bindColorHex('patternGrad2', 'patternGrad2Hex');
+        bindColorHex('bgColor1',     'bgColor1Hex');
+        bindColorHex('bgGrad1',      'bgGrad1Hex');
+        bindColorHex('bgGrad2',      'bgGrad2Hex');
+        bindColorHex('cornerFrameColor','cornerFrameColorHex');
+        bindColorHex('cornerDotColor',  'cornerDotColorHex');
+    
+        /* ── Gradient toggles ── */
+        document.getElementById('patternGradient').addEventListener('change', function() {
+          document.getElementById('patternSolidRow').style.display = this.checked ? 'none' : 'flex';
+          document.getElementById('patternGradRow').style.display  = this.checked ? 'block' : 'none';
+        });
+        document.getElementById('bgGradient').addEventListener('change', function() {
+          document.getElementById('bgSolidRow').style.display = this.checked ? 'none' : 'flex';
+          document.getElementById('bgGradRow').style.display  = this.checked ? 'block' : 'none';
+        });
+        document.getElementById('bgTransparent').addEventListener('change', function() {
+          const hide = this.checked;
+          document.getElementById('bgSolidRow').style.display = hide ? 'none' : '';
+          document.getElementById('bgGradRow').style.display  = hide ? 'none' : '';
+          document.getElementById('bgGradient').closest('label').style.opacity = hide ? '.35' : '1';
+        });
+    
+        /* ── Logo upload ── */
+        document.getElementById('logoUpload').addEventListener('change', function() {
+          const file = this.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = e => {
+            logoDataUrl = e.target.result;
+            document.getElementById('logoName').textContent = file.name.length > 14 ? file.name.slice(0,12) + '…' : file.name;
+            document.getElementById('logoClear').style.display = 'inline';
+          };
+          reader.readAsDataURL(file);
+        });
+        function clearLogo() {
+          logoDataUrl = null;
+          document.getElementById('logoUpload').value = '';
+          document.getElementById('logoName').textContent = 'None';
+          document.getElementById('logoClear').style.display = 'none';
+        }
+    
+        /* ── Gradient rotation map ── */
+        function gradRotation(dir) {
+          return dir === 'horizontal' ? 0 : dir === 'diagonal' ? 45 : 90; /* vertical = 90deg */
+        }
+    
+        /* ── Build dots gradient config ── */
+        function patternColorOpts() {
+          if (!document.getElementById('patternGradient').checked) {
+            return { color: document.getElementById('patternColor1').value };
+          }
+          return {
+            gradient: {
+              type: 'linear',
+              rotation: gradRotation(patGradDir) * Math.PI / 180,
+              colorStops: [
+                { offset: 0, color: document.getElementById('patternGrad1').value },
+                { offset: 1, color: document.getElementById('patternGrad2').value },
+              ]
+            }
+          };
+        }
+    
+        /* ── Build background options ── */
+        function bgOpts() {
+          if (document.getElementById('bgTransparent').checked) {
+            return { color: 'rgba(0,0,0,0)' };
+          }
+          if (document.getElementById('bgGradient').checked) {
+            return {
+              gradient: {
+                type: 'linear',
+                rotation: 90 * Math.PI / 180,
+                colorStops: [
+                  { offset: 0, color: document.getElementById('bgGrad1').value },
+                  { offset: 1, color: document.getElementById('bgGrad2').value },
+                ]
+              }
+            };
+          }
+          return { color: document.getElementById('bgColor1').value };
+        }
+    
+        /* ── Generate ── */
+        let qrInstance = null;
+    
+        function generateQR() {
+          const val = getQRValue();
+          if (!val) return;
+    
+          const size             = parseInt(document.getElementById('qrSize').value, 10);
+          const cornerFrameColor = document.getElementById('cornerFrameColor').value;
+          const cornerDotColor   = document.getElementById('cornerDotColor').value;
+    
+          const opts = {
+            width:  size,
+            height: size,
+            data:   val,
+            qrOptions:        { errorCorrectionLevel: 'H' },
+            dotsOptions:      { type: patternStyle, ...patternColorOpts() },
+            backgroundOptions: bgOpts(),
+            cornersSquareOptions: { type: cornerFrameStyle, color: cornerFrameColor },
+            cornersDotOptions:    { type: cornerDotStyle,   color: cornerDotColor },
+            imageOptions:     { crossOrigin: 'anonymous', margin: 4 },
+          };
+    
+          if (logoDataUrl) opts.image = logoDataUrl;
+    
+          const scratch = document.getElementById('qrScratch');
+          scratch.innerHTML = '';
+    
+          qrInstance = new QRCodeStyling(opts);
+          qrInstance.append(scratch);
+    
+          setTimeout(() => {
+            const canvas  = scratch.querySelector('canvas');
+            const preview = document.getElementById('qrPreview');
+            if (canvas) {
+              preview.src           = canvas.toDataURL('image/png');
+              preview._canvas       = canvas;
+              preview.style.display = 'block';
+            }
+            document.getElementById('downloadBtn').style.display = 'inline-flex';
+          }, 200);
+        }
+    
+        /* ── Download ── */
+        function downloadQR() {
+          if (!qrInstance) { alert('Generate a QR code first!'); return; }
+          qrInstance.download({ name: 'qrcode-zippywidgets', extension: 'png' });
+        }
+    
+        /* ── Live preview: debounce so rapid typing doesn't hammer the renderer ── */
+        let _liveTimer = null;
+        function liveGenerate() {
+          clearTimeout(_liveTimer);
+          _liveTimer = setTimeout(() => {
+            /* Only auto-generate if there's something to encode */
+            const val = (() => {
+              if (currentMode === 'wifi') {
+                return document.getElementById('wifiSsid').value.trim() ? true : false;
+              } else if (currentMode === 'text') {
+                return document.getElementById('qrTextarea').value.trim() ? true : false;
+              } else {
+                return document.getElementById('qrInput').value.trim() ? true : false;
+              }
+            })();
+            if (val) generateQR();
+          }, 280);
+        }
+    
+        /* Text / content inputs */
+        document.getElementById('qrInput').addEventListener('input', liveGenerate);
+        document.getElementById('qrInput').addEventListener('keydown', e => { if (e.key === 'Enter') generateQR(); });
+        document.getElementById('qrTextarea').addEventListener('input', liveGenerate);
+        document.getElementById('wifiSsid').addEventListener('input', liveGenerate);
+        document.getElementById('wifiPass').addEventListener('input', liveGenerate);
+        document.getElementById('wifiSec').addEventListener('change', liveGenerate);
+    
+        /* Size */
+        document.getElementById('qrSize').addEventListener('change', liveGenerate);
+    
+        /* Pattern style tiles — already handled via makeTilePicker, extend to trigger live */
+        document.getElementById('patternTiles').querySelectorAll('.style-tile').forEach(t =>
+          t.addEventListener('click', liveGenerate));
+        document.getElementById('cornerFrameTiles').querySelectorAll('.style-tile').forEach(t =>
+          t.addEventListener('click', liveGenerate));
+        document.getElementById('cornerDotTiles').querySelectorAll('.style-tile').forEach(t =>
+          t.addEventListener('click', liveGenerate));
+    
+        /* Gradient direction buttons */
+        document.getElementById('gradDirPat').querySelectorAll('.grad-dir-btn').forEach(b =>
+          b.addEventListener('click', liveGenerate));
+    
+        /* All colour pickers */
+        ['patternColor1','patternGrad1','patternGrad2',
+         'bgColor1','bgGrad1','bgGrad2',
+         'cornerFrameColor','cornerDotColor'].forEach(id =>
+          document.getElementById(id).addEventListener('input', liveGenerate));
+    
+        /* Checkboxes */
+        ['patternGradient','bgGradient','bgTransparent'].forEach(id =>
+          document.getElementById(id).addEventListener('change', liveGenerate));
+    
+        /* Logo */
+        document.getElementById('logoUpload').addEventListener('change', liveGenerate);
+    
+        /* Auto-generate on load with a placeholder so the preview is visible immediately */
+        window.addEventListener('load', () => {
+          document.getElementById('qrInput').value = 'https://zippywidgets.online/';
+          generateQR();
+        });
+  </script>
+</Layout>

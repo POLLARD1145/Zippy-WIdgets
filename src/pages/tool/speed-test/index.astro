@@ -1,0 +1,932 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Internet Speed Test | WiFi Speed, Ping, Jitter & Streamer Speed Check';
+const description = 'Free internet speed test — check download speed, upload speed, ping, jitter and ISP info instantly. Test Starlink speed, fiber broadband, 5G, gaming ping and streaming quality. No app, no sign-up.';
+const canonical = 'https://zippywidgets.online/tool/speed-test/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Internet Speed Test",
+    "url": "https://zippywidgets.online/speed-test/",
+    "description": "Free internet speed test. Measure download speed, upload speed, ping, jitter and ISP info. Includes streamer mode, gaming ping test and broadband quality rating. No app or sign-up required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the internet speed test work?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Download speed is measured by fetching files from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests and measuring variance. All tests run in your browser — no app or sign-up required." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good ping for gaming?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For competitive gaming, aim for ping under 40ms and jitter under 10ms. Ping under 100ms with jitter under 30ms is acceptable for casual and turn-based games. Above 100ms ping will cause noticeable lag in fast-paced games like FPS titles." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is jitter and why does it matter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Jitter is the variation in latency between packets. High jitter causes stuttering on video calls and lag spikes in games even if your average ping is low. It is measured in milliseconds — under 20ms is good, above 40ms will cause noticeable issues on real-time applications." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my speed test result lower than my broadband plan speed?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ISPs advertise theoretical maximum speeds. Real-world speeds are lower due to WiFi overhead (10–30%), network congestion during peak hours, distance from the router, and the number of active devices. Testing over ethernet at an off-peak time gives the most accurate comparison to your plan speed." }
+      },
+      {
+        "@type": "Question",
+        "name": "What download speed do I need for 4K streaming?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Netflix recommends 25 Mbps for 4K Ultra HD streaming. Disney+ and Apple TV+ recommend a similar figure. Allowing headroom for other devices on the same network, a 50 Mbps or faster connection ensures uninterrupted 4K playback." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">⚡</span>
+      <div>
+        <h1>Internet Speed Test — WiFi Speed, Ping, Jitter &amp; Streamer Check</h1>
+        <p>Check your download speed, upload speed, ping and jitter instantly. Includes a <strong>streamer speed test</strong>, <strong>gaming ping test</strong>, ISP info and connection quality rating — all in your browser, no app or sign-up needed.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="speed-hero">
+        <div class="mode-selector">
+          <button class="mode-btn" id="modeQuick"    onclick="setMode('quick')">⚡ Quick Check</button>
+          <button class="mode-btn selected" id="modeStandard" onclick="setMode('standard')">📶 Standard Test</button>
+          <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">🎬 Streamer / Gaming</button>
+        </div>
+        <div class="speed-btn-wrap">
+          <button class="start-btn" id="startBtn" onclick="startTest()">
+            <span class="btn-icon">⚡</span>
+            <span id="startLabel">Start Test</span>
+          </button>
+        </div>
+        <p class="status-text" id="statusText">Press Start to test your internet speed</p>
+      </div>
+
+      <div class="gauge-row">
+        <div class="gauge" id="gaugePing">
+          <div class="gauge-label">Ping</div>
+          <div class="gauge-value" id="valPing">—</div>
+          <div class="gauge-unit">ms</div>
+          <div class="gauge-bar"><div class="gauge-bar-fill" id="barPing"></div></div>
+        </div>
+        <div class="gauge" id="gaugeJitter">
+          <div class="gauge-label">Jitter</div>
+          <div class="gauge-value" id="valJitter">—</div>
+          <div class="gauge-unit">ms</div>
+          <div class="gauge-bar"><div class="gauge-bar-fill" id="barJitter"></div></div>
+        </div>
+        <div class="gauge" id="gaugeDown">
+          <div class="gauge-label">Download</div>
+          <div class="gauge-value" id="valDown">—</div>
+          <div class="gauge-unit">Mbps</div>
+          <div class="gauge-bar"><div class="gauge-bar-fill" id="barDown"></div></div>
+        </div>
+        <div class="gauge" id="gaugeUp">
+          <div class="gauge-label">Upload</div>
+          <div class="gauge-value" id="valUp">—</div>
+          <div class="gauge-unit">Mbps</div>
+          <div class="gauge-bar"><div class="gauge-bar-fill" id="barUp"></div></div>
+        </div>
+      </div>
+
+      <!-- Quality Rating -->
+      <div class="quality-card" id="qualityCard">
+        <h3>🎯 Connection Quality</h3>
+        <div class="quality-grid" id="qualityGrid"></div>
+      </div>
+
+      <!-- Network Info -->
+      <div class="net-info-card" id="netInfoCard">
+        <h3>🌍 Network Info</h3>
+        <div class="net-info-grid" id="netInfoGrid">
+          <div class="net-info-item ni-ip-row">
+            <span>IP Address &amp; ISP</span>
+            <div class="ni-ip-wrap">
+              <span class="ni-ip-val" id="niIp">Loading…</span>
+              <span class="ni-isp-sub" id="niIsp"></span>
+            </div>
+          </div>
+          <div class="net-info-item"><span>Location</span><span id="niLoc">Loading…</span></div>
+          <div class="net-info-item"><span>Connection Type</span><span id="niConn">—</span></div>
+        </div>
+      </div>
+
+      <!-- Share row -->
+      <div class="share-row" id="shareRow" style="display:none;">
+        <button class="btn btn-secondary" onclick="shareResult()">📤 Share Result</button>
+        <button class="btn btn-secondary" onclick="copyResult()">📋 Copy Result</button>
+      </div>
+    </div>
+
+    <!-- Use-case keyword chips -->
+    <div class="use-case-chips" style="margin:1rem 0 0;">
+      <span>WiFi Speed Test</span>
+      <span>Starlink Speed Test</span>
+      <span>Fiber Speed Test</span>
+      <span>5G Speed Test</span>
+      <span>Broadband Speed Check</span>
+      <span>Streamer Speed Test</span>
+      <span>Gaming Ping Test</span>
+      <span>Jitter Test</span>
+      <span>Upload Speed Test</span>
+      <span>ISP Speed Check</span>
+      <span>Satellite Internet Speed</span>
+      <span>4G LTE Speed Test</span>
+      <span>Remote Work Connection</span>
+      <span>Video Call Quality Check</span>
+    </div>
+
+    <!-- FAQ -->
+    <section class="faq-section card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>What is a good internet speed for streaming?</h3>
+        <p>Netflix recommends 15 Mbps for Full HD and 25 Mbps for 4K streaming. For Twitch or YouTube Live streaming (upload), you need at least 6 Mbps upload speed for 1080p 60fps. Use the <strong>Streamer mode</strong> above for a more accurate high-speed measurement.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What ping is good for gaming?</h3>
+        <p>Under 30 ms is excellent for online gaming. 30–60 ms is good for most games. Above 100 ms you may notice lag. Jitter (variation in ping) should be below 10 ms for a stable connection — our test measures both.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why is my speed test result lower than my plan?</h3>
+        <p>Speed tests measure your actual throughput at the time of the test. Common causes of lower results: WiFi interference (try a wired connection), network congestion during peak hours, ISP throttling, or running other downloads simultaneously.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How is this different from Fast.com or Google Speed Test?</h3>
+        <p>Unlike Fast.com (download only) or Google's embedded widget, this tool measures <strong>download, upload, ping and jitter</strong> together, shows your ISP and location, rates your connection for 8 real-world use cases, and saves your test history locally — no account needed.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How fast should my upload speed be for working from home?</h3>
+        <p>For video calls (Zoom, Teams, Google Meet) you need at least 3 Mbps upload. For sharing large files or using cloud services, 10+ Mbps upload is recommended. The quality rating panel above tells you instantly if your connection meets the threshold.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What speeds does Starlink get?</h3>
+        <p>Starlink satellite internet typically delivers 50–200 Mbps download and 10–20 Mbps upload, with latency between 20–60 ms — much lower than traditional satellite. Use the <strong>Streamer / Gaming</strong> mode above for an accurate Starlink speed measurement, as it uses larger file sizes that better reflect real-world throughput.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I test my fiber internet speed?</h3>
+        <p>Fiber connections (like Gigabit broadband) often exceed 500 Mbps. Standard speed tests may underestimate fiber speeds because they use small files. Select <strong>Streamer / Gaming mode</strong> which tests with up to 100MB files to get an accurate reading of your fiber or cable broadband speed.</p>
+      </div>
+    </section>
+
+    <!-- History -->
+    <div class="card history-card" id="historyCard">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
+        <h3 style="margin:0;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">📊 Test History</h3>
+        <button class="btn btn-secondary" style="font-size:.75rem;padding:.3rem .7rem;" onclick="clearHistory()">Clear</button>
+      </div>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>↓ Down</th>
+            <th>↑ Up</th>
+            <th>Ping</th>
+            <th>Jitter</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Internet Speed Test</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Select a test mode at the top — <strong>Quick Check</strong>, <strong>Standard Test</strong>, or <strong>Streamer / Gaming</strong> — then press the <strong>Start Test</strong> button. The tool measures ping and jitter first, then runs download and upload speed tests using Cloudflare's global network. Results appear in real time as each phase completes.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Choosing the Right Test Mode</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Quick Check (⚡):</strong> Uses smaller file sizes and fewer ping samples. Completes in about 10–15 seconds. Good for a fast snapshot when you suspect a problem.</li>
+          <li><strong>Standard Test (📶):</strong> The default. Balances accuracy and speed with medium-sized files. Best for everyday broadband checks.</li>
+          <li><strong>Streamer / Gaming (🎬):</strong> Uses large files up to 100MB and 15 ping samples. More accurate for high-speed connections like Gigabit fiber, Starlink, or cable 500+ Mbps plans. Takes 30–60 seconds.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Understanding Your Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Download speed (Mbps):</strong> How fast data arrives at your device. Affects streaming, browsing, and downloads.</li>
+          <li><strong>Upload speed (Mbps):</strong> How fast you can send data. Critical for video calls, live streaming, and cloud backups.</li>
+          <li><strong>Ping (ms):</strong> The round-trip time to the test server. Lower is better. Under 30ms is excellent for gaming and video calls.</li>
+          <li><strong>Jitter (ms):</strong> The variation in ping over multiple measurements. Low jitter means a stable connection. High jitter causes choppy video calls and rubber-banding in games even when ping is acceptable.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Tips for Accurate Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Close other tabs and pause any downloads or streaming before testing — other traffic lowers your measured speed.</li>
+          <li>For the most accurate reading, connect your device directly to your router via an ethernet cable and test on WiFi separately to measure wireless overhead.</li>
+          <li>Run the test 2–3 times and compare results. Speed naturally varies throughout the day due to network congestion.</li>
+          <li>The <strong>Connection Quality panel</strong> rates your connection against 8 real-world use cases — streaming, gaming, video calls, and more — so you don't need to interpret the numbers yourself.</li>
+          <li>Results are saved to <strong>Test History</strong> automatically so you can track performance over time without signing in.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How the Test Works</h3>
+        <p>Download speed is measured by fetching files of increasing size from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests to the Cloudflare endpoint and measuring the variance. All tests run entirely in your browser — no app, plugin, or server-side component is required.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    /* ── Speed Test specific styles ── */
+        .speed-hero {
+          text-align: center;
+          padding: 2rem 0 1rem;
+        }
+    
+        .speed-btn-wrap {
+          display: flex;
+          justify-content: center;
+          margin: 1.5rem 0;
+        }
+    
+        .start-btn {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          border: 4px solid var(--accent);
+          background: var(--surface2);
+          color: var(--text);
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background .2s, transform .15s, box-shadow .2s;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: .3rem;
+          box-shadow: 0 0 0 0 rgba(99,102,241,.4);
+          font-family: inherit;
+        }
+        .start-btn .btn-icon { font-size: 2rem; line-height: 1; }
+        .start-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 0 12px rgba(99,102,241,.15); }
+        .start-btn:active { transform: scale(.96); }
+        .start-btn:disabled { opacity: .5; cursor: not-allowed; }
+        .start-btn.running { border-color: #f59e0b; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.4)} 50%{box-shadow:0 0 0 16px rgba(245,158,11,.05)} }
+    
+        .gauge-row {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 1rem;
+          margin: 1.5rem 0;
+        }
+    
+        .gauge {
+          background: var(--surface2);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 1.25rem 1rem;
+          text-align: center;
+          transition: border-color .3s;
+        }
+        .gauge.active { border-color: var(--accent); }
+        .gauge.done   { border-color: #22c55e; }
+    
+        .gauge-label {
+          font-size: .72rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .07em;
+          color: var(--muted);
+          margin-bottom: .4rem;
+        }
+    
+        .gauge-value {
+          font-size: 2rem;
+          font-weight: 800;
+          color: var(--text);
+          line-height: 1.1;
+          font-variant-numeric: tabular-nums;
+        }
+    
+        .gauge-unit {
+          font-size: .78rem;
+          color: var(--muted);
+          margin-top: .15rem;
+        }
+    
+        .gauge-bar {
+          height: 4px;
+          background: var(--border);
+          border-radius: 2px;
+          margin-top: .75rem;
+          overflow: hidden;
+        }
+        .gauge-bar-fill {
+          height: 100%;
+          width: 0%;
+          border-radius: 2px;
+          background: var(--accent);
+          transition: width .35s ease;
+        }
+        .gauge.done .gauge-bar-fill { background: #22c55e; }
+    
+        .gauge.active {
+          border-color: var(--accent);
+          background: linear-gradient(90deg, var(--surface2) 25%, rgba(99,102,241,.07) 50%, var(--surface2) 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.4s infinite linear;
+        }
+        @keyframes shimmer {
+          0%   { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .gauge-value { transition: color .2s; }
+        .gauge.active .gauge-value { color: var(--accent); }
+    
+        .status-text {
+          text-align: center;
+          font-size: .9rem;
+          color: var(--muted);
+          min-height: 1.4em;
+          margin-bottom: .5rem;
+        }
+    
+        /* ── Quality Rating ── */
+        .quality-card {
+          background: var(--surface2);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 1.25rem;
+          margin-top: 1rem;
+          display: none;
+        }
+        .quality-card h3 {
+          font-size: .85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .06em;
+          color: var(--muted);
+          margin-bottom: 1rem;
+        }
+        .quality-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+          gap: .65rem;
+        }
+        .quality-item {
+          display: flex;
+          align-items: flex-start;
+          gap: .6rem;
+          font-size: .85rem;
+          color: var(--text);
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          padding: .65rem .75rem;
+        }
+        .q-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: .28rem;
+          font-size: .7rem;
+          font-weight: 700;
+          letter-spacing: .04em;
+          border-radius: 99px;
+          padding: .18rem .55rem;
+          white-space: nowrap;
+          flex-shrink: 0;
+          margin-top: .1rem;
+        }
+        .q-badge.good  { background: rgba(34,197,94,.18);  color: #22c55e; }
+        .q-badge.ok    { background: rgba(249,115,22,.18); color: #f97316; }
+        .q-badge.poor  { background: rgba(239,68,68,.18);  color: #ef4444; }
+        .q-label { display: flex; flex-direction: column; gap: .15rem; }
+        .q-label .q-name { font-weight: 600; font-size: .85rem; }
+        .q-label .q-desc { font-size: .75rem; color: var(--muted); line-height: 1.35; }
+    
+        /* ── Network Info ── */
+        .net-info-card {
+          background: var(--surface2);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 1.25rem;
+          margin-top: 1rem;
+          display: none;
+        }
+        .net-info-card h3 {
+          font-size: .85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .06em;
+          color: var(--muted);
+          margin-bottom: .85rem;
+        }
+        .net-info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          gap: .5rem .75rem;
+        }
+        .net-info-item { font-size: .85rem; }
+        .net-info-item span { color: var(--muted); display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+    
+        /* ── History ── */
+        .history-card {
+          margin-top: 1rem;
+          display: none;
+        }
+        .history-card h3 {
+          font-size: .85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .06em;
+          color: var(--muted);
+          margin-bottom: .75rem;
+        }
+        .history-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: .82rem;
+        }
+        .history-table th {
+          text-align: left;
+          color: var(--muted);
+          font-weight: 600;
+          padding: .4rem .5rem;
+          border-bottom: 1px solid var(--border);
+          font-size: .75rem;
+          text-transform: uppercase;
+        }
+        .history-table td {
+          padding: .5rem .5rem;
+          border-bottom: 1px solid var(--border);
+          color: var(--text);
+        }
+        .history-table tr:last-child td { border-bottom: none; }
+    
+        .share-row {
+          display: flex;
+          gap: .75rem;
+          margin-top: 1rem;
+          flex-wrap: wrap;
+        }
+    
+        /* ── Test Mode Selector ── */
+        .mode-selector {
+          display: flex;
+          justify-content: center;
+          gap: .5rem;
+          margin-bottom: 1.25rem;
+          flex-wrap: wrap;
+        }
+        .mode-btn {
+          padding: .4rem 1rem;
+          border-radius: 20px;
+          border: 1px solid var(--border);
+          background: var(--surface2);
+          color: var(--muted);
+          font-size: .8rem;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: inherit;
+          transition: border-color .2s, color .2s, background .2s;
+        }
+        .mode-btn.selected {
+          border-color: var(--accent);
+          color: var(--accent);
+          background: rgba(99,102,241,.1);
+        }
+    
+        /* ── Network Info two-line layout for long IPs ── */
+        .ni-ip-row { grid-column: 1 / -1; }
+        .ni-ip-wrap { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+        .ni-ip-val { font-size: .85rem; color: var(--text); word-break: break-all; }
+        .ni-isp-sub { font-size: .75rem; color: var(--muted); }
+    
+        @media (max-width: 480px) {
+          .gauge-value { font-size: 1.5rem; }
+          .start-btn { width: 120px; height: 120px; }
+        }
+  </style>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Internet Speed Test",
+        "url": "https://zippywidgets.online/speed-test/",
+        "description": "Free internet speed test. Measure download speed, upload speed, ping, jitter and ISP info. Includes streamer mode, gaming ping test and broadband quality rating. No app or sign-up required.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does the internet speed test work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Download speed is measured by fetching files from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests and measuring variance. All tests run in your browser — no app or sign-up required." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a good ping for gaming?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For competitive gaming, aim for ping under 40ms and jitter under 10ms. Ping under 100ms with jitter under 30ms is acceptable for casual and turn-based games. Above 100ms ping will cause noticeable lag in fast-paced games like FPS titles." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is jitter and why does it matter?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Jitter is the variation in latency between packets. High jitter causes stuttering on video calls and lag spikes in games even if your average ping is low. It is measured in milliseconds — under 20ms is good, above 40ms will cause noticeable issues on real-time applications." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my speed test result lower than my broadband plan speed?",
+            "acceptedAnswer": { "@type": "Answer", "text": "ISPs advertise theoretical maximum speeds. Real-world speeds are lower due to WiFi overhead (10–30%), network congestion during peak hours, distance from the router, and the number of active devices. Testing over ethernet at an off-peak time gives the most accurate comparison to your plan speed." }
+          },
+          {
+            "@type": "Question",
+            "name": "What download speed do I need for 4K streaming?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Netflix recommends 25 Mbps for 4K Ultra HD streaming. Disney+ and Apple TV+ recommend a similar figure. Allowing headroom for other devices on the same network, a 50 Mbps or faster connection ensures uninterrupted 4K playback." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline>
+    'use strict';
+    
+        const CF_DOWN = 'https://speed.cloudflare.com/__down?bytes=';
+        const CF_UP   = 'https://speed.cloudflare.com/__up';
+    
+        let lastResult = null;
+        let currentMode = 'standard';
+    
+        const MODES = {
+          quick:    { ping: 5,  down: [5_000_000, 10_000_000],                   up: [1_000_000, 2_000_000]                   },
+          standard: { ping: 10, down: [5_000_000, 10_000_000, 25_000_000],       up: [1_000_000, 2_000_000, 5_000_000]       },
+          streamer: { ping: 15, down: [10_000_000, 25_000_000, 50_000_000, 100_000_000], up: [2_000_000, 5_000_000, 10_000_000] },
+        };
+    
+        function setMode(mode) {
+          currentMode = mode;
+          ['quick','standard','streamer'].forEach(m => {
+            document.getElementById('mode' + m.charAt(0).toUpperCase() + m.slice(1))
+              .classList.toggle('selected', m === mode);
+          });
+        }
+    
+        async function startTest() {
+          const btn = document.getElementById('startBtn');
+          btn.disabled = true;
+          btn.classList.add('running');
+          document.getElementById('startLabel').textContent = 'Testing…';
+    
+          resetGauges();
+          document.getElementById('qualityCard').style.display = 'none';
+          document.getElementById('shareRow').style.display    = 'none';
+    
+          try {
+            setStatus('Measuring ping & jitter…');
+            const { ping, jitter } = await measurePing(MODES[currentMode].ping);
+            showGauge('gaugePing', 'valPing', 'barPing', ping.toFixed(1), ping, 200);
+            showGauge('gaugeJitter', 'valJitter', 'barJitter', jitter.toFixed(1), jitter, 50);
+    
+            setStatus('Testing download speed…');
+            document.getElementById('gaugeDown').classList.add('active');
+            const down = await measureDownload();
+            showGauge('gaugeDown', 'valDown', 'barDown', down.toFixed(1), down, 1000);
+    
+            setStatus('Testing upload speed…');
+            document.getElementById('gaugeUp').classList.add('active');
+            const up = await measureUpload();
+            showGauge('gaugeUp', 'valUp', 'barUp', up.toFixed(1), up, 1000);
+    
+            lastResult = { ping, jitter, down, up, ts: Date.now() };
+    
+            showQuality(down, up, ping, jitter);
+            saveHistory(lastResult);
+            renderHistory();
+    
+            document.getElementById('netInfoCard').style.display = 'block';
+            document.getElementById('shareRow').style.display    = 'flex';
+            setStatus('✅ Test complete');
+    
+            fetchNetInfo();
+    
+          } catch (e) {
+            setStatus('⚠️ Test failed — check your connection and try again.');
+          }
+    
+          btn.disabled = false;
+          btn.classList.remove('running');
+          document.getElementById('startLabel').textContent = 'Retest';
+        }
+    
+        function resetGauges() {
+          ['Ping','Jitter','Down','Up'].forEach(k => {
+            const id = k === 'Down' ? 'gaugeDown' : k === 'Up' ? 'gaugeUp' : 'gauge' + k;
+            document.getElementById(id).className = 'gauge';
+            const valId = k === 'Down' ? 'valDown' : k === 'Up' ? 'valUp' : 'val' + k;
+            const barId = k === 'Down' ? 'barDown' : k === 'Up' ? 'barUp' : 'bar' + k;
+            document.getElementById(valId).textContent = '—';
+            document.getElementById(barId).style.width = '0%';
+          });
+        }
+    
+        function showGauge(gaugeId, valId, barId, display, raw, max) {
+          document.getElementById(gaugeId).classList.remove('active');
+          document.getElementById(gaugeId).classList.add('done');
+          document.getElementById(valId).textContent = display;
+          const pct = Math.min(100, (raw / max) * 100);
+          document.getElementById(barId).style.width = pct + '%';
+        }
+    
+        function setStatus(msg) {
+          document.getElementById('statusText').textContent = msg;
+        }
+    
+        function animateValue(elId, barId, toVal, maxVal, duration) {
+          const el  = document.getElementById(elId);
+          const bar = document.getElementById(barId);
+          const start = parseFloat(el.textContent) || 0;
+          const startTime = performance.now();
+          function step(now) {
+            const p = Math.min(1, (now - startTime) / duration);
+            const ease = 1 - Math.pow(1 - p, 3);
+            const cur = start + (toVal - start) * ease;
+            el.textContent = cur.toFixed(1);
+            bar.style.width = Math.min(100, (cur / maxVal) * 100) + '%';
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+    
+        async function measurePing(samples) {
+          const times = [];
+          const url = 'https://speed.cloudflare.com/__down?bytes=1&t=' + Date.now();
+          for (let i = 0; i < samples; i++) {
+            const t0 = performance.now();
+            await fetch(url + i, { cache: 'no-store' });
+            times.push(performance.now() - t0);
+          }
+          const avg = times.reduce((a,b) => a+b, 0) / times.length;
+          const jitter = times.reduce((sum, t) => sum + Math.abs(t - avg), 0) / times.length;
+          return { ping: avg, jitter };
+        }
+    
+        async function measureDownload() {
+          const sizes = MODES[currentMode].down;
+          let totalBits = 0, totalTime = 0;
+          for (const bytes of sizes) {
+            const t0 = performance.now();
+            const res = await fetch(CF_DOWN + bytes + '&t=' + Date.now(), { cache: 'no-store' });
+            await res.arrayBuffer();
+            const elapsed = (performance.now() - t0) / 1000;
+            totalBits += bytes * 8;
+            totalTime += elapsed;
+            const live = (totalBits / totalTime) / 1_000_000;
+            animateValue('valDown', 'barDown', live, 1000, 400);
+          }
+          return (totalBits / totalTime) / 1_000_000;
+        }
+    
+        async function measureUpload() {
+          const sizes = MODES[currentMode].up;
+          let totalBits = 0, totalTime = 0;
+          for (const bytes of sizes) {
+            const data = new Uint8Array(bytes);
+            crypto.getRandomValues(data.subarray(0, Math.min(65536, bytes)));
+            const t0 = performance.now();
+            await fetch(CF_UP + '?t=' + Date.now(), {
+              method: 'POST',
+              body: data,
+              cache: 'no-store'
+            });
+            const elapsed = (performance.now() - t0) / 1000;
+            totalBits += bytes * 8;
+            totalTime += elapsed;
+            const live = (totalBits / totalTime) / 1_000_000;
+            animateValue('valUp', 'barUp', live, 1000, 400);
+          }
+          return (totalBits / totalTime) / 1_000_000;
+        }
+    
+        function showQuality(down, up, ping, jitter) {
+          /* Each use-case returns 'good' | 'ok' | 'poor' plus a short descriptor */
+          function rate(level) {
+            const icons = { good: '✓', ok: '~', poor: '✗' };
+            const labels = { good: 'Good', ok: 'OK', poor: 'Poor' };
+            return { level, icon: icons[level], text: labels[level] };
+          }
+    
+          const checks = [
+            {
+              name: '4K Streaming',
+              badge: down >= 25 ? rate('good') : down >= 10 ? rate('ok') : rate('poor'),
+              desc:  down >= 25 ? 'Ultra HD works smoothly' : down >= 10 ? 'May buffer on peak hours' : 'Stick to HD or lower',
+            },
+            {
+              name: 'HD Streaming',
+              badge: down >= 8 ? rate('good') : down >= 4 ? rate('ok') : rate('poor'),
+              desc:  down >= 8 ? '1080p without interruptions' : down >= 4 ? '720p reliable, 1080p may dip' : 'Standard definition only',
+            },
+            {
+              name: 'Video Calls',
+              badge: (ping < 80 && jitter < 20 && up >= 2) ? rate('good')
+                   : (ping < 150 && jitter < 40 && up >= 1) ? rate('ok')
+                   : rate('poor'),
+              desc:  (ping < 80 && jitter < 20 && up >= 2)  ? 'Crystal clear, no freezing'
+                   : (ping < 150 && jitter < 40 && up >= 1) ? 'Usable but may stutter briefly'
+                   : 'Likely choppy or frozen video',
+            },
+            {
+              name: 'Online Gaming',
+              badge: (ping < 40 && jitter < 10) ? rate('good')
+                   : (ping < 100 && jitter < 30) ? rate('ok')
+                   : rate('poor'),
+              desc:  (ping < 40 && jitter < 10)  ? 'Competitive-ready, low lag'
+                   : (ping < 100 && jitter < 30) ? 'Fine for casual & turn-based'
+                   : 'Too laggy for fast-paced games',
+            },
+            {
+              name: 'Remote Work / VPN',
+              badge: (down >= 25 && up >= 10 && ping < 80)  ? rate('good')
+                   : (down >= 10 && up >= 3  && ping < 150) ? rate('ok')
+                   : rate('poor'),
+              desc:  (down >= 25 && up >= 10 && ping < 80)  ? 'Fast file sync & calls'
+                   : (down >= 10 && up >= 3  && ping < 150) ? 'Works for most tasks'
+                   : 'VPN will feel slow or drop',
+            },
+            {
+              name: 'Music Streaming',
+              badge: down >= 1 ? rate('good') : down >= 0.5 ? rate('ok') : rate('poor'),
+              desc:  down >= 1 ? 'Lossless & HD audio fine' : down >= 0.5 ? 'Standard quality only' : 'May buffer frequently',
+            },
+            {
+              name: 'Fast Browsing',
+              badge: (ping < 50 && down >= 10)  ? rate('good')
+                   : (ping < 120 && down >= 3)  ? rate('ok')
+                   : rate('poor'),
+              desc:  (ping < 50 && down >= 10)  ? 'Pages load near-instantly'
+                   : (ping < 120 && down >= 3)  ? 'Normal speed, slight delay'
+                   : 'Noticeably slow page loads',
+            },
+            {
+              name: 'Smart Home / IoT',
+              badge: down >= 5 ? rate('good') : down >= 1 ? rate('ok') : rate('poor'),
+              desc:  down >= 5 ? 'Handles many devices at once' : down >= 1 ? 'Basic devices work fine' : 'May disconnect under load',
+            },
+          ];
+    
+          const grid = document.getElementById('qualityGrid');
+          grid.innerHTML = checks.map(c => `
+            <div class="quality-item">
+              <span class="q-badge ${c.badge.level}">${c.badge.icon} ${c.badge.text}</span>
+              <div class="q-label">
+                <span class="q-name">${c.name}</span>
+                <span class="q-desc">${c.desc}</span>
+              </div>
+            </div>`).join('');
+          document.getElementById('qualityCard').style.display = 'block';
+        }
+    
+        function truncateIp(ip) {
+          if (!ip) return '—';
+          if (ip.length <= 20) return ip;
+          return ip.substring(0, 18) + '…';
+        }
+    
+        async function fetchNetInfo() {
+          const ipEl  = document.getElementById('niIp');
+          const ispEl = document.getElementById('niIsp');
+          const locEl = document.getElementById('niLoc');
+          let data = null;
+    
+          const apis = [
+            async () => { const r = await fetch('https://ipwho.is/'); const d = await r.json(); return { ip: d.ip, org: d.connection?.isp || d.org, city: d.city, country: d.country }; },
+            async () => { const r = await fetch('https://ip-api.com/json/?fields=query,isp,city,country'); const d = await r.json(); return { ip: d.query, org: d.isp, city: d.city, country: d.country }; },
+            async () => { const r = await fetch('https://ipapi.co/json/'); const d = await r.json(); return { ip: d.ip, org: d.org, city: d.city, country: d.country_name }; },
+          ];
+    
+          for (const api of apis) {
+            try { data = await api(); if (data && data.ip) break; } catch (_) {}
+          }
+    
+          if (data && data.ip) {
+            ipEl.textContent  = truncateIp(data.ip);
+            ipEl.title        = data.ip;
+            ispEl.textContent = data.org ? '· ' + data.org : '';
+            locEl.textContent = [data.city, data.country].filter(Boolean).join(', ') || '—';
+          } else {
+            ipEl.textContent  = 'Unavailable';
+            ispEl.textContent = '';
+            locEl.textContent = 'Unavailable';
+          }
+          const conn = navigator.connection;
+          document.getElementById('niConn').textContent =
+            conn ? (conn.effectiveType || conn.type || '—').toUpperCase() : '—';
+        }
+    
+        function saveHistory(r) {
+          let hist = JSON.parse(localStorage.getItem('zw_speed_hist') || '[]');
+          hist.unshift(r);
+          if (hist.length > 10) hist = hist.slice(0, 10);
+          localStorage.setItem('zw_speed_hist', JSON.stringify(hist));
+        }
+    
+        function renderHistory() {
+          const hist = JSON.parse(localStorage.getItem('zw_speed_hist') || '[]');
+          if (!hist.length) return;
+          const body = document.getElementById('historyBody');
+          body.innerHTML = hist.map(r => {
+            const d = new Date(r.ts);
+            const t = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return `<tr>
+              <td>${t}</td>
+              <td>${r.down.toFixed(1)} Mbps</td>
+              <td>${r.up.toFixed(1)} Mbps</td>
+              <td>${r.ping.toFixed(0)} ms</td>
+              <td>${r.jitter.toFixed(0)} ms</td>
+            </tr>`;
+          }).join('');
+          document.getElementById('historyCard').style.display = 'block';
+        }
+    
+        function clearHistory() {
+          localStorage.removeItem('zw_speed_hist');
+          document.getElementById('historyBody').innerHTML = '';
+          document.getElementById('historyCard').style.display = 'none';
+        }
+    
+        const SITE_URL = 'https://zippywidgets.online/speed-test/';
+    
+        function shareResult() {
+          if (!lastResult) return;
+          const text = `My internet speed: ↓ ${lastResult.down.toFixed(1)} Mbps | ↑ ${lastResult.up.toFixed(1)} Mbps | Ping ${lastResult.ping.toFixed(0)} ms — tested at ${SITE_URL}`;
+          if (navigator.share) {
+            navigator.share({ title: 'My Speed Test Result', text, url: SITE_URL });
+          } else {
+            copyResult();
+          }
+        }
+    
+        function copyResult() {
+          if (!lastResult) return;
+          const text = `My internet speed: ↓ ${lastResult.down.toFixed(1)} Mbps | ↑ ${lastResult.up.toFixed(1)} Mbps | Ping ${lastResult.ping.toFixed(0)} ms | Jitter ${lastResult.jitter.toFixed(0)} ms — ${SITE_URL}`;
+          navigator.clipboard.writeText(text).then(() => {
+            const btn = document.querySelector('[onclick="copyResult()"]');
+            if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy Result', 2000); }
+          });
+        }
+    
+        // Load history on page load
+        renderHistory();
+        fetchNetInfo();
+  </script>
+</Layout>

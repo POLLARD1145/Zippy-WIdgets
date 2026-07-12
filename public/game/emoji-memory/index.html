@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Memory Match — Free Card Game Online (No Login) | ZippyWidgets</title>
+  <meta name="description" content="Flip and match emoji card pairs in the fewest moves. Free card game online — same daily emoji set for every player worldwide. No login, no download, works on any phone. One of the best free online games!" />
+  <meta name="keywords" content="emoji memory match, card games online free, free card game online, memory card game online, best free online games, mini games online, free memory game no login, daily memory game, flip cards browser game, concentration game online, online games free" />
+  <link rel="canonical" href="https://zippywidgets.online/game/emoji-memory/" />
+  <meta property="og:title" content="Emoji Memory Match — Free Card Game Online" />
+  <meta property="og:description" content="Free card game online — match all emoji pairs in the fewest flips. Daily seed, same puzzle worldwide. No login needed." />
+  <meta property="og:url" content="https://zippywidgets.online/game/emoji-memory/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Emoji Memory Match — Free Card Game Online" />
+  <meta name="twitter:description" content="Free card game online — match all emoji pairs in the fewest flips. No login, same daily puzzle worldwide." />
+  <link rel="icon" type="image/png" href="../../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Emoji Memory Match",
+    "description": "A free daily emoji memory matching game. Flip cards to find all pairs in the fewest moves. Same daily puzzle for all players worldwide.",
+    "url": "https://zippywidgets.online/game/emoji-memory/",
+    "applicationCategory": "Game",
+    "gamePlatform": "Web Browser",
+    "genre": ["Puzzle", "Memory Game"],
+    "playMode": "SinglePlayer",
+    "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <script src="../../theme.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Dark theme (default) ── */
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --surface2:  #22263a;
+      --border:    #2e3452;
+      --text:      #e8eaff;
+      --muted:     #7b82b0;
+      --navbar-bg: rgba(15,17,23,.88);
+      --accent:    #7c6af7;
+      --accent2:   #f97316;
+      --green:     #4ade80;
+      --yellow:    #fbbf24;
+      --red:       #f87171;
+      --card-back: #1e2235;
+      --card-front:#242840;
+      --radius:    12px;
+    }
+
+    /* ── Light theme ── */
+    [data-theme="light"] {
+      --bg:        #f4f6fb;
+      --surface:   #ffffff;
+      --surface2:  #e8edf6;
+      --border:    #c5cce0;
+      --text:      #1a1d2e;
+      --muted:     #5a6080;
+      --navbar-bg: rgba(244,246,251,.92);
+      --accent:    #5b4de0;
+      --accent2:   #f97316;
+      --card-back: #dde3f3;
+      --card-front:#ffffff;
+    }
+
+    /* ── Smooth transitions ── */
+    body, .navbar, .game-header, .stats-bar, .result-card, .share-box, .seo-card {
+      transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+    }
+
+    html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; }
+
+    /* ════════════════════════════════════════
+       NAVBAR — full site pattern
+    ════════════════════════════════════════ */
+    .navbar { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: .5rem; padding: 0 1.25rem; height: 60px; background: var(--navbar-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-size: 1.05rem; font-weight: 800; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: .4rem; flex-shrink: 0; }
+    .nav-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
+    .nav-links { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; }
+    .nav-pill { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; padding: .3rem .85rem; font-size: .8rem; font-weight: 500; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; }
+    .nav-pill:hover, .nav-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .theme-toggle { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 99px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; padding: 0; }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    /* Search — mirrors homepage; no index here so omit results */
+    .nav-search-spacer { flex: 1; }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: .4rem; flex-shrink: 0; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--navbar-bg); backdrop-filter: blur(16px); flex-direction: column; align-items: stretch; padding: 1rem 1.25rem 1.5rem; gap: .5rem; border-bottom: 1px solid var(--border); z-index: 150; }
+      .nav-links.open { display: flex; }
+      .nav-pill { text-align: center; padding: .7rem 1rem; font-size: .9rem; }
+    }
+
+    /* ════════════════════════════════════════
+       MOBILE-FIRST GAME LAYOUT
+       Base = 360px phone. Scale up with min-width.
+    ════════════════════════════════════════ */
+
+    .game-page { width: 100%; max-width: 560px; margin: 0 auto; padding: 1rem .75rem 3rem; display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+
+    /* ── Header ── */
+    .game-header { width: 100%; text-align: center; display: flex; flex-direction: column; gap: .35rem; align-items: center; }
+    .game-title { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; }
+    .game-title span { color: var(--accent); }
+    .seed-badge { display: inline-flex; align-items: center; gap: .3rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: .25rem .7rem; font-size: .7rem; color: var(--muted); }
+    .seed-badge b { color: var(--accent); }
+
+    /* ── Stats bar ── */
+    .stats-bar { width: 100%; display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+    .stat-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .5rem .85rem; display: flex; flex-direction: column; align-items: center; gap: .1rem; min-width: 68px; }
+    .stat-chip .sv { font-size: 1.3rem; font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat-chip .sl { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── Difficulty selector ── */
+    .diff-row { display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+    .diff-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); border-radius: 99px; padding: .3rem .9rem; font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .diff-btn:active, .diff-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── Board ── */
+    .board-wrap { width: 100%; }
+    /* Mobile default: 4 cols.  Cards are square via padding-bottom trick. */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(.35rem, 1.5vw, .6rem);
+      width: 100%;
+    }
+
+    /* ── Memory card 3-D flip ── */
+    .mem-card {
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+      perspective: 600px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 10px;
+      outline: none;
+    }
+    .mem-card:focus-visible .card-inner { border-color: var(--accent); }
+
+    .card-inner {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+      border-radius: 10px;
+      border: 2px solid var(--border);
+    }
+
+    .mem-card.flipped .card-inner,
+    .mem-card.matched .card-inner { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back {
+      background: var(--card-back);
+      font-size: clamp(1.1rem, 5vw, 1.6rem);
+      color: var(--muted);
+      user-select: none;
+    }
+    .card-back::after { content: '?'; font-weight: 900; opacity: .4; }
+    .card-front {
+      background: var(--card-front);
+      transform: rotateY(180deg);
+      font-size: clamp(1.4rem, 6vw, 2rem);
+      user-select: none;
+    }
+
+    /* Matched: glowing green border */
+    .mem-card.matched .card-inner {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px rgba(74,222,128,.3);
+    }
+    .mem-card.matched .card-front { background: rgba(74,222,128,.08); }
+
+    /* Mismatch shake */
+    .mem-card.mismatch .card-inner { animation: shake .4s ease; }
+    @keyframes shake {
+      0%,100% { transform: rotateY(180deg) translateX(0); }
+      20%      { transform: rotateY(180deg) translateX(-5px); }
+      40%      { transform: rotateY(180deg) translateX(5px); }
+      60%      { transform: rotateY(180deg) translateX(-4px); }
+      80%      { transform: rotateY(180deg) translateX(4px); }
+    }
+
+    /* Card back pattern — subtle dots */
+    .card-back {
+      background:
+        radial-gradient(circle, rgba(124,106,247,.12) 1px, transparent 1px),
+        var(--card-back);
+      background-size: 10px 10px;
+    }
+
+    /* ── Message bar ── */
+    .message-bar { min-height: 26px; font-size: .82rem; font-weight: 700; text-align: center; color: var(--muted); transition: color .2s; padding: 0 .5rem; }
+    .message-bar.good { color: var(--green); }
+    .message-bar.bad  { color: var(--red); }
+    .message-bar.info { color: var(--yellow); }
+
+    /* ── Result card ── */
+    .result-card { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; width: 100%; flex-direction: column; gap: .85rem; align-items: center; text-align: center; }
+    .result-card.visible { display: flex; }
+    .result-emoji { font-size: 2.5rem; }
+    .result-card h2 { font-size: 1.1rem; font-weight: 900; }
+    .result-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .share-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .7rem .85rem; font-family: monospace; font-size: .82rem; color: var(--text); white-space: pre-wrap; word-break: break-word; letter-spacing: .04em; line-height: 1.7; width: 100%; }
+    .btn { cursor: pointer; border: none; border-radius: 10px; font-family: inherit; font-weight: 700; transition: opacity .15s, transform .1s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .btn:active { opacity: .75; transform: scale(.97); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), #a78bfa); color: #fff; padding: .8rem 1.5rem; font-size: .9rem; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: .65rem 1.2rem; font-size: .83rem; }
+    .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+
+    /* ── Best score ribbon ── */
+    .best-ribbon { display: flex; align-items: center; gap: .35rem; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.35); border-radius: 8px; padding: .45rem .85rem; font-size: .78rem; color: var(--yellow); font-weight: 700; }
+
+    /* ── SEO section ── */
+    .seo-section { max-width: 560px; width: 100%; display: flex; flex-direction: column; gap: 1rem; padding: 0 .75rem; }
+    .seo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: flex; flex-direction: column; gap: .65rem; color: var(--muted); font-size: .85rem; line-height: 1.75; }
+    .seo-card h2 { font-size: .95rem; font-weight: 800; color: var(--text); }
+    .seo-card h3 { font-size: .85rem; font-weight: 700; color: var(--text); }
+
+    /* ── Ad slots ── */
+    .ad-slot-game { width: 100%; max-width: 560px; margin: 0 auto; padding: .5rem 0; min-height: 90px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ad-slot-game ins { display: block; width: 100%; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--border); padding: 1.25rem 1rem; text-align: center; font-size: .75rem; color: var(--muted); line-height: 1.9; }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--text); }
+
+    /* ── Scale up on wider screens ── */
+    @media (min-width: 400px) {
+      .game-title { font-size: 1.5rem; }
+      .stat-chip .sv { font-size: 1.45rem; }
+    }
+    @media (min-width: 480px) {
+      .game-page { padding: 1.25rem 1rem 3rem; gap: 1.15rem; }
+      .game-title { font-size: 1.6rem; }
+      .result-emoji { font-size: 3rem; }
+    }
+    /* 5-col grid for 20-card mode on wider screens */
+    @media (min-width: 420px) {
+      .card-grid.grid-5 { grid-template-columns: repeat(5, 1fr); }
+    }
+    @media (min-width: 500px) {
+      .card-grid.grid-5 { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="/">
+    <img src="../../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+  </a>
+  <div class="nav-search-spacer"></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+  <button class="theme-toggle" id="muteToggle" onclick="toggleMute()" aria-label="Toggle sound" style="margin-left:.25rem;">🔊</button>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-pill" href="/">Tools</a>
+    <a class="nav-pill active" href="/game/">Games</a>
+    <a class="nav-pill" href="/game/aetherforge/">AetherForge</a>
+    <a class="nav-pill" href="/game/word-scramble/">Word Scramble</a>
+  </div>
+</nav>
+
+<!-- Ad: above game, below nav — deferred -->
+<div class="ad-slot-game" id="ad-top-em" style="padding:0 1rem; margin-bottom:-.25rem;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6884221059402072"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s = document.getElementById('ad-top-em');
+    var o = new IntersectionObserver(function(e){ if(e[0].isIntersecting){ (adsbygoogle=window.adsbygoogle||[]).push({}); o.disconnect(); } }, { rootMargin:'200px' });
+    o.observe(s);
+  })();
+</script>
+
+<main>
+<div class="game-page">
+
+  <div class="game-header">
+    <div class="seed-badge">🌐 Daily seed: <b id="dailySeed">—</b> · Resets midnight UTC</div>
+    <h1 class="game-title">Emoji <span>Memory</span> Match</h1>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-chip"><span class="sv" id="statFlips">0</span><span class="sl">Flips</span></div>
+    <div class="stat-chip"><span class="sv" id="statPairs">0</span><span class="sl">Pairs</span></div>
+    <div class="stat-chip"><span class="sv" id="statBest">—</span><span class="sl">Best</span></div>
+    <div class="stat-chip"><span class="sv" id="statStreak">0</span><span class="sl">Streak 🔥</span></div>
+  </div>
+
+  <!-- Difficulty -->
+  <div class="diff-row" id="diffRow">
+    <button class="diff-btn active" data-pairs="8" id="diff-easy">Easy (4×4)</button>
+    <button class="diff-btn" data-pairs="10" id="diff-med">Medium (4×5)</button>
+    <button class="diff-btn" data-pairs="15" id="diff-hard">Hard (5×6)</button>
+  </div>
+
+  <!-- Message -->
+  <div class="message-bar" id="msgBar">Tap any card to begin</div>
+
+  <!-- Board -->
+  <div class="board-wrap">
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+
+  <!-- Result card -->
+  <div class="result-card" id="resultCard">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <h2 id="resultTitle">You matched them all!</h2>
+    <p id="resultDesc"></p>
+    <div class="best-ribbon" id="bestRibbon" style="display:none;">🏆 New best: <span id="newBestVal"></span> flips!</div>
+    <div class="share-box" id="shareBox"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="playAgainBtn">▶ Play Again</button>
+      <button class="btn btn-secondary" id="shareBtn">📋 Copy Result</button>
+    </div>
+  </div>
+
+</div><!-- .game-page -->
+
+<!-- Ad: below game, above SEO -->
+<div class="ad-slot-game" id="ad-bot-em" style="padding:0 1rem;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6884221059402072"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var s = document.getElementById('ad-bot-em');
+    var o = new IntersectionObserver(function(e){ if(e[0].isIntersecting){ (adsbygoogle=window.adsbygoogle||[]).push({}); o.disconnect(); } }, { rootMargin:'200px' });
+    o.observe(s);
+  })();
+</script>
+
+<section class="seo-section">
+  <div class="seo-card">
+    <h2>How to Play Emoji Memory Match</h2>
+    <p>The board starts with all cards face-down. Tap any card to reveal the emoji hidden underneath. Then tap a second card — if the two emojis match, the pair stays face-up and glows green. If they don't match, both cards flip back over after a brief pause.</p>
+    <p>Your goal is to find all pairs in as few flips as possible. The game tracks your flip count in real time. A lower score is better. Every day a new daily seed generates a fresh emoji set — the same set for every player worldwide.</p>
+    <h3>Difficulty levels</h3>
+    <p><strong>Easy (4×4 = 8 pairs)</strong> — great for a quick break or warming up your memory.<br><strong>Medium (4×5 = 10 pairs)</strong> — the default daily challenge.<br><strong>Hard (5×6 = 15 pairs)</strong> — tests your short-term memory under pressure.</p>
+    <h3>Scoring &amp; streak</h3>
+    <p>Your best flip count for each difficulty is saved in your browser (no account needed). Your daily play streak counts days in a row you complete the challenge — try to keep it going!</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <p>
+    <a href="/game/">Games</a> ·
+    <a href="/game/aetherforge/">AetherForge</a> ·
+    <a href="/game/word-scramble/">Word Scramble</a> ·
+    <a href="/game/emoji-memory/">Emoji Memory</a> ·
+    <a href="/tool/picker-wheel/">Picker Wheel</a> ·
+    <a href="/about/">About</a> ·
+    <a href="/privacy-policy/">Privacy</a>
+  </p>
+  <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — Runs 100% in your browser. No data sent to a server.</p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   EMOJI MEMORY MATCH — Game Logic
+   Mobile-first. Daily seed via UTC date. No external deps.
+════════════════════════════════════════════════════════════════ */
+
+/* ── Seeded PRNG (mulberry32) ── */
+function mulberry32(seed) {
+  return function() {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function todaySeed() {
+  const d = new Date();
+  return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth() + 1) * 100) + d.getUTCDate();
+}
+
+/* Seeded shuffle — Fisher-Yates */
+function shuffle(arr, rng) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ── Emoji pool — 60 distinct, family-friendly ── */
+const EMOJI_POOL = [
+  '🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯',
+  '🦁','🐮','🐷','🐸','🐵','🦄','🐙','🦋','🐢','🦕',
+  '🌸','🌻','🌺','🍀','🌈','⭐','🌙','🔥','💎','🎈',
+  '🎯','🎲','🎸','🎺','🎻','🥁','🎨','🖼️','🎭','🎪',
+  '🍕','🍔','🍟','🌮','🍣','🍜','🍦','🎂','🍰','🍩',
+  '🚀','🛸','🌍','🏔️','🏝️','🌋','🎠','🎡','🎢','🗽',
+];
+
+/* ── Difficulty config ── */
+const DIFFS = {
+  easy:   { pairs: 8,  cols: 4, label: 'Easy' },
+  medium: { pairs: 10, cols: 4, label: 'Medium' },
+  hard:   { pairs: 15, cols: 5, label: 'Hard' },
+};
+
+/* ── State ── */
+let seed, rng, currentDiff, cards, flipped, matched, flips, locked, gameOver, startTime, playCount;
+
+/* ── DOM refs ── */
+const grid        = document.getElementById('cardGrid');
+const msgBar      = document.getElementById('msgBar');
+const statFlips   = document.getElementById('statFlips');
+const statPairs   = document.getElementById('statPairs');
+const statBest    = document.getElementById('statBest');
+const statStreak  = document.getElementById('statStreak');
+const resultCard  = document.getElementById('resultCard');
+const resultEmoji = document.getElementById('resultEmoji');
+const resultTitle = document.getElementById('resultTitle');
+const resultDesc  = document.getElementById('resultDesc');
+const bestRibbon  = document.getElementById('bestRibbon');
+const newBestVal  = document.getElementById('newBestVal');
+const shareBox    = document.getElementById('shareBox');
+const dailySeedEl = document.getElementById('dailySeed');
+
+/* ── Storage helpers ── */
+function storageKey(diff, type) {
+  return 'emm_' + seed + '_' + diff + '_' + type;
+}
+function globalKey(diff, type) {
+  return 'emm_' + diff + '_' + type;
+}
+function getSaved(key, fallback) {
+  try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : fallback; }
+  catch(e) { return fallback; }
+}
+function setSaved(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+/* ── Init ── */
+function init() {
+  playCount = 0;
+  seed = todaySeed();
+  currentDiff = 'easy';
+  updateSeedBadge();
+  updateStreakDisplay();
+  buildGame();
+}
+
+function updateSeedBadge() {
+  dailySeedEl.textContent = playCount === 0
+    ? seed + ' (daily)'
+    : 'Bonus #' + playCount;
+}
+
+function buildGame(diff) {
+  if (diff) currentDiff = diff;
+
+  const cfg = DIFFS[currentDiff];
+  rng   = mulberry32(seed + cfg.pairs); // diff-specific seed offset
+  cards = [];
+  flipped = [];
+  matched = [];
+  flips   = 0;
+  locked  = false;
+  gameOver = false;
+  startTime = null;
+
+  /* Pick emoji set for today's seed + difficulty */
+  const emojiSet = shuffle(EMOJI_POOL, mulberry32(seed * 31 + cfg.pairs)).slice(0, cfg.pairs);
+
+  /* Duplicate + shuffle to make pairs */
+  const deck = shuffle([...emojiSet, ...emojiSet], rng);
+
+  /* Update grid class for columns */
+  grid.className = 'card-grid' + (cfg.cols === 5 ? ' grid-5' : '');
+  grid.style.gridTemplateColumns = 'repeat(' + cfg.cols + ', 1fr)';
+
+  /* Render */
+  grid.innerHTML = '';
+  deck.forEach((emoji, i) => {
+    const card = document.createElement('button');
+    card.className = 'mem-card';
+    card.setAttribute('aria-label', 'Memory card ' + (i + 1));
+    card.setAttribute('data-idx', i);
+    card.innerHTML =
+      '<div class="card-inner">' +
+        '<div class="card-face card-back"></div>' +
+        '<div class="card-face card-front">' + emoji + '</div>' +
+      '</div>';
+    card.addEventListener('click', () => onCardClick(card, emoji, i));
+    cards.push({ el: card, emoji, matched: false });
+    grid.appendChild(card);
+  });
+
+  /* Update stats */
+  updateStats();
+  setMsg('Tap any card to begin', '');
+
+  /* Hide result */
+  resultCard.classList.remove('visible');
+
+  /* Show today's best */
+  const best = getSaved(globalKey(currentDiff, 'best'), null);
+  statBest.textContent = best !== null ? best : '—';
+}
+
+/* ── Card click ── */
+function onCardClick(cardEl, emoji, idx) {
+  if (locked || gameOver) return;
+  if (cards[idx].matched) return;
+  if (flipped.length === 1 && flipped[0].idx === idx) return; // same card
+
+  /* Start timer on first flip */
+  if (!startTime) startTime = Date.now();
+
+  /* Flip it */
+  cardEl.classList.add('flipped');
+  flipped.push({ el: cardEl, emoji, idx });
+  flips++;
+  updateStats();
+  playSound('tap');
+
+  if (flipped.length === 2) {
+    locked = true;
+    const [a, b] = flipped;
+    if (a.emoji === b.emoji) {
+      /* Match! */
+      playSound('correct');
+      setTimeout(() => {
+        a.el.classList.remove('flipped'); a.el.classList.add('matched');
+        b.el.classList.remove('flipped'); b.el.classList.add('matched');
+        cards[a.idx].matched = true;
+        cards[b.idx].matched = true;
+        matched.push(a.emoji);
+        flipped = [];
+        locked  = false;
+        updateStats();
+
+        const remaining = DIFFS[currentDiff].pairs - matched.length;
+        if (remaining === 0) {
+          onWin();
+        } else {
+          setMsg('✅ Match! ' + remaining + ' pair' + (remaining !== 1 ? 's' : '') + ' to go', 'good');
+        }
+      }, 250);
+    } else {
+      /* No match */
+      playSound('wrong');
+      setMsg('❌ No match — try again', 'bad');
+      setTimeout(() => {
+        a.el.classList.add('mismatch');
+        b.el.classList.add('mismatch');
+      }, 50);
+      setTimeout(() => {
+        a.el.classList.remove('flipped', 'mismatch');
+        b.el.classList.remove('flipped', 'mismatch');
+        flipped = [];
+        locked  = false;
+        setMsg('Keep going!', '');
+      }, 900);
+    }
+  }
+}
+
+/* ── Win ── */
+function onWin() {
+  gameOver = true;
+  playSound('win');
+  const elapsed = startTime ? Math.round((Date.now() - startTime) / 1000) : 0;
+  const cfg = DIFFS[currentDiff];
+  const pairs = cfg.pairs;
+
+  setMsg('🎉 You matched them all!', 'good');
+
+  /* Best score */
+  const bestKey = globalKey(currentDiff, 'best');
+  const prevBest = getSaved(bestKey, null);
+  const isNewBest = prevBest === null || flips < prevBest;
+  if (isNewBest) {
+    setSaved(bestKey, flips);
+    statBest.textContent = flips;
+    bestRibbon.style.display = 'flex';
+    newBestVal.textContent = flips;
+  } else {
+    bestRibbon.style.display = 'none';
+  }
+
+  /* Save today's completion */
+  setSaved(storageKey(currentDiff, 'done'), true);
+  setSaved(storageKey(currentDiff, 'flips'), flips);
+
+  /* Streak */
+  updateStreak();
+  updateStreakDisplay();
+
+  /* Rating */
+  const par = pairs * 2.5; // ideal ~2.5 flips per pair
+  let rating, ratingEmoji;
+  if (flips <= pairs * 2)      { rating = 'Perfect memory!';  ratingEmoji = '🧠'; }
+  else if (flips <= par)       { rating = 'Excellent!';       ratingEmoji = '⭐'; }
+  else if (flips <= par * 1.4) { rating = 'Good job!';        ratingEmoji = '🎯'; }
+  else if (flips <= par * 1.9) { rating = 'Not bad!';         ratingEmoji = '👍'; }
+  else                          { rating = 'Keep practising!'; ratingEmoji = '💪'; }
+
+  resultEmoji.textContent = ratingEmoji;
+  resultTitle.textContent = rating;
+  resultDesc.textContent  =
+    'You matched all ' + pairs + ' pairs in ' + flips + ' flips' +
+    (elapsed ? ' (' + fmtTime(elapsed) + ')' : '') + '. ' +
+    (isNewBest ? 'New personal best on ' + cfg.label + '!' : 'Your best is ' + prevBest + ' flips on ' + cfg.label + '.');
+
+  /* Share text */
+  const streakVal = getSaved('emm_streak', 0);
+  const gridEmoji = buildShareGrid(pairs);
+  const roundLabel = playCount === 0 ? seed + ' (daily)' : 'Bonus #' + playCount;
+  shareBox.textContent =
+    '🃏 Emoji Memory Match — ' + cfg.label + '\n' +
+    '📅 ' + roundLabel + ' | ' + flips + ' flips\n' +
+    (isNewBest ? '🏆 New best!\n' : '') +
+    '🔥 Streak: ' + streakVal + ' day' + (streakVal !== 1 ? 's' : '') + '\n\n' +
+    gridEmoji + '\n\n' +
+    'zippywidgets.online/game/emoji-memory/';
+
+  resultCard.classList.add('visible');
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* Build a compact share grid using coloured squares */
+function buildShareGrid(pairs) {
+  const total = pairs * 2;
+  const cols  = DIFFS[currentDiff].cols;
+  let out = '', count = 0;
+  /* We use 🟩 for matched pairs.  We track order matches were found — for share we just show all green. */
+  for (let i = 0; i < total; i++) {
+    out += '🟩';
+    count++;
+    if (count % cols === 0 && i < total - 1) out += '\n';
+  }
+  return out;
+}
+
+/* ── Streak ── */
+function updateStreak() {
+  const today = seed;
+  const yesterday = (() => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - 1);
+    return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth() + 1) * 100) + d.getUTCDate();
+  })();
+  const lastDay  = getSaved('emm_last_day', null);
+  let streak     = getSaved('emm_streak', 0);
+
+  if (lastDay === today) return; // already counted today
+  if (lastDay === yesterday) { streak++; }
+  else { streak = 1; }
+
+  setSaved('emm_streak', streak);
+  setSaved('emm_last_day', today);
+}
+
+function updateStreakDisplay() {
+  statStreak.textContent = getSaved('emm_streak', 0);
+}
+
+/* ── Helpers ── */
+function setMsg(text, cls) {
+  msgBar.textContent = text;
+  msgBar.className = 'message-bar' + (cls ? ' ' + cls : '');
+}
+
+function updateStats() {
+  statFlips.textContent  = flips;
+  statPairs.textContent  = matched.length + '/' + DIFFS[currentDiff].pairs;
+  const best = getSaved(globalKey(currentDiff, 'best'), null);
+  statBest.textContent   = best !== null ? best : '—';
+}
+
+function fmtTime(s) {
+  if (s < 60) return s + 's';
+  return Math.floor(s / 60) + 'm ' + (s % 60) + 's';
+}
+
+/* ── Difficulty buttons ── */
+document.querySelectorAll('.diff-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const pairsMap = { '8': 'easy', '10': 'medium', '15': 'hard' };
+    const diff = pairsMap[btn.dataset.pairs];
+    document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    buildGame(diff);
+  });
+});
+
+/* ── Play again ── */
+document.getElementById('playAgainBtn').addEventListener('click', () => {
+  playCount++;
+  seed = todaySeed() + playCount * 999983;
+  updateSeedBadge();
+  buildGame();
+});
+
+/* ── Share ── */
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const text = shareBox.textContent;
+  if (navigator.share) {
+    navigator.share({ title: 'Emoji Memory Match', text }).catch(() => copyFallback(text));
+  } else {
+    copyFallback(text);
+  }
+});
+function copyFallback(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Result', 1800);
+  }).catch(() => {});
+}
+
+/* ── Hamburger nav ── */
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}));
+
+/* ── Boot ── */
+init();
+/* ── Audio engine ── */
+let _audioCtx = null;
+let _muted = (localStorage.getItem('zw_mute') === '1');
+(function(){ document.getElementById('muteToggle').textContent = _muted ? '🔇' : '🔊'; })();
+
+function _ctx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+function _tone(freq, dur, type, vol) {
+  if (_muted) return;
+  try {
+    const c = _ctx(), o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = type || 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || 0.22, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+    o.start(); o.stop(c.currentTime + dur);
+  } catch(e){}
+}
+function playSound(name) {
+  if (_muted) return;
+  if (name === 'tap')     { _tone(380, 0.06, 'sine', 0.1); }
+  if (name === 'correct') { _tone(520, 0.08, 'sine'); setTimeout(() => _tone(780, 0.14, 'sine'), 80); }
+  if (name === 'wrong')   { _tone(180, 0.15, 'sawtooth', 0.16); }
+  if (name === 'win') {
+    [523,659,784,1047].forEach((f,i) => setTimeout(() => _tone(f, 0.15, 'sine', 0.2), i*80));
+  }
+}
+function toggleMute() {
+  _muted = !_muted;
+  localStorage.setItem('zw_mute', _muted ? '1' : '0');
+  document.getElementById('muteToggle').textContent = _muted ? '🔇' : '🔊';
+}
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3a836cffee324682bf1554f0e4288871"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

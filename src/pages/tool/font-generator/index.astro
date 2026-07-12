@@ -1,0 +1,377 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Fancy Text Generator | Aesthetic Fonts, Glitch & Small Text Copy Paste';
+const description = 'Free fancy text generator — create aesthetic fonts, small text, glitch text, zalgo, vaporwave, cursive, subscript, wave text and 20+ Unicode styles. Copy and paste into Instagram bio, TikTok, Discord, or Twitter instantly.';
+const canonical = 'https://zippywidgets.online/tool/font-generator/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fancy Text Generator",
+    "url": "https://zippywidgets.online/font-generator/",
+    "description": "Free online fancy text generator. Convert any text into stylish Unicode fonts for Instagram, TikTok, Discord, and Twitter bios.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the fancy font generator work?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It converts your text into Unicode character equivalents that look like different fonts. Because they are standard Unicode characters, they paste anywhere: Instagram bios, TikTok profiles, Twitter, Discord, WhatsApp, and more — no special app or font file required." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I change my font on Instagram bio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Type your text into the generator, choose a style, click Copy, then open Instagram and paste directly into your bio editor. Instagram renders Unicode characters exactly as displayed in the generator." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do some characters appear as boxes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A small number of Unicode blocks are not included in every device font. If you see a square box instead of a character, your device font does not include that glyph. Switch to Bold Sans, Script, or Small Caps which have near-universal support on iOS and Android." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do these font styles work on TikTok and Discord?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Because the styles use Unicode characters rather than custom font files, they work on any platform that accepts UTF-8 text input — including TikTok, Discord, Twitter, LinkedIn, YouTube, and WhatsApp." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">✍️</span>
+      <div>
+        <h1>Fancy Text &amp; Aesthetic Font Generator</h1>
+        <p>Generate small text, glitch text, zalgo, vaporwave, cursive, subscript, wave text, mirror text and 20+ Unicode styles. One-click copy for Instagram bio, TikTok, Discord, and Twitter.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <input type="text" id="fontInput" placeholder="Type your text here…" oninput="updateFonts()" />
+      <div class="font-output-list mt-3" id="fontOutputList">
+        <p class="text-muted text-sm">Start typing above to see your text transformed.</p>
+      </div>
+    </div>
+    <div class="use-case-chips">
+      <span>Instagram Bio Font</span>
+      <span>TikTok Aesthetic Text</span>
+      <span>Small Text Generator</span>
+      <span>Glitch Text Generator</span>
+      <span>Zalgo Text</span>
+      <span>Vaporwave Text</span>
+      <span>Cursive Font Copy Paste</span>
+      <span>Mirror Text Generator</span>
+      <span>Subscript Text</span>
+      <span>Wave Text Generator</span>
+      <span>Discord Username Fonts</span>
+      <span>Cool Fonts for Twitter</span>
+    </div>
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Fancy Text Generator</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Type or paste your text into the input box at the top of the page. All 30 Unicode styles update instantly as you type — no button required. Scroll through the results to find the style that suits you, then click the <strong>Copy</strong> button next to it. The styled text is now on your clipboard and ready to paste anywhere.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Where Can You Paste These Fonts?</h3>
+        <p>Because all styles use standard Unicode characters rather than actual font files, the styled text works in any app or website that supports UTF-8 — which is virtually everything. Popular destinations include:</p>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Instagram bio</strong> — make your profile name or bio stand out with bold, cursive or aesthetic styles.</li>
+          <li><strong>TikTok username and bio</strong> — many creators use full-width or small caps to differentiate their brand.</li>
+          <li><strong>Discord username and server names</strong> — bold sans or fraktur styles are popular in gaming communities.</li>
+          <li><strong>Twitter / X display name</strong> — Unicode names display in timelines, giving your profile a unique look.</li>
+          <li><strong>WhatsApp and Telegram</strong> — paste into messages, group names, or status text.</li>
+          <li><strong>YouTube channel name</strong> — bold serif and script styles appear in channel headers.</li>
+          <li><strong>LinkedIn headline</strong> — subtle styles like double-struck or small caps add personality without looking unprofessional.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Understanding the Styles</h3>
+        <p><strong>Bold / Italic / Bold Italic</strong> styles use the Unicode Mathematical Alphanumeric block — these are the most widely supported and render correctly on virtually all devices. <strong>Fraktur / Gothic</strong> mimics old Germanic blackletter script. <strong>Vaporwave / Full-Width</strong> spaces out characters in the distinctive aesthetic style. <strong>Zalgo Glitch</strong> adds combining diacritic marks above and below each letter to create a corrupted-text effect — great for horror-themed content. <strong>Regional Indicators</strong> converts each letter to the emoji flag indicator blocks, giving a colourful boxed appearance.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Why Some Characters May Not Display</h3>
+        <p>A small number of Unicode blocks are not included in every system font. If you see a square box (□) instead of a character, it means your device's font does not include that Unicode glyph. This is increasingly rare on modern phones and computers. Most styles — bold, italic, cursive, bubble, circled, and vaporwave — render correctly on all major platforms.</p>
+      </div>
+    </section>
+
+    <section class="faq-section card" style="margin-top:0;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How does the fancy font generator work?</h3>
+        <p>It converts your text into Unicode character equivalents that look like different fonts — no special software needed. Because they’re standard Unicode, they paste anywhere: Instagram bios, TikTok profiles, Twitter, Discord, and more.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I change my font on Instagram bio?</h3>
+        <p>Type your text above, choose a style, click “Copy”, then paste directly into your Instagram bio editor. Instagram renders Unicode characters exactly as you see them here.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do these fonts work on TikTok and Discord?</h3>
+        <p>Yes. Because the characters are Unicode — not images or custom fonts — they display natively on every platform that supports UTF-8, including TikTok, Discord, Twitter/X, Facebook, and WhatsApp.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why do some characters appear as boxes?</h3>
+        <p>A small number of Unicode blocks (like some mathematical alphanumeric symbols) are not included in every device font. Most modern phones and computers display all styles correctly.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Fancy Text Generator",
+        "url": "https://zippywidgets.online/font-generator/",
+        "description": "Free online fancy text generator. Convert any text into stylish Unicode fonts for Instagram, TikTok, Discord, and Twitter bios.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does the fancy font generator work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It converts your text into Unicode character equivalents that look like different fonts. Because they are standard Unicode characters, they paste anywhere: Instagram bios, TikTok profiles, Twitter, Discord, WhatsApp, and more — no special app or font file required." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I change my font on Instagram bio?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Type your text into the generator, choose a style, click Copy, then open Instagram and paste directly into your bio editor. Instagram renders Unicode characters exactly as displayed in the generator." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do some characters appear as boxes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A small number of Unicode blocks are not included in every device font. If you see a square box instead of a character, your device font does not include that glyph. Switch to Bold Sans, Script, or Small Caps which have near-universal support on iOS and Android." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do these font styles work on TikTok and Discord?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Because the styles use Unicode characters rather than custom font files, they work on any platform that accepts UTF-8 text input — including TikTok, Discord, Twitter, LinkedIn, YouTube, and WhatsApp." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline>
+    'use strict';
+    
+        const FONTS = [
+          { name: 'Bold Serif',          fn: boldSerif },
+          { name: 'Italic Serif',        fn: italicSerif },
+          { name: 'Bold Italic Serif',   fn: boldItalicSerif },
+          { name: 'Script / Cursive',    fn: script },
+          { name: 'Bold Sans',           fn: boldSans },
+          { name: 'Italic Sans',         fn: italicSans },
+          { name: 'Bold Italic Sans',    fn: boldItalicSans },
+          { name: 'Double-Struck',       fn: doubleStruck },
+          { name: 'Fraktur / Gothic',    fn: fraktur },
+          { name: 'Bold Fraktur',        fn: boldFraktur },
+          { name: 'Monospace',           fn: monospace },
+          { name: 'Circled',             fn: circled },
+          { name: 'Squared',             fn: squared },
+          { name: 'Full-Width / Vaporwave', fn: fullwidth },
+          { name: 'Tiny Caps',           fn: tinyCaps },
+          { name: 'Superscript',         fn: superscript },
+          { name: 'Bubble Text',         fn: bubble },
+          { name: 'Inverted',            fn: inverted },
+          { name: 'Underline',           fn: underline },
+          { name: 'Double Underline',    fn: doubleUnderline },
+          { name: 'Wavy Underline',      fn: wavyUnderline },
+          { name: 'Strikethrough',       fn: strikethrough },
+          { name: 'Bold Script',         fn: boldScript },
+          { name: 'Negative Squared',    fn: negativeSquared },
+          { name: 'Subscript',           fn: subscript },
+          { name: 'Aesthetic Spaced',    fn: aestheticSpaced },
+          { name: 'Wave / Alternating',  fn: waveCase },
+          { name: 'Mirror / Reversed',   fn: mirrored },
+          { name: 'Regional Indicators', fn: regionalIndicators },
+          { name: 'Zalgo Glitch',        fn: zalgo },
+        ];
+    
+        function shiftStr(str, upper, lower, digits) {
+          return [...str].map(c => {
+            const u = c.charCodeAt(0);
+            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(upper + u - 65);
+            if (c >= 'a' && c <= 'z') return String.fromCodePoint(lower + u - 97);
+            if (digits && c >= '0' && c <= '9') return String.fromCodePoint(digits + u - 48);
+            return c;
+          }).join('');
+        }
+    
+        function boldSerif(s)        { return shiftStr(s, 0x1D400, 0x1D41A, 0x1D7CE); }
+        function italicSerif(s)      { return shiftStr(s, 0x1D434, 0x1D44E); }
+        function boldItalicSerif(s)  { return shiftStr(s, 0x1D468, 0x1D482); }
+        function script(s)           { return shiftStr(s, 0x1D4D0, 0x1D4EA); }
+        function boldSans(s)         { return shiftStr(s, 0x1D5D4, 0x1D5EE, 0x1D7EC); }
+        function italicSans(s)       { return shiftStr(s, 0x1D608, 0x1D622); }
+        function boldItalicSans(s)   { return shiftStr(s, 0x1D63C, 0x1D656); }
+        function doubleStruck(s)     { return shiftStr(s, 0x1D538, 0x1D552, 0x1D7D8); }
+        function fraktur(s)          { return shiftStr(s, 0x1D504, 0x1D51E); }
+        function boldFraktur(s)      { return shiftStr(s, 0x1D56C, 0x1D586); }
+        function monospace(s)        { return shiftStr(s, 0x1D670, 0x1D68A, 0x1D7F6); }
+    
+        const SUP_MAP = {a:'ᵃ',b:'ᵇ',c:'ᶜ',d:'ᵈ',e:'ᵉ',f:'ᶠ',g:'ᵍ',h:'ʰ',i:'ⁱ',j:'ʲ',k:'ᵏ',l:'ˡ',m:'ᵐ',n:'ⁿ',o:'ᵒ',p:'ᵖ',q:'q',r:'ʳ',s:'ˢ',t:'ᵗ',u:'ᵘ',v:'ᵛ',w:'ʷ',x:'ˣ',y:'ʸ',z:'ᶻ','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+        function superscript(s) { return [...s].map(c => SUP_MAP[c.toLowerCase()] || c).join(''); }
+    
+        const BUBBLE_UPPER = ['Ⓐ','Ⓑ','Ⓒ','Ⓓ','Ⓔ','Ⓕ','Ⓖ','Ⓗ','Ⓘ','Ⓙ','Ⓚ','Ⓛ','Ⓜ','Ⓝ','Ⓞ','Ⓟ','Ⓠ','Ⓡ','Ⓢ','Ⓣ','Ⓤ','Ⓥ','Ⓦ','Ⓧ','Ⓨ','Ⓩ'];
+        const BUBBLE_LOWER = ['ⓐ','ⓑ','ⓒ','ⓓ','ⓔ','ⓕ','ⓖ','ⓗ','ⓘ','ⓙ','ⓚ','ⓛ','ⓜ','ⓝ','ⓞ','ⓟ','ⓠ','ⓡ','ⓢ','ⓣ','ⓤ','ⓥ','ⓦ','ⓧ','ⓨ','ⓩ'];
+        function bubble(s) { return [...s].map(c => { const u=c.charCodeAt(0); if(c>='A'&&c<='Z') return BUBBLE_UPPER[u-65]; if(c>='a'&&c<='z') return BUBBLE_LOWER[u-97]; return c; }).join(''); }
+    
+        const INV_MAP = {a:'ɐ',b:'q',c:'ɔ',d:'p',e:'ǝ',f:'ɟ',g:'ƃ',h:'ɥ',i:'ᴉ',j:'ɾ',k:'ʞ',l:'l',m:'ɯ',n:'u',o:'o',p:'d',q:'b',r:'ɹ',s:'s',t:'ʇ',u:'n',v:'ʌ',w:'ʍ',x:'x',y:'ʎ',z:'z'};
+        function inverted(s) { return [...s].map(c => INV_MAP[c.toLowerCase()] || c).join('').split('').reverse().join(''); }
+    
+        function underline(s) { return [...s].map(c => c + '\u0332').join(''); }
+    
+        function circled(s) {
+          return [...s].map(c => {
+            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x24B6 + c.charCodeAt(0) - 65);
+            if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x24D0 + c.charCodeAt(0) - 97);
+            if (c >= '1' && c <= '9') return String.fromCodePoint(0x2460 + c.charCodeAt(0) - 49);
+            if (c === '0') return '⓪';
+            return c;
+          }).join('');
+        }
+    
+        function squared(s) {
+          return [...s].map(c => {
+            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x1F130 + c.charCodeAt(0) - 65);
+            if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x1F130 + c.charCodeAt(0) - 97);
+            return c;
+          }).join('');
+        }
+    
+        function fullwidth(s) {
+          return [...s].map(c => {
+            const u = c.charCodeAt(0);
+            if (u >= 33 && u <= 126) return String.fromCodePoint(0xFF01 + u - 33);
+            if (c === ' ') return '\u3000';
+            return c;
+          }).join('');
+        }
+    
+        const TINY = {a:'ᴀ',b:'ʙ',c:'ᴄ',d:'ᴅ',e:'ᴇ',f:'ꜰ',g:'ɢ',h:'ʜ',i:'ɪ',j:'ᴊ',k:'ᴋ',l:'ʟ',m:'ᴍ',n:'ɴ',o:'ᴏ',p:'ᴘ',q:'Q',r:'ʀ',s:'ꜱ',t:'ᴛ',u:'ᴜ',v:'ᴠ',w:'ᴡ',x:'x',y:'ʏ',z:'ᴢ'};
+        function tinyCaps(s) { return [...s].map(c => TINY[c.toLowerCase()] || c).join(''); }
+        function strikethrough(s)    { return [...s].map(c => c + '\u0336').join(''); }
+        function doubleUnderline(s)  { return [...s].map(c => c + '\u0333').join(''); }
+        function wavyUnderline(s)    { return [...s].map(c => c + '\u0330').join(''); }
+    
+        function boldScript(s)       { return shiftStr(s, 0x1D4D0, 0x1D4EA, 0x1D7CE); }
+    
+        function negativeSquared(s) {
+          return [...s].map(c => {
+            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(0x1F170 + c.charCodeAt(0) - 65);
+            if (c >= 'a' && c <= 'z') return String.fromCodePoint(0x1F170 + c.charCodeAt(0) - 97);
+            return c;
+          }).join('');
+        }
+    
+        const SUB_MAP = {a:'ₐ',e:'ₑ',h:'ₕ',i:'ᵢ',j:'ⱼ',k:'ₖ',l:'ₗ',m:'ₘ',n:'ₙ',o:'ₒ',p:'ₚ',r:'ᵣ',s:'ₛ',t:'ₜ',u:'ᵤ',v:'ᵥ',x:'ₓ','0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+        function subscript(s) { return [...s].map(c => SUB_MAP[c.toLowerCase()] || c).join(''); }
+    
+        function aestheticSpaced(s) { return [...s].join(' '); }
+    
+        function waveCase(s) { return [...s].map((c,i) => i%2===0 ? c.toUpperCase() : c.toLowerCase()).join(''); }
+    
+        function mirrored(s) {
+          const M={a:'ɐ',b:'d',c:'ɔ',d:'b',e:'ǝ',f:'ɟ',g:'ƃ',h:'ɥ',i:'ᴉ',j:'ɾ',k:'ʞ',l:'l',m:'ɯ',n:'u',o:'o',p:'q',q:'p',r:'ɹ',s:'s',t:'ʇ',u:'n',v:'ʌ',w:'ʍ',x:'x',y:'ʎ',z:'z'};
+          return [...s].map(c=>M[c.toLowerCase()]||(c>='A'&&c<='Z'?(M[c.toLowerCase()]||c).toUpperCase():c)).reverse().join('');
+        }
+    
+        function regionalIndicators(s) {
+          return [...s].map(c => {
+            const l = c.toLowerCase();
+            if (l >= 'a' && l <= 'z') return String.fromCodePoint(0x1F1E6 + l.charCodeAt(0) - 97) + '\u200B';
+            return c;
+          }).join('');
+        }
+    
+        const ZALGO_UP = ['\u030d','\u030e','\u0304','\u0305','\u033f','\u0311','\u0306','\u0310','\u0352','\u0357','\u0351','\u0307','\u0308','\u030a','\u0342'];
+        const ZALGO_DN = ['\u0316','\u0317','\u0318','\u0319','\u031c','\u031d','\u031e','\u031f','\u0320','\u0324','\u0325','\u0326','\u0329','\u032a','\u032b'];
+        function zalgo(s) {
+          return [...s].map(c => {
+            if (c === ' ') return c;
+            let r = c;
+            for (let i = 0; i < 2; i++) r += ZALGO_UP[Math.floor(Math.random()*ZALGO_UP.length)];
+            for (let i = 0; i < 2; i++) r += ZALGO_DN[Math.floor(Math.random()*ZALGO_DN.length)];
+            return r;
+          }).join('');
+        }
+    
+        function updateFonts() {
+          const input = document.getElementById('fontInput').value || '';
+          const list  = document.getElementById('fontOutputList');
+          if (!input) {
+            list.innerHTML = '<p class="text-muted text-sm">Start typing above to see your text transformed.</p>';
+            return;
+          }
+          list.innerHTML = FONTS.map(f => {
+            const out = f.fn(input);
+            return `
+              <div class="font-row">
+                <span class="label">${f.name}</span>
+                <span class="preview">${out}</span>
+                <button class="copy-btn" onclick="copyFont(this, ${JSON.stringify(out)})">Copy</button>
+              </div>`;
+          }).join('');
+        }
+    
+        function copyFont(btn, text) {
+          navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+          });
+        }
+  </script>
+</Layout>

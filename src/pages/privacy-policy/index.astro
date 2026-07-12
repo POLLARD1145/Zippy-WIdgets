@@ -1,0 +1,71 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Privacy Policy | ZippyWidgets';
+const description = 'ZippyWidgets privacy policy. Learn how we handle your data, advertising cookies, and browser-based tool usage.';
+---
+
+<Layout title={title} description={description}>
+  <Nav />
+
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🔒</span>
+      <div>
+        <h1>Privacy Policy</h1>
+        <p>Last updated: July 2026</p>
+      </div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Overview</h2>
+        <p style="color:var(--muted);line-height:1.7;">ZippyWidgets.online ("we", "us", or "our") operates a collection of free browser-based utility tools. This Privacy Policy explains what information is collected when you visit our site, how it is used, and your rights in relation to it.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Data We Do Not Collect</h2>
+        <p style="color:var(--muted);line-height:1.7;">All tools on ZippyWidgets run entirely in your browser. Text you type, dates you enter, QR codes you generate, and wheel entries you add are never transmitted to our servers — because we have no servers. No account, registration, or login is required.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Google AdSense & Advertising Cookies</h2>
+        <p style="color:var(--muted);line-height:1.7;">We use Google AdSense to display advertisements on this site. Google AdSense uses cookies and similar tracking technologies to serve ads based on your prior visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visit to our site and/or other sites on the internet.</p>
+        <p style="color:var(--muted);line-height:1.7;margin-top:.75rem;">You may opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color:var(--accent);">Google Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalised advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener" style="color:var(--accent);">aboutads.info</a>.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Google Analytics</h2>
+        <p style="color:var(--muted);line-height:1.7;">We may use Google Analytics to collect anonymised usage statistics such as page views, session duration, and device type. This data is aggregated and cannot identify you personally. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" style="color:var(--accent);">Google Analytics Opt-out Browser Add-on</a>.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Third-Party Links</h2>
+        <p style="color:var(--muted);line-height:1.7;">Our site may contain links to external websites. We are not responsible for the privacy practices or content of those sites. We encourage you to review the privacy policy of any site you visit.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Children's Privacy</h2>
+        <p style="color:var(--muted);line-height:1.7;">ZippyWidgets does not knowingly collect any personal information from children under the age of 13. If you believe your child has provided personal information on our site, please contact us and we will remove it promptly.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Changes to This Policy</h2>
+        <p style="color:var(--muted);line-height:1.7;">We may update this Privacy Policy from time to time. Changes will be reflected by the "Last updated" date at the top of this page. Continued use of ZippyWidgets after any changes constitutes your acceptance of the updated policy.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Contact</h2>
+        <p style="color:var(--muted);line-height:1.7;">If you have any questions about this Privacy Policy, please email us at <a href="mailto:support@zippywidgets.online" style="color:var(--accent);">support@zippywidgets.online</a>.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

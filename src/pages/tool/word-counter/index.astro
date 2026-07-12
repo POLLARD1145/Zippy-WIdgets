@@ -1,0 +1,252 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Word Counter | Essay Word Count & Tweet Character Limit Checker';
+const description = 'Free word counter and character counter. Check essay word count, tweet character limit, and real-time limits for Instagram, LinkedIn, TikTok & SMS. No sign-up needed.';
+const canonical = 'https://zippywidgets.online/tool/word-counter/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word & Character Counter",
+    "url": "https://zippywidgets.online/word-counter/",
+    "description": "Free real-time word counter and character counter tool. Count words, characters, sentences, and paragraphs instantly.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the word counter work?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Paste or type your text into the editor and all statistics update in real time — no button press needed. It counts words, characters with and without spaces, sentences, paragraphs, lines, and estimates reading time at 200 words per minute." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the character limit for Twitter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Twitter (X) allows 280 characters per post. The word counter's Platform Limits panel shows your current character count against this limit in real time, turning orange near the limit and red when exceeded." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text private when I use this tool?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. All text is processed entirely in your browser using JavaScript. Nothing you type is sent to a server, logged, or stored. You can safely paste confidential documents — they never leave your device." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Instagram caption character limit?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Instagram captions allow up to 2,200 characters, but only the first 125 characters are visible before the 'more' link. The word counter tracks both thresholds in the Platform Limits panel." }
+      }
+    ]
+  }
+  </script>
+<main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📝</span>
+      <div>
+        <h1>Word Counter — Essay Word Count &amp; Character Limit Checker</h1>
+        <p>Count words, characters, sentences and paragraphs. Instantly check tweet character limits, essay word counts, and platform limits for Instagram, LinkedIn, TikTok &amp; SMS.</p>
+      </div>
+    </div>
+
+    <div class="wc-layout">
+    <div class="card wc-editor">
+      <textarea id="wcTextarea" rows="10" placeholder="Paste or type your text here…" oninput="updateWordCount()"></textarea>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="val" id="statWords">0</div><div class="lbl">Words</div></div>
+        <div class="stat-box"><div class="val" id="statChars">0</div><div class="lbl">Characters</div></div>
+        <div class="stat-box"><div class="val" id="statNoSpace">0</div><div class="lbl">No Spaces</div></div>
+        <div class="stat-box"><div class="val" id="statSentences">0</div><div class="lbl">Sentences</div></div>
+        <div class="stat-box"><div class="val" id="statParas">0</div><div class="lbl">Paragraphs</div></div>
+        <div class="stat-box"><div class="val" id="statLines">0</div><div class="lbl">Lines</div></div>
+      </div>
+      <p class="reading-time" id="readingTime">Reading time: —</p>
+      <div class="btn-group mt-2">
+        <button class="btn btn-secondary" onclick="document.getElementById('wcTextarea').value=''; updateWordCount();">Clear</button>
+        <button class="btn btn-secondary" onclick="copyText()">Copy Text</button>
+      </div>
+    </div>
+
+    <aside class="platform-limits card">
+      <h2 style="font-size:.9rem;font-weight:700;margin-bottom:.9rem;color:var(--text);">Platform Limits</h2>
+      <ul class="limit-list" id="limitList">
+        <li data-limit="280"><span class="plat-name">X / Twitter</span><span class="plat-limit"><span class="plat-used" id="lim-twitter">0</span> / 280</span></li>
+        <li data-limit="2200"><span class="plat-name">Instagram Caption</span><span class="plat-limit"><span class="plat-used" id="lim-instagram">0</span> / 2,200</span></li>
+        <li data-limit="3000"><span class="plat-name">LinkedIn Post</span><span class="plat-limit"><span class="plat-used" id="lim-linkedin">0</span> / 3,000</span></li>
+        <li data-limit="500"><span class="plat-name">Threads</span><span class="plat-limit"><span class="plat-used" id="lim-threads">0</span> / 500</span></li>
+        <li data-limit="63206"><span class="plat-name">Facebook Post</span><span class="plat-limit"><span class="plat-used" id="lim-facebook">0</span> / 63,206</span></li>
+        <li data-limit="100"><span class="plat-name">TikTok Caption</span><span class="plat-limit"><span class="plat-used" id="lim-tiktok">0</span> / 100</span></li>
+        <li data-limit="160"><span class="plat-name">SMS Message</span><span class="plat-limit"><span class="plat-used" id="lim-sms">0</span> / 160</span></li>
+        <li data-limit="160"><span class="plat-name">Meta Description</span><span class="plat-limit"><span class="plat-used" id="lim-meta">0</span> / 160</span></li>
+      </ul>
+    </aside>
+    </div>
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Word & Character Counter</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Paste or type any text into the editor above and all statistics update in real time — no button press needed. The counter tracks <strong>words</strong>, <strong>characters</strong> (with and without spaces), <strong>sentences</strong>, <strong>paragraphs</strong>, <strong>lines</strong>, and an estimated <strong>reading time</strong> based on an average adult reading speed of 200 words per minute.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Understanding the Platform Limits Panel</h3>
+        <p>The panel on the right side shows how your current character count compares against real-world platform limits. Each row highlights in orange when you are approaching the limit and turns red when you exceed it. This is particularly useful when crafting social media posts:</p>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>X / Twitter:</strong> 280 characters per post. Emojis count as 2 characters.</li>
+          <li><strong>Instagram Caption:</strong> 2,200 characters, but only the first ~125 show before "more" is clicked.</li>
+          <li><strong>LinkedIn Post:</strong> 3,000 characters for personal posts; articles are unlimited.</li>
+          <li><strong>Threads:</strong> 500 characters per thread post.</li>
+          <li><strong>TikTok Caption:</strong> 100 characters — keep it punchy.</li>
+          <li><strong>SMS:</strong> Standard SMS is 160 characters per message segment. Going over splits the message.</li>
+          <li><strong>Meta Description:</strong> Google truncates meta descriptions at around 155–160 characters in search results.</li>
+        </ul>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Common Uses</h3>
+        <p><strong>Students and academics</strong> use this tool to check essay word counts before submission — paste in your work and confirm it meets minimum or maximum requirements without switching to a desktop app. <strong>Copywriters and marketers</strong> use it to craft posts that fit precisely within platform limits. <strong>SEO professionals</strong> use the meta description counter to ensure descriptions are the right length for Google search snippets.</p>
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>All text you paste into this tool is processed entirely in your browser using JavaScript. Nothing you type is sent to a server, logged, or stored. You can safely paste confidential documents, cover letters, or personal writing — it never leaves your device. The Clear button instantly removes all text from the editor.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Word & Character Counter",
+        "url": "https://zippywidgets.online/word-counter/",
+        "description": "Free real-time word counter and character counter tool. Count words, characters, sentences, and paragraphs instantly.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+  </script>
+
+  <script is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does the word counter work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Paste or type your text into the editor and all statistics update in real time — no button press needed. It counts words, characters with and without spaces, sentences, paragraphs, lines, and estimates reading time at 200 words per minute." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the character limit for Twitter?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Twitter (X) allows 280 characters per post. The word counter's Platform Limits panel shows your current character count against this limit in real time, turning orange near the limit and red when exceeded." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my text private when I use this tool?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. All text is processed entirely in your browser using JavaScript. Nothing you type is sent to a server, logged, or stored. You can safely paste confidential documents — they never leave your device." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the Instagram caption character limit?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Instagram captions allow up to 2,200 characters, but only the first 125 characters are visible before the 'more' link. The word counter tracks both thresholds in the Platform Limits panel." }
+          }
+        ]
+      }
+  </script>
+
+  <script is:inline>
+    (function(){
+            var slot = document.getElementById('adSlot');
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+  </script>
+
+  <script is:inline>
+    'use strict';
+    
+        const LIMITS = [
+          { id: 'lim-twitter',   limit: 280 },
+          { id: 'lim-instagram', limit: 2200 },
+          { id: 'lim-linkedin',  limit: 3000 },
+          { id: 'lim-threads',   limit: 500 },
+          { id: 'lim-facebook',  limit: 63206 },
+          { id: 'lim-tiktok',    limit: 100 },
+          { id: 'lim-sms',       limit: 160 },
+          { id: 'lim-meta',      limit: 160 },
+        ];
+    
+        function updateWordCount() {
+          const text = document.getElementById('wcTextarea').value;
+    
+          const words     = text.trim() ? text.trim().split(/\s+/).length : 0;
+          const chars     = text.length;
+          const noSpace   = text.replace(/\s/g, '').length;
+          const sentences = text.trim() ? (text.match(/[^.!?]*[.!?]+/g) || []).length : 0;
+          const paras     = text.trim() ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+          const lines     = text ? text.split('\n').length : 0;
+    
+          document.getElementById('statWords').textContent     = words.toLocaleString();
+          document.getElementById('statChars').textContent     = chars.toLocaleString();
+          document.getElementById('statNoSpace').textContent   = noSpace.toLocaleString();
+          document.getElementById('statSentences').textContent = sentences.toLocaleString();
+          document.getElementById('statParas').textContent     = paras.toLocaleString();
+          document.getElementById('statLines').textContent     = lines.toLocaleString();
+    
+          const mins = Math.ceil(words / 200);
+          document.getElementById('readingTime').textContent =
+            words > 0 ? `Reading time: ~${mins} min${mins > 1 ? 's' : ''} (200 wpm)` : 'Reading time: —';
+    
+          LIMITS.forEach(({ id, limit }) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = chars.toLocaleString();
+            const li = el.closest('li');
+            li.classList.toggle('limit-over',  chars > limit);
+            li.classList.toggle('limit-warn',  chars > limit * 0.85 && chars <= limit);
+            li.classList.remove('limit-over',  chars > limit);
+            li.classList.remove('limit-warn',  chars > limit * 0.85 && chars <= limit);
+            if (chars > limit)          li.className = 'limit-over';
+            else if (chars > limit * 0.85) li.className = 'limit-warn';
+            else                            li.className = '';
+          });
+        }
+    
+        function copyText() {
+          navigator.clipboard.writeText(document.getElementById('wcTextarea').value);
+        }
+  </script>
+</Layout>
