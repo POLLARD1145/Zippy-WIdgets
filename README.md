@@ -17,11 +17,26 @@
 
 ---
 
-Whether you need a **free QR code generator**, a **word counter for essays**, a **random name picker wheel**, or just want to play a quick **daily word scramble**, Zippy Widgets has you covered.
+Whether you need a **free PDF merger**, an **image compressor**, a **strong password generator**, a **free QR code generator**, a **word counter for essays**, a **random name picker wheel**, or just want to play a quick **daily word scramble**, Zippy Widgets has you covered.
 
 ---
 
 ## 🛠️ Free Online Tools
+
+### [Free PDF Merger](https://zippywidgets.online/pdf-merger/)
+Combine multiple PDF files into one document instantly in your browser. No file size limits, no watermarks, no sign-up, and your files never leave your device.
+
+### [Free Image Compressor](https://zippywidgets.online/image-compressor/)
+Reduce JPG, PNG and WebP image file sizes in seconds. Choose quality, resize, and convert formats — all client-side, no upload to any server.
+
+### [Strong Password Generator](https://zippywidgets.online/password-generator/)
+Generate secure, random passwords with a live strength meter. Customise length and character types. Uses the Web Crypto API and never stores your passwords.
+
+### [JSON Formatter & CSV Converter](https://zippywidgets.online/json-formatter/)
+Format, validate, minify and convert JSON to CSV or CSV to JSON. A clean, privacy-friendly editor for developers and data analysts.
+
+### [Favicon Generator](https://zippywidgets.online/favicon-generator/)
+Convert any PNG or JPG logo into a multi-resolution `favicon.ico` file plus an Apple touch icon. Generates the correct HTML tags for your website.
 
 ### [Free QR Code Generator](https://zippywidgets.online/qr-code-generator/)
 Generate custom QR codes instantly in your browser. Supports custom foreground/background colours, logo overlay, and rounded corner styles. No watermarks, no sign-up, completely free.
@@ -96,6 +111,11 @@ Tips, guides, and explainers on internet tools and everyday tech topics:
 │   ├── emoji-geography/    # Country emoji quiz
 │   └── aetherforge/        # Crafting puzzle game
 ├── qr-code-generator/
+├── pdf-merger/
+├── image-compressor/
+├── password-generator/
+├── json-formatter/
+├── favicon-generator/
 ├── font-generator/
 ├── picker-wheel/
 ├── age-calculator/

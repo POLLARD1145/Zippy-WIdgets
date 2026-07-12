@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strong Password Generator — Free & Secure, No Sign-up</title>
+  <meta name="description" content="Generate strong, secure, random passwords instantly. Customise length and character types. No data stored, no sign-up, works 100% in your browser." />
+  <meta name="keywords" content="password generator, strong password generator, random password generator, secure password generator, create strong password, online password generator" />
+  <link rel="canonical" href="https://zippywidgets.online/password-generator/" />
+  <meta property="og:title" content="Strong Password Generator — Free & Secure, No Sign-up" />
+  <meta property="og:description" content="Generate strong, random passwords instantly. Customise length and character types. No data stored, works in your browser." />
+  <meta property="og:url" content="https://zippywidgets.online/password-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets%20Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Strong Password Generator — Free & Secure, No Sign-up" />
+  <meta name="twitter:description" content="Generate strong, random passwords instantly. No data stored, works in your browser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Strong Password Generator",
+    "url": "https://zippywidgets.online/password-generator/",
+    "description": "Generate strong, secure, random passwords instantly in your browser. Customise length and character types. No data stored, no sign-up required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this password generator secure?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Passwords are generated locally in your browser using the Web Crypto API's cryptographically strong random number generator. They are never sent to or stored on any server." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use generated passwords for my accounts?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The generated passwords are completely random and safe to use for any account. We recommend using a password manager to store them securely so you don't have to memorise long random strings." }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes a password strong?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A strong password is long (at least 12 characters), random, and uses a mix of uppercase letters, lowercase letters, numbers, and symbols. Avoid dictionary words, names, dates, and predictable patterns." }
+      }
+    ]
+  }
+  </script>
+  <style>
+    .password-display {
+      position: relative;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.1rem;
+      color: var(--text);
+      min-height: 3.5rem;
+      display: flex; align-items: center;
+    }
+    .password-display:empty::before {
+      content: 'Click Generate to create a password';
+      color: var(--muted);
+      font-family: inherit;
+      font-size: .95rem;
+    }
+    .copy-btn {
+      position: absolute; top: .6rem; right: .6rem;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); border-radius: 6px; padding: .4rem .7rem;
+      cursor: pointer; font-size: .8rem; transition: all .2s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .control-group { display: flex; flex-direction: column; gap: .4rem; }
+    .control-group label { font-size: .85rem; color: var(--text); font-weight: 600; }
+    .range-row { display: flex; align-items: center; gap: .75rem; }
+    .range-row input[type="range"] { flex: 1; }
+    .range-row span { min-width: 2.5rem; text-align: right; font-weight: 600; color: var(--accent); }
+    .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+    @media (min-width: 480px) { .checkbox-group { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+    .checkbox-group label {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .6rem .8rem;
+      font-size: .85rem; color: var(--text); cursor: pointer;
+    }
+    .checkbox-group input { accent-color: var(--accent); width: 16px; height: 16px; }
+    .strength-bar {
+      height: 6px; border-radius: 99px; background: var(--surface2);
+      overflow: hidden; margin-top: .75rem;
+    }
+    .strength-bar .fill {
+      height: 100%; width: 0%; border-radius: 99px; transition: width .3s, background .3s;
+    }
+    .strength-label { font-size: .8rem; margin-top: .35rem; color: var(--muted); }
+    .history-list { display: flex; flex-direction: column; gap: .5rem; margin-top: .75rem; }
+    .history-item {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .55rem .75rem;
+      font-family: ui-monospace, monospace; font-size: .85rem;
+    }
+    .history-item .pass { flex: 1; word-break: break-all; color: var(--text); }
+    .history-item button { background: transparent; border: none; color: var(--accent); cursor: pointer; font-size: .8rem; }
+    .history-item button:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+      <a class="nav-pill" href="/speed-test/">Speed Test</a>
+      <a class="nav-pill active" href="/password-generator/">Password Generator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🔐</span>
+      <div>
+        <h1>Strong Password Generator — Create Secure Random Passwords</h1>
+        <p>Generate strong, random passwords instantly. Choose length and character types. No data stored, no sign-up, 100% browser-based.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="password-display" id="passwordDisplay"></div>
+      <div class="strength-bar" id="strengthBar"><div class="fill" id="strengthFill"></div></div>
+      <div class="strength-label" id="strengthLabel">&nbsp;</div>
+
+      <div class="control-group" style="margin-top:1rem;">
+        <label>Password Length</label>
+        <div class="range-row">
+          <input type="range" id="lengthRange" min="6" max="64" value="16" />
+          <span id="lengthValue">16</span>
+        </div>
+      </div>
+
+      <div class="control-group" style="margin-top:.75rem;">
+        <label>Character Types</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" id="uppercase" checked /> ABC</label>
+          <label><input type="checkbox" id="lowercase" checked /> abc</label>
+          <label><input type="checkbox" id="numbers" checked /> 123</label>
+          <label><input type="checkbox" id="symbols" checked /> #$%</label>
+        </div>
+      </div>
+
+      <div class="control-group" style="margin-top:.75rem;">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;">
+          <input type="checkbox" id="avoidAmbiguous" />
+          Avoid ambiguous characters (0, O, l, 1)
+        </label>
+      </div>
+
+      <div class="btn-group" style="margin-top:1.25rem;">
+        <button class="btn btn-primary" onclick="generatePassword()">Generate Password</button>
+        <button class="btn btn-secondary" onclick="copyPassword()" id="copyBtn">Copy to Clipboard</button>
+      </div>
+
+      <div id="historySection" style="display:none;margin-top:1.25rem;">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.5rem;">Generated Passwords</h3>
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Create a Strong Password</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>Weak passwords are the single most common cause of account takeovers. A strong password is long, random, and unique — and it should never be reused across multiple sites. This generator creates cryptographically random passwords that are extremely difficult to guess or crack.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Password Length Recommendations</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>12 characters:</strong> Minimum recommended for general online accounts.</li>
+          <li><strong>16 characters:</strong> Good balance of security and usability for most passwords.</li>
+          <li><strong>20+ characters:</strong> Recommended for banking, email, and password manager master passwords.</li>
+          <li><strong>32+ characters:</strong> Overkill for humans, but ideal for API keys and machine accounts.</li>
+        </ul>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What the Strength Meter Means</h3>
+        <p>The strength meter estimates how long a brute-force attack would take to crack your password based on its length and character variety. Short passwords with only one character type are weak. Long passwords mixing uppercase, lowercase, numbers, and symbols are very strong.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy Guarantee</h3>
+        <p>This password generator uses your browser's built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues" target="_blank" rel="noopener" style="color:var(--accent);">Web Crypto API</a> to produce random values. Passwords are generated locally and never leave your device. We do not store, log, or transmit anything.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Pro Tip: Use a Password Manager</h3>
+        <p>Generating a strong password is only half the battle — you also need to store it safely. Use a reputable password manager (Bitwarden, KeePass, 1Password, or your browser's built-in manager) to save and autofill your passwords. That way every account can have a unique, random password without you needing to remember any of them.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a> ·
+      <a href="/speed-test/">Speed Test</a> ·
+      <a href="/password-generator/">Password Generator</a>
+    </p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
+
+  <script>
+    'use strict';
+
+    const lengthRange = document.getElementById('lengthRange');
+    const lengthValue = document.getElementById('lengthValue');
+    const passwordDisplay = document.getElementById('passwordDisplay');
+    const strengthFill = document.getElementById('strengthFill');
+    const strengthLabel = document.getElementById('strengthLabel');
+    const historySection = document.getElementById('historySection');
+    const historyList = document.getElementById('historyList');
+    let history = [];
+
+    lengthRange.addEventListener('input', () => {
+      lengthValue.textContent = lengthRange.value;
+    });
+
+    document.getElementById('uppercase').addEventListener('change', () => {
+      if (!anyChecked()) document.getElementById('lowercase').checked = true;
+    });
+    document.getElementById('lowercase').addEventListener('change', () => {
+      if (!anyChecked()) document.getElementById('uppercase').checked = true;
+    });
+    document.getElementById('numbers').addEventListener('change', () => {
+      if (!anyChecked()) document.getElementById('lowercase').checked = true;
+    });
+    document.getElementById('symbols').addEventListener('change', () => {
+      if (!anyChecked()) document.getElementById('lowercase').checked = true;
+    });
+
+    function anyChecked() {
+      return document.getElementById('uppercase').checked ||
+             document.getElementById('lowercase').checked ||
+             document.getElementById('numbers').checked ||
+             document.getElementById('symbols').checked;
+    }
+
+    function generatePassword() {
+      const length = parseInt(lengthRange.value);
+      const useUpper = document.getElementById('uppercase').checked;
+      const useLower = document.getElementById('lowercase').checked;
+      const useNumbers = document.getElementById('numbers').checked;
+      const useSymbols = document.getElementById('symbols').checked;
+      const avoidAmbiguous = document.getElementById('avoidAmbiguous').checked;
+
+      let upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let lower = 'abcdefghijklmnopqrstuvwxyz';
+      let numbers = '0123456789';
+      let symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+      if (avoidAmbiguous) {
+        upper = upper.replace(/[O]/g, '');
+        lower = lower.replace(/[l]/g, '');
+        numbers = numbers.replace(/[01]/g, '');
+      }
+
+      let chars = '';
+      if (useUpper) chars += upper;
+      if (useLower) chars += lower;
+      if (useNumbers) chars += numbers;
+      if (useSymbols) chars += symbols;
+
+      if (!chars) {
+        chars = lower;
+        document.getElementById('lowercase').checked = true;
+      }
+
+      const array = new Uint32Array(length);
+      window.crypto.getRandomValues(array);
+
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        password += chars[array[i] % chars.length];
+      }
+
+      passwordDisplay.textContent = password;
+      updateStrength(password);
+      addToHistory(password);
+    }
+
+    function updateStrength(password) {
+      let score = 0;
+      if (password.length >= 12) score++;
+      if (password.length >= 16) score++;
+      if (password.length >= 20) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      const labels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+      const colors = ['var(--red)', 'var(--red)', '#f59e0b', '#f59e0b', 'var(--green)', 'var(--green)'];
+      const index = Math.min(score, 5);
+      const pct = ((index + 1) / 6) * 100;
+
+      strengthFill.style.width = pct + '%';
+      strengthFill.style.background = colors[index];
+      strengthLabel.textContent = labels[index] + ' (' + password.length + ' chars)';
+      strengthLabel.style.color = colors[index];
+    }
+
+    function copyPassword() {
+      const pass = passwordDisplay.textContent;
+      if (!pass) { generatePassword(); return; }
+      navigator.clipboard.writeText(pass).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+
+    function addToHistory(password) {
+      if (history.includes(password)) return;
+      history.unshift(password);
+      if (history.length > 5) history.pop();
+      renderHistory();
+    }
+
+    function renderHistory() {
+      if (history.length === 0) { historySection.style.display = 'none'; return; }
+      historySection.style.display = 'block';
+      historyList.innerHTML = history.map(p => `
+        <div class="history-item">
+          <span class="pass">${escapeHtml(p)}</span>
+          <button onclick="copyFromHistory(this)">Copy</button>
+        </div>
+      `).join('');
+    }
+
+    function copyFromHistory(btn) {
+      const pass = btn.parentElement.querySelector('.pass').textContent;
+      navigator.clipboard.writeText(pass).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 1200);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Generate one on load
+    generatePassword();
+  </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3a836cffee324682bf1554f0e4288871"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

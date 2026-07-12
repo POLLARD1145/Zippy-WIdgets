@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Favicon Generator — Convert Image to Favicon.ico Online</title>
+  <meta name="description" content="Convert any PNG or JPG image into a favicon.ico file for your website. Generate 16x16, 32x32, 48x48 and 180x180 icons instantly in your browser. Free, no sign-up." />
+  <meta name="keywords" content="favicon generator, convert image to favicon, favicon.ico maker, free favicon creator, png to favicon, website icon generator" />
+  <link rel="canonical" href="https://zippywidgets.online/favicon-generator/" />
+  <meta property="og:title" content="Free Favicon Generator — Convert Image to Favicon.ico Online" />
+  <meta property="og:description" content="Convert PNG or JPG images to favicon.ico files for your website. Generate multiple icon sizes in your browser. Free, no sign-up." />
+  <meta property="og:url" content="https://zippywidgets.online/favicon-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets%20Logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Free Favicon Generator — Convert Image to Favicon.ico Online" />
+  <meta name="twitter:description" content="Convert PNG or JPG images to favicon.ico files. Generate multiple icon sizes in your browser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/png" href="../ZippyWidgets Logo.png" />
+  <link rel="apple-touch-icon" href="../ZippyWidgets Logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-6884221059402072">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Favicon Generator",
+    "url": "https://zippywidgets.online/favicon-generator/",
+    "description": "Convert PNG or JPG images into favicon.ico files for websites. Generate 16x16, 32x32, 48x48 and 180x180 icons instantly in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this favicon generator free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets Favicon Generator is completely free. There are no file size limits, no watermarks, and no sign-up required." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do my images get uploaded to a server?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The favicon is generated entirely in your browser using the HTML5 canvas API. Your image is never uploaded to any server." }
+      },
+      {
+        "@type": "Question",
+        "name": "What sizes are included in the favicon.ico file?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The generated favicon.ico includes 16x16, 32x32, and 48x48 icon sizes for maximum browser compatibility. A separate 180x180 PNG is also provided for Apple touch icons." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a transparent PNG?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Transparent PNGs are supported and transparency is preserved in the generated favicon.ico file." }
+      }
+    ]
+  }
+  </script>
+  <style>
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      background: var(--surface2);
+      transition: border-color .2s, background .2s;
+      cursor: pointer;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(56,189,248,.08);
+    }
+    .drop-zone .icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .drop-zone input { display: none; }
+    .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .preview-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+    .preview-box img { background: repeating-conic-gradient(var(--surface) 0% 25%, transparent 0% 50%) 50% / 12px 12px; border-radius: 6px; }
+    .preview-box .label { font-size: .75rem; color: var(--muted); margin-top: .5rem; }
+    .sizes-list { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-top: .75rem; }
+    .sizes-list span { background: var(--surface2); border: 1px solid var(--border); border-radius: 99px; padding: .25rem .7rem; font-size: .75rem; color: var(--muted); }
+    .btn-row { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem; }
+    .status-msg { margin-top: .75rem; font-size: .85rem; color: var(--muted); min-height: 1.25rem; text-align: center; }
+    .status-msg.error { color: var(--red); }
+    .status-msg.success { color: var(--green); }
+    .code-block {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; font-family: ui-monospace, monospace; font-size: .8rem; line-height: 1.6;
+      overflow-x: auto; margin-top: .75rem; color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="/">
+      <img src="../ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">☀️</button>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-pill" href="/picker-wheel/">Picker Wheel</a>
+      <a class="nav-pill" href="/font-generator/">Font Generator</a>
+      <a class="nav-pill" href="/word-counter/">Word Counter</a>
+      <a class="nav-pill" href="/qr-code-generator/">QR Code</a>
+      <a class="nav-pill" href="/age-calculator/">Age Calculator</a>
+      <a class="nav-pill" href="/speed-test/">Speed Test</a>
+      <a class="nav-pill active" href="/favicon-generator/">Favicon Generator</a>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🎨</span>
+      <div>
+        <h1>Free Favicon Generator — Convert Image to Favicon.ico</h1>
+        <p>Turn any PNG or JPG into a website favicon.ico file with multiple icon sizes. Generate Apple touch icons and HTML tags instantly in your browser.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">🖼️</div>
+        <p><strong>Click to upload an image</strong> or drag and drop it here</p>
+        <p style="font-size:.8rem;margin-top:.4rem;">Recommended: square PNG or JPG, at least 260×260 pixels</p>
+        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" />
+      </div>
+
+      <div class="preview-grid" id="previewGrid" style="display:none;"></div>
+
+      <div class="sizes-list" id="sizesList" style="display:none;">
+        <span>16×16</span><span>32×32</span><span>48×48</span><span>180×180 Apple touch</span>
+      </div>
+
+      <div class="btn-row" id="actionButtons" style="display:none;">
+        <button class="btn btn-primary" id="generateBtn" onclick="generateFavicon()">Download favicon.ico</button>
+        <button class="btn btn-secondary" onclick="downloadPng(180, 'apple-touch-icon')">Download 180×180 PNG</button>
+        <button class="btn btn-secondary" onclick="resetTool()">New Image</button>
+      </div>
+
+      <div class="status-msg" id="statusMsg"></div>
+
+      <div id="htmlCode" style="display:none;">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:1.25rem;margin-bottom:.5rem;">HTML Code for Your Website</h3>
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:.5rem;">Place these tags inside the <code>&lt;head&gt;</code> section of your HTML:</p>
+        <pre class="code-block" id="codeBlock"></pre>
+      </div>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Create a Favicon.ico File</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>A favicon is the small icon that appears in browser tabs, bookmarks, and search results. Every website should have one. This tool creates a proper multi-resolution favicon.ico file from any PNG or JPG image — entirely in your browser.</p>
+        <ol style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Upload your logo or icon:</strong> Choose a square PNG or JPG for best results. Non-square images are centred and cropped to fit.</li>
+          <li><strong>Preview the sizes:</strong> See how your icon will look at common favicon sizes.</li>
+          <li><strong>Download favicon.ico:</strong> This file contains 16×16, 32×32, and 48×48 versions for maximum browser compatibility.</li>
+          <li><strong>Download the Apple touch icon:</strong> The 180×180 PNG is recommended for iOS devices and modern browsers.</li>
+          <li><strong>Add to your site:</strong> Copy the HTML tags and place them in your page's <code>&lt;head&gt;</code> section.</li>
+        </ol>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Favicon Best Practices</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Use a simple, recognisable design. Favicons are tiny, so complex details will not be visible.</li>
+          <li>Start with a square source image of at least 260×260 pixels.</li>
+          <li>Use a transparent PNG if you want the favicon to blend with different browser themes.</li>
+          <li>Name the main file <code>favicon.ico</code> and place it in your website root directory for automatic detection.</li>
+          <li>Also provide a 180×180 or 192×192 PNG for mobile home-screen icons and search engine rich results.</li>
+        </ul>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>Your image is processed entirely in your browser using the HTML5 canvas API. It is never uploaded to a server, cloud storage, or any third party.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <a href="/about/">About</a> ·
+      <a href="/blog/">Blog</a> ·
+      <a href="/contact/">Contact</a> ·
+      <a href="/privacy-policy/">Privacy Policy</a> ·
+      <a href="/disclaimer/">Disclaimer</a> ·
+      <a href="/picker-wheel/">Picker Wheel</a> ·
+      <a href="/font-generator/">Font Generator</a> ·
+      <a href="/word-counter/">Word Counter</a> ·
+      <a href="/qr-code-generator/">QR Code Generator</a> ·
+      <a href="/age-calculator/">Age Calculator</a> ·
+      <a href="/speed-test/">Speed Test</a> ·
+      <a href="/favicon-generator/">Favicon Generator</a>
+    </p>
+    <p style="margin-top:.5rem">© 2026 ZippyWidgets.online — All tools run 100% in your browser. No data is ever sent to a server.</p>
+  </footer>
+
+  <script>
+    (function(){
+      var t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+      t.addEventListener('click',function(){var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+      l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){l.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+    })();
+  </script>
+
+  <script>
+    'use strict';
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewGrid = document.getElementById('previewGrid');
+    const sizesList = document.getElementById('sizesList');
+    const actionButtons = document.getElementById('actionButtons');
+    const statusMsg = document.getElementById('statusMsg');
+    const htmlCode = document.getElementById('htmlCode');
+    const codeBlock = document.getElementById('codeBlock');
+
+    let sourceImage = null;
+    let sourceFileName = 'favicon';
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) handleFile(fileInput.files[0]);
+      fileInput.value = '';
+    });
+
+    function handleFile(file) {
+      if (!file.type.match(/image\/(jpeg|png)/) && !file.name.match(/\.(jpg|jpeg|png)$/i)) {
+        showStatus('Please upload a PNG or JPG image.', 'error');
+        return;
+      }
+
+      sourceFileName = file.name.replace(/\.[^/.]+$/, '');
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          sourceImage = img;
+          renderPreviews();
+          dropZone.style.display = 'none';
+          previewGrid.style.display = 'grid';
+          sizesList.style.display = 'flex';
+          actionButtons.style.display = 'flex';
+          htmlCode.style.display = 'block';
+          codeBlock.textContent = getHtmlTags();
+          showStatus('✅ Image loaded. Click Download favicon.ico to save.', 'success');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderPreviews() {
+      previewGrid.innerHTML = '';
+      const sizes = [16, 32, 48, 180];
+      sizes.forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        drawIcon(canvas, size);
+
+        const box = document.createElement('div');
+        box.className = 'preview-box';
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL('image/png');
+        img.width = Math.min(size, 120);
+        img.height = Math.min(size, 120);
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = size + '×' + size;
+        box.appendChild(img);
+        box.appendChild(label);
+        previewGrid.appendChild(box);
+      });
+    }
+
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, size, size);
+
+      const scale = Math.max(sourceImage.naturalWidth, sourceImage.naturalHeight);
+      const sWidth = sourceImage.naturalWidth;
+      const sHeight = sourceImage.naturalHeight;
+
+      // Center-crop to square
+      let srcX = 0, srcY = 0, srcW = sWidth, srcH = sHeight;
+      if (sWidth > sHeight) {
+        srcW = sHeight; srcX = (sWidth - sHeight) / 2;
+      } else if (sHeight > sWidth) {
+        srcH = sWidth; srcY = (sHeight - sWidth) / 2;
+      }
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(sourceImage, srcX, srcY, srcW, srcH, 0, 0, size, size);
+    }
+
+    function getPngBlob(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      drawIcon(canvas, size);
+      return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    }
+
+    function getPngDataUrl(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      drawIcon(canvas, size);
+      return canvas.toDataURL('image/png');
+    }
+
+    async function generateFavicon() {
+      if (!sourceImage) return;
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+
+      try {
+        // Use a simple ICO writer: BMP-style icon directory + PNG data for each size
+        const sizes = [16, 32, 48];
+        const images = await Promise.all(sizes.map(async size => {
+          const blob = await getPngBlob(size);
+          const buf = await blob.arrayBuffer();
+          return { size, buf };
+        }));
+
+        const iconDirSize = 6 + images.length * 16;
+        let offset = iconDirSize;
+        const parts = [];
+
+        // Icon directory header
+        const header = new DataView(new ArrayBuffer(6));
+        header.setUint16(0, 0, true); // Reserved
+        header.setUint16(2, 1, true); // Type: icon
+        header.setUint16(4, images.length, true); // Count
+        parts.push(header.buffer);
+
+        for (const img of images) {
+          const entry = new DataView(new ArrayBuffer(16));
+          entry.setUint8(0, img.size); // Width
+          entry.setUint8(1, img.size); // Height
+          entry.setUint8(2, 0); // Colors
+          entry.setUint8(3, 0); // Reserved
+          entry.setUint16(4, 0, true); // Color planes
+          entry.setUint16(6, 32, true); // Bits per pixel
+          entry.setUint32(8, img.buf.byteLength, true); // Size in bytes
+          entry.setUint32(12, offset, true); // Offset
+          parts.push(entry.buffer);
+          offset += img.buf.byteLength;
+        }
+
+        for (const img of images) parts.push(img.buf);
+
+        const icoBlob = new Blob(parts, { type: 'image/x-icon' });
+        triggerDownload(icoBlob, sourceFileName + '.ico');
+        showStatus('✅ favicon.ico downloaded successfully.', 'success');
+      } catch (e) {
+        console.error(e);
+        showStatus('Error generating favicon: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Download favicon.ico';
+      }
+    }
+
+    async function downloadPng(size, suffix) {
+      if (!sourceImage) return;
+      const blob = await getPngBlob(size);
+      triggerDownload(blob, sourceFileName + '-' + suffix + '.png');
+    }
+
+    function triggerDownload(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function getHtmlTags() {
+      return `<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/${sourceFileName}-apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/${sourceFileName}-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/${sourceFileName}-16x16.png" />`;
+    }
+
+    function resetTool() {
+      sourceImage = null;
+      sourceFileName = 'favicon';
+      previewGrid.innerHTML = '';
+      dropZone.style.display = 'block';
+      previewGrid.style.display = 'none';
+      sizesList.style.display = 'none';
+      actionButtons.style.display = 'none';
+      htmlCode.style.display = 'none';
+      codeBlock.textContent = '';
+      showStatus('', '');
+    }
+
+    function showStatus(msg, type) {
+      statusMsg.textContent = msg;
+      statusMsg.className = 'status-msg' + (type ? ' ' + type : '');
+    }
+  </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3a836cffee324682bf1554f0e4288871"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
