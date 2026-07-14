@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="ZippyWidgets%20Logo.png" alt="Zippy Widgets Logo" width="280" />
+<img src="public/ZippyWidgets%20Logo.png" alt="Zippy Widgets Logo" width="280" />
 
 # Zippy Widgets
 
