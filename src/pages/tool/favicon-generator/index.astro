@@ -342,6 +342,17 @@ const canonical = 'https://zippywidgets.online/tool/favicon-generator/';
       var ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, size, size);
 
+      ctx.imageSmoothingEnabled = size > 16;
+      ctx.imageSmoothingQuality = 'high';
+
+      if (isSvg) {
+        // SVGs are resolution-independent — draw the whole image scaled to fill
+        // the canvas. Using naturalWidth/Height for crop calculation is unreliable
+        // for SVGs (they may be 0 or misreport), causing the image to be clipped.
+        ctx.drawImage(sourceImage, 0, 0, size, size);
+        return;
+      }
+
       var dims = getSourceDimensions();
       var sWidth = dims.w;
       var sHeight = dims.h;
@@ -354,8 +365,6 @@ const canonical = 'https://zippywidgets.online/tool/favicon-generator/';
         srcH = sWidth; srcY = (sHeight - sWidth) / 2;
       }
 
-      ctx.imageSmoothingEnabled = size > 16;
-      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(sourceImage, srcX, srcY, srcW, srcH, 0, 0, size, size);
     }
 
