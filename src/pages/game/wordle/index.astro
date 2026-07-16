@@ -1,0 +1,865 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Daily Wordle — Free Word Guessing Game Online (No Login) | ZippyWidgets';
+const description = 'Guess the hidden 5-letter word in 6 tries. Free daily Wordle-style game — no login required. Same word worldwide every day. Green, yellow and grey clues guide your guesses!';
+const canonical = 'https://zippywidgets.online/game/wordle/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <meta name="keywords" content="wordle game, free wordle, daily wordle, word guessing game, wordle online, 5 letter word game, wordle no login, wordle today" />
+    <meta property="og:title" content="Daily Wordle — Free Word Guessing Game (No Login)" />
+    <meta property="og:description" content="Guess the 5-letter word in 6 tries. Free daily wordle-style game — no signup. Same word worldwide every day." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Daily Wordle — Free Word Guessing Game No Login" />
+    <meta name="twitter:description" content="Free wordle-style game — guess the 5-letter word in 6 tries. No signup. Same puzzle worldwide." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Daily Wordle",
+        "description": "A free daily word guessing game. Players have 6 attempts to guess a hidden 5-letter word using colour-coded clues. Same puzzle worldwide every day.",
+        "url": "https://zippywidgets.online/game/wordle/",
+        "applicationCategory": "Game",
+        "gamePlatform": "Web Browser",
+        "genre": ["Word Game", "Puzzle"],
+        "playMode": "SinglePlayer",
+        "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+  </Fragment>
+
+  <Nav />
+
+  <!-- Top ad — deferred until first interaction -->
+  <div class="ad-slot-game" id="ad-top-wl" style="padding:.25rem 1rem;">
+    <ins class="adsbygoogle" style="display:block"
+      data-ad-client="ca-pub-6884221059402072"
+      data-ad-slot="auto" data-ad-format="horizontal"
+      data-full-width-responsive="true"></ins>
+  </div>
+
+  <main>
+  <div class="game-page">
+
+    <!-- Header -->
+    <div class="game-header">
+      <h1 class="game-title">Daily <span>Wordle</span></h1>
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;">
+        <div class="seed-badge">🌐 Puzzle <b id="seed-display">—</b></div>
+        <span class="mode-label" id="mode-label">📅 Daily puzzle</span>
+      </div>
+      <!-- already-played notice, hidden by default -->
+      <div class="daily-done-notice" id="daily-done-notice" style="display:none;">
+        ✅ You already completed today's puzzle — here's a bonus round!
+      </div>
+      <!-- attempt dots -->
+      <div class="attempt-dots" id="attempt-dots">
+        <div class="attempt-dot active" id="dot-0"></div>
+        <div class="attempt-dot" id="dot-1"></div>
+        <div class="attempt-dot" id="dot-2"></div>
+        <div class="attempt-dot" id="dot-3"></div>
+        <div class="attempt-dot" id="dot-4"></div>
+        <div class="attempt-dot" id="dot-5"></div>
+      </div>
+    </div>
+
+    <!-- Message bar -->
+    <div class="message-bar" id="message-bar">Guess the 5-letter word</div>
+
+    <!-- Guess grid -->
+    <div class="guess-grid" id="guess-grid"></div>
+
+    <!-- Keyboard -->
+    <div class="keyboard" id="keyboard">
+      <div class="kb-row" id="kb-row-0"></div>
+      <div class="kb-row" id="kb-row-1"></div>
+      <div class="kb-row" id="kb-row-2"></div>
+    </div>
+
+  </div>
+
+  <!-- Result modal overlay -->
+  <div class="modal-backdrop" id="result-modal" aria-modal="true" role="dialog" aria-labelledby="result-heading" style="display:none;">
+    <div class="modal-panel">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <h2 id="result-heading">—</h2>
+      <p id="result-body">—</p>
+      <div class="share-box" id="share-box"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="copyShare()">📋 Copy Result</button>
+        <button class="btn btn-primary" id="btn-play-again" onclick="playBonus()" style="background:linear-gradient(135deg,#4ade80,#38bdf8);color:#000;">🎲 Play Again</button>
+        <button class="btn btn-secondary" onclick="window.location.href='/game/'">🎮 More Games</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO section -->
+  <div class="game-page seo-section" style="padding-top:0;">
+    <div class="seo-card">
+      <h2>How to Play Daily Wordle</h2>
+      <p>Guess the hidden <strong style="color:var(--text);">5-letter word</strong> in 6 attempts. Type a word and press Enter. After each guess the tiles change colour to show how close you are.</p>
+      <h3>Colour Clues</h3>
+      <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem;">
+        <li><strong style="color:#4ade80;">Green</strong> — correct letter, correct position</li>
+        <li><strong style="color:#fbbf24;">Yellow</strong> — letter is in the word but wrong position</li>
+        <li><strong style="color:#555;">Grey</strong> — letter not in the word at all</li>
+      </ul>
+      <p>A new puzzle resets every day at midnight UTC. Share your spoiler-free emoji result with friends to compare without giving away the answer.</p>
+    </div>
+    <div class="seo-card">
+      <h2>Frequently Asked Questions</h2>
+      <div style="display:flex;flex-direction:column;gap:.9rem;">
+        <div><h3>Is this free to play?</h3><p>Yes — completely free, no login or sign-up required.</p></div>
+        <div><h3>Does every player get the same word?</h3><p>Yes. The daily word is chosen using today's UTC date as a seed, so every player worldwide has the same puzzle.</p></div>
+        <div><h3>Do only valid words count?</h3><p>Yes — your guess must be a real English word from our dictionary. Made-up letter strings won't be accepted.</p></div>
+        <div><h3>Is my progress saved?</h3><p>Yes — your game state is saved in your browser's localStorage so you can close the tab and return.</p></div>
+        <div><h3>Can I play extra rounds after the daily?</h3><p>Yes — after finishing the daily you can keep playing unlimited bonus rounds with the Play Again button.</p></div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.8rem;color:var(--muted);">← <a href="/game/" style="color:#38bdf8;">All Games</a> &nbsp;·&nbsp; <a href="/" style="color:#38bdf8;">ZippyWidgets</a></p>
+    <div class="ad-slot-game" id="ad-bottom-wl">
+      <ins class="adsbygoogle" style="display:block"
+        data-ad-client="ca-pub-6884221059402072"
+        data-ad-slot="auto" data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+  </div>
+  </main>
+
+
+  <script is:inline>
+"use strict";
+
+// ── PRNG (Mulberry32) ────────────────────────────────────────────────────
+function seededRandom(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function getDailySeed() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.has('seed')) return parseInt(p.get('seed'), 10);
+  const d = new Date();
+  return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth() + 1) * 100) + d.getUTCDate();
+}
+
+// ── Word lists ───────────────────────────────────────────────────────────
+// Answers: common, well-known 5-letter words
+const ANSWERS = [
+  'ABOUT','ABOVE','ABUSE','ACHED','ACRES','ADDED','ADEPT','ADMIT','ADOPT','ADULT',
+  'AGENT','AGREE','AHEAD','AISLE','ALERT','ALIEN','ALIGN','ALIKE','ALIVE','ALOOF',
+  'ALTER','ANGEL','ANGER','ANGLE','ANNEX','ANTIC','APPLE','APPLY','ARENA','ARGUE',
+  'ARISE','ARMOR','AROMA','AROSE','ARRAY','ARROW','ASKED','ATLAS','ATONE','AUDIT',
+  'AVAIL','AVOID','AWAKE','AWARD','AWARE','AWFUL','BACON','BADGE','BAKER','BASIC',
+  'BASIN','BATCH','BEACH','BEARD','BEAST','BEGIN','BEING','BELLE','BENCH','BELOW',
+  'BESET','BEVEL','BIRCH','BISON','BLACK','BLAND','BLANK','BLAST','BLAZE','BLEAK',
+  'BLEND','BLESS','BLIND','BLOCK','BLOOD','BLOOM','BLOWN','BLUNT','BLURB','BOARD',
+  'BONUS','BOOST','BOOTH','BOUND','BRACE','BRAID','BRAND','BRASH','BRAVE','BREAD',
+  'BREAK','BREED','BRIAR','BRIDE','BRINE','BRING','BRINK','BRISK','BROAD','BROOK',
+  'BROTH','BROWN','BUILD','BUILT','BULGE','BULLY','BURST','CABIN','CAMEL','CANDY',
+  'CARRY','CATCH','CEDAR','CHAIN','CHAIR','CHALK','CHASE','CHEAP','CHECK','CHEEK',
+  'CHEER','CHESS','CHEST','CHIEF','CHILL','CHIME','CHOIR','CHOSE','CIVIC','CIVIL',
+  'CLAIM','CLASH','CLASP','CLASS','CLEAN','CLEAR','CLEFT','CLERK','CLICK','CLIFF',
+  'CLIMB','CLING','CLOAK','CLOCK','CLONE','CLOSE','CLOTH','CLOUD','CLOUT','CLOWN',
+  'COAST','COMBO','COMET','COMIC','CORAL','COUNT','COURT','COVER','CRACK','CRAFT',
+  'CRAMP','CRASH','CRAWL','CRAZE','CRISP','CROSS','CROWD','CROWN','CRUEL','CRUSH',
+  'CYCLE','DANCE','DEALT','DECOY','DEFER','DELAY','DENSE','DEPOT','DEVIL','DIGIT',
+  'DIZZY','DODGE','DRAFT','DRAIN','DRAPE','DREAD','DREAM','DRIFT','DRILL','DRINK',
+  'DROVE','DROWN','DWARF','DWELL','EAGER','EAGLE','EARLY','EARTH','ELECT','ELITE',
+  'EMBER','EMPTY','ENJOY','ENTER','ENVOY','EQUAL','EQUIP','ERECT','EVADE','EVERY',
+  'EXACT','EXCEL','EXERT','EXIST','EXTRA','EXULT','FABLE','FAINT','FAIRY','FAITH',
+  'FANCY','FATAL','FEAST','FERAL','FETCH','FEVER','FIBER','FIELD','FIFTH','FIGHT',
+  'FINCH','FLAIR','FLAME','FLARE','FLASH','FLASK','FLEET','FLESH','FLOCK','FLOOD',
+  'FLOOR','FLOUR','FLUID','FLUTE','FOCUS','FORCE','FOUND','FRAME','FRANK','FRESH',
+  'FRONT','FROST','FRUIT','GAVEL','GAUZE','GIANT','GIVEN','GLADE','GLARE','GLEAN',
+  'GLIDE','GLOOM','GLORY','GLOSS','GRACE','GRADE','GRAIN','GRAND','GRANT','GRAPE',
+  'GRASP','GRATE','GRAVE','GRAZE','GREED','GREET','GRIEF','GRIND','GROAN','GROSS',
+  'GROUP','GROVE','GROWL','GUILE','GUSTO','HABIT','HARSH','HASTE','HATCH','HAUNT',
+  'HAVEN','HAZEL','HEART','HEAVY','HEDGE','HENCE','HINGE','HONOR','HOTEL','HOUND',
+  'HOUSE','HOVER','HUMAN','HUMOR','HURRY','HUSKY','IMAGE','INDEX','INFER','INGOT',
+  'INNER','ISSUE','JOKER','JUDGE','JUICE','KARMA','KNACK','KNAVE','KNEEL','LANCE',
+  'LARGE','LASER','LATCH','LATER','LAUGH','LAYER','LEARN','LEMON','LEVEL','LIGHT',
+  'LITHE','LOCAL','LODGE','LOFTY','LOGIC','LOOSE','LOVER','LOWER','LOYAL','LUCID',
+  'LUNAR','MAGIC','MAPLE','MARSH','MEDIA','MERIT','METAL','MIGHT','MIRTH','MIXER',
+  'MODEL','MOIST','MONEY','MONTH','MORAL','MOURN','MOVIE','MUSIC','NERVE','NIGHT',
+  'NOBLE','NOISE','NOTCH','NOVEL','OCEAN','OLIVE','OPERA','ORBIT','ORDER','OUGHT',
+  'OUTDO','OVERT','OZONE','PAGAN','PANIC','PARTY','PATCH','PAUSE','PEACE','PEACH',
+  'PEARL','PILOT','PIXEL','PLACE','PLAID','PLAIN','PLANK','PLANT','PLATE','PLAZA',
+  'PLUCK','PLUMB','PLUME','PLUMP','POKER','POLAR','POUCH','POUND','POWER','PRESS',
+  'PRICE','PRIDE','PRIME','PROBE','PRONE','PROSE','PROVE','PRUNE','PULSE','PUNCH',
+  'PURGE','QUEEN','QUEST','QUEUE','QUILL','QUIRK','QUOTA','RABBI','RADAR','RAINY',
+  'RALLY','RANCH','RANGE','RAPID','RAVEN','REACH','REBEL','REIGN','RELAX','RELAY',
+  'REMIX','RENEW','REPAY','RESIN','REVEL','RHYME','RIGID','RIVET','RIVAL','ROAST',
+  'ROCKY','ROUGE','ROUND','ROWDY','ROYAL','RUGBY','RULER','RURAL','RUSTY','SAINT',
+  'SANDY','SAUCE','SAVOR','SCALP','SCARE','SCENE','SCONE','SCOOP','SCORE','SCOUT',
+  'SEIZE','SENSE','SERVE','SEVEN','SHADE','SHAKE','SHAME','SHAPE','SHARE','SHARK',
+  'SHARP','SHELF','SHIRT','SHOCK','SHORE','SHORT','SHOUT','SIEGE','SIGMA','SINCE',
+  'SIXTH','SKILL','SKULL','SLACK','SLANT','SLICE','SLIDE','SLIME','SLOOP','SLOPE',
+  'SMALL','SMART','SMASH','SMILE','SMOKE','SNARE','SOLAR','SOLID','SOLVE','SPACE',
+  'SPARE','SPARK','SPAWN','SPEAK','SPEAR','SPEED','SPELL','SPEND','SPITE','SPLIT',
+  'SPOKE','SPOON','SPORT','SPRAY','SQUAD','STACK','STAIN','STAKE','STALE','STALL',
+  'STAMP','STAND','STARE','START','STARK','STASH','STEAL','STEAM','STEEL','STEEP',
+  'STICK','STILL','STING','STOMP','STONE','STOOP','STORM','STORY','STOUT','STOVE',
+  'STRAP','STRAW','STRAY','STRIP','STUCK','STUDY','STUMP','STYLE','SUGAR','SUNNY',
+  'SUPER','SURGE','SWAMP','SWEAR','SWEAT','SWEEP','SWEET','SWIFT','SWIPE','SWIRL',
+  'SWORD','SYRUP','TALON','TAUNT','TENSE','THORN','THREE','TIGER','TIGHT','TIMER',
+  'TIRED','TITLE','TOAST','TOKEN','TOPIC','TORCH','TOTAL','TOUCH','TOUGH','TOWEL',
+  'TOWER','TOXIC','TRAIL','TRAIN','TRAIT','TRAMP','TRASH','TREAD','TREND','TRIAL',
+  'TRIBE','TRICK','TROLL','TROOP','TROUT','TROVE','TRUCK','TRULY','TRUNK','TRUST',
+  'TRUTH','TULIP','TUMOR','TWICE','TWIRL','ULTRA','UNCLE','UNDER','UNION','UPPER',
+  'UPSET','VAPOR','VAULT','VERGE','VIGOR','VITAL','VIVID','VOCAL','VOICE','WALTZ',
+  'WATER','WEARY','WEAVE','WEDGE','WEIRD','WHALE','WHEAT','WHILE','WHITE','WHOLE',
+  'WIDOW','WITCH','WITTY','WOMAN','WORLD','WORRY','WORSE','WORST','WORTH','WOUND',
+  'WRATH','WRING','YIELD','YOUNG','YOUTH','ZEBRA','ZESTY',
+];
+
+// Valid guesses = answers + extra valid 5-letter words
+const VALID_EXTRA = [
+  'AAHED','AALII','ABACI','ABACK','ABAFT','ABASH','ABATE','ABBEY','ABBOT','ABHOR',
+  'ABIDE','ABLER','ABODE','ABOON','ABUTS','ABYSS','ACIDS','ACMES','ACNED','ACORN',
+  'ACRED','ACNES','ACRES','ACTED','ACUTE','ADAGE','ADMAN','ADOBE','AEONS','AFOOT',
+  'AFTER','AGAVE','AGING','AGONY','AGILE','AGIOS','AGISM','AGLOW','AGONE','AGORA',
+  'AGUED','AHOLD','AIKEN','AIRED','AIRER','AIRTS','AIVER','AJIVA','AKELA','ALANIN',
+  'ALBUM','ALDER','ALLAY','ALLOT','ALLOW','ALLAY','ALONE','ALONG','ALOUD','ALTAR',
+  'AMINO','AMISS','AMITY','AMONG','AMOUR','AMPLY','AMUSE','ANGEL','ANNOY','ANTIC',
+  'ANVIL','APART','APISH','ARGOT','ARMOR','ARSON','ASHBY','ASKEW','ATLAS','ATTIC',
+  'AUDIO','AUGUR','AUNTS','AVIAN','AXION','AXONS','AYAHS','AZURE','BADGE','BADLY',
+  'BAGEL','BAGGY','BALMY','BANAL','BANDY','BARGE','BARON','BASAL','BASTE','BATTY',
+  'BAWDY','BEADY','BEIGE','BELLY','BERTH','BIOME','BISON','BLISS','BLITZ','BLOKE',
+  'BOGGY','BONEY','BONGO','BOOZY','BOSSY','BOXER','BROOD','BUDDY','BUGGY','BULKY',
+  'BUMPY','BUNNY','BUSHY','BUTTY','CABAL','CAGEY','CAMPY','CATTY','CAUSЕ','CAWING',
+  'CHAFE','CHAMP','CHAOS','CHOPS','CHUMP','CLANG','CLANK','CLAPS','CLEAT','CLODS',
+  'CLOPS','CLUNG','COALS','COMBO','COMFY','CONGA','CORNY','COUPE','CRIMP','CRISP',
+  'CROAK','CRONE','CRONY','CROUP','CUBIC','CURLY','DAFFY','DAGGA','DAILY','DAINTY',
+  'DAMPY','DANDY','DATUM','DAUNT','DAILY','DATED','DIVAN','DIXIE','DIZZY','DOGMA',
+  'DROIT','DUCHY','DUCKY','DUMPY','DUNNO','DUSTY','EBONY','EDGED','EERIE','EIGHT',
+  'ELFIN','EMAIL','EMCEE','ETUDE','EVOKE','EXALT','EXPEL','EYRIE','FAMED','FAWNY',
+  'FEIGN','FEMME','FELON','FERAL','FERNY','FILLY','FISHY','FLAIR','FLAKY','FLASK',
+  'FLAIR','FLOOR','FLORA','FLOATY','FOGGY','FOLLY','FORAY','FROWN','FRUMP','FRYER',
+  'FUNKY','FURRY','FUZZY','GAUDY','GAWKY','GAUZY','GEEKY','GIMP','GIRLY','GLOVE',
+  'GLUEY','GNASH','GOODY','GOOEY','GORGE','GOUTY','GRAZE','GRIEF','GRIME','GRIMY',
+  'GRIPE','GROAN','GROIN','GROOM','GROPE','GROUP','GROUT','GROVE','GRUFF','GRUMP',
+  'GULLY','GUMMY','GUSTY','GYPSY','HANDY','HAIRY','HAPPY','HARPY','HASTY','HATED',
+  'HAUGHTY','HEADY','HENNA','HIPPO','HIPPY','HILLY','HOARY','HOBBY','HONEY','HOOKY',
+  'HORNY','HOSER','HUFFY','HULKY','HUMPY','HYENA','ICIER','ICING','IDIOM','IDIOT',
+  'IMPEL','INANE','INDIE','INEPT','INTER','IRATE','IRKED','ITCHY','IVORY','JAGGY',
+  'JAZZY','JERKY','JIFFY','JOUST','JUMBO','JUMPY','JUTTY','KOOKY','LACEY','LANKY',
+  'LARDY','LAXLY','LEAFY','LEAFY','LEAKY','LEERY','LEFTY','LEGGY','LINER','LIVID',
+  'LLAMA','LOAMY','LOOPY','LORDY','LOONY','LOUSY','LUCKY','LUMPY','LUSTY','LUSTY',
+  'LYMPH','LYRIC','MANLY','MANIC','MANGY','MAUVE','MEALY','MEATY','MESSY','MILKY',
+  'MINTY','MISTY','MOLDY','MOODY','MUDDY','MUGGY','MURKY','MUSTY','NASTY','NATTY',
+  'NEEDY','NERDY','NIPPY','NOISY','NUTTY','OAKEN','OCHRE','ODDLY','OGLED','OINKS',
+  'OOZED','OVOID','OWNED','OXIDE','PACED','PADDY','PAGAN','PANSY','PASTY','PATSY',
+  'PAWKY','PAYNE','PEPPY','PERKY','PESKY','PETTY','PHONY','PICKY','PITHY','PIXY',
+  'PLEAD','PLUMB','PLUNK','PLUSH','POTTY','POUTY','PRIVY','PRICY','PROSY','PROWL',
+  'PRUDE','PUFFY','PUDGY','PUPPY','PUSHY','PYGMY','QUAFF','QUAKY','QUERY','QUEUE',
+  'QUIXOTIC','RABBI','RABID','RANDY','RATTY','RAWER','REEDY','RIFFY','RISKY','RITZY',
+  'ROCKY','ROOMY','ROPEY','RUDDY','RUINY','RUMPY','RUNNY','RUSTY','SALTY','SAPPY',
+  'SASSY','SAUCY','SCALY','SHADY','SHAKY','SILKY','SKYEY','SLACK','SLIMY','SLOPPY',
+  'SNAKY','SNAPPY','SNOWY','SOGGY','SOPPY','SOOTY','SOAPY','SOUPY','SPICY','SPIKY',
+  'SPLAT','SPOOKY','SPUNKY','STARK','STONY','STORK','STORMY','STUFFY','STUNT','SUDSY',
+  'SULKY','SULLEN','SUNNY','SURLY','SWAMP','SWEPT','SYRUP','TABBY','TALLY','TANGY',
+  'TARDY','TAWNY','TEARY','TEDDY','TESTY','TIMID','TIPPY','TIPSY','TOFFY','TOASTY',
+  'TOTAL','TOTEM','TOUCHY','TOFFY','TROUT','TUBBY','TULIP','TUFFY','TURFY','TWIXT',
+  'TYPIC','UNIFY','UNTIL','UNZIP','UPPITY','USURP','UTMOST','VAUNT','VEINY','VEDIC',
+  'VITAL','VIVIFY','VOWEL','VYING','WAFFY','WAIFY','WASPY','WEBBY','WEEDY','WHINY',
+  'WISPY','WITTY','WOOLY','WORMY','WOOZY','YUCKY','YUMMY','ZAPPY','ZIPPY','ZONAL',
+];
+const VALID_WORDS = new Set([...ANSWERS, ...VALID_EXTRA]);
+
+// ── Game state ────────────────────────────────────────────────────────────
+const DAILY_SEED = getDailySeed();
+const WORD_LEN = 5;
+const MAX_ATTEMPTS = 6;
+const KB_ROWS = [
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L'],
+  ['ENTER','Z','X','C','V','B','N','M','⌫'],
+];
+
+let isBonus = false;
+let bonusRound = 0;
+let TARGET_WORD, SAVE_KEY;
+let guesses, currentRow, currentInput, gameOver, keyStates;
+
+// ── Pick word ────────────────────────────────────────────────────────────
+function pickAnswer(seed) {
+  const rng = seededRandom(seed);
+  return ANSWERS[Math.floor(rng() * ANSWERS.length)];
+}
+
+// ── Helper: check if a save slot is already finished ─────────────────────
+function isSaveFinished(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return false;
+    return JSON.parse(raw).gameOver === true;
+  } catch { return false; }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+function initRound(bonus, bRound) {
+  // If the requested slot is already finished, find the next fresh bonus round
+  let resolvedBonus = bonus;
+  let resolvedRound = bRound;
+  const dailyKey = `wl_daily_${DAILY_SEED}`;
+
+  if (!bonus && isSaveFinished(dailyKey)) {
+    // Daily is done — scan forward to find the first unplayed bonus slot
+    resolvedBonus = true;
+    resolvedRound = 1;
+    while (isSaveFinished(`wl_bonus_${DAILY_SEED}_${resolvedRound}`)) {
+      resolvedRound++;
+    }
+  } else if (bonus && isSaveFinished(`wl_bonus_${DAILY_SEED}_${bRound}`)) {
+    // A specific bonus round is done (e.g. Play Again on an already-solved bonus)
+    resolvedRound = bRound + 1;
+    while (isSaveFinished(`wl_bonus_${DAILY_SEED}_${resolvedRound}`)) {
+      resolvedRound++;
+    }
+  }
+
+  isBonus = resolvedBonus;
+  bonusRound = resolvedRound;
+  const seed = resolvedBonus
+    ? DAILY_SEED * 1000 + resolvedRound * 13
+    : DAILY_SEED;
+  TARGET_WORD = pickAnswer(seed);
+  SAVE_KEY = resolvedBonus
+    ? `wl_bonus_${DAILY_SEED}_${resolvedRound}`
+    : dailyKey;
+
+  // Reset state, then load any in-progress save for this slot
+  guesses = [];
+  currentRow = 0;
+  currentInput = '';
+  gameOver = false;
+  keyStates = {};
+  loadState(); // safe — we only reach here if the slot is NOT finished
+
+  renderAll();
+  updateModeLabel();
+  document.getElementById('seed-display').textContent = resolvedBonus ? `Bonus ${resolvedRound}` : DAILY_SEED;
+
+  // Show notice when we auto-skipped the daily
+  const notice = document.getElementById('daily-done-notice');
+  if (notice) {
+    const dailyWasDone = !bonus && resolvedBonus;
+    notice.style.display = dailyWasDone ? '' : 'none';
+  }
+
+  if (currentRow > 0) {
+    setMessage(`${MAX_ATTEMPTS - currentRow} attempt${MAX_ATTEMPTS - currentRow > 1 ? 's' : ''} left`, 'info');
+  } else {
+    setMessage('Guess the 5-letter word');
+  }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function closeModal() {
+  const modal = document.getElementById('result-modal');
+  modal.classList.remove('open');
+  setTimeout(() => { modal.style.display = 'none'; }, 250);
+}
+function openModal() {
+  const modal = document.getElementById('result-modal');
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => modal.classList.add('open'));
+}
+
+function renderAll() {
+  renderGrid();
+  renderKeyboard();
+  closeModal();
+  document.getElementById('keyboard').style.opacity = '';
+  document.getElementById('keyboard').style.pointerEvents = '';
+  // dots
+  for (let i = 0; i < MAX_ATTEMPTS; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.className = 'attempt-dot';
+  }
+  guesses.forEach((g, i) => {
+    const dot = document.getElementById('dot-' + i);
+    if (dot) dot.classList.add(g === TARGET_WORD ? 'correct' : 'wrong');
+  });
+  if (!gameOver && currentRow < MAX_ATTEMPTS) {
+    const d = document.getElementById('dot-' + currentRow);
+    if (d) d.classList.add('active');
+  }
+}
+
+function renderGrid() {
+  const grid = document.getElementById('guess-grid');
+  grid.innerHTML = '';
+  for (let r = 0; r < MAX_ATTEMPTS; r++) {
+    const row = document.createElement('div');
+    row.className = 'guess-row';
+    row.id = 'row-' + r;
+    for (let c = 0; c < WORD_LEN; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'g-tile';
+      tile.id = `tile-${r}-${c}`;
+      if (r < guesses.length) {
+        tile.textContent = guesses[r][c];
+        tile.classList.add(getTileClass(guesses[r], c));
+      } else if (r === currentRow) {
+        tile.textContent = currentInput[c] || '';
+        if (c === currentInput.length && !gameOver) tile.classList.add('active-cur');
+      }
+      row.appendChild(tile);
+    }
+    grid.appendChild(row);
+  }
+}
+
+function getTileClass(word, col) {
+  const ch = word[col];
+  if (ch === TARGET_WORD[col]) return 'correct';
+  // count available letters for yellow logic
+  const targetArr = TARGET_WORD.split('');
+  const guessArr = word.split('');
+  // mark greens first
+  const used = targetArr.map((t, i) => guessArr[i] === t);
+  // count yellows
+  let yellows = 0;
+  for (let i = 0; i < col; i++) {
+    if (guessArr[i] !== TARGET_WORD[i] && TARGET_WORD.includes(guessArr[i])) yellows++;
+  }
+  const totalInTarget = targetArr.filter(t => t === ch).length;
+  const greensOfCh = targetArr.filter((t, i) => t === ch && guessArr[i] === ch).length;
+  const priorYellows = guessArr.slice(0, col).filter((g, i) => g === ch && g !== targetArr[i]).length;
+  if (TARGET_WORD.includes(ch) && greensOfCh + priorYellows < totalInTarget) return 'present';
+  return 'absent';
+}
+
+function renderKeyboard() {
+  KB_ROWS.forEach((keys, ri) => {
+    const rowEl = document.getElementById('kb-row-' + ri);
+    rowEl.innerHTML = '';
+    keys.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (k.length > 1 ? ' wide' : '');
+      btn.textContent = k;
+      btn.dataset.key = k;
+      const state = keyStates[k];
+      if (state) btn.classList.add(state);
+      btn.addEventListener('click', () => handleKey(k));
+      rowEl.appendChild(btn);
+    });
+  });
+}
+
+function updateKeyboard() {
+  KB_ROWS.flat().forEach(k => {
+    const el = document.querySelector(`.kb-key[data-key="${k}"]`);
+    if (!el) return;
+    const state = keyStates[k];
+    el.className = 'kb-key' + (k.length > 1 ? ' wide' : '') + (state ? ' ' + state : '');
+  });
+}
+
+function setMessage(msg, cls = '') {
+  const el = document.getElementById('message-bar');
+  el.textContent = msg;
+  el.className = 'message-bar' + (cls ? ' ' + cls : '');
+}
+function updateModeLabel() {
+  const el = document.getElementById('mode-label');
+  if (!el) return;
+  el.textContent = isBonus ? `🎲 Bonus round ${bonusRound}` : '📅 Daily puzzle';
+  el.style.color = isBonus ? 'var(--yellow)' : 'var(--accent)';
+}
+
+// ── Input ─────────────────────────────────────────────────────────────────
+function handleKey(key) {
+  if (gameOver) return;
+  if (key === '⌫' || key === 'BACKSPACE') {
+    currentInput = currentInput.slice(0, -1);
+    setMessage('Guess the 5-letter word');
+    renderGrid();
+    return;
+  }
+  if (key === 'ENTER') { submitGuess(); return; }
+  if (/^[A-Z]$/.test(key) && currentInput.length < WORD_LEN) {
+    currentInput += key;
+    renderGrid();
+    playSound('tap');
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = e.key.toUpperCase();
+  if (k === 'BACKSPACE') { handleKey('⌫'); return; }
+  if (k === 'ENTER') { handleKey('ENTER'); return; }
+  if (/^[A-Z]$/.test(k)) handleKey(k);
+});
+
+// ── Submit ────────────────────────────────────────────────────────────────
+function submitGuess() {
+  if (currentInput.length < WORD_LEN) {
+    setMessage('Not enough letters', 'bad');
+    shakeRow(currentRow);
+    playSound('wrong');
+    return;
+  }
+  if (!VALID_WORDS.has(currentInput)) {
+    setMessage('Not in word list', 'bad');
+    shakeRow(currentRow);
+    playSound('wrong');
+    return;
+  }
+  const guess = currentInput;
+  guesses.push(guess);
+  // update key states
+  guess.split('').forEach((ch, i) => {
+    const newState = getTileClass(guess, i);
+    const cur = keyStates[ch];
+    if (!cur || (cur === 'absent') || (cur === 'present' && newState === 'correct')) {
+      keyStates[ch] = newState;
+    }
+  });
+  currentInput = '';
+  currentRow++;
+  renderGrid();
+  updateKeyboard();
+  flipRow(currentRow - 1);
+  if (guess === TARGET_WORD) {
+    gameOver = true;
+    updateDots(currentRow - 1, 'correct');
+    saveState();
+    playSound('correct');
+    setTimeout(() => { playSound('win'); showResult(true); }, 600);
+    return;
+  }
+  if (currentRow >= MAX_ATTEMPTS) {
+    gameOver = true;
+    updateDots(currentRow - 1, 'wrong');
+    saveState();
+    playSound('wrong');
+    setTimeout(() => { playSound('lose'); showResult(false); }, 600);
+    return;
+  }
+  updateDots(currentRow - 1, 'wrong');
+  playSound('wrong');
+  saveState();
+  setMessage(`${MAX_ATTEMPTS - currentRow} attempt${MAX_ATTEMPTS - currentRow > 1 ? 's' : ''} left`, 'info');
+}
+
+function updateDots(idx, result) {
+  const dot = document.getElementById('dot-' + idx);
+  if (dot) { dot.classList.remove('active'); dot.classList.add(result); }
+  const next = document.getElementById('dot-' + (idx + 1));
+  if (next) next.classList.add('active');
+}
+
+// ── Animations ────────────────────────────────────────────────────────────
+function shakeRow(r) {
+  const row = document.getElementById('row-' + r);
+  if (!row) return;
+  row.style.animation = 'none';
+  row.offsetHeight;
+  row.style.animation = 'shake .4s ease';
+}
+function flipRow(r) {
+  for (let c = 0; c < WORD_LEN; c++) {
+    const tile = document.getElementById(`tile-${r}-${c}`);
+    if (!tile) continue;
+    setTimeout(() => {
+      tile.style.transform = 'rotateX(90deg)';
+      setTimeout(() => { tile.style.transform = ''; }, 150);
+    }, c * 80);
+  }
+}
+const styleEl = document.createElement('style');
+styleEl.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }`;
+document.head.appendChild(styleEl);
+
+// ── Result ────────────────────────────────────────────────────────────────
+const RESULT_EMOJIS = ['🏆','🌟','🎯','👍','😅','😬'];
+function buildShareText(won) {
+  const d = new Date();
+  const ds = `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+  const label = isBonus ? `ZippyWidgets Bonus Wordle (round ${bonusRound})` : `ZippyWidgets Daily Wordle ${ds}`;
+  let grid = label + '\n';
+  grid += (won ? `${guesses.length}/${MAX_ATTEMPTS}` : `X/${MAX_ATTEMPTS}`) + '\n\n';
+  guesses.forEach(g => {
+    grid += g.split('').map((ch, i) => {
+      if (ch === TARGET_WORD[i]) return '🟩';
+      if (TARGET_WORD.includes(ch)) return '🟨';
+      return '⬛';
+    }).join('') + '\n';
+  });
+  return (grid + '\nplay: zippywidgets.online/game/wordle/').trim();
+}
+function showResult(won) {
+  document.getElementById('result-emoji').textContent = won ? RESULT_EMOJIS[Math.min(guesses.length - 1, 5)] : '💀';
+  document.getElementById('result-heading').textContent = won ? `Solved in ${guesses.length}!` : `The word was ${TARGET_WORD}`;
+  document.getElementById('result-body').textContent = won
+    ? `You got "${TARGET_WORD}" in ${guesses.length} of ${MAX_ATTEMPTS} guesses.`
+    : `The answer was "${TARGET_WORD}". Better luck tomorrow!`;
+  document.getElementById('share-box').textContent = buildShareText(won);
+  setMessage(won ? '🎉 Nicely done!' : '💀 Out of guesses', won ? 'good' : 'bad');
+  document.getElementById('keyboard').style.opacity = '.4';
+  document.getElementById('keyboard').style.pointerEvents = 'none';
+  openModal();
+}
+function playBonus() { initRound(true, bonusRound + 1); }
+function copyShare() {
+  navigator.clipboard.writeText(document.getElementById('share-box').textContent)
+    .then(() => setMessage('Result copied — paste it anywhere!', 'good'))
+    .catch(() => prompt('Copy your result:', document.getElementById('share-box').textContent));
+}
+
+// ── Persistence ───────────────────────────────────────────────────────────
+function saveState() {
+  localStorage.setItem(SAVE_KEY, JSON.stringify({ guesses, currentRow, keyStates, gameOver }));
+}
+function loadState() {
+  const raw = localStorage.getItem(SAVE_KEY);
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    guesses = s.guesses || [];
+    currentRow = s.currentRow || 0;
+    keyStates = s.keyStates || {};
+    gameOver = s.gameOver || false;
+  } catch {}
+}
+
+// ── Audio ─────────────────────────────────────────────────────────────────
+let _audioCtx = null;
+let _muted = localStorage.getItem('zw_mute') === '1';
+(function(){
+  const m = document.getElementById('muteToggle');
+  if (m) m.textContent = _muted ? '🔇' : '🔊';
+})();
+function _ctx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+function _tone(f, dur, type, vol) {
+  if (_muted) return;
+  try {
+    const c = _ctx(), o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = type || 'sine'; o.frequency.value = f;
+    g.gain.setValueAtTime(vol || 0.22, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+    o.start(); o.stop(c.currentTime + dur);
+  } catch(e) {}
+}
+function playSound(name) {
+  if (_muted) return;
+  if (name === 'tap')     { _tone(340, 0.05, 'sine', 0.1); }
+  if (name === 'correct') { _tone(520, 0.08, 'sine'); setTimeout(() => _tone(660, 0.1, 'sine'), 80); }
+  if (name === 'wrong')   { _tone(200, 0.12, 'sawtooth', 0.15); }
+  if (name === 'win')     { [523,659,784,1047].forEach((f,i) => setTimeout(() => _tone(f, 0.15, 'sine', 0.2), i*80)); }
+  if (name === 'lose')    { _tone(330, 0.1, 'sawtooth', 0.2); setTimeout(() => _tone(220, 0.25, 'sawtooth', 0.18), 110); }
+}
+function toggleMute() {
+  _muted = !_muted;
+  localStorage.setItem('zw_mute', _muted ? '1' : '0');
+  const m = document.getElementById('muteToggle');
+  if (m) m.textContent = _muted ? '🔇' : '🔊';
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+initRound(false, 0);
+
+// Lazy ads
+(function() {
+  function loadTopAd() {
+    const el = document.getElementById('ad-top-wl');
+    if (el && el.querySelector('ins:not([data-adsbygoogle-status])')) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+    document.removeEventListener('pointerdown', loadTopAd);
+    document.removeEventListener('keydown', loadTopAd);
+  }
+  document.addEventListener('pointerdown', loadTopAd, { once: true });
+  document.addEventListener('keydown', loadTopAd, { once: true });
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      const el = document.getElementById('ad-bottom-wl');
+      if (el && el.querySelector('ins:not([data-adsbygoogle-status])')) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
+      obs.disconnect();
+    }
+  }, { rootMargin: '200px' });
+  const bottom = document.getElementById('ad-bottom-wl');
+  if (bottom) obs.observe(bottom);
+})();
+  </script>
+
+  <Footer />
+
+  <style is:global>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a; --border:#2e3452;
+      --text:#e8eaff; --muted:#7b82b0; --navbar-bg:rgba(15,17,23,.88);
+      --accent:#38bdf8; --green:#4ade80; --yellow:#fbbf24; --red:#f87171; --radius:12px;
+      --tile-correct-bg:#14532d; --tile-present-bg:#713f12; --tile-absent-bg:#1e1e2e;
+      --tile-absent-border:#3a3a5c; --tile-absent-text:#3a3a5c;
+      --kb-absent-bg:#111; --kb-absent-border:#222; --kb-absent-text:#444;
+    }
+    [data-theme="light"] {
+      --bg:#f4f6fb; --surface:#ffffff; --surface2:#e8edf6; --border:#c5cce0;
+      --text:#1a1d2e; --muted:#5a6080; --navbar-bg:rgba(244,246,251,.92); --accent:#0ea5e9;
+      --tile-correct-bg:#bbf7d0; --tile-present-bg:#fef08a; --tile-absent-bg:#e2e8f0;
+      --tile-absent-border:#94a3b8; --tile-absent-text:#64748b;
+      --kb-absent-bg:#e2e8f0; --kb-absent-border:#cbd5e1; --kb-absent-text:#64748b;
+    }
+    body, .navbar, .g-tile, .kb-key, .result-card, .share-box, .seo-card {
+      transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+    }
+    html, body { min-height:100vh; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:15px; }
+    .navbar { position:sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:60px; background:var(--navbar-bg); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+    .nav-brand { font-size:1.1rem; font-weight:800; text-decoration:none; color:var(--text); display:flex; align-items:center; gap:.4rem; }
+    .nav-logo { width:28px; height:28px; object-fit:contain; border-radius:6px; }
+    .nav-links { display:flex; gap:.4rem; flex-wrap:wrap; }
+    .nav-pill { background:none; border:1px solid var(--border); color:var(--muted); border-radius:99px; padding:.3rem .85rem; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; text-decoration:none; display:inline-block; }
+    .nav-pill:hover, .nav-pill.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .theme-toggle { background:none; border:1px solid var(--border); color:var(--muted); border-radius:99px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer; transition:border-color .2s,color .2s; flex-shrink:0; padding:0; }
+    .theme-toggle:hover { border-color:var(--accent); color:var(--accent); }
+    .nav-toggle { display:none; flex-direction:column; justify-content:center; gap:5px; background:none; border:none; cursor:pointer; padding:.4rem; z-index:200; }
+    .nav-toggle span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:transform .25s,opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity:0; }
+    .nav-toggle.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    @media (max-width:640px) {
+      .nav-toggle { display:flex; }
+      .nav-links { display:none; position:fixed; top:60px; left:0; right:0; background:var(--navbar-bg); backdrop-filter:blur(16px); flex-direction:column; align-items:stretch; padding:1rem 1.25rem 1.5rem; gap:.5rem; border-bottom:1px solid var(--border); z-index:150; }
+      .nav-links.open { display:flex; }
+      .nav-pill { text-align:center; padding:.7rem 1rem; font-size:.9rem; }
+    }
+
+    /* Layout */
+    .game-page { width:100%; max-width:540px; margin:0 auto; padding:1rem .75rem 3rem; display:flex; flex-direction:column; gap:1rem; align-items:center; }
+    .game-header { text-align:center; display:flex; flex-direction:column; gap:.35rem; align-items:center; }
+    .game-title { font-size:1.35rem; font-weight:900; letter-spacing:-.02em; }
+    .game-title span { color:var(--accent); }
+    .seed-badge { display:inline-flex; align-items:center; gap:.3rem; background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:.25rem .7rem; font-size:.7rem; color:var(--muted); }
+    .seed-badge b { color:var(--accent); }
+    .mode-label { font-size:.7rem; font-weight:600; letter-spacing:.04em; }
+
+    /* Guess grid */
+    .guess-grid { display:flex; flex-direction:column; gap:.4rem; width:100%; align-items:center; }
+    .guess-row { display:flex; gap:.4rem; justify-content:center; }
+    .g-tile { width:clamp(46px,12vw,58px); height:clamp(46px,12vw,58px); background:var(--surface2); border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:clamp(1.1rem,4vw,1.4rem); font-weight:900; text-transform:uppercase; transition:background .3s,border-color .3s,transform .15s; }
+    .g-tile.correct  { background:var(--tile-correct-bg);  border-color:var(--green);  color:var(--green); }
+    .g-tile.present  { background:var(--tile-present-bg);  border-color:var(--yellow); color:var(--yellow); }
+    .g-tile.absent   { background:var(--tile-absent-bg);   border-color:var(--tile-absent-border); color:var(--tile-absent-text); }
+    .g-tile.active-cur { border-color:var(--accent); }
+    .g-tile:not(:empty) { transform:scale(1.05); }
+    .g-tile.correct, .g-tile.present, .g-tile.absent { transform:none; }
+
+    /* Keyboard — same as word-scramble */
+    .keyboard { display:flex; flex-direction:column; gap:.4rem; align-items:center; width:100%; padding:0 .25rem; }
+    .kb-row { display:flex; gap:.3rem; width:100%; justify-content:center; }
+    .kb-key { flex:1; max-width:42px; min-width:0; height:50px; padding:0 2px; background:var(--surface2); border:1px solid var(--border); border-radius:7px; font-family:inherit; font-size:clamp(.65rem,2.8vw,.85rem); font-weight:700; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,color .2s; user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+    .kb-key:active { opacity:.7; }
+    .kb-key.wide  { flex:1.6; max-width:60px; font-size:clamp(.6rem,2.4vw,.75rem); }
+    .kb-key.correct { background:var(--tile-correct-bg); border-color:var(--green); color:var(--green); }
+    .kb-key.present { background:var(--tile-present-bg); border-color:var(--yellow); color:var(--yellow); }
+    .kb-key.absent  { background:var(--kb-absent-bg); border-color:var(--kb-absent-border); color:var(--kb-absent-text); }
+
+    /* Message */
+    .message-bar { min-height:28px; font-size:.82rem; font-weight:700; text-align:center; color:var(--muted); padding:0 .5rem; }
+    .message-bar.good { color:var(--green); }
+    .message-bar.bad  { color:var(--red); }
+    .message-bar.info { color:var(--yellow); }
+
+    /* "Daily already done" notice */
+    .daily-done-notice {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(74,222,128,.1);
+      border: 1px solid rgba(74,222,128,.3);
+      border-radius: 20px;
+      padding: .3rem .9rem;
+      text-align: center;
+    }
+
+    /* Modal overlay */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; transition: opacity .25s ease;
+    }
+    .modal-backdrop.open { opacity: 1; }
+    .modal-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem 1.5rem;
+      width: 100%; max-width: 420px;
+      display: flex; flex-direction: column; gap: 1rem;
+      align-items: center; text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,.5);
+      transform: translateY(24px) scale(.97);
+      transition: transform .25s ease;
+    }
+    .modal-backdrop.open .modal-panel { transform: translateY(0) scale(1); }
+
+    /* Result content inside modal */
+    .result-emoji { font-size: 2.8rem; }
+    #result-heading { font-size: 1.2rem; font-weight: 900; }
+    #result-body { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+    .share-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:.7rem .85rem; font-family:monospace; font-size:.78rem; color:var(--text); white-space:pre-wrap; word-break:break-word; letter-spacing:.03em; line-height:1.7; width:100%; overflow-x:hidden; }
+    .btn { cursor:pointer; border:none; border-radius:10px; font-family:inherit; font-weight:700; transition:opacity .15s,transform .1s; touch-action:manipulation; }
+    .btn:active { opacity:.75; transform:scale(.97); }
+    .btn-primary { background:linear-gradient(135deg,#38bdf8,#818cf8); color:#000; padding:.8rem 1.5rem; font-size:.9rem; }
+    .btn-secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); padding:.65rem 1.2rem; font-size:.83rem; }
+    .btn-row { display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; }
+
+    /* Progress dots */
+    .attempt-dots { display:flex; gap:.4rem; align-items:center; justify-content:center; }
+    .attempt-dot { width:8px; height:8px; border-radius:50%; background:var(--surface2); border:1.5px solid var(--border); transition:background .3s,border-color .3s; }
+    .attempt-dot.active  { background:var(--accent); border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,189,248,.2); }
+    .attempt-dot.correct { background:var(--green); border-color:var(--green); }
+    .attempt-dot.wrong   { background:var(--red); border-color:var(--red); }
+
+    /* SEO section */
+    .seo-section { max-width:540px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:1rem; margin-top:.25rem; padding:0 .75rem; }
+    .seo-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; display:flex; flex-direction:column; gap:.65rem; color:var(--muted); font-size:.85rem; line-height:1.75; }
+    .seo-card h2 { font-size:.95rem; font-weight:800; color:var(--text); }
+    .seo-card h3 { font-size:.85rem; font-weight:700; color:var(--text); }
+
+    /* Ad slots */
+    .ad-slot-game { width:100%; max-width:540px; margin:0 auto; padding:.5rem 0; min-height:60px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .ad-slot-game ins { display:block; width:100%; }
+
+    /* Footer */
+    .footer { border-top:1px solid var(--border); padding:1.25rem 1rem; text-align:center; font-size:.75rem; color:var(--muted); line-height:1.9; }
+    .footer a { color:var(--muted); text-decoration:none; }
+    .footer a:hover { color:var(--text); }
+
+    @media (min-width:400px) {
+      .game-title { font-size:1.5rem; }
+      .kb-key { height:54px; }
+    }
+    @media (min-width:480px) {
+      .game-page { padding:1.25rem 1rem 3rem; gap:1.15rem; }
+      .game-title { font-size:1.6rem; }
+      .g-tile { width:clamp(50px,13vw,62px); height:clamp(50px,13vw,62px); }
+      .kb-key { height:58px; font-size:.88rem; }
+    }
+  </style>
+</Layout>

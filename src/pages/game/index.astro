@@ -31,6 +31,19 @@ const canonical = 'https://zippywidgets.online/game/';
         "position": 1,
         "item": {
           "@type": "VideoGame",
+          "name": "Daily Wordle",
+          "description": "Guess the hidden 5-letter word in 6 tries using colour-coded clues. Same word worldwide every day.",
+          "url": "https://zippywidgets.online/game/wordle/",
+          "gamePlatform": "Web Browser",
+          "genre": ["Word Game", "Puzzle"],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "VideoGame",
           "name": "AetherForge: Chrono-Deck",
           "description": "Free daily roguelike deckbuilder. Forge elemental combos to defeat 5 bosses. Same seed worldwide every day.",
           "url": "https://zippywidgets.online/game/aetherforge/",
@@ -41,7 +54,7 @@ const canonical = 'https://zippywidgets.online/game/';
       },
       {
         "@type": "ListItem",
-        "position": 2,
+        "position": 4,
         "item": {
           "@type": "VideoGame",
           "name": "Daily Word Scramble",
@@ -54,7 +67,7 @@ const canonical = 'https://zippywidgets.online/game/';
       },
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 5,
         "item": {
           "@type": "VideoGame",
           "name": "Emoji Geography",
@@ -67,7 +80,7 @@ const canonical = 'https://zippywidgets.online/game/';
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 6,
         "item": {
           "@type": "VideoGame",
           "name": "Rock Paper Scissors",
@@ -80,7 +93,7 @@ const canonical = 'https://zippywidgets.online/game/';
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 7,
         "item": {
           "@type": "VideoGame",
           "name": "Emoji Memory Match",
@@ -107,6 +120,19 @@ const canonical = 'https://zippywidgets.online/game/';
     </div>
 
     <div class="games-grid">
+
+      <!-- Wordle -->
+      <a class="game-card" href="/game/wordle/" style="--card-color:#4ade80;">
+        <div class="game-icon">🔡</div>
+        <h2>Daily Wordle</h2>
+        <p>Guess the hidden 5-letter word in 6 tries. Green, yellow and grey clues guide you closer with every guess. Same word worldwide every day — share your result without spoilers.</p>
+        <div class="game-meta">
+          <span class="game-tag tag-daily">Daily</span>
+          <span class="game-tag tag-word">Word Game</span>
+          <span class="game-tag tag-puzzle">Puzzle</span>
+        </div>
+        <span class="play-btn">▶ Play Now →</span>
+      </a>
 
       <!-- AetherForge -->
       <a class="game-card" href="/game/aetherforge/" style="--card-color:#7c6af7;">
