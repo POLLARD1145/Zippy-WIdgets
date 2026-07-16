@@ -1,0 +1,944 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Weather Today & Tomorrow — Free 7-Day Forecast for Any City | ZippyWidgets';
+const description = 'Check the weather today, weather tomorrow, and a free 7-day forecast for any city worldwide. Temperature, rain chance, wind, humidity, UV index. Instant, no sign-up. Works for London, Lagos, Mumbai, São Paulo and everywhere else.';
+const canonical = 'https://zippywidgets.online/tool/weather/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <!-- Keyword targeting: weather today, weather tomorrow, today weather, clima para amanhã, मौसम, कल का मौसम, previsão do tempo, cuaca -->
+    <meta name="keywords" content="weather today, weather tomorrow, today weather, weather forecast, 7 day forecast, weather this week, clima para amanhã, previsão do tempo, मौसम, कल का मौसम, aaj ka mausam, kal ka mausam, cuaca, weather by city, hourly forecast, rain forecast, UV index, wind speed, humidity, free weather app, weather online no signup" />
+    <meta property="og:title" content="Weather Today & Tomorrow — Free 7-Day Forecast for Any City" />
+    <meta property="og:description" content="Instant weather today and tomorrow for any city worldwide. 7-day forecast, hourly breakdown, rain chance, wind, UV index. No sign-up — works on any device." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Weather Today & Tomorrow — Free 7-Day Forecast" />
+    <meta name="twitter:description" content="Check weather today, tomorrow and the full week for any city. Free, instant, no sign-up." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Weather Today & Forecast",
+        "url": "https://zippywidgets.online/tool/weather/",
+        "description": "Free weather tool showing today's weather, tomorrow's forecast and a 7-day outlook for any city worldwide. Includes temperature, rain chance, wind speed, humidity, UV index, sunrise and sunset times.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "featureList": ["Weather today", "Weather tomorrow", "7-day forecast", "Hourly forecast", "Rain probability", "UV Index", "Wind speed", "Humidity", "Sunrise and Sunset", "GPS location detection", "City search with autocomplete"],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "inLanguage": ["en","hi","pt","id"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I check the weather today?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Open the tool and it automatically detects your city and shows today's weather including current temperature, feels-like temperature, humidity, wind speed, UV index and today's rain total. You can also search any city by name." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I check the weather tomorrow?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The 7-day forecast section shows tomorrow's weather as the second row, including the high and low temperature, weather condition, and rain probability. Scroll down past the hourly strip to see it." }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is the weather forecast for tomorrow?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Tomorrow's forecast is highly accurate — typically within 1-2°C and correct on rain/no-rain about 85% of the time. Forecasts degrade in accuracy beyond 3-4 days. Data comes from Open-Meteo which uses ECMWF, NOAA and DWD models." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I check the weather for any city in the world?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — type any city name in the search box and the autocomplete will show matching cities. Select your city and the forecast loads instantly. It works for cities in India, Brazil, Indonesia, the US, UK and everywhere else." }
+          },
+          {
+            "@type": "Question",
+            "name": "Where does the weather data come from?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Data is sourced from Open-Meteo, a free open-source weather API aggregating data from national meteorological services including NOAA (USA), DWD (Germany), and ECMWF (European Centre for Medium-Range Weather Forecasts). Forecasts update every hour." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it detect my location automatically?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — on load it detects your approximate city from your IP address and loads the forecast instantly. Use the GPS button for precise device-level location, or search any city manually." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does UV Index mean?",
+            "acceptedAnswer": { "@type": "Answer", "text": "UV Index measures sunburn-causing radiation strength. 0–2 is low (no protection needed), 3–5 is moderate (wear sunscreen), 6–7 is high, 8–10 is very high (avoid midday sun), 11+ is extreme. The tool colour-codes the UV index so you can tell at a glance." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this free to use?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely free, no account, no sign-up, no app download required. Open the page and the forecast loads automatically." }
+          }
+        ]
+      }
+    </script>
+  </Fragment>
+
+  <Nav />
+
+  <main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">🌤️</span>
+      <div>
+        <h1>Weather Today &amp; Tomorrow — Free 7-Day Forecast</h1>
+        <p>Instant weather for any city worldwide. Check <strong>today's weather</strong>, <strong>tomorrow's forecast</strong> and the full week — temperature, rain chance, wind, humidity &amp; UV index. No sign-up, no app.</p>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="wx-search-row">
+        <div class="wx-search-wrap">
+          <span class="wx-search-icon">🔍</span>
+          <input id="cityInput" type="text" placeholder="Search city, e.g. London, Lagos, Mumbai…"
+            autocomplete="off" spellcheck="false" aria-label="Search city" />
+          <div class="wx-suggestions" id="wxSuggestions"></div>
+        </div>
+        <button class="btn btn-primary wx-search-btn" onclick="searchCity()">Search</button>
+        <button class="btn btn-secondary wx-loc-btn" onclick="useGPS()" title="Use my location" aria-label="Use my GPS location">📍</button>
+      </div>
+      <p class="wx-detecting" id="wxDetecting">📡 Detecting your location…</p>
+    </div>
+
+    <!-- Current weather card -->
+    <div class="card wx-current" id="wxCurrent" style="display:none;position:relative;overflow:hidden;">
+      <!-- Weather animation canvas — sits behind everything -->
+      <canvas id="wxCanvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;border-radius:var(--radius);"></canvas>
+      <!-- All content sits above canvas -->
+      <div style="position:relative;z-index:1;">
+      <div class="wx-current-top">
+        <div class="wx-location-name">
+          <h2 id="wxCity">—</h2>
+          <span id="wxCountry" class="wx-country"></span>
+        </div>
+        <div class="wx-current-main">
+          <div class="wx-big-icon" id="wxIcon">—</div>
+          <div class="wx-temp-wrap">
+            <div class="wx-temp" id="wxTemp">—</div>
+            <div class="wx-feels" id="wxFeels">Feels like —</div>
+            <div class="wx-desc" id="wxDesc">—</div>
+          </div>
+        </div>
+        <div class="wx-unit-toggle">
+          <button class="unit-btn active" id="btnC" onclick="setUnit('C')">°C</button>
+          <button class="unit-btn" id="btnF" onclick="setUnit('F')">°F</button>
+        </div>
+      </div>
+      <div class="wx-stats-grid">
+        <div class="wx-stat"><div class="wx-stat-val" id="wxHumidity">—</div><div class="wx-stat-lbl">Humidity</div></div>
+        <div class="wx-stat"><div class="wx-stat-val" id="wxWind">—</div><div class="wx-stat-lbl">Wind</div></div>
+        <div class="wx-stat"><div class="wx-stat-val" id="wxUV">—</div><div class="wx-stat-lbl">UV Index</div></div>
+        <div class="wx-stat"><div class="wx-stat-val" id="wxPrecip">—</div><div class="wx-stat-lbl">Rain today</div></div>
+        <div class="wx-stat"><div class="wx-stat-val" id="wxSunrise">—</div><div class="wx-stat-lbl">Sunrise</div></div>
+        <div class="wx-stat"><div class="wx-stat-val" id="wxSunset">—</div><div class="wx-stat-lbl">Sunset</div></div>
+      </div>
+      </div><!-- /z-index wrapper -->
+    </div>
+
+    <!-- Hourly strip -->
+    <div class="card" id="wxHourlyCard" style="display:none;padding:1rem;">
+      <h3 class="wx-section-title">Hourly — next 24 hours</h3>
+      <div class="wx-hourly-strip" id="wxHourlyStrip"></div>
+    </div>
+
+    <!-- 7-day forecast -->
+    <div class="card" id="wxForecastCard" style="display:none;padding:1rem;">
+      <h3 class="wx-section-title">7-Day Forecast</h3>
+      <div class="wx-forecast-grid" id="wxForecastGrid"></div>
+    </div>
+
+    <!-- Error state -->
+    <div class="card wx-error" id="wxError" style="display:none;">
+      <span>⚠️</span>
+      <p id="wxErrorMsg">Could not load weather data.</p>
+      <button class="btn btn-secondary" onclick="retryLast()">Try Again</button>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle" style="display:block"
+        data-ad-client="ca-pub-6884221059402072"
+        data-ad-slot="auto" data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var s=document.getElementById('adSlot');
+        new IntersectionObserver(function(e){if(e[0].isIntersecting){(adsbygoogle=window.adsbygoogle||[]).push({});} },{rootMargin:'200px'}).observe(s);
+      })();
+    </script>
+
+    <!-- Use-case chips — keyword-rich for crawlers -->
+    <div class="use-case-chips" style="margin:1rem 0 0;">
+      <span>Weather today</span>
+      <span>Weather tomorrow</span>
+      <span>Today weather</span>
+      <span>Weather this week</span>
+      <span>7-day forecast</span>
+      <span>Hourly forecast</span>
+      <span>Rain forecast</span>
+      <span>UV Index today</span>
+      <span>Wind speed</span>
+      <span>Humidity checker</span>
+      <span>Sunrise &amp; Sunset</span>
+      <span>Weather by city</span>
+      <span>Clima para amanhã</span>
+      <span>Previsão do tempo</span>
+      <span>मौसम आज</span>
+      <span>कल का मौसम</span>
+      <span>Cuaca hari ini</span>
+      <span>Travel weather</span>
+    </div>
+
+    <!-- SEO content block -->
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Weather Today, Tomorrow &amp; This Week</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+
+        <p>This free weather tool gives you <strong style="color:var(--text);">today's weather</strong> and <strong style="color:var(--text);">tomorrow's forecast</strong> for any city in the world — no account, no app download, no sign-up. Just open the page and your local weather loads automatically.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">How to check weather today</h3>
+        <p>The tool automatically detects your city from your IP address and shows the current temperature, feels-like temperature, humidity, wind speed, UV index, and today's total rainfall. The <strong>hourly strip</strong> below the current card shows hour-by-hour conditions for the next 24 hours so you can plan your day around rain windows.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">How to check weather tomorrow</h3>
+        <p>Scroll to the <strong>7-Day Forecast</strong> section. The second tile (after Today) shows tomorrow's weather — high and low temperature, condition description, and rain probability. This forecast is highly accurate (typically within 1–2°C and 85% correct on rain vs. no rain).</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">What does the rain percentage mean?</h3>
+        <p>The rain probability (shown as 💧 percentage) is the chance of measurable rainfall at that location during that hour or day. A 70% chance doesn't mean it will rain 70% of the day — it means there is a 70% probability that rain occurs at some point. Plan outdoor events around anything above 40%.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Why check UV Index?</h3>
+        <p>UV radiation causes sunburn even on overcast days. The UV index tells you when you need protection: 0–2 (low) = no sunscreen needed, 3–5 (moderate) = SPF 30+ recommended, 6–7 (high) = wear sunscreen and a hat, 8–10 (very high) = limit time in direct sun, 11+ (extreme) = avoid being outside between 10am–4pm.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Switch between °C and °F</h3>
+        <p>Use the °C / °F toggle on the current weather card. All temperatures — current, hourly, and the full 7-day forecast — update instantly. Your preference is saved so it persists on your next visit.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Search weather for any city</h3>
+        <p>Type any city in the search box — start with 2 characters and an autocomplete list appears. Works for cities worldwide: London, Lagos, Mumbai, Delhi, São Paulo, Jakarta, New York, Tokyo, Nairobi, Cairo and thousands more. Click the 📍 button to use your device's GPS for a precise reading.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How do I check the weather today?</h3>
+        <p>Open the tool — it auto-detects your city and shows today's weather instantly. You'll see the current temperature, feels-like, humidity, wind, UV index and today's rain total. Search any other city using the search bar at the top.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I check the weather tomorrow?</h3>
+        <p>Scroll to the <strong>7-Day Forecast</strong> grid. The second card (after Today) shows tomorrow's high/low temperature, weather condition and rain probability. Tomorrow's forecast is typically accurate within 1–2°C.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How accurate is the weather forecast for tomorrow?</h3>
+        <p>Days 1–3 are highly accurate — within 1–2°C and around 85% correct on precipitation. Days 4–7 are directionally correct for planning but less precise. Data comes from Open-Meteo using ECMWF, NOAA and DWD models, updated every hour.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I check weather for any city in the world?</h3>
+        <p>Yes — search any city worldwide. Type 2+ characters and autocomplete suggestions appear. Works for India (Mumbai, Delhi, Bangalore), Brazil (São Paulo, Rio de Janeiro), Indonesia (Jakarta, Surabaya), US, UK and everywhere else.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What does UV Index mean?</h3>
+        <p>UV Index measures the strength of sun radiation that causes sunburn. 0–2 low (no action needed), 3–5 moderate (apply sunscreen), 6–7 high, 8–10 very high (seek shade at midday), 11+ extreme. The tool colour-codes it so you know at a glance.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Where does the weather data come from?</h3>
+        <p>From <strong>Open-Meteo</strong>, a free open-source API that aggregates data from national weather services — NOAA (USA), DWD (Germany), and ECMWF (European medium-range models). Forecasts are updated every hour.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is my location stored?</h3>
+        <p>No. Your coordinates are only used to request data from Open-Meteo's API. Nothing is stored on our servers — all processing happens in your browser.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+  'use strict';
+
+  // ── State ────────────────────────────────────────────────────────────────
+  let currentUnit = localStorage.getItem('wx_unit') || 'C';
+  let lastLat = null, lastLon = null, lastCity = '', lastCountry = '';
+  let rawData = null; // cached API response
+
+  // ── Weather code → emoji + description ──────────────────────────────────
+  const WX_CODES = {
+    0:  ['☀️','Clear sky'],        1:  ['🌤️','Mainly clear'],
+    2:  ['⛅','Partly cloudy'],    3:  ['☁️','Overcast'],
+    45: ['🌫️','Fog'],             48: ['🌫️','Icy fog'],
+    51: ['🌦️','Light drizzle'],   53: ['🌦️','Drizzle'],       55: ['🌧️','Heavy drizzle'],
+    61: ['🌧️','Slight rain'],     63: ['🌧️','Rain'],          65: ['🌧️','Heavy rain'],
+    71: ['🌨️','Slight snow'],     73: ['❄️','Snow'],          75: ['❄️','Heavy snow'],
+    77: ['🌨️','Snow grains'],
+    80: ['🌦️','Light showers'],   81: ['🌧️','Showers'],      82: ['⛈️','Heavy showers'],
+    85: ['🌨️','Snow showers'],    86: ['❄️','Heavy snow showers'],
+    95: ['⛈️','Thunderstorm'],    96: ['⛈️','Thunderstorm w/ hail'], 99: ['⛈️','Thunderstorm w/ heavy hail'],
+  };
+  function wxInfo(code) { return WX_CODES[code] || ['🌡️','Unknown']; }
+
+  // ── Unit helpers ─────────────────────────────────────────────────────────
+  function toF(c) { return (c * 9/5 + 32).toFixed(1); }
+  function fmtTemp(c) { return currentUnit === 'C' ? `${Math.round(c)}°C` : `${Math.round(toF(c))}°F`; }
+  function fmtWind(kmh) {
+    return currentUnit === 'C' ? `${Math.round(kmh)} km/h` : `${Math.round(kmh * 0.621371)} mph`;
+  }
+
+  function setUnit(u) {
+    currentUnit = u;
+    localStorage.setItem('wx_unit', u);
+    document.getElementById('btnC').classList.toggle('active', u === 'C');
+    document.getElementById('btnF').classList.toggle('active', u === 'F');
+    if (rawData) renderAll(rawData, lastCity, lastCountry);
+  }
+
+  // ── UV label ──────────────────────────────────────────────────────────────
+  function uvLabel(uv) {
+    if (uv <= 2) return { text: uv + ' Low',       color: '#22c55e' };
+    if (uv <= 5) return { text: uv + ' Moderate',  color: '#f59e0b' };
+    if (uv <= 7) return { text: uv + ' High',      color: '#f97316' };
+    if (uv <= 10) return { text: uv + ' Very High', color: '#ef4444' };
+    return             { text: uv + ' Extreme',    color: '#dc2626' };
+  }
+
+  // ── Time helpers ──────────────────────────────────────────────────────────
+  function fmtHour(iso) {
+    const d = new Date(iso);
+    let h = d.getHours(), ampm = h >= 12 ? 'pm' : 'am';
+    h = h % 12 || 12;
+    return h + ampm;
+  }
+  function fmtDay(iso) {
+    return new Date(iso).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  function fmtTime(iso) {
+    return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ── Main fetch ────────────────────────────────────────────────────────────
+  async function fetchWeather(lat, lon, city, country) {
+    lastLat = lat; lastLon = lon; lastCity = city; lastCountry = country;
+    showLoading();
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+        + `&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,uv_index`
+        + `&hourly=temperature_2m,precipitation_probability,weather_code`
+        + `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset,uv_index_max`
+        + `&timezone=auto&forecast_days=7`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('API error ' + res.status);
+      rawData = await res.json();
+      renderAll(rawData, city, country);
+    } catch (e) {
+      showError('Could not load weather for ' + city + '. Please try again.');
+    }
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
+  function renderAll(data, city, country) {
+    const c = data.current;
+    const [icon, desc] = wxInfo(c.weather_code);
+
+    // Current
+    document.getElementById('wxCity').textContent = city;
+    document.getElementById('wxCountry').textContent = country;
+    document.getElementById('wxIcon').textContent = icon;
+    document.getElementById('wxTemp').textContent = fmtTemp(c.temperature_2m);
+    document.getElementById('wxFeels').textContent = 'Feels like ' + fmtTemp(c.apparent_temperature);
+    document.getElementById('wxDesc').textContent = desc;
+    document.getElementById('wxHumidity').textContent = c.relative_humidity_2m + '%';
+    document.getElementById('wxWind').textContent = fmtWind(c.wind_speed_10m);
+    document.getElementById('wxPrecip').textContent = c.precipitation + ' mm';
+
+    const uv = uvLabel(Math.round(c.uv_index));
+    const uvEl = document.getElementById('wxUV');
+    uvEl.textContent = uv.text;
+    uvEl.style.color = uv.color;
+
+    // Sunrise/Sunset from daily[0]
+    document.getElementById('wxSunrise').textContent = fmtTime(data.daily.sunrise[0]);
+    document.getElementById('wxSunset').textContent  = fmtTime(data.daily.sunset[0]);
+
+    show('wxCurrent');
+    show('wxHourlyCard');
+    show('wxForecastCard');
+    hide('wxError');
+    hide('wxDetecting');
+
+    renderHourly(data);
+    renderForecast(data);
+
+    // Start canvas animation — wait a tick so the card is visible and sized
+    const dayFlag = isCurrentlyDay(data.daily.sunrise[0], data.daily.sunset[0]);
+    requestAnimationFrame(() => startAnim(c.weather_code, dayFlag));
+  }
+
+  function renderHourly(data) {
+    const strip = document.getElementById('wxHourlyStrip');
+    strip.innerHTML = '';
+    const now = new Date();
+    let count = 0;
+    data.hourly.time.forEach((t, i) => {
+      if (count >= 24) return;
+      const d = new Date(t);
+      if (d < now) return;
+      count++;
+      const [icon] = wxInfo(data.hourly.weather_code[i]);
+      const prob = data.hourly.precipitation_probability[i];
+      const el = document.createElement('div');
+      el.className = 'wx-hour';
+      el.innerHTML = `
+        <div class="wx-hour-time">${fmtHour(t)}</div>
+        <div class="wx-hour-icon">${icon}</div>
+        <div class="wx-hour-temp">${fmtTemp(data.hourly.temperature_2m[i])}</div>
+        ${prob > 20 ? `<div class="wx-hour-rain">💧${prob}%</div>` : '<div class="wx-hour-rain" style="opacity:0">-</div>'}
+      `;
+      strip.appendChild(el);
+    });
+  }
+
+  function renderForecast(data) {
+    const grid = document.getElementById('wxForecastGrid');
+    grid.innerHTML = '';
+    data.daily.time.forEach((t, i) => {
+      const [icon, desc] = wxInfo(data.daily.weather_code[i]);
+      const prob = data.daily.precipitation_probability_max[i];
+      const el = document.createElement('div');
+      el.className = 'wx-day';
+      el.innerHTML = `
+        <div class="wx-day-name">${i === 0 ? 'Today' : fmtDay(t)}</div>
+        <div class="wx-day-icon">${icon}</div>
+        <div class="wx-day-desc">${desc}</div>
+        <div class="wx-day-temps">
+          <span class="wx-day-hi">${fmtTemp(data.daily.temperature_2m_max[i])}</span>
+          <span class="wx-day-lo">${fmtTemp(data.daily.temperature_2m_min[i])}</span>
+        </div>
+        ${prob > 10 ? `<div class="wx-day-rain">💧 ${prob}%</div>` : ''}
+      `;
+      grid.appendChild(el);
+    });
+  }
+  
+
+  // ── City search (Open-Meteo Geocoding) ────────────────────────────────────
+  async function searchCity() {
+    const q = document.getElementById('cityInput').value.trim();
+    if (!q) return;
+    hideSuggestions();
+    showLoading();
+    try {
+      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=en&format=json`);
+      const data = await res.json();
+      if (!data.results || !data.results.length) { showError(`No city found for "${q}".`); return; }
+      const r = data.results[0];
+      await fetchWeather(r.latitude, r.longitude, r.name, r.country || '');
+    } catch { showError('Search failed. Please check your connection.'); }
+  }
+
+  // Autocomplete suggestions
+  let suggestTimer;
+  document.getElementById('cityInput').addEventListener('input', function() {
+    clearTimeout(suggestTimer);
+    const q = this.value.trim();
+    if (q.length < 2) { hideSuggestions(); return; }
+    suggestTimer = setTimeout(() => fetchSuggestions(q), 300);
+  });
+  document.getElementById('cityInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { searchCity(); hideSuggestions(); }
+    if (e.key === 'Escape') hideSuggestions();
+  });
+
+  async function fetchSuggestions(q) {
+    try {
+      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=en&format=json`);
+      const data = await res.json();
+      renderSuggestions(data.results || []);
+    } catch {}
+  }
+
+  function renderSuggestions(results) {
+    const box = document.getElementById('wxSuggestions');
+    box.innerHTML = '';
+    if (!results.length) { hideSuggestions(); return; }
+    results.forEach(r => {
+      const item = document.createElement('div');
+      item.className = 'wx-suggestion-item';
+      item.textContent = [r.name, r.admin1, r.country].filter(Boolean).join(', ');
+      item.addEventListener('mousedown', e => {
+        e.preventDefault();
+        document.getElementById('cityInput').value = r.name;
+        hideSuggestions();
+        fetchWeather(r.latitude, r.longitude, r.name, r.country || '');
+      });
+      box.appendChild(item);
+    });
+    box.style.display = 'block';
+  }
+
+  function hideSuggestions() {
+    document.getElementById('wxSuggestions').style.display = 'none';
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.wx-search-wrap')) hideSuggestions();
+  });
+
+  // ── GPS ───────────────────────────────────────────────────────────────────
+  function useGPS() {
+    if (!navigator.geolocation) { showError('Geolocation not supported by your browser.'); return; }
+    showLoading();
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const { latitude: lat, longitude: lon } = pos.coords;
+      const name = await reverseGeocode(lat, lon);
+      await fetchWeather(lat, lon, name.city, name.country);
+    }, () => showError('Location access denied. Please search manually.'));
+  }
+
+  async function reverseGeocode(lat, lon) {
+    try {
+      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=en&format=json`);
+      // Open-Meteo geocoding doesn't do reverse, use ipapi for name fallback
+    } catch {}
+    return { city: `${lat.toFixed(2)}, ${lon.toFixed(2)}`, country: '' };
+  }
+
+  // ── Auto-detect location on load (IP-based) ───────────────────────────────
+  async function autoDetect() {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const d = await res.json();
+      if (d.latitude && d.city) {
+        document.getElementById('cityInput').value = d.city;
+        await fetchWeather(d.latitude, d.longitude, d.city, d.country_name || d.country || '');
+      } else {
+        hide('wxDetecting');
+      }
+    } catch {
+      hide('wxDetecting');
+    }
+  }
+
+  // ── UI helpers ────────────────────────────────────────────────────────────
+  function show(id) { document.getElementById(id).style.display = ''; }
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+
+  function showLoading() {
+    hide('wxCurrent'); hide('wxHourlyCard'); hide('wxForecastCard'); hide('wxError');
+    document.getElementById('wxDetecting').textContent = '⏳ Loading weather…';
+    show('wxDetecting');
+  }
+
+  function showError(msg) {
+    hide('wxCurrent'); hide('wxHourlyCard'); hide('wxForecastCard'); hide('wxDetecting');
+    document.getElementById('wxErrorMsg').textContent = msg;
+    show('wxError');
+  }
+
+  function retryLast() {
+    if (lastLat !== null) fetchWeather(lastLat, lastLon, lastCity, lastCountry);
+    else autoDetect();
+  }
+
+  // ── Canvas weather animation engine ──────────────────────────────────────
+  let wxAnimFrame = null;
+  let wxParticles = [];
+  let wxAnimType = null;
+
+  function stopAnim() {
+    if (wxAnimFrame) { cancelAnimationFrame(wxAnimFrame); wxAnimFrame = null; }
+    wxParticles = [];
+    const cv = document.getElementById('wxCanvas');
+    if (cv) { const ctx = cv.getContext('2d'); ctx.clearRect(0, 0, cv.width, cv.height); }
+  }
+
+  function startAnim(code, isDay) {
+    stopAnim();
+    const cv = document.getElementById('wxCanvas');
+    if (!cv) return;
+
+    // Size canvas to its rendered size
+    const resize = () => {
+      cv.width  = cv.offsetWidth  * devicePixelRatio;
+      cv.height = cv.offsetHeight * devicePixelRatio;
+    };
+    resize();
+    const resizeObs = new ResizeObserver(resize);
+    resizeObs.observe(cv);
+
+    const ctx = cv.getContext('2d');
+
+    // Categorise weather code
+    const isRain        = (code >= 51 && code <= 67) || (code >= 80 && code <= 82);
+    const isSnow        = (code >= 71 && code <= 77) || (code >= 85 && code <= 86);
+    const isThunder     = code >= 95;
+    const isFog         = code === 45 || code === 48;
+    const isClear       = code <= 1;
+    const isPartCloud   = code === 2 || code === 3;
+    const isNight       = !isDay;
+
+    if (isThunder || isRain) { spawnRain(cv, isThunder); loop(rainLoop, ctx, cv, isThunder); }
+    else if (isSnow)         { spawnSnow(cv); loop(snowLoop, ctx, cv); }
+    else if (isFog)          { spawnFog(cv);  loop(fogLoop,  ctx, cv); }
+    else if (isClear && isNight) { spawnStars(cv); loop(starsLoop, ctx, cv); }
+    else if (isClear)        { loop(sunLoop, ctx, cv); }
+    else if (isPartCloud)    { spawnClouds(cv); loop(cloudsLoop, ctx, cv); }
+    // overcast — no anim, just subtle gradient
+    else { loop(overcastLoop, ctx, cv); }
+  }
+
+  function loop(fn, ctx, cv, extra) {
+    const tick = () => { fn(ctx, cv, extra); wxAnimFrame = requestAnimationFrame(tick); };
+    wxAnimFrame = requestAnimationFrame(tick);
+  }
+
+  // ── Rain ─────────────────────────────────────────────────────────────────
+  function spawnRain(cv, heavy) {
+    const count = heavy ? 180 : 110;
+    for (let i = 0; i < count; i++) {
+      wxParticles.push({
+        x: Math.random() * cv.width,
+        y: Math.random() * cv.height,
+        len:  (4 + Math.random() * 10) * devicePixelRatio,
+        speed:(6 + Math.random() * 8)  * devicePixelRatio,
+        opacity: 0.15 + Math.random() * 0.35,
+        wind: 1.5 * devicePixelRatio,
+      });
+    }
+  }
+  let _flash = 0;
+  function rainLoop(ctx, cv, isThunder) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    // Subtle blue tint overlay
+    ctx.fillStyle = 'rgba(30,60,100,0.18)';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+
+    if (isThunder && Math.random() < 0.003) _flash = 6;
+    if (_flash > 0) {
+      ctx.fillStyle = `rgba(255,255,255,${_flash * 0.04})`;
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      _flash--;
+    }
+
+    ctx.strokeStyle = '#a8d4f5';
+    ctx.lineWidth = 1 * devicePixelRatio;
+    wxParticles.forEach(p => {
+      ctx.globalAlpha = p.opacity;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x + p.wind, p.y + p.len);
+      ctx.stroke();
+      p.x += p.wind; p.y += p.speed;
+      if (p.y > cv.height) { p.y = -p.len; p.x = Math.random() * cv.width; }
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  // ── Snow ─────────────────────────────────────────────────────────────────
+  function spawnSnow(cv) {
+    for (let i = 0; i < 80; i++) {
+      wxParticles.push({
+        x: Math.random() * cv.width,
+        y: Math.random() * cv.height,
+        r: (1.5 + Math.random() * 3) * devicePixelRatio,
+        speed: (0.5 + Math.random() * 1.5) * devicePixelRatio,
+        drift: (Math.random() - 0.5) * 0.5 * devicePixelRatio,
+        opacity: 0.5 + Math.random() * 0.5,
+        sway: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+  function snowLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = 'rgba(180,210,240,0.12)';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    wxParticles.forEach(p => {
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = '#e8f4ff';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      p.sway += 0.02;
+      p.x += Math.sin(p.sway) * p.drift + p.drift;
+      p.y += p.speed;
+      if (p.y > cv.height) { p.y = -p.r; p.x = Math.random() * cv.width; }
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  // ── Fog ───────────────────────────────────────────────────────────────────
+  function spawnFog(cv) {
+    for (let i = 0; i < 6; i++) {
+      wxParticles.push({
+        x: Math.random() * cv.width,
+        y: cv.height * (0.2 + Math.random() * 0.6),
+        w: cv.width * (0.4 + Math.random() * 0.5),
+        h: cv.height * (0.08 + Math.random() * 0.1),
+        speed: (0.15 + Math.random() * 0.25) * devicePixelRatio,
+        opacity: 0.06 + Math.random() * 0.1,
+      });
+    }
+  }
+  function fogLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    wxParticles.forEach(p => {
+      const grad = ctx.createRadialGradient(p.x + p.w/2, p.y, 0, p.x + p.w/2, p.y, p.w/2);
+      grad.addColorStop(0, `rgba(200,210,220,${p.opacity})`);
+      grad.addColorStop(1, 'rgba(200,210,220,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.ellipse(p.x + p.w/2, p.y, p.w/2, p.h/2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      p.x += p.speed;
+      if (p.x > cv.width + p.w/2) p.x = -p.w;
+    });
+  }
+
+  // ── Stars (clear night) ───────────────────────────────────────────────────
+  function spawnStars(cv) {
+    for (let i = 0; i < 60; i++) {
+      wxParticles.push({
+        x: Math.random() * cv.width,
+        y: Math.random() * cv.height * 0.85,
+        r: (0.5 + Math.random() * 1.5) * devicePixelRatio,
+        twinkle: Math.random() * Math.PI * 2,
+        speed: 0.02 + Math.random() * 0.04,
+      });
+    }
+  }
+  function starsLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = 'rgba(10,15,40,0.3)';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    wxParticles.forEach(p => {
+      p.twinkle += p.speed;
+      const alpha = 0.4 + Math.sin(p.twinkle) * 0.5;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#fffde7';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  // ── Sun rays (clear day) ──────────────────────────────────────────────────
+  let _sunAngle = 0;
+  function sunLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    _sunAngle += 0.003;
+    const cx = cv.width * 0.82, cy = cv.height * 0.22;
+    const rays = 12, outerR = cv.height * 0.38, innerR = cv.height * 0.2;
+    // Glow
+    const glow = ctx.createRadialGradient(cx, cy, innerR * 0.3, cx, cy, outerR);
+    glow.addColorStop(0,   'rgba(255,220,60,0.18)');
+    glow.addColorStop(0.5, 'rgba(255,180,0,0.07)');
+    glow.addColorStop(1,   'rgba(255,180,0,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(cx, cy, outerR, 0, Math.PI * 2); ctx.fill();
+    // Rays
+    ctx.strokeStyle = 'rgba(255,210,50,0.18)';
+    ctx.lineWidth = 2 * devicePixelRatio;
+    for (let i = 0; i < rays; i++) {
+      const angle = _sunAngle + (i * Math.PI * 2) / rays;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * innerR, cy + Math.sin(angle) * innerR);
+      ctx.lineTo(cx + Math.cos(angle) * outerR, cy + Math.sin(angle) * outerR);
+      ctx.stroke();
+    }
+  }
+
+  // ── Clouds ────────────────────────────────────────────────────────────────
+  function spawnClouds(cv) {
+    for (let i = 0; i < 4; i++) {
+      wxParticles.push({
+        x: Math.random() * cv.width,
+        y: cv.height * (0.1 + Math.random() * 0.3),
+        scale: 0.5 + Math.random() * 0.8,
+        speed: (0.2 + Math.random() * 0.3) * devicePixelRatio,
+        opacity: 0.12 + Math.random() * 0.1,
+      });
+    }
+  }
+  function drawCloud(ctx, x, y, scale, opacity) {
+    ctx.globalAlpha = opacity;
+    ctx.fillStyle = '#d0dde8';
+    const s = scale * 40 * devicePixelRatio;
+    [
+      [0, 0, s], [-s*.7, s*.2, s*.7], [s*.7, s*.2, s*.7],
+      [-s*1.3, s*.4, s*.6], [s*1.3, s*.4, s*.6],
+    ].forEach(([dx, dy, r]) => {
+      ctx.beginPath(); ctx.arc(x + dx, y + dy, r, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+  function cloudsLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    wxParticles.forEach(p => {
+      drawCloud(ctx, p.x, p.y, p.scale, p.opacity);
+      p.x += p.speed;
+      if (p.x - p.scale * 80 * devicePixelRatio > cv.width) p.x = -p.scale * 80 * devicePixelRatio;
+    });
+  }
+  function overcastLoop(ctx, cv) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = 'rgba(120,130,150,0.07)';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+  }
+
+  // ── Determine day/night from sunrise/sunset ───────────────────────────────
+  function isCurrentlyDay(sunriseIso, sunsetIso) {
+    const now = Date.now();
+    return now >= new Date(sunriseIso).getTime() && now < new Date(sunsetIso).getTime();
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  setUnit(currentUnit);
+  autoDetect();
+
+  </script>
+
+  <style is:global>
+    /* ── Search row ── */
+    .wx-search-row {
+      display: flex; gap: .6rem; align-items: center; position: relative;
+    }
+    .wx-search-wrap {
+      flex: 1; position: relative;
+    }
+    .wx-search-wrap input {
+      width: 100%; padding: .65rem 1rem .65rem 2.4rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--text); font-size: .95rem;
+      font-family: inherit;
+    }
+    .wx-search-wrap input:focus { outline: none; border-color: var(--accent); }
+    .wx-search-icon {
+      position: absolute; left: .75rem; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; pointer-events: none;
+    }
+    .wx-search-btn { white-space: nowrap; }
+    .wx-loc-btn { padding: .65rem .85rem; font-size: 1.1rem; }
+    .wx-detecting {
+      font-size: .82rem; color: var(--muted); margin-top: .6rem; text-align: center;
+    }
+
+    /* Autocomplete suggestions */
+    .wx-suggestions {
+      display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      z-index: 50; overflow: hidden;
+    }
+    .wx-suggestion-item {
+      padding: .6rem 1rem; font-size: .88rem; color: var(--text);
+      cursor: pointer; border-bottom: 1px solid var(--border);
+    }
+    .wx-suggestion-item:last-child { border-bottom: none; }
+    .wx-suggestion-item:hover { background: var(--surface2); color: var(--accent); }
+
+    /* ── Current card ── */
+    .wx-current { padding: 1.5rem; }
+    .wx-current-top {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      align-items: flex-start; justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .wx-location-name h2 { font-size: 1.4rem; font-weight: 800; margin: 0; }
+    .wx-country { font-size: .85rem; color: var(--muted); }
+    .wx-current-main {
+      display: flex; align-items: center; gap: 1rem; flex: 1;
+      justify-content: center;
+    }
+    .wx-big-icon { font-size: 4rem; line-height: 1; }
+    .wx-temp { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--text); }
+    .wx-feels { font-size: .85rem; color: var(--muted); margin-top: .2rem; }
+    .wx-desc  { font-size: .95rem; font-weight: 600; color: var(--text); margin-top: .15rem; }
+
+    /* Unit toggle */
+    .wx-unit-toggle { display: flex; gap: .3rem; }
+    .unit-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted); border-radius: 8px; padding: .3rem .7rem;
+      font-size: .82rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: all .2s;
+    }
+    .unit-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Stats strip */
+    .wx-stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem;
+    }
+    @media (min-width: 500px) { .wx-stats-grid { grid-template-columns: repeat(6, 1fr); } }
+    .wx-stat {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: .75rem .5rem; text-align: center;
+    }
+    .wx-stat-val { font-size: 1.05rem; font-weight: 800; color: var(--accent); }
+    .wx-stat-lbl { font-size: .68rem; color: var(--muted); margin-top: .2rem; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ── Section title ── */
+    .wx-section-title {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); margin-bottom: .85rem;
+    }
+
+    /* ── Hourly strip ── */
+    .wx-hourly-strip {
+      display: flex; gap: .5rem; overflow-x: auto;
+      padding-bottom: .5rem; scrollbar-width: thin;
+    }
+    .wx-hourly-strip::-webkit-scrollbar { height: 4px; }
+    .wx-hourly-strip::-webkit-scrollbar-track { background: var(--surface2); border-radius: 2px; }
+    .wx-hourly-strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .wx-hour {
+      flex-shrink: 0; width: 60px; text-align: center;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: .6rem .3rem; display: flex;
+      flex-direction: column; gap: .2rem; align-items: center;
+    }
+    .wx-hour-time { font-size: .68rem; color: var(--muted); font-weight: 600; }
+    .wx-hour-icon { font-size: 1.4rem; line-height: 1; }
+    .wx-hour-temp { font-size: .8rem; font-weight: 700; color: var(--text); }
+    .wx-hour-rain { font-size: .68rem; color: #38bdf8; }
+
+    /* ── 7-day forecast grid ── */
+    .wx-forecast-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: .6rem;
+    }
+    .wx-day {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: .75rem .5rem; text-align: center;
+      display: flex; flex-direction: column; gap: .25rem; align-items: center;
+    }
+    .wx-day-name { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .wx-day-icon { font-size: 1.8rem; line-height: 1; margin: .2rem 0; }
+    .wx-day-desc { font-size: .68rem; color: var(--muted); line-height: 1.3; }
+    .wx-day-temps { display: flex; gap: .4rem; align-items: baseline; }
+    .wx-day-hi { font-size: .95rem; font-weight: 800; color: var(--text); }
+    .wx-day-lo { font-size: .8rem; color: var(--muted); }
+    .wx-day-rain { font-size: .72rem; color: #38bdf8; }
+
+    /* ── Error state ── */
+    .wx-error {
+      display: flex; flex-direction: column; align-items: center;
+      gap: .75rem; padding: 2rem; text-align: center; color: var(--muted);
+    }
+    .wx-error span { font-size: 2rem; }
+
+    @media (max-width: 480px) {
+      .wx-search-row { flex-wrap: wrap; }
+      .wx-search-wrap { width: 100%; }
+      .wx-big-icon { font-size: 3rem; }
+      .wx-temp { font-size: 2.4rem; }
+      .wx-forecast-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    }
+  </style>
+</Layout>

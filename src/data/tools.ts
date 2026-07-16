@@ -9,6 +9,14 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    href: '/tool/weather/',
+    icon: '🌤️',
+    name: 'Weather Today & Forecast',
+    description: 'Weather today, tomorrow and 7-day forecast for any city. Temperature, rain chance, wind, humidity & UV index — instant, no sign-up.',
+    cta: 'Check Weather →',
+    tags: 'weather today tomorrow forecast rain temperature wind humidity uv index city hourly weekly clima mausam cuaca',
+  },
+  {
     href: '/tool/pdf-merger/',
     icon: '📑',
     name: 'PDF Merger',
