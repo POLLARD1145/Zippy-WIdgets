@@ -5,6 +5,10 @@ Thumbs.db
 # Editor folders
 .vscode/
 .idea/
+.devin/
+AGENTS.md
+ENGINEERING.md
+AGENT_PLAYBOOKS.md
 
 # Dependency folders
 node_modules/
@@ -15,6 +19,7 @@ dist/
 build/
 .astro/
 google-trends/
+google-search-performance/
 
 # Logs
 *.log

@@ -3,8 +3,8 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 
-const title = 'Age Calculator | How Many Days Old Am I? Days Until Birthday';
-const description = 'How old am I? Enter your birthdate to find your exact age in years, months, weeks, and total days. See how many days old you are and days until your next birthday.';
+const title = 'How Many Days Old Am I? Free Days Old Calculator | ZippyWidgets';
+const description = 'Find out how many days old you are. Enter your date of birth for your exact age in years, months, weeks, total days and days until your next birthday.';
 const canonical = 'https://zippywidgets.online/tool/age-calculator/';
 ---
 
@@ -15,9 +15,9 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Age Calculator",
-    "url": "https://zippywidgets.online/age-calculator/",
-    "description": "Free age calculator. Enter your birthdate to find your exact age in years, months, weeks, days, and hours with next birthday countdown.",
+    "name": "Days Old Calculator",
+    "url": "https://zippywidgets.online/tool/age-calculator/",
+    "description": "Free days old calculator. Enter your birthdate to find your exact age in years, months, weeks, total days, and hours with a next birthday countdown.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -28,6 +28,11 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many days old am I?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Enter your date of birth and the calculator counts the calendar days from that date to today. It accounts for leap years and shows your total days lived alongside your age in years, months, weeks, and hours." }
+      },
       {
         "@type": "Question",
         "name": "How is my exact age calculated?",
@@ -57,8 +62,8 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
     <div class="tool-header">
       <span class="icon">🎂</span>
       <div>
-        <h1>Age Calculator — How Many Days Old Am I?</h1>
-        <p>Enter your date of birth to find your exact age in years, months, weeks, and total days. Includes days until your next birthday and age in months.</p>
+        <h1>How Many Days Old Am I? Free Days Old Calculator</h1>
+        <p>Enter your date of birth to see exactly how many days old you are, plus your age in years, months, weeks and the days until your next birthday.</p>
       </div>
     </div>
 
@@ -94,7 +99,7 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
     </script>
 
     <section class="card" style="margin-top:1rem;">
-      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Age Calculator</h2>
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Find Out How Many Days Old You Are</h2>
       <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
         <p>Select your date of birth using the date picker above and click <strong>Calculate My Age</strong>. Your result appears instantly showing your exact age broken down into <strong>years</strong>, <strong>months</strong>, <strong>weeks</strong>, <strong>days</strong>, and even <strong>total hours</strong> lived. You'll also see a live countdown to your next birthday.</p>
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What the Results Mean</h3>
@@ -117,47 +122,6 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
 
   <Footer />
 
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Age Calculator",
-        "url": "https://zippywidgets.online/age-calculator/",
-        "description": "Free age calculator. Enter your birthdate to find your exact age in years, months, weeks, days, and hours with next birthday countdown.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How is my exact age calculated?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Your age is calculated from your date of birth to today's date using your device's local clock. The calculation accounts for leap years, giving an accurate count of years, months, weeks, days, hours, and minutes lived." }
-          },
-          {
-            "@type": "Question",
-            "name": "How do leap years affect age calculations?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Leap years add an extra day (February 29) every 4 years, with exceptions for century years not divisible by 400. The age calculator accounts for these correctly. If you were born on February 29, your birthday is treated as March 1 in non-leap years for the day-count calculation." }
-          },
-          {
-            "@type": "Question",
-            "name": "Is my date of birth stored anywhere?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date is only held in memory for the duration of your visit." }
-          },
-          {
-            "@type": "Question",
-            "name": "How accurate is the 'hours lived' figure?",
-            "acceptedAnswer": { "@type": "Answer", "text": "The hours lived figure is calculated from midnight on your date of birth, not your exact birth time (which is typically unknown). It is therefore an approximation accurate to within 24 hours." }
-          }
-        ]
-      }
-  </script>
 
   <script is:inline>
     (function(){
@@ -211,18 +175,26 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
             { lbl: 'Next Birthday In', val: isBirthday ? '🎉 Today!' : daysUntil + ' days' },
           ];
     
-          document.getElementById('ageResult').innerHTML = rows.map(r => `
-            <div class="age-row">
-              <span class="age-lbl">${r.lbl}</span>
-              <span class="age-val">${r.val}</span>
-            </div>`).join('');
+          const result = document.getElementById('ageResult');
+          result.replaceChildren(...rows.map((row) => {
+            const item = document.createElement('div');
+            item.className = 'age-row';
+            const label = document.createElement('span');
+            label.className = 'age-lbl';
+            label.textContent = row.lbl;
+            const value = document.createElement('span');
+            value.className = 'age-val';
+            value.textContent = row.val;
+            item.append(label, value);
+            return item;
+          }));
     
           document.getElementById('birthdayMsg').textContent = isBirthday ? '🎂 Happy Birthday! 🎉' : '';
         }
     
         function clearAge() {
           document.getElementById('dobInput').value = '';
-          document.getElementById('ageResult').innerHTML = '';
+          document.getElementById('ageResult').replaceChildren();
           document.getElementById('birthdayMsg').textContent = '';
         }
   </script>

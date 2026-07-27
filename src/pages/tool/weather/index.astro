@@ -30,7 +30,7 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
         "operatingSystem": "Any",
         "featureList": ["Weather today", "Weather tomorrow", "7-day forecast", "Hourly forecast", "Rain probability", "UV Index", "Wind speed", "Humidity", "Sunrise and Sunset", "GPS location detection", "City search with autocomplete"],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "inLanguage": ["en","hi","pt","id"]
+        "inLanguage": "en"
       }
     </script>
     <script type="application/ld+json">
@@ -65,8 +65,8 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
           },
           {
             "@type": "Question",
-            "name": "Does it detect my location automatically?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes — on load it detects your approximate city from your IP address and loads the forecast instantly. Use the GPS button for precise device-level location, or search any city manually." }
+            "name": "How does location search work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Search for a city by name, or use the GPS button to share your device location with your browser. Weather and city searches are sent to Open-Meteo to retrieve the forecast; the tool does not automatically perform an IP-based location lookup." }
           },
           {
             "@type": "Question",
@@ -76,7 +76,7 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
           {
             "@type": "Question",
             "name": "Is this free to use?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely free, no account, no sign-up, no app download required. Open the page and the forecast loads automatically." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely free, with no account, sign-up, or app download required. Search for a city or choose the location button to load a forecast." }
           }
         ]
       }
@@ -108,7 +108,8 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
         <button class="btn btn-primary wx-search-btn" onclick="searchCity()">Search</button>
         <button class="btn btn-secondary wx-loc-btn" onclick="useGPS()" title="Use my location" aria-label="Use my GPS location">📍</button>
       </div>
-      <p class="wx-detecting" id="wxDetecting">📡 Detecting your location…</p>
+      <p class="wx-detecting" id="wxDetecting">Search for a city, or use the location button to share your device location.</p>
+      <p style="margin-top:.75rem;color:var(--muted);font-size:.8rem;line-height:1.5;">Weather and city searches are requested from Open-Meteo. Using the location button shares your coordinates through your browser to retrieve a local forecast.</p>
     </div>
 
     <!-- Current weather card -->
@@ -205,10 +206,10 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Weather Today, Tomorrow &amp; This Week</h2>
       <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
 
-        <p>This free weather tool gives you <strong style="color:var(--text);">today's weather</strong> and <strong style="color:var(--text);">tomorrow's forecast</strong> for any city in the world — no account, no app download, no sign-up. Just open the page and your local weather loads automatically.</p>
+        <p>This free weather tool gives you <strong style="color:var(--text);">today's weather</strong> and <strong style="color:var(--text);">tomorrow's forecast</strong> for any city in the world — no account, no app download, no sign-up. Search for a city or use your browser's location permission for a local forecast.</p>
 
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">How to check weather today</h3>
-        <p>The tool automatically detects your city from your IP address and shows the current temperature, feels-like temperature, humidity, wind speed, UV index, and today's total rainfall. The <strong>hourly strip</strong> below the current card shows hour-by-hour conditions for the next 24 hours so you can plan your day around rain windows.</p>
+        <p>Search for a city or choose the location button to show the current temperature, feels-like temperature, humidity, wind speed, UV index, and today's total rainfall. The <strong>hourly strip</strong> below the current card shows hour-by-hour conditions for the next 24 hours so you can plan your day around rain windows.</p>
 
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">How to check weather tomorrow</h3>
         <p>Scroll to the <strong>7-Day Forecast</strong> section. The second tile (after Today) shows tomorrow's weather — high and low temperature, condition description, and rain probability. This forecast is highly accurate (typically within 1–2°C and 85% correct on rain vs. no rain).</p>
@@ -505,25 +506,9 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
   async function reverseGeocode(lat, lon) {
     try {
       const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=en&format=json`);
-      // Open-Meteo geocoding doesn't do reverse, use ipapi for name fallback
+      // The geocoding endpoint does not provide reverse-geocoding results.
     } catch {}
     return { city: `${lat.toFixed(2)}, ${lon.toFixed(2)}`, country: '' };
-  }
-
-  // ── Auto-detect location on load (IP-based) ───────────────────────────────
-  async function autoDetect() {
-    try {
-      const res = await fetch('https://ipapi.co/json/');
-      const d = await res.json();
-      if (d.latitude && d.city) {
-        document.getElementById('cityInput').value = d.city;
-        await fetchWeather(d.latitude, d.longitude, d.city, d.country_name || d.country || '');
-      } else {
-        hide('wxDetecting');
-      }
-    } catch {
-      hide('wxDetecting');
-    }
   }
 
   // ── UI helpers ────────────────────────────────────────────────────────────
@@ -544,7 +529,7 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
 
   function retryLast() {
     if (lastLat !== null) fetchWeather(lastLat, lastLon, lastCity, lastCountry);
-    else autoDetect();
+    else showError('Search for a city or use the location button to load a forecast.');
   }
 
   // ── Canvas weather animation engine ──────────────────────────────────────
@@ -801,7 +786,6 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
 
   // ── Boot ──────────────────────────────────────────────────────────────────
   setUnit(currentUnit);
-  autoDetect();
 
   </script>
 

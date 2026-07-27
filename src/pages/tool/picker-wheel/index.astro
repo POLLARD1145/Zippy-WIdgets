@@ -3,8 +3,8 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 
-const title = 'Spin the Wheel – Free Random Winner & Name Picker | ZippyWidgets';
-const description = 'Free spin-the-wheel random winner picker — spin to pick a giveaway winner, raffle name, classroom student, or team. Winner wheel for contest picks, food decisions, yes/no, and more. No sign-up.';
+const title = 'Random Winner Wheel — Free Raffle & Contest Winner Picker | ZippyWidgets';
+const description = 'Pick a random giveaway, raffle or contest winner with a free winner wheel. Add names, spin fairly and choose a winner instantly. No sign-up.';
 const canonical = 'https://zippywidgets.online/tool/picker-wheel/';
 ---
 
@@ -15,9 +15,9 @@ const canonical = 'https://zippywidgets.online/tool/picker-wheel/';
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Random Picker Wheel",
-    "url": "https://zippywidgets.online/picker-wheel/",
-    "description": "Free online random picker wheel. Spin to pick a name, decision, or choice from your custom list instantly.",
+    "name": "Random Winner Wheel",
+    "url": "https://zippywidgets.online/tool/picker-wheel/",
+    "description": "Free online random winner wheel for giveaways, raffles, contests, classrooms, and custom choices.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -28,6 +28,11 @@ const canonical = 'https://zippywidgets.online/tool/picker-wheel/';
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I pick a random raffle or contest winner?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Paste one eligible name per line, select Update Wheel, then press Spin. The winner wheel selects one entry at random and displays the result immediately. Add a name more than once only when that person has legitimately earned multiple entries." }
+      },
       {
         "@type": "Question",
         "name": "How do I use the random picker wheel?",
@@ -62,8 +67,8 @@ const canonical = 'https://zippywidgets.online/tool/picker-wheel/';
     <div class="tool-header">
       <span class="icon">🎡</span>
       <div>
-        <h1>Spin the Wheel — Free Random Winner &amp; Name Picker</h1>
-        <p>Add names or choices and spin. Use as a random winner wheel for giveaways and contests, a classroom name picker, raffle picker, team selector, or food decider.</p>
+        <h1>Random Winner Wheel — Free Raffle &amp; Contest Picker</h1>
+        <p>Add names and spin to pick a random giveaway, raffle or contest winner. Also use it as a classroom name picker, team selector or food decider.</p>
       </div>
     </div>
 
@@ -154,7 +159,7 @@ Eve</textarea>
     </section>
 
     <section class="card" style="margin-top:1rem;">
-      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Random Winner Wheel — Pick Giveaway &amp; Contest Winners</h2>
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Random Winner Wheel — Pick a Giveaway, Raffle or Contest Winner</h2>
       <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
         <p>The most popular use for a winner wheel is picking a random winner from a giveaway, raffle, or contest. Add every participant's name to the list — one per line — click <strong>Update Wheel</strong>, then spin the winner wheel live for your audience. The animated spin makes the selection visible and verifiable, so nobody can question the result.</p>
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How to Pick a Random Contest Winner</h3>
@@ -174,52 +179,6 @@ Eve</textarea>
 
   <Footer />
 
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Random Picker Wheel",
-        "url": "https://zippywidgets.online/picker-wheel/",
-        "description": "Free online random picker wheel. Spin to pick a name, decision, or choice from your custom list instantly.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do I use the random picker wheel?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Type your entries into the text box — one item per line — then click Update Wheel and press Spin. The wheel lands on a random segment and displays the winner. No sign-up required." }
-          },
-          {
-            "@type": "Question",
-            "name": "Is the picker wheel truly random and fair?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each spin uses the browser's built-in random number generator seeded by OS-level entropy. Every entry has exactly a 1-in-N chance of winning, where N is the number of entries. Previous results have no effect on future spins." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I remove a name after it has been picked?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Delete the name from the text box and click Update Wheel. This is useful for teachers who want to cycle through all students before repeating, or for multi-round giveaways." }
-          },
-          {
-            "@type": "Question",
-            "name": "Does the picker wheel work on mobile phones?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The picker wheel is fully responsive and works on iOS and Android browsers. Tap the wheel or the Spin button to start. No app installation is required." }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the built-in presets for?",
-            "acceptedAnswer": { "@type": "Answer", "text": "The presets quickly load popular use cases: What to eat, Numbers 1–10, Yes or No, Truth or Dare, Giveaway Winner, and Days of Week. They are useful when you need a wheel immediately without typing a custom list." }
-          }
-        ]
-      }
-  </script>
 
   <script is:inline>
     (function(){
