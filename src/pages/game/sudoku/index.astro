@@ -1,0 +1,968 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Daily Sudoku — Free Online Sudoku Puzzle, No Login | ZippyWidgets';
+const description = 'Play a free daily Sudoku puzzle in your browser. Four difficulties, notes mode, hints, and keyboard controls. Same puzzle worldwide every day — no login required.';
+const canonical = 'https://zippywidgets.online/game/sudoku/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <meta name="keywords" content="sudoku, daily sudoku, free sudoku, sudoku online, sudoku puzzle, play sudoku, sudoku no login, sudoku game, logic puzzle" />
+    <meta property="og:title" content="Daily Sudoku — Free Online Sudoku Puzzle, No Login" />
+    <meta property="og:description" content="Free daily Sudoku puzzle with four difficulties. Notes, hints, keyboard controls, and spoiler-free sharing. Same puzzle worldwide every day." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://zippywidgets.online/ZippyWidgets Logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Daily Sudoku — Free Online Sudoku, No Login" />
+    <meta name="twitter:description" content="Free daily Sudoku puzzle. Four difficulties, notes mode, same puzzle worldwide every day." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Daily Sudoku",
+        "description": "A free daily Sudoku puzzle game. Four difficulty levels, notes mode, hints, and keyboard controls. Same puzzle for all players worldwide every day.",
+        "url": "https://zippywidgets.online/game/sudoku/",
+        "applicationCategory": "Game",
+        "gamePlatform": "Web Browser",
+        "genre": ["Puzzle", "Sudoku", "Logic Game"],
+        "playMode": "SinglePlayer",
+        "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+  </Fragment>
+
+  <Nav />
+
+  <div class="ad-slot-game" id="ad-top-sd" style="padding:.25rem 1rem;">
+    <ins class="adsbygoogle" style="display:block"
+      data-ad-client="ca-pub-6884221059402072"
+      data-ad-slot="auto" data-ad-format="horizontal"
+      data-full-width-responsive="true"></ins>
+  </div>
+
+  <main>
+    <div class="sd-game-page">
+      <div class="sd-game-header">
+        <h1 class="sd-game-title">Daily <span>Sudoku</span></h1>
+        <div class="sd-header-row">
+          <div class="sd-seed-badge">🌐 Puzzle <b id="sd-seed-display">—</b></div>
+          <span class="sd-mode-label" id="sd-mode-label">📅 Daily puzzle</span>
+        </div>
+        <div class="sd-daily-done-notice" id="sd-daily-done-notice" style="display:none;">
+          ✅ You already completed today's puzzle — here's a bonus round!
+        </div>
+      </div>
+
+      <div class="sd-difficulty-bar" role="group" aria-label="Difficulty">
+        <button class="sd-diff-btn active" data-diff="easy" onclick="sd.setDifficulty('easy')">Easy</button>
+        <button class="sd-diff-btn" data-diff="medium" onclick="sd.setDifficulty('medium')">Medium</button>
+        <button class="sd-diff-btn" data-diff="hard" onclick="sd.setDifficulty('hard')">Hard</button>
+        <button class="sd-diff-btn" data-diff="expert" onclick="sd.setDifficulty('expert')">Expert</button>
+      </div>
+
+      <div class="sd-stats-bar">
+        <div class="sd-stat" id="sd-timer-stat">⏱ <span id="sd-timer-display">00:00</span></div>
+        <div class="sd-stat" id="sd-hints-stat">💡 <span id="sd-hints-display">0</span></div>
+        <button class="sd-notes-toggle" id="sd-notes-toggle" onclick="sd.toggleNotes()" aria-pressed="false">
+          📝 Notes <span class="sd-status">OFF</span>
+        </button>
+      </div>
+
+      <div class="sd-message-bar" id="sd-message-bar" role="status" aria-live="polite">Select a cell and fill the grid</div>
+
+      <div class="sd-grid-wrap">
+        <div class="sd-sudoku-grid" id="sd-sudoku-grid" role="grid" aria-label="Sudoku board" tabindex="0"></div>
+      </div>
+
+      <div class="sd-controls">
+        <div class="sd-number-pad" id="sd-number-pad" role="group" aria-label="Number input"></div>
+        <div class="sd-action-pad" role="group" aria-label="Actions">
+          <button class="sd-action-btn" onclick="sd.inputErase()" aria-label="Erase selected cell">⌫ Erase</button>
+          <button class="sd-action-btn" onclick="sd.useHint()" aria-label="Reveal one correct number">💡 Hint</button>
+          <button class="sd-action-btn" onclick="sd.newGame()">🔄 New</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-modal-backdrop" id="sd-result-modal" aria-modal="true" role="dialog" aria-labelledby="sd-result-heading" style="display:none;">
+      <div class="sd-modal-panel" role="document">
+        <div class="sd-result-emoji" id="sd-result-emoji">🎉</div>
+        <h2 id="sd-result-heading">—</h2>
+        <p id="sd-result-body">—</p>
+        <div class="sd-share-box" id="sd-share-box"></div>
+        <div class="sd-btn-row">
+          <button class="sd-btn sd-btn-primary" onclick="sd.copyShare()">📋 Copy Result</button>
+          <button class="sd-btn sd-btn-primary" id="sd-btn-play-again" onclick="sd.playBonus()" style="background:linear-gradient(135deg,#4ade80,#38bdf8);color:#000;">🎲 Play Again</button>
+          <button class="sd-btn sd-btn-secondary" onclick="window.location.href='/game/'">🎮 More Games</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-game-page sd-seo-section" style="padding-top:0;">
+      <div class="sd-seo-card">
+        <h2>How to Play Daily Sudoku</h2>
+        <p>Fill the <strong>9×9 grid</strong> so that every row, every column, and every 3×3 box contains the digits <strong>1 through 9</strong> exactly once. Tap or click a cell, then choose a number from the pad below. Use the keyboard arrow keys to move around.</p>
+        <h3>Tips</h3>
+        <ul>
+          <li><strong>Notes mode</strong> lets you jot down small candidate numbers in a cell. Toggle it with the Notes button or press <kbd>N</kbd>.</li>
+          <li><strong>Hints</strong> reveal one correct number if you get stuck — but they count toward your final stats.</li>
+          <li><strong>Four difficulties</strong> control how many starting numbers you get. Easy has more givens; Expert leaves the most blanks.</li>
+        </ul>
+        <p>A new puzzle resets every day at midnight UTC. The same daily puzzle appears for every player worldwide, so you can compare times without spoilers.</p>
+      </div>
+      <div class="sd-seo-card">
+        <h2>Frequently Asked Questions</h2>
+        <div class="sd-faq-list">
+          <div>
+            <h3>Is this free to play?</h3>
+            <p>Yes — completely free, no login or sign-up required.</p>
+          </div>
+          <div>
+            <h3>Does every player get the same puzzle?</h3>
+            <p>Yes. The daily puzzle is generated using today's UTC date as a seed, so every player worldwide sees the same Sudoku on the same day.</p>
+          </div>
+          <div>
+            <h3>Is my progress saved?</h3>
+            <p>Yes — your current grid, notes, timer, and difficulty are saved in your browser's localStorage so you can close the tab and return later.</p>
+          </div>
+          <div>
+            <h3>Can I play more than one puzzle a day?</h3>
+            <p>Yes — after finishing the daily puzzle, press Play Again for unlimited bonus rounds with a fresh seeded board.</p>
+          </div>
+          <div>
+            <h3>Are the puzzles guaranteed to have one solution?</h3>
+            <p>Yes. Every generated board is validated by a solver to ensure it has exactly one valid solution.</p>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:.8rem;color:var(--muted);">← <a href="/game/" style="color:#38bdf8;">All Games</a> &nbsp;·&nbsp; <a href="/" style="color:#38bdf8;">ZippyWidgets</a></p>
+      <div class="ad-slot-game" id="ad-bottom-sd">
+        <ins class="adsbygoogle" style="display:block"
+          data-ad-client="ca-pub-6884221059402072"
+          data-ad-slot="auto" data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    "use strict";
+
+    const SD = (function() {
+      // ── PRNG & seed ────────────────────────────────────────────────────────
+      function seededRandom(seed) {
+        return function() {
+          let t = seed += 0x6D2B79F5;
+          t = Math.imul(t ^ (t >>> 15), t | 1);
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      function getDailySeed() {
+        const p = new URLSearchParams(window.location.search);
+        if (p.has('seed')) return parseInt(p.get('seed'), 10);
+        const d = new Date();
+        return (d.getUTCFullYear() * 10000) + ((d.getUTCMonth() + 1) * 100) + d.getUTCDate();
+      }
+
+      // ── Constants ────────────────────────────────────────────────────────────
+      const DAILY_SEED = getDailySeed();
+      const DIFFICULTY = {
+        easy:   { name: 'Easy',   givens: 40, index: 0 },
+        medium: { name: 'Medium', givens: 32, index: 1 },
+        hard:   { name: 'Hard',   givens: 26, index: 2 },
+        expert: { name: 'Expert', givens: 22, index: 3 },
+      };
+      const DIFF_KEYS = ['easy','medium','hard','expert'];
+
+      // ── State ────────────────────────────────────────────────────────────────
+      let state = {
+        difficulty: 'medium',
+        puzzle: [],
+        solution: [],
+        grid: [],
+        notes: [],
+        givens: new Set(),
+        selectedCell: 40,
+        notesMode: false,
+        gameOver: false,
+        startTime: null,
+        elapsedOffset: 0,
+        timerInterval: null,
+        hintsUsed: 0,
+        isBonus: false,
+        bonusRound: 0,
+      };
+
+      // ── Base solved grid & generator ─────────────────────────────────────────
+      const BASE_GRID = [
+        [5,3,4,6,7,8,9,1,2],
+        [6,7,2,1,9,5,3,4,8],
+        [1,9,8,3,4,2,5,6,7],
+        [8,5,9,7,6,1,4,2,3],
+        [4,2,6,8,5,3,7,9,1],
+        [7,1,3,9,2,4,8,5,6],
+        [9,6,1,5,3,7,2,8,4],
+        [2,8,7,4,1,9,6,3,5],
+        [3,4,5,2,8,6,1,7,9],
+      ];
+
+      function shuffleArray(arr, rng) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(rng() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function generateSolution(seed) {
+        const rng = seededRandom(seed);
+        const digitMap = {};
+        const digits = shuffleArray([1,2,3,4,5,6,7,8,9], rng);
+        for (let i = 0; i < 9; i++) digitMap[i + 1] = digits[i];
+
+        let grid = BASE_GRID.map(row => row.map(v => digitMap[v]));
+
+        // Shuffle rows within each band
+        for (let b = 0; b < 3; b++) {
+          const rows = [b*3, b*3+1, b*3+2];
+          shuffleArray(rows, rng);
+          const band = rows.map(r => grid[r]);
+          for (let i = 0; i < 3; i++) grid[b*3 + i] = band[i];
+        }
+
+        // Shuffle columns within each stack
+        for (let s = 0; s < 3; s++) {
+          const cols = [s*3, s*3+1, s*3+2];
+          shuffleArray(cols, rng);
+          for (let r = 0; r < 9; r++) {
+            const newRow = [...grid[r]];
+            for (let i = 0; i < 3; i++) newRow[s*3 + i] = grid[r][cols[i]];
+            grid[r] = newRow;
+          }
+        }
+
+        // Shuffle bands
+        const bandOrder = shuffleArray([0,1,2], rng);
+        const newGrid = [];
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) newGrid.push(grid[bandOrder[i]*3 + j]);
+        }
+        grid = newGrid;
+
+        // Shuffle stacks
+        const stackOrder = shuffleArray([0,1,2], rng);
+        const finalGrid = [];
+        for (let r = 0; r < 9; r++) {
+          const row = [];
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) row.push(grid[r][stackOrder[i]*3 + j]);
+          }
+          finalGrid.push(row);
+        }
+        grid = finalGrid;
+
+        if (rng() < 0.5) {
+          const transposed = [];
+          for (let r = 0; r < 9; r++) {
+            const row = [];
+            for (let c = 0; c < 9; c++) row.push(grid[c][r]);
+            transposed.push(row);
+          }
+          grid = transposed;
+        }
+
+        return grid.flat();
+      }
+
+      // ── Solver ───────────────────────────────────────────────────────────────
+      function solveCount(board, limit) {
+        limit = limit || 2;
+        let count = 0;
+        const nums = [1,2,3,4,5,6,7,8,9];
+
+        function findEmpty() {
+          for (let i = 0; i < 81; i++) if (!board[i]) return i;
+          return -1;
+        }
+
+        function isValid(pos, num) {
+          const row = Math.floor(pos / 9);
+          const col = pos % 9;
+          const boxRow = Math.floor(row / 3) * 3;
+          const boxCol = Math.floor(col / 3) * 3;
+          for (let i = 0; i < 9; i++) {
+            if (board[row * 9 + i] === num) return false;
+            if (board[i * 9 + col] === num) return false;
+          }
+          for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 3; c++) {
+              if (board[(boxRow + r) * 9 + (boxCol + c)] === num) return false;
+            }
+          }
+          return true;
+        }
+
+        function solve() {
+          if (count >= limit) return;
+          const pos = findEmpty();
+          if (pos === -1) { count++; return; }
+          for (let i = 0; i < 9; i++) {
+            const num = nums[i];
+            if (isValid(pos, num)) {
+              board[pos] = num;
+              solve();
+              board[pos] = 0;
+              if (count >= limit) return;
+            }
+          }
+        }
+
+        solve();
+        return count;
+      }
+
+      // ── Puzzle generation ────────────────────────────────────────────────────
+      function generatePuzzle(seed, difficulty) {
+        const solution = generateSolution(seed);
+        const puzzle = [...solution];
+        const targetGivens = DIFFICULTY[difficulty].givens;
+        const removalRng = seededRandom(seed + 9999);
+        const cells = shuffleArray([...Array(81).keys()], removalRng);
+        let removed = 0;
+
+        for (const idx of cells) {
+          if (puzzle[idx] === 0) continue;
+          const original = puzzle[idx];
+          puzzle[idx] = 0;
+          const test = [...puzzle];
+          if (solveCount(test, 2) === 1) {
+            removed++;
+            if (81 - removed <= targetGivens) break;
+          } else {
+            puzzle[idx] = original;
+          }
+        }
+
+        return { puzzle, solution };
+      }
+
+      // ── Save / load ─────────────────────────────────────────────────────────
+      function getSaveKey() {
+        const base = `zw_sd_${state.isBonus ? 'bonus_' : ''}${DAILY_SEED}_${state.difficulty}`;
+        return state.isBonus ? `${base}_${state.bonusRound}` : base;
+      }
+
+      function isSaveFinished(key) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return false;
+          const s = JSON.parse(raw);
+          return s && s.gameOver === true;
+        } catch { return false; }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(getSaveKey(), JSON.stringify({
+            version: 1,
+            difficulty: state.difficulty,
+            puzzle: state.puzzle,
+            solution: state.solution,
+            grid: state.grid,
+            notes: state.notes.map(n => Array.from(n)),
+            givens: Array.from(state.givens),
+            notesMode: state.notesMode,
+            gameOver: state.gameOver,
+            startTime: state.startTime,
+            elapsedOffset: state.elapsedOffset,
+            hintsUsed: state.hintsUsed,
+            isBonus: state.isBonus,
+            bonusRound: state.bonusRound,
+          }));
+        } catch {}
+      }
+
+      function loadState(key) {
+        try {
+          const raw = localStorage.getItem(key || getSaveKey());
+          if (!raw) return false;
+          const s = JSON.parse(raw);
+          if (!s || s.version !== 1) return false;
+          state.difficulty = s.difficulty || state.difficulty;
+          state.puzzle = s.puzzle || [];
+          state.solution = s.solution || [];
+          state.grid = s.grid || [];
+          state.notes = Array.isArray(s.notes) ? s.notes.map(arr => new Set(arr || [])) : [];
+          state.givens = new Set(s.givens || []);
+          state.notesMode = !!s.notesMode;
+          state.gameOver = !!s.gameOver;
+          state.startTime = typeof s.startTime === 'number' ? s.startTime : Date.now();
+          state.elapsedOffset = typeof s.elapsedOffset === 'number' ? s.elapsedOffset : 0;
+          state.hintsUsed = typeof s.hintsUsed === 'number' ? s.hintsUsed : 0;
+          state.isBonus = !!s.isBonus;
+          state.bonusRound = typeof s.bonusRound === 'number' ? s.bonusRound : 0;
+          return true;
+        } catch { return false; }
+      }
+
+      // ── Init round ───────────────────────────────────────────────────────────
+      function computeSeed(difficulty, bonus, round) {
+        const salt = DIFFICULTY[difficulty].index + 1;
+        if (bonus) return DAILY_SEED * 100000 + salt * 1000 + round * 7;
+        return DAILY_SEED * 100 + salt;
+      }
+
+      function initRound(difficulty, bonus, round) {
+        stopTimer();
+        state.difficulty = difficulty || 'medium';
+        state.isBonus = !!bonus;
+        state.bonusRound = typeof round === 'number' ? round : 0;
+        const seed = computeSeed(state.difficulty, state.isBonus, state.bonusRound);
+
+        const loaded = loadState();
+        if (!loaded || state.puzzle.length !== 81) {
+          const { puzzle, solution } = generatePuzzle(seed, state.difficulty);
+          state.puzzle = puzzle;
+          state.solution = solution;
+          state.grid = Array(81).fill(0);
+          state.notes = Array.from({ length: 81 }, () => new Set());
+          state.givens = new Set();
+          state.puzzle.forEach((v, i) => { if (v) state.givens.add(i); });
+          state.gameOver = false;
+          state.startTime = Date.now();
+          state.elapsedOffset = 0;
+          state.hintsUsed = 0;
+          state.selectedCell = 40;
+        }
+
+        if (!state.isBonus && state.gameOver) {
+          // Daily finished for this difficulty; scan for a fresh bonus slot
+          const dailyDoneNotice = document.getElementById('sd-daily-done-notice');
+          if (dailyDoneNotice) dailyDoneNotice.style.display = '';
+          let bRound = 1;
+          while (isSaveFinished(`zw_sd_bonus_${DAILY_SEED}_${state.difficulty}_${bRound}`)) bRound++;
+          return initRound(state.difficulty, true, bRound);
+        }
+
+        document.getElementById('sd-daily-done-notice').style.display = 'none';
+        startTimer();
+        updateDifficultyUI();
+        renderAll();
+        updateModeLabel();
+        document.getElementById('sd-seed-display').textContent = state.isBonus ? `Bonus ${state.bonusRound}` : DAILY_SEED;
+        setMessage(state.gameOver ? (state.isBonus ? 'Bonus round complete!' : "Today's puzzle already solved") : 'Select a cell and fill the grid');
+      }
+
+      // ── Timer ────────────────────────────────────────────────────────────────
+      function startTimer() {
+        if (state.timerInterval) return;
+        if (state.gameOver) return;
+        state.startTime = Date.now();
+        state.timerInterval = setInterval(() => {
+          const total = state.elapsedOffset + Math.floor((Date.now() - state.startTime) / 1000);
+          renderTimer(total);
+        }, 1000);
+      }
+
+      function stopTimer() {
+        if (state.timerInterval) {
+          state.elapsedOffset += Math.floor((Date.now() - state.startTime) / 1000);
+          clearInterval(state.timerInterval);
+          state.timerInterval = null;
+        }
+      }
+
+      function currentElapsed() {
+        let total = state.elapsedOffset;
+        if (state.timerInterval) total += Math.floor((Date.now() - state.startTime) / 1000);
+        return total;
+      }
+
+      // ── Rendering ────────────────────────────────────────────────────────────
+      function renderTimer(seconds) {
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        document.getElementById('sd-timer-display').textContent = `${m}:${s}`;
+      }
+
+      function updateDifficultyUI() {
+        document.querySelectorAll('.sd-diff-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.diff === state.difficulty);
+        });
+      }
+
+      function updateModeLabel() {
+        const el = document.getElementById('sd-mode-label');
+        if (!el) return;
+        el.textContent = state.isBonus ? `🎲 Bonus round ${state.bonusRound}` : '📅 Daily puzzle';
+        el.style.color = state.isBonus ? 'var(--yellow)' : 'var(--accent)';
+      }
+
+      function setMessage(msg, cls) {
+        const el = document.getElementById('sd-message-bar');
+        el.textContent = msg;
+        el.className = 'sd-message-bar' + (cls ? ' ' + cls : '');
+      }
+
+      function getConflicts() {
+        const conflicts = new Set();
+        const rows = new Array(9).fill(null).map(() => ({}));
+        const cols = new Array(9).fill(null).map(() => ({}));
+        const boxes = new Array(9).fill(null).map(() => ({}));
+        for (let i = 0; i < 81; i++) {
+          const v = state.grid[i];
+          if (!v) continue;
+          const r = Math.floor(i / 9), c = i % 9, b = Math.floor(r / 3) * 3 + Math.floor(c / 3);
+          if (rows[r][v]) { conflicts.add(rows[r][v]); conflicts.add(i); }
+          else rows[r][v] = i;
+          if (cols[c][v]) { conflicts.add(cols[c][v]); conflicts.add(i); }
+          else cols[c][v] = i;
+          if (boxes[b][v]) { conflicts.add(boxes[b][v]); conflicts.add(i); }
+          else boxes[b][v] = i;
+        }
+        return conflicts;
+      }
+
+      function renderAll() {
+        const gridEl = document.getElementById('sd-sudoku-grid');
+        gridEl.innerHTML = '';
+        const conflicts = getConflicts();
+
+        for (let r = 0; r < 9; r++) {
+          const rowEl = document.createElement('div');
+          rowEl.className = 'sd-row';
+          rowEl.setAttribute('role', 'row');
+          for (let c = 0; c < 9; c++) {
+            const idx = r * 9 + c;
+            const cell = document.createElement('div');
+            cell.className = 'sd-cell';
+            cell.setAttribute('role', 'gridcell');
+            cell.setAttribute('data-index', idx);
+            cell.setAttribute('tabindex', idx === state.selectedCell ? '0' : '-1');
+            cell.setAttribute('aria-selected', idx === state.selectedCell ? 'true' : 'false');
+
+            if (state.givens.has(idx)) {
+              cell.classList.add('given');
+              cell.textContent = state.puzzle[idx];
+              cell.setAttribute('aria-label', `Row ${r + 1}, column ${c + 1}, given ${state.puzzle[idx]}`);
+            } else {
+              const val = state.grid[idx];
+              if (val) {
+                cell.textContent = val;
+                cell.setAttribute('aria-label', `Row ${r + 1}, column ${c + 1}, value ${val}`);
+              } else {
+                cell.setAttribute('aria-label', `Row ${r + 1}, column ${c + 1}, empty`);
+                const notesArr = Array.from(state.notes[idx] || []).sort((a, b) => a - b);
+                if (notesArr.length) {
+                  const notesWrap = document.createElement('div');
+                  notesWrap.className = 'sd-cell-notes';
+                  for (let n = 1; n <= 9; n++) {
+                    const span = document.createElement('span');
+                    span.textContent = notesArr.includes(n) ? n : '';
+                    notesWrap.appendChild(span);
+                  }
+                  cell.appendChild(notesWrap);
+                }
+              }
+            }
+
+            if (idx === state.selectedCell) cell.classList.add('selected');
+            if (conflicts.has(idx)) cell.classList.add('conflict');
+            if ((r + 1) % 3 === 0 && r !== 8) cell.classList.add('box-b-bottom');
+            if ((c + 1) % 3 === 0 && c !== 8) cell.classList.add('box-b-right');
+
+            cell.addEventListener('click', () => selectCell(idx));
+            cell.addEventListener('pointerdown', (e) => { e.preventDefault(); selectCell(idx); });
+            rowEl.appendChild(cell);
+          }
+          gridEl.appendChild(rowEl);
+        }
+
+        // Number pad
+        const padEl = document.getElementById('sd-number-pad');
+        padEl.innerHTML = '';
+        for (let n = 1; n <= 9; n++) {
+          const btn = document.createElement('button');
+          btn.textContent = n;
+          btn.setAttribute('aria-label', `Enter ${n}`);
+          btn.addEventListener('click', () => inputNumber(n));
+          padEl.appendChild(btn);
+        }
+
+        // Notes toggle
+        const notesBtn = document.getElementById('sd-notes-toggle');
+        notesBtn.setAttribute('aria-pressed', state.notesMode ? 'true' : 'false');
+        notesBtn.querySelector('.sd-status').textContent = state.notesMode ? 'ON' : 'OFF';
+        notesBtn.classList.toggle('active', state.notesMode);
+
+        // Hints
+        document.getElementById('sd-hints-display').textContent = state.hintsUsed;
+      }
+
+      function selectCell(idx) {
+        if (state.gameOver) return;
+        state.selectedCell = idx;
+        renderAll();
+      }
+
+      // ── Input ────────────────────────────────────────────────────────────────
+      function inputNumber(n) {
+        if (state.gameOver) return;
+        if (state.selectedCell == null) { setMessage('Select a cell first', 'bad'); playSound('wrong'); return; }
+        if (state.givens.has(state.selectedCell)) { setMessage('Given cells cannot be changed', 'bad'); playSound('wrong'); return; }
+        if (state.notesMode) {
+          const notes = state.notes[state.selectedCell];
+          if (state.grid[state.selectedCell]) state.grid[state.selectedCell] = 0;
+          if (notes.has(n)) notes.delete(n); else notes.add(n);
+          saveState();
+          renderAll();
+          playSound('tap');
+          return;
+        }
+        state.notes[state.selectedCell].clear();
+        state.grid[state.selectedCell] = n;
+        saveState();
+        renderAll();
+        playSound('tap');
+        checkWin();
+      }
+
+      function inputErase() {
+        if (state.gameOver) return;
+        if (state.selectedCell == null) return;
+        if (state.givens.has(state.selectedCell)) return;
+        state.grid[state.selectedCell] = 0;
+        state.notes[state.selectedCell].clear();
+        saveState();
+        renderAll();
+        playSound('tap');
+      }
+
+      function toggleNotes() {
+        state.notesMode = !state.notesMode;
+        saveState();
+        renderAll();
+        setMessage(state.notesMode ? 'Notes mode on — tap numbers to add/remove candidates' : 'Notes mode off');
+      }
+
+      function setDifficulty(diff) {
+        if (diff === state.difficulty && !state.isBonus) return;
+        // If current is bonus, switch to daily for new difficulty
+        stopTimer();
+        initRound(diff, false, 0);
+      }
+
+      function newGame() {
+        if (state.isBonus) {
+          // Generate a fresh bonus round for current difficulty
+          let bRound = state.bonusRound + 1;
+          while (isSaveFinished(`zw_sd_bonus_${DAILY_SEED}_${state.difficulty}_${bRound}`)) bRound++;
+          initRound(state.difficulty, true, bRound);
+        } else {
+          // If daily not finished, confirm? For simplicity, just start a bonus round.
+          if (state.gameOver) {
+            initRound(state.difficulty, true, 1);
+          } else {
+            // Save current daily progress then start a bonus
+            initRound(state.difficulty, true, 1);
+          }
+        }
+      }
+
+      function useHint() {
+        if (state.gameOver) return;
+        const empties = [];
+        for (let i = 0; i < 81; i++) {
+          if (!state.givens.has(i) && state.grid[i] !== state.solution[i]) empties.push(i);
+        }
+        if (!empties.length) return;
+        const idx = empties[Math.floor(Math.random() * empties.length)];
+        state.grid[idx] = state.solution[idx];
+        state.notes[idx].clear();
+        state.hintsUsed++;
+        state.selectedCell = idx;
+        saveState();
+        renderAll();
+        setMessage(`Hint placed: ${state.solution[idx]}`, 'info');
+        playSound('correct');
+        checkWin();
+      }
+
+      // ── Win / result ─────────────────────────────────────────────────────────
+      function checkWin() {
+        if (state.gameOver) return;
+        if (state.grid.some(v => !v)) return;
+        const conflicts = getConflicts();
+        if (conflicts.size > 0) { setMessage('There are still conflicts', 'bad'); return; }
+        // Check matches solution (defensive, since unique solution)
+        for (let i = 0; i < 81; i++) {
+          if (state.grid[i] !== state.solution[i]) return;
+        }
+        state.gameOver = true;
+        stopTimer();
+        saveState();
+        showResult(true);
+      }
+
+      function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      }
+
+      function buildShareText() {
+        const d = new Date();
+        const ds = `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+        const label = state.isBonus
+          ? `ZippyWidgets Bonus Sudoku (round ${state.bonusRound})`
+          : `ZippyWidgets Daily Sudoku ${ds}`;
+        return `${label}\nDifficulty: ${DIFFICULTY[state.difficulty].name}\nTime: ${formatTime(currentElapsed())}\nHints: ${state.hintsUsed}\n\nplay: zippywidgets.online/game/sudoku/`.trim();
+      }
+
+      function showResult(won) {
+        const elapsed = currentElapsed();
+        document.getElementById('sd-result-emoji').textContent = won ? '🎉' : '😅';
+        document.getElementById('sd-result-heading').textContent = won ? 'Puzzle solved!' : 'Puzzle complete';
+        document.getElementById('sd-result-body').textContent = `Difficulty: ${DIFFICULTY[state.difficulty].name} · Time: ${formatTime(elapsed)} · Hints: ${state.hintsUsed}`;
+        document.getElementById('sd-share-box').textContent = buildShareText();
+        setMessage(won ? '🎉 Great job!' : 'Done!', 'good');
+        openModal();
+      }
+
+      function openModal() {
+        const modal = document.getElementById('sd-result-modal');
+        modal.style.display = 'flex';
+        requestAnimationFrame(() => modal.classList.add('open'));
+      }
+
+      function closeModal() {
+        const modal = document.getElementById('sd-result-modal');
+        modal.classList.remove('open');
+        setTimeout(() => { modal.style.display = 'none'; }, 250);
+      }
+
+      function copyShare() {
+        const text = document.getElementById('sd-share-box').textContent;
+        navigator.clipboard.writeText(text)
+          .then(() => setMessage('Result copied — paste it anywhere!', 'good'))
+          .catch(() => prompt('Copy your result:', text));
+      }
+
+      function playBonus() {
+        closeModal();
+        newGame();
+      }
+
+      // ── Keyboard ─────────────────────────────────────────────────────────────
+      function moveSelection(dr, dc) {
+        if (state.selectedCell == null) { state.selectedCell = 40; renderAll(); return; }
+        const r = Math.floor(state.selectedCell / 9);
+        const c = state.selectedCell % 9;
+        const nr = Math.max(0, Math.min(8, r + dr));
+        const nc = Math.max(0, Math.min(8, c + dc));
+        state.selectedCell = nr * 9 + nc;
+        renderAll();
+        focusSelected();
+      }
+
+      function focusSelected() {
+        const cell = document.querySelector(`.sd-cell[data-index="${state.selectedCell}"]`);
+        if (cell) cell.focus();
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        const k = e.key;
+        if (k === 'ArrowUp') { e.preventDefault(); moveSelection(-1, 0); }
+        else if (k === 'ArrowDown') { e.preventDefault(); moveSelection(1, 0); }
+        else if (k === 'ArrowLeft') { e.preventDefault(); moveSelection(0, -1); }
+        else if (k === 'ArrowRight') { e.preventDefault(); moveSelection(0, 1); }
+        else if (/^[1-9]$/.test(k)) { e.preventDefault(); inputNumber(parseInt(k, 10)); }
+        else if (k === 'Backspace' || k === 'Delete' || k === '0') { e.preventDefault(); inputErase(); }
+        else if (k.toLowerCase() === 'n') { e.preventDefault(); toggleNotes(); }
+        else if (k.toLowerCase() === 'h') { e.preventDefault(); useHint(); }
+        else if (k === 'Escape') { closeModal(); }
+      });
+
+      document.getElementById('sd-sudoku-grid').addEventListener('focus', () => {
+        if (state.selectedCell == null) state.selectedCell = 40;
+        focusSelected();
+      });
+
+      // ── Audio ────────────────────────────────────────────────────────────────
+      let _audioCtx = null;
+      let _muted = false;
+      try { _muted = localStorage.getItem('zw_mute') === '1'; } catch {}
+
+      function _ctx() {
+        if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return _audioCtx;
+      }
+      function _tone(f, dur, type, vol) {
+        if (_muted) return;
+        try {
+          const c = _ctx(), o = c.createOscillator(), g = c.createGain();
+          o.connect(g); g.connect(c.destination);
+          o.type = type || 'sine'; o.frequency.value = f;
+          g.gain.setValueAtTime(vol || 0.22, c.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+          o.start(); o.stop(c.currentTime + dur);
+        } catch {}
+      }
+      function playSound(name) {
+        if (_muted) return;
+        if (name === 'tap') _tone(340, 0.05, 'sine', 0.1);
+        if (name === 'correct') { _tone(520, 0.08, 'sine'); setTimeout(() => _tone(660, 0.1, 'sine'), 80); }
+        if (name === 'wrong') _tone(200, 0.12, 'sawtooth', 0.15);
+        if (name === 'win') [523,659,784,1047].forEach((f, i) => setTimeout(() => _tone(f, 0.15, 'sine', 0.2), i * 80));
+      }
+
+      // ── Ads ──────────────────────────────────────────────────────────────────
+      function loadAds() {
+        (function() {
+          function loadTopAd() {
+            const el = document.getElementById('ad-top-sd');
+            if (el && el.querySelector('ins:not([data-adsbygoogle-status])')) {
+              (window.adsbygoogle = window.adsbygoogle || []).push({});
+            }
+            document.removeEventListener('pointerdown', loadTopAd);
+            document.removeEventListener('keydown', loadTopAd);
+          }
+          document.addEventListener('pointerdown', loadTopAd, { once: true });
+          document.addEventListener('keydown', loadTopAd, { once: true });
+          const bottom = document.getElementById('ad-bottom-sd');
+          if (bottom) {
+            const obs = new IntersectionObserver(entries => {
+              if (entries[0].isIntersecting) {
+                const ins = bottom.querySelector('ins:not([data-adsbygoogle-status])');
+                if (ins) (window.adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(bottom);
+          }
+        })();
+      }
+
+      // ── Boot ───────────────────────────────────────────────────────────────────
+      function boot() {
+        initRound('medium', false, 0);
+        loadAds();
+      }
+
+      // Public API
+      return {
+        boot,
+        setDifficulty,
+        toggleNotes,
+        inputNumber,
+        inputErase,
+        useHint,
+        newGame,
+        playBonus,
+        copyShare,
+      };
+    })();
+
+    window.sd = SD;
+    document.addEventListener('DOMContentLoaded', SD.boot);
+  </script>
+
+  <style is:global>
+    .sd-game-page { width:100%; max-width:540px; margin:0 auto; padding:1rem .75rem 3rem; display:flex; flex-direction:column; gap:1rem; align-items:center; }
+    .sd-game-header { text-align:center; display:flex; flex-direction:column; gap:.35rem; align-items:center; }
+    .sd-game-title { font-size:1.35rem; font-weight:900; letter-spacing:-.02em; }
+    .sd-game-title span { color:var(--accent); }
+    .sd-header-row { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; justify-content:center; }
+    .sd-seed-badge { display:inline-flex; align-items:center; gap:.3rem; background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:.25rem .7rem; font-size:.7rem; color:var(--muted); }
+    .sd-seed-badge b { color:var(--accent); }
+    .sd-mode-label { font-size:.7rem; font-weight:600; letter-spacing:.04em; }
+    .sd-daily-done-notice { font-size:.75rem; font-weight:600; color:var(--green); background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3); border-radius:20px; padding:.3rem .9rem; text-align:center; }
+
+    .sd-difficulty-bar { display:flex; gap:.35rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:.35rem; }
+    .sd-diff-btn { background:transparent; border:1px solid transparent; color:var(--muted); border-radius:8px; padding:.45rem .8rem; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s; touch-action:manipulation; }
+    .sd-diff-btn:hover, .sd-diff-btn.active { background:var(--accent); color:#000; border-color:var(--accent); }
+
+    .sd-stats-bar { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; justify-content:center; }
+    .sd-stat { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:.3rem .8rem; font-size:.75rem; color:var(--muted); font-weight:600; }
+    .sd-stat span { color:var(--text); }
+    .sd-notes-toggle { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:.3rem .8rem; font-size:.75rem; font-weight:600; color:var(--muted); cursor:pointer; display:inline-flex; align-items:center; gap:.3rem; transition:all .2s; touch-action:manipulation; }
+    .sd-notes-toggle.active { background:rgba(56,189,248,.15); border-color:var(--accent); color:var(--accent); }
+    .sd-notes-toggle .sd-status { font-weight:800; }
+
+    .sd-message-bar { min-height:28px; font-size:.82rem; font-weight:700; text-align:center; color:var(--muted); padding:0 .5rem; }
+    .sd-message-bar.good { color:var(--green); }
+    .sd-message-bar.bad  { color:var(--red); }
+    .sd-message-bar.info { color:var(--yellow); }
+
+    .sd-grid-wrap { width:100%; display:flex; justify-content:center; }
+    .sd-sudoku-grid { display:flex; flex-direction:column; gap:0; border:2px solid var(--text); border-radius:8px; overflow:hidden; width:min(100%, 420px); aspect-ratio:1; background:var(--surface); }
+    .sd-row { display:flex; flex:1; }
+    .sd-cell { flex:1; display:flex; align-items:center; justify-content:center; font-size:clamp(1.2rem, 5vw, 1.6rem); font-weight:700; background:var(--surface); border-right:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--text); cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; position:relative; transition:background .15s, border-color .15s; }
+    .sd-cell:last-child { border-right:none; }
+    .sd-row:last-child .sd-cell { border-bottom:none; }
+    .sd-cell.box-b-right { border-right-width:2px; border-right-color:var(--text); }
+    .sd-row:last-child .sd-cell.box-b-bottom,
+    .sd-cell.box-b-bottom { border-bottom-width:2px; border-bottom-color:var(--text); }
+    .sd-cell.given { background:var(--surface2); font-weight:800; }
+    .sd-cell.selected { background:rgba(56,189,248,.18); outline:none; box-shadow:inset 0 0 0 2px var(--accent); }
+    .sd-cell.conflict { background:rgba(248,113,113,.22); }
+    .sd-cell:focus-visible { box-shadow:inset 0 0 0 3px var(--accent); }
+
+    .sd-cell-notes { position:absolute; inset:2px; display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:repeat(3, 1fr); font-size:.38em; color:var(--muted); font-weight:600; pointer-events:none; }
+    .sd-cell-notes span { display:flex; align-items:center; justify-content:center; }
+
+    .sd-controls { width:100%; display:flex; flex-direction:column; gap:.75rem; align-items:center; }
+    .sd-number-pad { display:grid; grid-template-columns:repeat(3, 1fr); gap:.4rem; width:100%; max-width:280px; }
+    .sd-number-pad button { aspect-ratio:1; background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-size:1.1rem; font-weight:700; cursor:pointer; transition:background .15s, transform .05s; touch-action:manipulation; }
+    .sd-number-pad button:active { transform:scale(.95); background:var(--accent); color:#000; }
+
+    .sd-action-pad { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; }
+    .sd-action-btn { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.6rem 1rem; font-size:.8rem; font-weight:700; color:var(--text); cursor:pointer; transition:all .15s; touch-action:manipulation; }
+    .sd-action-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .sd-action-btn:active { transform:scale(.97); }
+
+    .sd-modal-backdrop { position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.65); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; transition:opacity .25s ease; }
+    .sd-modal-backdrop.open { opacity:1; }
+    .sd-modal-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.75rem 1.5rem 1.5rem; width:100%; max-width:420px; display:flex; flex-direction:column; gap:1rem; align-items:center; text-align:center; box-shadow:0 24px 64px rgba(0,0,0,.5); transform:translateY(24px) scale(.97); transition:transform .25s ease; }
+    .sd-modal-backdrop.open .sd-modal-panel { transform:translateY(0) scale(1); }
+    .sd-result-emoji { font-size:2.8rem; }
+    #sd-result-heading { font-size:1.2rem; font-weight:900; }
+    #sd-result-body { font-size:.85rem; color:var(--muted); line-height:1.6; }
+    .sd-share-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:.7rem .85rem; font-family:monospace; font-size:.78rem; color:var(--text); white-space:pre-wrap; word-break:break-word; letter-spacing:.03em; line-height:1.7; width:100%; overflow-x:hidden; }
+    .sd-btn { cursor:pointer; border:none; border-radius:10px; font-family:inherit; font-weight:700; transition:opacity .15s,transform .1s; touch-action:manipulation; }
+    .sd-btn:active { opacity:.75; transform:scale(.97); }
+    .sd-btn-primary { background:linear-gradient(135deg,#38bdf8,#818cf8); color:#000; padding:.8rem 1.5rem; font-size:.9rem; }
+    .sd-btn-secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); padding:.65rem 1.2rem; font-size:.83rem; }
+    .sd-btn-row { display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; }
+
+    .sd-seo-section { max-width:540px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:1rem; margin-top:.25rem; padding:0 .75rem; }
+    .sd-seo-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; display:flex; flex-direction:column; gap:.65rem; color:var(--muted); font-size:.85rem; line-height:1.75; }
+    .sd-seo-card h2 { font-size:.95rem; font-weight:800; color:var(--text); }
+    .sd-seo-card h3 { font-size:.85rem; font-weight:700; color:var(--text); }
+    .sd-seo-card ul { padding-left:1.1rem; display:flex; flex-direction:column; gap:.3rem; }
+    .sd-seo-card kbd { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:.1rem .35rem; font-size:.8em; font-family:inherit; }
+    .sd-faq-list { display:flex; flex-direction:column; gap:.9rem; }
+
+    @media (min-width:400px) {
+      .sd-game-title { font-size:1.5rem; }
+      .sd-diff-btn { padding:.5rem 1rem; font-size:.85rem; }
+    }
+    @media (min-width:480px) {
+      .sd-game-page { padding:1.25rem 1rem 3rem; gap:1.15rem; }
+      .sd-game-title { font-size:1.6rem; }
+      .sd-number-pad { max-width:360px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-cell, .sd-btn, .sd-action-btn, .sd-diff-btn, .sd-number-pad button { transition:none; }
+      .sd-modal-backdrop, .sd-modal-panel { transition:none; }
+    }
+  </style>
+</Layout>
