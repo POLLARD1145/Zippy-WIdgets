@@ -33,6 +33,14 @@ export const tools: Tool[] = [
     tags: 'compress image jpg png webp resize optimize',
   },
   {
+    href: '/tool/jpg-to-pdf/',
+    icon: '📄',
+    name: 'JPG to PDF Converter',
+    description: 'Convert JPG, PNG and WebP images to a single PDF file in your browser. Choose page size, orientation and margins.',
+    cta: 'Convert to PDF →',
+    tags: 'jpg to pdf convert image to pdf png to pdf webp to pdf pdf converter merge images to pdf',
+  },
+  {
     href: '/tool/picker-wheel/',
     icon: '🎡',
     name: 'Random Picker Wheel',

@@ -9,12 +9,6 @@
 - **Boundary:** Describe it as a page editor. Do not promise arbitrary text editing inside existing PDFs.
 - **SEO angle:** Free PDF Page Editor — Reorder, Rotate, Delete & Extract PDF Pages.
 
-### JPG to PDF Converter
-
-- **Demand signal:** “convert jpg to pdf free” is rising in the latest worldwide free-search data.
-- **Scope:** Convert multiple JPG, PNG, and WebP images to a PDF locally; choose page size, orientation, margins, and image order.
-- **SEO angle:** Convert JPG to PDF Free — Images to PDF in Your Browser.
-
 ## Later
 
 ### Image Background Remover
