@@ -33,6 +33,14 @@ export const tools: Tool[] = [
     tags: 'pdf editor reorder rotate delete extract pages page organizer',
   },
   {
+    href: '/tool/file-beam/',
+    icon: '📡',
+    name: 'File Beam — Wi-Fi Transfer',
+    description: 'Send files between phones, tablets and computers on the same Wi-Fi. No cloud, no upload — direct browser-to-browser transfer.',
+    cta: 'Send Files →',
+    tags: 'file transfer wifi share send files between devices airdrop web rtc p2p local network',
+  },
+  {
     href: '/tool/image-compressor/',
     icon: '🖼️',
     name: 'Image Compressor',
