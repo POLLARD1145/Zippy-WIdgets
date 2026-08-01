@@ -539,66 +539,6 @@ const canonical = 'https://zippywidgets.online/tool/speed-test/';
   </style>
 
   <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Internet Speed Test",
-        "url": "https://zippywidgets.online/tool/speed-test/",
-        "description": "Free internet speed test. Measure download speed, upload speed, ping, jitter and ISP info. Includes streamer mode, gaming ping test and broadband quality rating. No app or sign-up required.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How does the internet speed test work?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Download speed is measured by fetching files from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests and measuring variance. All tests run in your browser — no app or sign-up required." }
-          },
-          {
-            "@type": "Question",
-            "name": "What is a good ping for gaming?",
-            "acceptedAnswer": { "@type": "Answer", "text": "For competitive gaming, aim for ping under 40ms and jitter under 10ms. Ping under 100ms with jitter under 30ms is acceptable for casual and turn-based games. Above 100ms ping will cause noticeable lag in fast-paced games like FPS titles." }
-          },
-          {
-            "@type": "Question",
-            "name": "What is jitter and why does it matter?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Jitter is the variation in latency between packets. High jitter causes stuttering on video calls and lag spikes in games even if your average ping is low. It is measured in milliseconds — under 20ms is good, above 40ms will cause noticeable issues on real-time applications." }
-          },
-          {
-            "@type": "Question",
-            "name": "Why is my speed test result lower than my broadband plan speed?",
-            "acceptedAnswer": { "@type": "Answer", "text": "ISPs advertise theoretical maximum speeds. Real-world speeds are lower due to WiFi overhead (10–30%), network congestion during peak hours, distance from the router, and the number of active devices. Testing over ethernet at an off-peak time gives the most accurate comparison to your plan speed." }
-          },
-          {
-            "@type": "Question",
-            "name": "What download speed do I need for 4K streaming?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Netflix recommends 25 Mbps for 4K Ultra HD streaming. Disney+ and Apple TV+ recommend a similar figure. Allowing headroom for other devices on the same network, a 50 Mbps or faster connection ensures uninterrupted 4K playback." }
-          }
-        ]
-      }
-  </script>
-
-  <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
-
-  <script is:inline>
     'use strict';
     
         const CF_DOWN = 'https://speed.cloudflare.com/__down?bytes=';

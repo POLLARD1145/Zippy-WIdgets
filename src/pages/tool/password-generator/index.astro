@@ -208,56 +208,6 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
   </style>
 
   <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Strong Password Generator",
-        "url": "https://zippywidgets.online/tool/password-generator/",
-        "description": "Generate strong, secure, random passwords instantly in your browser. Customise length and character types. No data stored, no sign-up required.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is this password generator secure?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Passwords are generated locally in your browser using the Web Crypto API's cryptographically strong random number generator. They are never sent to or stored on any server." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use generated passwords for my accounts?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The generated passwords are completely random and safe to use for any account. We recommend using a password manager to store them securely so you don't have to memorise long random strings." }
-          },
-          {
-            "@type": "Question",
-            "name": "What makes a password strong?",
-            "acceptedAnswer": { "@type": "Answer", "text": "A strong password is long (at least 12 characters), random, and uses a mix of uppercase letters, lowercase letters, numbers, and symbols. Avoid dictionary words, names, dates, and predictable patterns." }
-          }
-        ]
-      }
-  </script>
-
-  <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
-
-  <script is:inline>
     'use strict';
     
         const lengthRange = document.getElementById('lengthRange');

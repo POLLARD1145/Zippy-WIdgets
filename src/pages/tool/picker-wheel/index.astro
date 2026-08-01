@@ -181,19 +181,6 @@ Eve</textarea>
 
 
   <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
-
-  <script is:inline>
     'use strict';
     
         const WHEEL_COLORS = [

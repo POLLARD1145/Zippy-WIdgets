@@ -6,8 +6,9 @@ import { tools } from '@data/tools.ts';
 
 const title = 'ZippyWidgets – Free Online Tools: PDF Merger, Image Compressor, QR Code, Word Counter & More';
 const description = 'Free online tools — spin a random winner wheel, generate Instagram bio fonts, create QR codes, merge PDFs, compress images, and more. No sign-up, works instantly in your browser.';
+const canonical = 'https://zippywidgets.online/';
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} canonical={canonical}>
   <Nav />
 
   <main class="flex flex-col items-center w-full">
@@ -36,6 +37,71 @@ const description = 'Free online tools — spin a random winner wheel, generate 
       <p>The tools here cover the tasks that come up repeatedly in everyday digital life. The <strong>PDF Merger</strong> combines multiple PDFs into one file with no limits, no watermarks, and no uploads. The <strong>Image Compressor</strong> shrinks JPG, PNG and WebP images for faster websites and social media uploads. The <strong>Password Generator</strong> creates cryptographically random passwords with a live strength meter. The <strong>JSON Formatter</strong> formats, validates and converts JSON and CSV data for developers. The <strong>Favicon Generator</strong> turns any logo into a multi-size favicon.ico file. The <strong>Random Picker Wheel</strong> is used by teachers, streamers, and event hosts worldwide for fair, transparent selections. The <strong>Font Generator</strong> produces over 30 Unicode text styles that paste directly into Instagram, TikTok, Discord, and Twitter. The <strong>Word Counter</strong> tracks not just words but platform-specific character limits for Twitter, LinkedIn, TikTok, SMS, and more. The <strong>QR Code Generator</strong> creates WiFi, URL, email, and plain-text QR codes with custom colours and high-resolution PNG export. The <strong>Age Calculator</strong> gives precise results down to hours lived and days until the next birthday. The <strong>Speed Test</strong> measures download, upload, ping and jitter against Cloudflare's global network — with plain-English connection quality ratings for gaming, streaming, video calls and more.</p>
       <p>All tools are free. All tools work offline after first load. <a href="/blog/" style="color:var(--accent);">Read the blog</a> for in-depth guides on getting the most out of each one.</p>
     </section>
+
+    <section class="card mt-4 md:mt-6 flex flex-col gap-4 text-[var(--muted)] leading-7 text-[0.93rem]">
+      <h2 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Are ZippyWidgets tools really free?</h3>
+        <p>Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers. The site is supported by display advertising, which keeps the tools free for everyone.</p>
+      </div>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Do I need to install anything or create an account?</h3>
+        <p>No. All tools run entirely in your web browser. Open the page, use the tool, and close the tab when you're done. There is nothing to download, install, or register for. The tools work on desktop, tablet, and mobile browsers.</p>
+      </div>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Is my data safe when using these tools?</h3>
+        <p>Yes. All processing happens locally in your browser using JavaScript. Your text, images, PDFs, passwords, and other inputs are never transmitted to any server. The only exceptions are the Weather tool (which queries Open-Meteo for forecast data) and the Speed Test (which measures throughput against Cloudflare's network). These external requests are clearly disclosed on each tool's page.</p>
+      </div>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Do the tools work on mobile phones?</h3>
+        <p>Yes. Every tool is designed mobile-first and works on iOS and Android browsers. The interfaces are touch-friendly, responsive, and adapt to narrow screen widths. No app installation is required — just visit the URL in your phone's browser.</p>
+      </div>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Can I use these tools offline?</h3>
+        <p>Most tools work offline after the page has loaded once, because all processing is client-side. The exceptions are the Weather tool and Speed Test, which require an internet connection to fetch live data. Tools that process files (PDF Merger, Image Compressor, JPG to PDF, Favicon Generator) work entirely offline.</p>
+      </div>
+      <div class="faq-item">
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Are the tools ad-free?</h3>
+        <p>The tools themselves are not ad-free — ZippyWidgets displays Google AdSense advertisements to fund the site. However, ads are deferred and isolated from the primary tool interface so they never block interaction or cause layout shifts. The core functionality is never gated behind ads.</p>
+      </div>
+    </section>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are ZippyWidgets tools really free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers. The site is supported by display advertising, which keeps the tools free for everyone." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to install anything or create an account?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. All tools run entirely in your web browser. Open the page, use the tool, and close the tab when you're done. There is nothing to download, install, or register for. The tools work on desktop, tablet, and mobile browsers." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data safe when using these tools?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens locally in your browser using JavaScript. Your text, images, PDFs, passwords, and other inputs are never transmitted to any server. The only exceptions are the Weather tool (which queries Open-Meteo for forecast data) and the Speed Test (which measures throughput against Cloudflare's network). These external requests are clearly disclosed on each tool's page." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do the tools work on mobile phones?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool is designed mobile-first and works on iOS and Android browsers. The interfaces are touch-friendly, responsive, and adapt to narrow screen widths. No app installation is required — just visit the URL in your phone's browser." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use these tools offline?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most tools work offline after the page has loaded once, because all processing is client-side. The exceptions are the Weather tool and Speed Test, which require an internet connection to fetch live data. Tools that process files (PDF Merger, Image Compressor, JPG to PDF, Favicon Generator) work entirely offline." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the tools ad-free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The tools themselves are not ad-free — ZippyWidgets displays Google AdSense advertisements to fund the site. However, ads are deferred and isolated from the primary tool interface so they never block interaction or cause layout shifts. The core functionality is never gated behind ads." }
+        }
+      ]
+    })} />
     </div>
 
     <div class="ad-slot" id="adSlot">
