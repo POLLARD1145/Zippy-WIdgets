@@ -89,7 +89,7 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
     </div>
-    <script>
+    <script is:inline>
       (function(){
         var slot = document.getElementById('adSlot');
         var obs = new IntersectionObserver(function(entries){
@@ -180,61 +180,6 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
   </style>
 
   <script is:inline src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Free PDF Merger",
-        "url": "https://zippywidgets.online/tool/pdf-merger/",
-        "description": "Merge multiple PDF files into one PDF online for free. No file size limits, no watermarks, no sign-up required. Works entirely in your browser.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is this PDF merger really free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets PDF Merger is completely free. There are no file size limits, no page limits, no watermarks, and no sign-up required." }
-          },
-          {
-            "@type": "Question",
-            "name": "Do my PDF files get uploaded to a server?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. The entire merge process happens in your browser using JavaScript. Your PDFs are never uploaded to any server, so your documents stay private and secure." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I reorder PDF pages before merging?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. After uploading your PDFs, drag and drop them into the desired order, or use the up/down arrows next to each file. The merged PDF will follow the order shown in the list." }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the maximum file size?",
-            "acceptedAnswer": { "@type": "Answer", "text": "There is no artificial file size limit. The only limits are your device's memory and browser capabilities. Most users can merge files totaling several hundred megabytes." }
-          }
-        ]
-      }
-  </script>
-
-  <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
 
   <script is:inline>
     'use strict';

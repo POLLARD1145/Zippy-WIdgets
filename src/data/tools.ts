@@ -25,6 +25,14 @@ export const tools: Tool[] = [
     tags: 'pdf merge combine join files splitter',
   },
   {
+    href: '/tool/pdf-page-editor/',
+    icon: '✂️',
+    name: 'PDF Page Editor',
+    description: 'Reorder, rotate, delete and extract pages from any PDF. Drag-and-drop thumbnails, no sign-up, all in your browser.',
+    cta: 'Edit PDF Pages →',
+    tags: 'pdf editor reorder rotate delete extract pages page organizer',
+  },
+  {
     href: '/tool/image-compressor/',
     icon: '🖼️',
     name: 'Image Compressor',

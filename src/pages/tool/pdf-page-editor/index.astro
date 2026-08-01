@@ -1,0 +1,632 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'Free PDF Page Editor — Reorder, Rotate, Delete & Extract PDF Pages Online';
+const description = 'Edit PDF pages online for free. Reorder, rotate, delete and extract pages from any PDF. No sign-up, no upload — works 100% in your browser.';
+const canonical = 'https://zippywidgets.online/tool/pdf-page-editor/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free PDF Page Editor",
+    "url": "https://zippywidgets.online/tool/pdf-page-editor/",
+    "description": "Edit PDF pages online for free. Reorder, rotate, delete and extract pages from any PDF. No sign-up, no upload — works entirely in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this PDF page editor free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets PDF Page Editor is completely free with no sign-up, no watermarks, and no page limits." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I edit the text inside a PDF?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. This tool is a page editor — it lets you reorder, rotate, delete, and extract pages. It does not edit text content within existing PDF pages." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my PDFs uploaded to a server?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. All processing happens entirely in your browser using JavaScript. Your PDF files never leave your device." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I extract specific pages from a PDF?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the pages you want by clicking on them, then click Extract Selected to download only those pages as a new PDF." }
+      }
+    ]
+  }
+  </script>
+
+<main class="tool-page max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📄</span>
+      <div>
+        <h1>Free PDF Page Editor — Reorder, Rotate, Delete &amp; Extract Pages</h1>
+        <p>Upload a PDF and rearrange its pages visually. Drag to reorder, rotate, delete, or extract specific pages. No sign-up, no upload — everything happens in your browser.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">📁</div>
+        <p><strong>Click to upload a PDF</strong> or drag and drop one here</p>
+        <p style="font-size:.8rem;margin-top:.4rem;">Single PDF file, up to 200&nbsp;MB</p>
+        <input type="file" id="fileInput" accept=".pdf,application/pdf" />
+      </div>
+
+      <div class="status-msg" id="statusMsg"></div>
+
+      <div class="editor-toolbar" id="editorToolbar" style="display:none;">
+        <span class="page-count" id="pageCount"></span>
+        <div class="toolbar-actions">
+          <button class="btn btn-secondary" id="selectModeBtn" onclick="toggleSelectMode()">Select pages</button>
+          <button class="btn btn-secondary" id="extractBtn" onclick="extractSelected()" style="display:none;">Extract selected</button>
+          <button class="btn btn-secondary" onclick="rotateAll()">Rotate all 90°</button>
+          <button class="btn btn-primary" id="downloadBtn" onclick="downloadEdited()">Download PDF</button>
+          <button class="btn btn-secondary" onclick="resetEditor()">Start over</button>
+        </div>
+      </div>
+
+      <div class="page-grid" id="pageGrid"></div>
+
+      <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Edit PDF Pages Online</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>The ZippyWidgets PDF Page Editor lets you rearrange the pages of any PDF without installing software or creating an account. Upload a file, and every page is rendered as a thumbnail you can drag, rotate, delete, or extract. When you're done, click Download to save the edited PDF.</p>
+        <ol style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Upload a PDF:</strong> Click the box above or drag and drop a PDF file onto it.</li>
+          <li><strong>Rearrange pages:</strong> Drag any thumbnail to a new position, or use the ↑ / ↓ buttons on each page.</li>
+          <li><strong>Rotate pages:</strong> Click the rotate button on any thumbnail to rotate it 90° clockwise.</li>
+          <li><strong>Delete pages:</strong> Click the × button on any thumbnail to remove it from the document.</li>
+          <li><strong>Extract pages:</strong> Click "Select pages", tap the pages you want, then click "Extract selected" to download just those pages.</li>
+          <li><strong>Download:</strong> Click "Download PDF" to save your edited document.</li>
+        </ol>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">What Can This Tool Do?</h3>
+        <p>This is a <strong>page-level editor</strong>. It can reorder, rotate, delete, and extract pages. It cannot edit the text, images, or formatting inside individual pages — that requires a full PDF authoring tool. Think of it as scissors and glue for PDF pages: cut out what you don't need, rearrange the rest, and save.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Is My Data Private?</h3>
+        <p>Yes. The editor uses <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener" style="color:var(--accent);">pdf-lib</a> and <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener" style="color:var(--accent);">PDF.js</a> to read and manipulate your PDF entirely in your browser. Your file is never uploaded to a server, cloud storage, or third-party API. When you close the tab, all data is gone.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Tips for Best Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>If your PDF is password-protected, remove the password in your PDF reader first.</li>
+          <li>Very large PDFs (100+ pages) may take a few seconds to render thumbnails — be patient.</li>
+          <li>Rotation is applied permanently in the downloaded PDF, not just visually.</li>
+          <li>Extracted pages are saved as a new PDF file — the original is not modified.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="faq-section card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Is this PDF page editor free?</h3>
+        <p>Yes. It is completely free with no sign-up, no watermarks, and no page limits. The tool is supported by display advertising.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I edit the text inside a PDF?</h3>
+        <p>No. This tool edits pages — reorder, rotate, delete, and extract. It does not modify text, images, or formatting inside existing PDF pages.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Are my PDFs uploaded to a server?</h3>
+        <p>No. All processing happens in your browser using JavaScript. Your PDF files never leave your device.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I extract specific pages from a PDF?</h3>
+        <p>Yes. Click "Select pages", tap the pages you want, then click "Extract selected" to download only those pages as a new PDF.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    .drop-zone {
+          border: 2px dashed var(--border);
+          border-radius: var(--radius);
+          padding: 2.5rem 1.5rem;
+          text-align: center;
+          color: var(--muted);
+          background: var(--surface2);
+          transition: border-color .2s, background .2s;
+          cursor: pointer;
+        }
+        .drop-zone:hover, .drop-zone.drag-over {
+          border-color: var(--accent);
+          background: rgba(56,189,248,.08);
+        }
+        .drop-zone .icon { font-size: 2.5rem; margin-bottom: .75rem; }
+        .drop-zone input { display: none; }
+
+        .editor-toolbar {
+          display: flex; align-items: center; justify-content: space-between;
+          flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; padding: .75rem 1rem;
+          background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+        }
+        .page-count { font-size: .85rem; color: var(--muted); font-weight: 600; }
+        .toolbar-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+        .page-grid {
+          display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 1rem; margin-top: 1.25rem;
+        }
+        .page-card {
+          position: relative; border: 2px solid var(--border); border-radius: 10px;
+          overflow: hidden; background: var(--surface2); cursor: grab;
+          transition: border-color .15s, box-shadow .15s;
+        }
+        .page-card:hover { border-color: var(--accent); }
+        .page-card.dragging { opacity: .5; cursor: grabbing; }
+        .page-card.drag-over { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,.25); }
+        .page-card.selected { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,.25); }
+        .page-card canvas { display: block; width: 100%; height: auto; }
+        .page-card .page-label {
+          position: absolute; bottom: 0; left: 0; right: 0;
+          background: rgba(0,0,0,.65); color: #fff; font-size: .72rem;
+          text-align: center; padding: .2rem; pointer-events: none;
+        }
+        .page-card .page-actions {
+          position: absolute; top: 4px; right: 4px; display: flex; gap: 3px;
+        }
+        .page-card .page-actions button {
+          width: 26px; height: 26px; border: none; border-radius: 6px;
+          background: rgba(0,0,0,.6); color: #fff; cursor: pointer; font-size: .72rem;
+          display: flex; align-items: center; justify-content: center;
+          transition: background .15s;
+        }
+        .page-card .page-actions button:hover { background: var(--accent); }
+        .page-card .page-actions button.remove:hover { background: #ef4444; }
+        .page-card .reorder-btns {
+          position: absolute; top: 4px; left: 4px; display: flex; flex-direction: column; gap: 3px;
+        }
+        .page-card .reorder-btns button {
+          width: 26px; height: 26px; border: none; border-radius: 6px;
+          background: rgba(0,0,0,.6); color: #fff; cursor: pointer; font-size: .72rem;
+          display: flex; align-items: center; justify-content: center;
+          transition: background .15s;
+        }
+        .page-card .reorder-btns button:hover { background: var(--accent); }
+        .page-card .reorder-btns button:disabled { opacity: .35; cursor: default; }
+
+        .progress-bar {
+          width: 100%; height: 6px; background: var(--surface2); border-radius: 99px;
+          overflow: hidden; margin-top: 1rem; display: none;
+        }
+        .progress-bar .fill {
+          height: 100%; width: 0%; background: var(--accent); border-radius: 99px;
+          transition: width .3s;
+        }
+        .status-msg { margin-top: .75rem; font-size: .85rem; color: var(--muted); min-height: 1.25rem; }
+        .status-msg.error { color: var(--red); }
+        .status-msg.success { color: var(--green); }
+
+        .btn {
+          border: none; border-radius: 8px; padding: .55rem 1.1rem; font-size: .85rem;
+          font-weight: 600; cursor: pointer; transition: all .2s;
+        }
+        .btn:disabled { opacity: .5; cursor: not-allowed; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+        .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+        .btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+        @media (max-width: 640px) {
+          .page-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: .6rem; }
+          .editor-toolbar { flex-direction: column; align-items: stretch; }
+          .toolbar-actions { justify-content: flex-start; }
+        }
+  </style>
+
+  <script is:inline src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <script is:inline>
+    'use strict';
+
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    const MAX_PAGES = 200;
+    const MAX_FILE_SIZE = 200 * 1024 * 1024;
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const pageGrid = document.getElementById('pageGrid');
+    const editorToolbar = document.getElementById('editorToolbar');
+    const statusMsg = document.getElementById('statusMsg');
+    const pageCount = document.getElementById('pageCount');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+
+    let pages = [];
+    let selectMode = false;
+    let pdfBytes = null;
+    let dragSrcIdx = null;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      handleFile(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => {
+      handleFile(fileInput.files);
+      fileInput.value = '';
+    });
+
+    function showStatus(msg, type) {
+      statusMsg.textContent = msg;
+      statusMsg.className = 'status-msg' + (type ? ' ' + type : '');
+    }
+
+    function handleFile(fileListObj) {
+      const file = fileListObj[0];
+      if (!file) return;
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        showStatus('Please upload a PDF file.', 'error');
+        return;
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        showStatus('File too large. Maximum size is 200 MB.', 'error');
+        return;
+      }
+      loadPdf(file);
+    }
+
+    async function loadPdf(file) {
+      showStatus('Loading PDF and rendering thumbnails...', '');
+      progressBar.style.display = 'block';
+      progressFill.style.width = '10%';
+      dropZone.style.display = 'none';
+      editorToolbar.style.display = 'flex';
+
+      try {
+        pdfBytes = await file.arrayBuffer();
+
+        const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
+        const pdfDoc = await loadingTask.promise;
+        const numPages = pdfDoc.numPages;
+
+        if (numPages > MAX_PAGES) {
+          showStatus('PDF has ' + numPages + ' pages. Maximum is ' + MAX_PAGES + ' pages.', 'error');
+          progressBar.style.display = 'none';
+          dropZone.style.display = '';
+          editorToolbar.style.display = 'none';
+          return;
+        }
+
+        pages = [];
+        for (let i = 1; i <= numPages; i++) {
+          const page = await pdfDoc.getPage(i);
+          const viewport = page.getViewport({ scale: 0.4 });
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+          pages.push({
+            originalIndex: i - 1,
+            rotation: 0,
+            thumbnail: canvas.toDataURL('image/jpeg', 0.7),
+            width: viewport.width,
+            height: viewport.height,
+          });
+
+          progressFill.style.width = Math.round((i / numPages) * 85) + 10 + '%';
+        }
+
+        progressFill.style.width = '100%';
+        setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 1000);
+        renderPages();
+        showStatus('PDF loaded. ' + numPages + ' page' + (numPages === 1 ? '' : 's') + ' ready to edit.', 'success');
+      } catch (err) {
+        console.error(err);
+        showStatus('Error loading PDF: ' + (err.message || 'Could not read the file. Make sure it is a valid PDF.'), 'error');
+        progressBar.style.display = 'none';
+        dropZone.style.display = '';
+        editorToolbar.style.display = 'none';
+      }
+    }
+
+    function renderPages() {
+      pageGrid.replaceChildren();
+      pages.forEach((page, idx) => {
+        const card = document.createElement('div');
+        card.className = 'page-card' + (page.selected ? ' selected' : '');
+        card.draggable = !selectMode;
+        card.dataset.index = idx;
+
+        const img = document.createElement('img');
+        img.src = page.thumbnail;
+        img.alt = 'Page ' + (idx + 1);
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        if (page.rotation) img.style.transform = 'rotate(' + page.rotation + 'deg)';
+        card.appendChild(img);
+
+        const label = document.createElement('div');
+        label.className = 'page-label';
+        label.textContent = 'Page ' + (idx + 1);
+        card.appendChild(label);
+
+        const actions = document.createElement('div');
+        actions.className = 'page-actions';
+
+        const rotateBtn = document.createElement('button');
+        rotateBtn.title = 'Rotate 90°';
+        rotateBtn.textContent = '⟳';
+        rotateBtn.addEventListener('click', (e) => { e.stopPropagation(); rotatePage(idx); });
+        actions.appendChild(rotateBtn);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove';
+        removeBtn.title = 'Delete page';
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', (e) => { e.stopPropagation(); deletePage(idx); });
+        actions.appendChild(removeBtn);
+        card.appendChild(actions);
+
+        const reorderBtns = document.createElement('div');
+        reorderBtns.className = 'reorder-btns';
+
+        const upBtn = document.createElement('button');
+        upBtn.textContent = '↑';
+        upBtn.disabled = idx === 0;
+        upBtn.addEventListener('click', (e) => { e.stopPropagation(); movePage(idx, -1); });
+        reorderBtns.appendChild(upBtn);
+
+        const downBtn = document.createElement('button');
+        downBtn.textContent = '↓';
+        downBtn.disabled = idx === pages.length - 1;
+        downBtn.addEventListener('click', (e) => { e.stopPropagation(); movePage(idx, 1); });
+        reorderBtns.appendChild(downBtn);
+        card.appendChild(reorderBtns);
+
+        if (selectMode) {
+          card.addEventListener('click', () => toggleSelect(idx));
+        }
+
+        card.addEventListener('dragstart', (e) => {
+          if (selectMode) { e.preventDefault(); return; }
+          dragSrcIdx = idx;
+          card.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+        });
+        card.addEventListener('dragend', () => {
+          card.classList.remove('dragging');
+          document.querySelectorAll('.page-card').forEach(c => c.classList.remove('drag-over'));
+        });
+        card.addEventListener('dragover', (e) => {
+          if (selectMode || dragSrcIdx === null) return;
+          e.preventDefault();
+          card.classList.add('drag-over');
+        });
+        card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+        card.addEventListener('drop', (e) => {
+          if (selectMode || dragSrcIdx === null) return;
+          e.preventDefault();
+          card.classList.remove('drag-over');
+          const targetIdx = parseInt(card.dataset.index, 10);
+          if (dragSrcIdx !== targetIdx) {
+            const moved = pages.splice(dragSrcIdx, 1)[0];
+            pages.splice(targetIdx, 0, moved);
+            dragSrcIdx = null;
+            renderPages();
+          }
+        });
+
+        pageGrid.appendChild(card);
+      });
+
+      pageCount.textContent = pages.length + ' page' + (pages.length === 1 ? '' : 's');
+    }
+
+    function movePage(idx, dir) {
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= pages.length) return;
+      const temp = pages[idx];
+      pages[idx] = pages[newIdx];
+      pages[newIdx] = temp;
+      renderPages();
+    }
+
+    function rotatePage(idx) {
+      pages[idx].rotation = (pages[idx].rotation + 90) % 360;
+      renderPages();
+    }
+
+    function deletePage(idx) {
+      pages.splice(idx, 1);
+      renderPages();
+      if (pages.length === 0) {
+        showStatus('All pages deleted. Upload a new PDF to start over.', '');
+      }
+    }
+
+    function rotateAll() {
+      pages.forEach(p => p.rotation = (p.rotation + 90) % 360);
+      renderPages();
+    }
+
+    function toggleSelectMode() {
+      selectMode = !selectMode;
+      pages.forEach(p => p.selected = false);
+      document.getElementById('selectModeBtn').textContent = selectMode ? 'Done selecting' : 'Select pages';
+      document.getElementById('extractBtn').style.display = selectMode ? '' : 'none';
+      renderPages();
+    }
+
+    function toggleSelect(idx) {
+      pages[idx].selected = !pages[idx].selected;
+      renderPages();
+    }
+
+    async function downloadEdited() {
+      if (pages.length === 0) {
+        showStatus('No pages to download.', 'error');
+        return;
+      }
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.disabled = true;
+      downloadBtn.textContent = 'Saving...';
+      showStatus('Building edited PDF...', '');
+      progressBar.style.display = 'block';
+      progressFill.style.width = '20%';
+
+      try {
+        const { PDFDocument, degrees } = PDFLib;
+        const srcDoc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+        const outDoc = await PDFDocument.create();
+
+        for (let i = 0; i < pages.length; i++) {
+          const [copiedPage] = await outDoc.copyPages(srcDoc, [pages[i].originalIndex]);
+          if (pages[i].rotation) {
+            const current = copiedPage.getRotation().angle;
+            copiedPage.setRotation(degrees((current + pages[i].rotation) % 360));
+          }
+          outDoc.addPage(copiedPage);
+          progressFill.style.width = Math.round(((i + 1) / pages.length) * 70) + 20 + '%';
+        }
+
+        progressFill.style.width = '95%';
+        showStatus('Finalizing PDF...', '');
+        const outBytes = await outDoc.save();
+        const blob = new Blob([outBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'edited-document.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        progressFill.style.width = '100%';
+        showStatus('Edited PDF downloaded successfully!', 'success');
+      } catch (err) {
+        console.error(err);
+        showStatus('Error: ' + (err.message || 'Could not save the PDF.'), 'error');
+      } finally {
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = 'Download PDF';
+        setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 2000);
+      }
+    }
+
+    async function extractSelected() {
+      const selected = pages.filter(p => p.selected);
+      if (selected.length === 0) {
+        showStatus('No pages selected. Click on thumbnails to select them.', 'error');
+        return;
+      }
+      const extractBtn = document.getElementById('extractBtn');
+      extractBtn.disabled = true;
+      extractBtn.textContent = 'Extracting...';
+      showStatus('Extracting ' + selected.length + ' page' + (selected.length === 1 ? '' : 's') + '...', '');
+      progressBar.style.display = 'block';
+      progressFill.style.width = '20%';
+
+      try {
+        const { PDFDocument, degrees } = PDFLib;
+        const srcDoc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+        const outDoc = await PDFDocument.create();
+
+        for (let i = 0; i < selected.length; i++) {
+          const [copiedPage] = await outDoc.copyPages(srcDoc, [selected[i].originalIndex]);
+          if (selected[i].rotation) {
+            const current = copiedPage.getRotation().angle;
+            copiedPage.setRotation(degrees((current + selected[i].rotation) % 360));
+          }
+          outDoc.addPage(copiedPage);
+          progressFill.style.width = Math.round(((i + 1) / selected.length) * 70) + 20 + '%';
+        }
+
+        progressFill.style.width = '95%';
+        showStatus('Finalizing extracted PDF...', '');
+        const outBytes = await outDoc.save();
+        const blob = new Blob([outBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'extracted-pages.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        progressFill.style.width = '100%';
+        showStatus('Extracted PDF downloaded successfully!', 'success');
+      } catch (err) {
+        console.error(err);
+        showStatus('Error: ' + (err.message || 'Could not extract pages.'), 'error');
+      } finally {
+        extractBtn.disabled = false;
+        extractBtn.textContent = 'Extract selected';
+        setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 2000);
+      }
+    }
+
+    function resetEditor() {
+      pages = [];
+      pdfBytes = null;
+      selectMode = false;
+      pageGrid.replaceChildren();
+      editorToolbar.style.display = 'none';
+      dropZone.style.display = '';
+      showStatus('', '');
+      document.getElementById('selectModeBtn').textContent = 'Select pages';
+      document.getElementById('extractBtn').style.display = 'none';
+    }
+  </script>
+</Layout>
