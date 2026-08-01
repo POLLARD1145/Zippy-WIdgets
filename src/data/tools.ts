@@ -36,9 +36,9 @@ export const tools: Tool[] = [
     href: '/tool/file-beam/',
     icon: '📡',
     name: 'File Beam — Wi-Fi Transfer',
-    description: 'Send files between phones, tablets and computers on the same Wi-Fi. No cloud, no upload — direct browser-to-browser transfer.',
+    description: 'Send files between phones, tablets and computers on the same Wi-Fi. Share a link to connect, then transfer both ways. No cloud, no file size limit, no sign-up.',
     cta: 'Send Files →',
-    tags: 'file transfer wifi share send files between devices airdrop web rtc p2p local network',
+    tags: 'file transfer wifi share send files between devices airdrop web rtc p2p local network bidirectional stream',
   },
   {
     href: '/tool/image-compressor/',

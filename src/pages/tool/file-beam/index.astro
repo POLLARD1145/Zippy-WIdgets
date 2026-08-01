@@ -1,0 +1,896 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+
+const title = 'File Beam — Send Files Between Devices on Same Wi-Fi, No Cloud | ZippyWidgets';
+const description = 'Transfer files directly between phones, tablets and computers on the same Wi-Fi network. No cloud, no upload, no sign-up. Share a link to connect, then send files both ways.';
+const canonical = 'https://zippywidgets.online/tool/file-beam/';
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Nav />
+
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "File Beam",
+    "url": "https://zippywidgets.online/tool/file-beam/",
+    "description": "Transfer files directly between devices on the same Wi-Fi network using browser-to-browser WebRTC. No cloud storage, no upload, no sign-up. Share a link to connect, then send files both ways.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does File Beam transfer files without a server?",
+        "acceptedAnswer": { "@type": "Answer", "text": "File Beam uses WebRTC, a browser technology that creates a direct peer-to-peer connection between two devices. You share a link to establish the connection, then files flow directly from one device to the other — no cloud, no upload, no intermediary server." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do both devices need to be on the same Wi-Fi network?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For best results, yes. WebRTC can work across networks using STUN servers, but transfer speeds are fastest and most reliable when both devices are on the same local network." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a file size limit?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Files are streamed in small chunks over the WebRTC data channel, so there is no file size limit. In Chrome and Edge, you can choose a save folder so incoming files stream directly to disk without using memory." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can both devices send and receive files?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once connected, both devices can drag and drop files to send. The connection is bidirectional — either side can send files at any time." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my files uploaded to any server?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Files are transferred directly between the two devices using an encrypted WebRTC data channel. The only external request is to Google's public STUN servers, which help the devices find each other — no file data ever touches a server." }
+      }
+    ]
+  }
+  </script>
+
+<main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <a class="back-btn" href="/">← Back to all tools</a>
+
+    <div class="tool-header">
+      <span class="icon">📡</span>
+      <div>
+        <h1>File Beam — Send Files Between Devices on Same Wi-Fi</h1>
+        <p>Transfer files directly between your phone, tablet, and computer. No cloud, no upload, no sign-up — just a direct browser-to-browser connection over your local network.</p>
+      </div>
+    </div>
+
+    <!-- ===== CONNECT WIZARD ===== -->
+    <div class="card" id="wizardCard">
+      <div id="wizardIdle">
+        <div class="wizard-hero">
+          <div class="wizard-icon">🔗</div>
+          <h2>Start a connection</h2>
+          <p>Create a link and share it with the other device to establish a direct connection.</p>
+          <button class="btn btn-primary btn-lg" id="startBtn" onclick="startConnection()">Create connection link</button>
+        </div>
+      </div>
+
+      <div id="wizardCreating" style="display:none;">
+        <div class="wizard-hero">
+          <div class="spinner"></div>
+          <h2>Creating connection link…</h2>
+          <p>Generating a secure peer-to-peer connection code.</p>
+        </div>
+      </div>
+
+      <div id="wizardOfferReady" style="display:none;">
+        <div class="wizard-hero">
+          <div class="wizard-icon">📤</div>
+          <h2>Share this link</h2>
+          <p>Send this link to the other device via any messaging app. They'll open it to connect.</p>
+        </div>
+        <div class="link-box" id="offerLinkBox"></div>
+        <div class="link-actions">
+          <button class="btn btn-primary" id="copyOfferBtn" onclick="copyLink('offerLinkBox')">Copy link</button>
+          <button class="btn btn-secondary" id="shareOfferBtn" onclick="shareLink('offerLinkBox')" style="display:none;">Share</button>
+        </div>
+        <div class="waiting-indicator">
+          <div class="pulse-dot"></div>
+          <span>Waiting for the other device to connect…</span>
+        </div>
+        <div class="answer-input-section">
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:.5rem;">When the other device sends back their link, paste it here:</p>
+          <input type="text" id="answerLinkInput" class="link-input" placeholder="Paste the answer link here…" />
+          <button class="btn btn-primary" id="connectBtn" onclick="acceptAnswerLink()">Connect</button>
+        </div>
+      </div>
+
+      <div id="wizardProcessing" style="display:none;">
+        <div class="wizard-hero">
+          <div class="spinner"></div>
+          <h2>Processing connection…</h2>
+          <p id="processingMsg">Establishing peer-to-peer connection.</p>
+        </div>
+      </div>
+
+      <div id="wizardAnswerReady" style="display:none;">
+        <div class="wizard-hero">
+          <div class="wizard-icon">📥</div>
+          <h2>Send this link back</h2>
+          <p>Copy this link and send it back to the first device to complete the connection.</p>
+        </div>
+        <div class="link-box" id="answerLinkBox"></div>
+        <div class="link-actions">
+          <button class="btn btn-primary" id="copyAnswerBtn" onclick="copyLink('answerLinkBox')">Copy link</button>
+          <button class="btn btn-secondary" id="shareAnswerBtn" onclick="shareLink('answerLinkBox')" style="display:none;">Share</button>
+        </div>
+        <div class="waiting-indicator">
+          <div class="pulse-dot"></div>
+          <span>Waiting for the connection to complete…</span>
+        </div>
+      </div>
+
+      <div id="wizardError" style="display:none;">
+        <div class="wizard-hero">
+          <div class="wizard-icon" style="color:var(--red);">⚠️</div>
+          <h2>Connection failed</h2>
+          <p id="errorMsg">Something went wrong. Please try again.</p>
+          <button class="btn btn-primary" onclick="resetWizard()">Start over</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TRANSFER UI ===== -->
+    <div class="card" id="transferCard" style="display:none;">
+      <div class="connected-bar">
+        <div class="connected-indicator">
+          <span class="connected-dot"></span>
+          <span>Connected</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="disconnect()">Disconnect</button>
+      </div>
+
+      <div class="save-folder-row" id="saveFolderRow" style="display:none;">
+        <button class="btn btn-secondary btn-sm" id="chooseFolderBtn" onclick="chooseSaveFolder()">
+          📂 Choose save folder (recommended)
+        </button>
+        <span class="folder-status" id="folderStatus"></span>
+      </div>
+
+      <div class="drop-zone" id="transferDropZone">
+        <div class="icon">📁</div>
+        <p><strong>Drop files here to send</strong> or click to browse</p>
+        <p style="font-size:.8rem;margin-top:.4rem;">Any file type, any size — files are streamed</p>
+        <input type="file" id="transferFileInput" multiple />
+      </div>
+
+      <div class="transfer-stats" id="transferStats">
+        <div class="stat"><span class="stat-val" id="statSent">0 B</span><span class="stat-label">Sent</span></div>
+        <div class="stat"><span class="stat-val" id="statRecv">0 B</span><span class="stat-label">Received</span></div>
+        <div class="stat"><span class="stat-val" id="statSpeed">—</span><span class="stat-label">Speed</span></div>
+      </div>
+
+      <div class="transfer-list" id="transferList"></div>
+    </div>
+
+    <div class="ad-slot" id="adSlot">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6884221059402072"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script is:inline>
+      (function(){
+        var slot = document.getElementById('adSlot');
+        var obs = new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            obs.disconnect();
+          }
+        }, { rootMargin: '200px' });
+        obs.observe(slot);
+      })();
+    </script>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How File Beam Works</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;color:var(--muted);line-height:1.75;font-size:.92rem;">
+        <p>File Beam creates a <strong>direct peer-to-peer connection</strong> between two devices using WebRTC — the same technology that powers video calls in browsers. No cloud storage, no upload servers, and no account are needed. Files travel straight from one device to the other.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Step-by-Step Guide</h3>
+        <ol style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Create a connection link:</strong> Click "Create connection link" and you'll get a shareable URL.</li>
+          <li><strong>Share the link:</strong> Send the link to the other device via any messaging app, email, or QR code.</li>
+          <li><strong>Other device opens the link:</strong> The page auto-detects the connection and generates an answer link.</li>
+          <li><strong>Send the answer link back:</strong> The other device shares its answer link back to you.</li>
+          <li><strong>Paste or open the answer link:</strong> Paste it into the input field, or open it in the same tab. The connection completes automatically.</li>
+          <li><strong>Transfer files both ways:</strong> Once connected, both devices can drag and drop files to send. Files stream in chunks with real-time progress.</li>
+        </ol>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Bidirectional Transfer</h3>
+        <p>Unlike most file-sharing tools, File Beam is <strong>bidirectional</strong> — once connected, both devices can send and receive files simultaneously. There's no "sender" and "receiver" role after connection; both sides can drop files into the transfer zone at any time.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">No File Size Limit</h3>
+        <p>Files are <strong>streamed</strong> in small chunks over the WebRTC data channel rather than loaded into memory all at once. This means there is no file size limit — you can transfer multi-gigabyte files if your network can handle it. In Chrome and Edge, you can choose a save folder so incoming files stream directly to disk without using device memory.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
+        <p>Files are transferred directly between the two devices using an encrypted WebRTC data channel. No file data is ever sent to any server. The only external request is to Google's public STUN servers, which help the devices discover each other's network addresses — this is standard WebRTC infrastructure and no file content passes through it. Once you disconnect, all data is cleared from memory.</p>
+
+        <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Tips for Best Results</h3>
+        <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Keep both devices on the same Wi-Fi network for the fastest and most reliable transfer.</li>
+          <li>Keep both browser tabs open and in the foreground during transfer — background tabs may be throttled.</li>
+          <li>In Chrome or Edge, click "Choose save folder" so incoming files save directly to disk without using memory.</li>
+          <li>If the connection fails, close both tabs and start fresh with a new connection link.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="faq-section card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How does File Beam transfer files without a server?</h3>
+        <p>File Beam uses WebRTC, a browser technology that creates a direct peer-to-peer connection between two devices. You share a link to establish the connection, then files flow directly from one device to the other — no cloud, no upload, no intermediary server.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do both devices need to be on the same Wi-Fi network?</h3>
+        <p>For best results, yes. WebRTC can work across networks using STUN servers, but transfer speeds are fastest and most reliable when both devices are on the same local network.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is there a file size limit?</h3>
+        <p>No. Files are streamed in small chunks over the WebRTC data channel, so there is no file size limit. In Chrome and Edge, you can choose a save folder so incoming files stream directly to disk without using memory.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can both devices send and receive files?</h3>
+        <p>Yes. Once connected, both devices can drag and drop files to send. The connection is bidirectional — either side can send files at any time.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Are my files uploaded to any server?</h3>
+        <p>No. Files are transferred directly between the two devices using a WebRTC data channel. The only external request is to Google's STUN servers, which help the devices find each other — no file data ever touches a server.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    /* ===== Wizard ===== */
+    .wizard-hero { text-align: center; padding: 1.5rem 1rem; }
+    .wizard-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .wizard-hero h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+    .wizard-hero p { font-size: .88rem; color: var(--muted); max-width: 420px; margin: 0 auto 1rem; line-height: 1.6; }
+
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      margin: 0 auto .75rem; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .link-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: .75rem 1rem; font-size: .78rem; color: var(--text); word-break: break-all;
+      max-height: 80px; overflow-y: auto; margin: 0 0 .75rem; line-height: 1.5;
+      font-family: ui-monospace, monospace;
+    }
+    .link-actions { display: flex; gap: .5rem; justify-content: center; margin-bottom: 1rem; }
+
+    .waiting-indicator {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .75rem; font-size: .85rem; color: var(--muted);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+
+    .answer-input-section {
+      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .link-input {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .65rem .85rem; font-size: .82rem; color: var(--text);
+      margin-bottom: .5rem;
+    }
+    .link-input:focus { outline: none; border-color: var(--accent); }
+
+    /* ===== Connected bar ===== */
+    .connected-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 1rem; background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.3);
+      border-radius: 10px; margin-bottom: 1rem;
+    }
+    .connected-indicator { display: flex; align-items: center; gap: .5rem; font-size: .9rem; font-weight: 600; color: var(--green); }
+    .connected-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .save-folder-row {
+      display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .folder-status { font-size: .82rem; color: var(--muted); }
+
+    /* ===== Drop zone ===== */
+    .drop-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 2rem 1.5rem; text-align: center; color: var(--muted);
+      background: var(--surface2); transition: border-color .2s, background .2s; cursor: pointer;
+    }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: rgba(56,189,248,.08); }
+    .drop-zone .icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .drop-zone input { display: none; }
+
+    /* ===== Stats ===== */
+    .transfer-stats {
+      display: flex; gap: 1rem; margin-top: 1rem; padding: .75rem 1rem;
+      background: var(--surface2); border-radius: 10px;
+    }
+    .stat { flex: 1; text-align: center; }
+    .stat-val { display: block; font-size: 1rem; font-weight: 700; color: var(--text); }
+    .stat-label { font-size: .75rem; color: var(--muted); }
+
+    /* ===== Transfer list ===== */
+    .transfer-list { display: flex; flex-direction: column; gap: .6rem; margin-top: 1rem; }
+    .transfer-item {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+      padding: .75rem 1rem; display: flex; flex-direction: column; gap: .5rem;
+    }
+    .transfer-item-head { display: flex; align-items: center; gap: .65rem; }
+    .transfer-item-head .file-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .transfer-item-head .file-name { flex: 1; font-size: .88rem; color: var(--text); word-break: break-all; font-weight: 500; }
+    .transfer-item-head .file-size { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+    .transfer-item-head .dir-icon { font-size: .9rem; }
+    .transfer-item-head .status-badge {
+      font-size: .72rem; padding: .15rem .5rem; border-radius: 99px; font-weight: 600;
+    }
+    .status-badge.transferring { background: rgba(56,189,248,.15); color: var(--accent); }
+    .status-badge.done { background: rgba(34,197,94,.15); color: var(--green); }
+    .status-badge.queued { background: var(--surface); color: var(--muted); }
+    .status-badge.error { background: rgba(239,68,68,.15); color: var(--red); }
+
+    .transfer-progress {
+      width: 100%; height: 6px; background: var(--surface); border-radius: 99px; overflow: hidden;
+    }
+    .transfer-progress .bar {
+      height: 100%; width: 0%; border-radius: 99px; transition: width .15s;
+    }
+    .transfer-progress .bar.sending { background: var(--accent); }
+    .transfer-progress .bar.receiving { background: var(--green); }
+
+    .transfer-meta { font-size: .75rem; color: var(--muted); display: flex; justify-content: space-between; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      border: none; border-radius: 8px; padding: .55rem 1.1rem; font-size: .85rem;
+      font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-lg { padding: .75rem 1.5rem; font-size: .95rem; }
+    .btn-sm { padding: .4rem .85rem; font-size: .8rem; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+    .btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+    @media (max-width: 640px) {
+      .transfer-stats { flex-direction: column; gap: .5rem; }
+      .link-actions { flex-direction: column; }
+    }
+  </style>
+
+  <script is:inline>
+    'use strict';
+
+    const ICE_SERVERS = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    const CHUNK_SIZE = 64 * 1024;
+    const HIGH_WATER_MARK = 4 * 1024 * 1024;
+    const LOW_WATER_MARK = 1 * 1024 * 1024;
+
+    let pc = null;
+    let dc = null;
+    let role = null;
+    let dirHandle = null;
+    let sendQueue = [];
+    let sending = false;
+    let totalSent = 0;
+    let totalRecv = 0;
+    let transferStartTime = 0;
+    let activeTransfers = new Map();
+
+    // ===== Helpers =====
+    function formatSize(bytes) {
+      if (bytes === 0) return '0 B';
+      const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(1024));
+      return (bytes / Math.pow(1024, i)).toFixed(i > 0 ? 1 : 0) + ' ' + units[i];
+    }
+
+    function formatSpeed(bytesPerSec) {
+      if (bytesPerSec <= 0) return '—';
+      return formatSize(bytesPerSec) + '/s';
+    }
+
+    function fileIcon(name) {
+      const ext = (name.split('.').pop() || '').toLowerCase();
+      const map = { pdf: '📄', jpg: '🖼️', jpeg: '🖼️', png: '🖼️', gif: '🖼️', webp: '🖼️', svg: '🖼️', mp4: '🎬', mov: '🎬', avi: '🎬', mkv: '🎬', mp3: '🎵', wav: '🎵', flac: '🎵', zip: '📦', rar: '📦', '7z': '📦', tar: '📦', gz: '📦', doc: '📝', docx: '📝', txt: '📝', md: '📝', xls: '📊', xlsx: '📊', csv: '📊', ppt: '📽️', pptx: '📽️', js: '📜', ts: '📜', py: '📜', html: '🌐', css: '🌐', json: '🔧', xml: '🔧', apk: '📱', dmg: '💾', exe: '💾' };
+      return map[ext] || '📎';
+    }
+
+    function showPanel(id) {
+      ['wizardIdle','wizardCreating','wizardOfferReady','wizardProcessing','wizardAnswerReady','wizardError'].forEach(p => {
+        const el = document.getElementById(p);
+        if (el) el.style.display = 'none';
+      });
+      const el = document.getElementById(id);
+      if (el) el.style.display = '';
+    }
+
+    function showError(msg) {
+      document.getElementById('errorMsg').textContent = msg || 'Something went wrong. Please try again.';
+      showPanel('wizardError');
+    }
+
+    function resetWizard() {
+      if (dc) { try { dc.close(); } catch(e){} dc = null; }
+      if (pc) { try { pc.close(); } catch(e){} pc = null; }
+      sessionStorage.removeItem('fb_offer');
+      history.replaceState(null, '', window.location.pathname);
+      showPanel('wizardIdle');
+    }
+
+    // ===== WebRTC =====
+    function createPeer() {
+      pc = new RTCPeerConnection(ICE_SERVERS);
+      pc.onconnectionstatechange = () => {
+        const s = pc.connectionState;
+        if (s === 'connected') {
+          document.getElementById('wizardCard').style.display = 'none';
+          document.getElementById('transferCard').style.display = '';
+          transferStartTime = performance.now();
+        } else if (s === 'disconnected' || s === 'failed') {
+          if (document.getElementById('transferCard').style.display !== 'none') {
+            showError('Connection lost. Please start a new connection.');
+            document.getElementById('transferCard').style.display = 'none';
+            document.getElementById('wizardCard').style.display = '';
+          }
+        }
+      };
+      return pc;
+    }
+
+    function waitForIce(p) {
+      return new Promise((resolve) => {
+        if (p.iceGatheringState === 'complete') return resolve();
+        const check = () => { if (p.iceGatheringState === 'complete') { p.removeEventListener('icegatheringstatechange', check); resolve(); } };
+        p.addEventListener('icegatheringstatechange', check);
+        setTimeout(resolve, 4000);
+      });
+    }
+
+    // ===== SENDER: Create offer =====
+    async function startConnection() {
+      document.getElementById('startBtn').disabled = true;
+      showPanel('wizardCreating');
+
+      try {
+        pc = createPeer();
+        dc = pc.createDataChannel('file-beam', { ordered: true });
+        setupDataChannel(dc);
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        await waitForIce(pc);
+
+        const code = btoa(JSON.stringify({ sdp: pc.localDescription }));
+        const link = window.location.origin + window.location.pathname + '#o=' + code;
+        document.getElementById('offerLinkBox').textContent = link;
+        sessionStorage.setItem('fb_offer', code);
+        showPanel('wizardOfferReady');
+
+        if (navigator.share) document.getElementById('shareOfferBtn').style.display = '';
+      } catch (err) {
+        console.error(err);
+        showError('Could not create connection: ' + (err.message || 'unknown error'));
+      }
+    }
+
+    // ===== SENDER: Accept answer link =====
+    async function acceptAnswerLink() {
+      const input = document.getElementById('answerLinkInput');
+      const btn = document.getElementById('connectBtn');
+      let raw = input.value.trim();
+      if (!raw) return;
+
+      btn.disabled = true;
+      showPanel('wizardProcessing');
+      document.getElementById('processingMsg').textContent = 'Completing connection…';
+
+      try {
+        let code;
+        if (raw.includes('#a=')) code = raw.split('#a=')[1];
+        else code = raw;
+        const answer = JSON.parse(atob(code));
+        await pc.setRemoteDescription(new RTCSessionDescription(answer.sdp));
+      } catch (err) {
+        console.error(err);
+        showError('Invalid answer link. Please check and try again.');
+        btn.disabled = false;
+      }
+    }
+
+    // ===== RECEIVER: Auto-process offer from URL hash =====
+    async function processOfferFromHash(code) {
+      showPanel('wizardProcessing');
+      document.getElementById('processingMsg').textContent = 'Processing connection link…';
+
+      try {
+        pc = createPeer();
+        pc.ondatachannel = (ev) => { dc = ev.channel; setupDataChannel(dc); };
+
+        const offer = JSON.parse(atob(code));
+        await pc.setRemoteDescription(new RTCSessionDescription(offer.sdp));
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        await waitForIce(pc);
+
+        const answerCode = btoa(JSON.stringify({ sdp: pc.localDescription }));
+        const link = window.location.origin + window.location.pathname + '#a=' + answerCode;
+        document.getElementById('answerLinkBox').textContent = link;
+        showPanel('wizardAnswerReady');
+
+        if (navigator.share) document.getElementById('shareAnswerBtn').style.display = '';
+      } catch (err) {
+        console.error(err);
+        showError('Invalid connection link. Please ask for a new link.');
+      }
+    }
+
+    // ===== SENDER: Auto-process answer from URL hash =====
+    async function processAnswerFromHash(code) {
+      const storedOffer = sessionStorage.getItem('fb_offer');
+      if (!storedOffer) {
+        showError('No pending connection found. Please create a new connection link.');
+        return;
+      }
+
+      showPanel('wizardProcessing');
+      document.getElementById('processingMsg').textContent = 'Completing connection…';
+
+      try {
+        pc = createPeer();
+        dc = pc.createDataChannel('file-beam', { ordered: true });
+        setupDataChannel(dc);
+
+        const offer = JSON.parse(atob(storedOffer));
+        await pc.setLocalDescription(new RTCSessionDescription(offer.sdp));
+
+        const answer = JSON.parse(atob(code));
+        await pc.setRemoteDescription(new RTCSessionDescription(answer.sdp));
+      } catch (err) {
+        console.error(err);
+        showError('Could not complete connection. Please start over.');
+      }
+    }
+
+    // ===== Data channel =====
+    function setupDataChannel(channel) {
+      channel.binaryType = 'arraybuffer';
+
+      channel.onopen = () => {
+        document.getElementById('wizardCard').style.display = 'none';
+        document.getElementById('transferCard').style.display = '';
+        transferStartTime = performance.now();
+        if (window.showDirectoryPicker) document.getElementById('saveFolderRow').style.display = '';
+      };
+
+      channel.onmessage = (event) => {
+        if (typeof event.data === 'string') {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'file-start') {
+            handleIncomingStart(msg);
+          } else if (msg.type === 'file-end') {
+            handleIncomingEnd(msg);
+          }
+        } else {
+          handleIncomingChunk(event.data);
+        }
+      };
+
+      channel.onclose = () => {
+        if (document.getElementById('transferCard').style.display !== 'none') {
+          showError('Connection closed.');
+          document.getElementById('transferCard').style.display = 'none';
+          document.getElementById('wizardCard').style.display = '';
+        }
+      };
+
+      channel.onerror = (err) => console.error('DC error:', err);
+    }
+
+    // ===== Sending (streaming with file.stream()) =====
+    function queueFiles(fileList) {
+      Array.from(fileList).forEach(f => {
+        const id = crypto.randomUUID();
+        sendQueue.push({ file: f, id });
+        addTransferItem(id, f.name, f.size, 'sending', 'queued');
+      });
+      processSendQueue();
+    }
+
+    async function processSendQueue() {
+      if (sending) return;
+      sending = true;
+
+      while (sendQueue.length > 0 && dc && dc.readyState === 'open') {
+        const item = sendQueue.shift();
+        await sendFileStreaming(item.file, item.id);
+      }
+      sending = false;
+    }
+
+    async function sendFileStreaming(file, id) {
+      updateTransferItem(id, 'transferring', 0);
+      dc.send(JSON.stringify({ type: 'file-start', name: file.name, size: file.size, mime: file.type || '', id }));
+
+      const stream = file.stream();
+      const reader = stream.getReader();
+      let offset = 0;
+      const startTs = performance.now();
+
+      try {
+        while (true) {
+          if (dc.bufferedAmount > HIGH_WATER_MARK) {
+            await new Promise(r => {
+              const iv = setInterval(() => {
+                if (dc.bufferedAmount < LOW_WATER_MARK || !dc || dc.readyState !== 'open') {
+                  clearInterval(iv);
+                  r();
+                }
+              }, 10);
+            });
+          }
+          if (!dc || dc.readyState !== 'open') break;
+
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          dc.send(value);
+          offset += value.byteLength;
+          totalSent += value.byteLength;
+          const pct = Math.round((offset / file.size) * 100);
+          const elapsed = (performance.now() - startTs) / 1000;
+          const speed = elapsed > 0 ? offset / elapsed : 0;
+          updateTransferItem(id, 'transferring', pct, formatSpeed(speed));
+          updateStats();
+        }
+
+        dc.send(JSON.stringify({ type: 'file-end', id }));
+        updateTransferItem(id, 'done', 100);
+      } catch (err) {
+        console.error('Send error:', err);
+        updateTransferItem(id, 'error', 0);
+      } finally {
+        reader.releaseLock();
+      }
+    }
+
+    // ===== Receiving (streaming to disk or memory) =====
+    let recvState = null;
+
+    async function handleIncomingStart(msg) {
+      recvState = { id: msg.id, name: msg.name, size: msg.size, mime: msg.mime, offset: 0, chunks: [], writable: null, fileHandle: null };
+      addTransferItem(msg.id, msg.name, msg.size, 'receiving', 'transferring');
+
+      if (dirHandle) {
+        try {
+          const fh = await dirHandle.getFileHandle(msg.name, { create: true });
+          recvState.writable = await fh.createWritable();
+        } catch (e) {
+          console.warn('Could not create file in directory, falling back to memory:', e);
+        }
+      }
+    }
+
+    async function handleIncomingChunk(data) {
+      if (!recvState) return;
+      recvState.offset += data.byteLength;
+      totalRecv += data.byteLength;
+
+      if (recvState.writable) {
+        await recvState.writable.write(data);
+      } else {
+        recvState.chunks.push(data);
+      }
+
+      const pct = recvState.size > 0 ? Math.round((recvState.offset / recvState.size) * 100) : 0;
+      const elapsed = (performance.now() - transferStartTime) / 1000;
+      const speed = elapsed > 0 ? (totalSent + totalRecv) / elapsed : 0;
+      updateTransferItem(recvState.id, 'transferring', pct, formatSpeed(speed));
+      updateStats();
+    }
+
+    async function handleIncomingEnd(msg) {
+      if (!recvState) return;
+
+      if (recvState.writable) {
+        await recvState.writable.close();
+      } else {
+        const blob = new Blob(recvState.chunks, { type: recvState.mime || 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = recvState.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      }
+
+      updateTransferItem(recvState.id, 'done', 100);
+      recvState = null;
+    }
+
+    // ===== Transfer UI =====
+    function addTransferItem(id, name, size, direction, status) {
+      const list = document.getElementById('transferList');
+      const item = document.createElement('div');
+      item.className = 'transfer-item';
+      item.dataset.id = id;
+
+      const head = document.createElement('div');
+      head.className = 'transfer-item-head';
+
+      const icon = document.createElement('span');
+      icon.className = 'file-icon';
+      icon.textContent = fileIcon(name);
+
+      const dirIcon = document.createElement('span');
+      dirIcon.className = 'dir-icon';
+      dirIcon.textContent = direction === 'sending' ? '↑' : '↓';
+      dirIcon.style.color = direction === 'sending' ? 'var(--accent)' : 'var(--green)';
+
+      const fName = document.createElement('span');
+      fName.className = 'file-name';
+      fName.textContent = name;
+
+      const fSize = document.createElement('span');
+      fSize.className = 'file-size';
+      fSize.textContent = formatSize(size);
+
+      const badge = document.createElement('span');
+      badge.className = 'status-badge ' + status;
+      badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+      head.appendChild(icon);
+      head.appendChild(dirIcon);
+      head.appendChild(fName);
+      head.appendChild(fSize);
+      head.appendChild(badge);
+      item.appendChild(head);
+
+      const progress = document.createElement('div');
+      progress.className = 'transfer-progress';
+      const bar = document.createElement('div');
+      bar.className = 'bar ' + direction;
+      progress.appendChild(bar);
+      item.appendChild(progress);
+
+      const meta = document.createElement('div');
+      meta.className = 'transfer-meta';
+      meta.innerHTML = '<span></span><span></span>';
+      item.appendChild(meta);
+
+      list.insertBefore(item, list.firstChild);
+    }
+
+    function updateTransferItem(id, status, pct, speed) {
+      const item = document.querySelector('.transfer-item[data-id="' + id + '"]');
+      if (!item) return;
+
+      const badge = item.querySelector('.status-badge');
+      if (badge) {
+        badge.className = 'status-badge ' + status;
+        badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+      }
+
+      const bar = item.querySelector('.transfer-progress .bar');
+      if (bar) bar.style.width = pct + '%';
+
+      const meta = item.querySelector('.transfer-meta');
+      if (meta) {
+        meta.children[0].textContent = pct + '%';
+        meta.children[1].textContent = speed || '';
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('statSent').textContent = formatSize(totalSent);
+      document.getElementById('statRecv').textContent = formatSize(totalRecv);
+      const elapsed = (performance.now() - transferStartTime) / 1000;
+      const speed = elapsed > 0 ? (totalSent + totalRecv) / elapsed : 0;
+      document.getElementById('statSpeed').textContent = formatSpeed(speed);
+    }
+
+    // ===== Save folder picker =====
+    async function chooseSaveFolder() {
+      try {
+        dirHandle = await window.showDirectoryPicker();
+        document.getElementById('folderStatus').textContent = 'Saving to: ' + dirHandle.name + '/';
+        document.getElementById('chooseFolderBtn').textContent = '✓ ' + dirHandle.name + '/';
+        document.getElementById('chooseFolderBtn').disabled = true;
+      } catch (e) {
+        if (e.name !== 'AbortError') console.warn(e);
+      }
+    }
+
+    // ===== Link sharing helpers =====
+    function copyLink(boxId) {
+      const text = document.getElementById(boxId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }
+
+    async function shareLink(boxId) {
+      const text = document.getElementById(boxId).textContent;
+      try {
+        await navigator.share({ title: 'File Beam connection', url: text });
+      } catch (e) { /* user cancelled */ }
+    }
+
+    // ===== Disconnect =====
+    function disconnect() {
+      if (dc) { try { dc.send(JSON.stringify({ type: 'bye' })); } catch(e){} try { dc.close(); } catch(e){} dc = null; }
+      if (pc) { try { pc.close(); } catch(e){} pc = null; }
+      dirHandle = null;
+      totalSent = 0;
+      totalRecv = 0;
+      sendQueue = [];
+      document.getElementById('transferCard').style.display = 'none';
+      document.getElementById('transferList').replaceChildren();
+      resetWizard();
+    }
+
+    // ===== Drop zone (transfer) =====
+    const transferDropZone = document.getElementById('transferDropZone');
+    const transferFileInput = document.getElementById('transferFileInput');
+
+    transferDropZone.addEventListener('click', () => transferFileInput.click());
+    transferDropZone.addEventListener('dragover', (e) => { e.preventDefault(); transferDropZone.classList.add('drag-over'); });
+    transferDropZone.addEventListener('dragleave', () => transferDropZone.classList.remove('drag-over'));
+    transferDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      transferDropZone.classList.remove('drag-over');
+      if (dc && dc.readyState === 'open') queueFiles(e.dataTransfer.files);
+    });
+    transferFileInput.addEventListener('change', () => {
+      if (dc && dc.readyState === 'open') queueFiles(transferFileInput.files);
+      transferFileInput.value = '';
+    });
+
+    // ===== Auto-detect URL hash on load =====
+    (function init() {
+      const hash = window.location.hash;
+      if (hash.startsWith('#o=')) {
+        const code = hash.substring(3);
+        history.replaceState(null, '', window.location.pathname);
+        processOfferFromHash(code);
+      } else if (hash.startsWith('#a=')) {
+        const code = hash.substring(3);
+        history.replaceState(null, '', window.location.pathname);
+        processAnswerFromHash(code);
+      }
+    })();
+  </script>
+</Layout>
