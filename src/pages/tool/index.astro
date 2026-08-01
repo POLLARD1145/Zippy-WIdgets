@@ -20,6 +20,9 @@ const toolsJson = JSON.stringify(
 );
 ---
 <Layout title={title} description={description}>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
   <Nav />
 
   <main class="flex flex-col items-center w-full">

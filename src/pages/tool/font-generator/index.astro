@@ -90,7 +90,7 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
     </div>
-    <script>
+    <script is:inline>
       (function(){
         var slot = document.getElementById('adSlot');
         var obs = new IntersectionObserver(function(entries){
@@ -171,19 +171,6 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
 
   <Footer />
 
-
-  <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
 
   <script is:inline>
     'use strict';
@@ -333,21 +320,35 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
         function updateFonts() {
           const input = document.getElementById('fontInput').value || '';
           const list  = document.getElementById('fontOutputList');
+          list.replaceChildren();
           if (!input) {
-            list.innerHTML = '<p class="text-muted text-sm">Start typing above to see your text transformed.</p>';
+            const p = document.createElement('p');
+            p.className = 'text-muted text-sm';
+            p.textContent = 'Start typing above to see your text transformed.';
+            list.appendChild(p);
             return;
           }
-          list.innerHTML = FONTS.map(f => {
+          FONTS.forEach(f => {
             const out = f.fn(input);
-            return `
-              <div class="font-row">
-                <span class="label">${f.name}</span>
-                <span class="preview">${out}</span>
-                <button class="copy-btn" onclick="copyFont(this, ${JSON.stringify(out)})">Copy</button>
-              </div>`;
-          }).join('');
+            const row = document.createElement('div');
+            row.className = 'font-row';
+            const label = document.createElement('span');
+            label.className = 'label';
+            label.textContent = f.name;
+            const preview = document.createElement('span');
+            preview.className = 'preview';
+            preview.textContent = out;
+            const btn = document.createElement('button');
+            btn.className = 'copy-btn';
+            btn.textContent = 'Copy';
+            btn.addEventListener('click', function() { copyFont(btn, out); });
+            row.appendChild(label);
+            row.appendChild(preview);
+            row.appendChild(btn);
+            list.appendChild(row);
+          });
         }
-    
+
         function copyFont(btn, text) {
           navigator.clipboard.writeText(text).then(() => {
             btn.textContent = 'Copied!';
