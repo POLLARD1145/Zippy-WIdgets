@@ -194,12 +194,38 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
           }));
     
           document.getElementById('birthdayMsg').textContent = isBirthday ? '🎂 Happy Birthday! 🎉' : '';
+          updateHash();
         }
-    
+
+        function updateHash() {
+          const val = document.getElementById('dobInput').value;
+          if (!val) {
+            history.replaceState(null, '', location.pathname + location.search);
+            return;
+          }
+          const params = new URLSearchParams();
+          params.set('dob', val);
+          history.replaceState(null, '', '#' + params.toString());
+        }
+
+        function applyStateFromHash() {
+          if (!location.hash || location.hash.length < 2) return;
+          const params = new URLSearchParams(location.hash.slice(1));
+          const dob = params.get('dob');
+          if (dob) {
+            const input = document.getElementById('dobInput');
+            input.value = dob;
+          }
+        }
+
         function clearAge() {
           document.getElementById('dobInput').value = '';
           document.getElementById('ageResult').replaceChildren();
           document.getElementById('birthdayMsg').textContent = '';
+          updateHash();
         }
+
+        applyStateFromHash();
+        if (document.getElementById('dobInput').value) calculateAge();
   </script>
 </Layout>

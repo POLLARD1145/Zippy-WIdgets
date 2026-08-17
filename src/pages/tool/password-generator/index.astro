@@ -301,6 +301,36 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
           passwordDisplay.textContent = password;
           updateStrength(password);
           addToHistory(password);
+          updateHash();
+        }
+
+        function updateHash() {
+          const params = new URLSearchParams();
+          params.set('len', lengthRange.value);
+          if (document.getElementById('uppercase').checked) params.set('upper', '1');
+          if (document.getElementById('lowercase').checked) params.set('lower', '1');
+          if (document.getElementById('numbers').checked) params.set('num', '1');
+          if (document.getElementById('symbols').checked) params.set('sym', '1');
+          if (document.getElementById('avoidAmbiguous').checked) params.set('ambig', '1');
+          history.replaceState(null, '', '#' + params.toString());
+        }
+
+        function applyStateFromHash() {
+          if (!location.hash || location.hash.length < 2) return;
+          const params = new URLSearchParams(location.hash.slice(1));
+          if (params.has('len')) {
+            const len = parseInt(params.get('len'), 10);
+            if (len >= 4 && len <= 128) {
+              lengthRange.value = len;
+              lengthValue.textContent = len;
+            }
+          }
+          document.getElementById('uppercase').checked = params.get('upper') === '1';
+          document.getElementById('lowercase').checked = params.get('lower') === '1';
+          document.getElementById('numbers').checked = params.get('num') === '1';
+          document.getElementById('symbols').checked = params.get('sym') === '1';
+          document.getElementById('avoidAmbiguous').checked = params.get('ambig') === '1';
+          if (!anyChecked()) document.getElementById('lowercase').checked = true;
         }
     
         function updateStrength(password) {
@@ -367,7 +397,8 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
           return div.innerHTML;
         }
     
-        // Generate one on load
+        // Generate one on load, restoring shared state first
+        applyStateFromHash();
         generatePassword();
   </script>
 </Layout>

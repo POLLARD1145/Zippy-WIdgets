@@ -206,6 +206,7 @@ Eve</textarea>
         let canvas, ctx;
     
         function init() {
+          applyStateFromHash();
           canvas = document.getElementById('wheelCanvas');
           ctx    = canvas.getContext('2d');
           resizeCanvas();
@@ -313,8 +314,27 @@ Eve</textarea>
           wheelEntries = entries;
           resetWheel();
           renderChips();
+          updateHash();
         }
-    
+
+        function updateHash() {
+          if (!wheelEntries.length) return;
+          const params = new URLSearchParams();
+          params.set('entries', wheelEntries.join('\n'));
+          history.replaceState(null, '', '#' + params.toString());
+        }
+
+        function applyStateFromHash() {
+          if (!location.hash || location.hash.length < 2) return;
+          const params = new URLSearchParams(location.hash.slice(1));
+          const entries = params.get('entries');
+          if (!entries) return;
+          const list = entries.split('\n').map(s => s.trim()).filter(Boolean);
+          if (list.length < 2) return;
+          wheelEntries = list;
+          document.getElementById('wheelTextarea').value = list.join('\n');
+        }
+
         function renderChips() {
           const container = document.getElementById('wheelChips');
           if (!container) return;
@@ -327,22 +347,24 @@ Eve</textarea>
             container.appendChild(chip);
           });
         }
-    
+
         function removeEntry(idx) {
           wheelEntries.splice(idx, 1);
           document.getElementById('wheelTextarea').value = wheelEntries.join('\n');
           resetWheel();
           renderChips();
+          updateHash();
         }
-    
+
         function addSampleEntries() {
           const samples = ['Alice','Bob','Charlie','Diana','Eve','Frank','Grace','Henry','Iris','Jack'];
           wheelEntries = samples;
           document.getElementById('wheelTextarea').value = samples.join('\n');
           resetWheel();
           renderChips();
+          updateHash();
         }
-    
+
         const PRESETS = {
           eat:     ['Pizza','Sushi','Burger','Tacos','Pasta','Salad','Ramen','Steak','Curry','Sandwiches'],
           numbers: ['1','2','3','4','5','6','7','8','9','10'],
@@ -351,14 +373,15 @@ Eve</textarea>
           giveaway:['Winner!','Try Again','Almost!','Next Time','You Win!'],
           days:    ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
         };
-    
+
         function loadPreset(key) {
           wheelEntries = PRESETS[key];
           document.getElementById('wheelTextarea').value = PRESETS[key].join('\n');
           resetWheel();
           renderChips();
+          updateHash();
         }
-    
+
         document.addEventListener('DOMContentLoaded', init);
   </script>
 </Layout>
