@@ -3,6 +3,7 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import { tools } from '@data/tools.ts';
+import { SITE, FEATURES } from '@data/config.ts';
 
 const title = 'ZippyWidgets – Free Online Tools: PDF Merger, Image Compressor, QR Code, Word Counter & More';
 const description = 'Free online tools — spin a random winner wheel, generate Instagram bio fonts, create QR codes, merge PDFs, compress images, and more. No sign-up, works instantly in your browser.';
@@ -12,12 +13,26 @@ const canonical = 'https://zippywidgets.online/';
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ZippyWidgets",
-      "alternateName": "ZippyWidgets.online",
-      "url": "https://zippywidgets.online/",
-      "logo": "https://zippywidgets.online/ZippyWidgets%20Logo.png",
-      "sameAs": []
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "ZippyWidgets",
+          "alternateName": "ZippyWidgets.online",
+          "url": "https://zippywidgets.online/",
+          "logo": "https://zippywidgets.online/ZippyWidgets%20Logo.png",
+          "sameAs": []
+        },
+        {
+          "@type": "WebSite",
+          "name": "ZippyWidgets",
+          "url": SITE.url,
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": { "@type": "EntryPoint", "urlTemplate": `${SITE.url.slice(0, -1)}${SITE.searchPath}` },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
     })} />
   </Fragment>
   <Nav />
@@ -53,7 +68,7 @@ const canonical = 'https://zippywidgets.online/';
       <h2 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0;">Frequently Asked Questions</h2>
       <div class="faq-item">
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Are ZippyWidgets tools really free?</h3>
-        <p>Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers. The site is supported by display advertising, which keeps the tools free for everyone.</p>
+        <p>Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers.</p>
       </div>
       <div class="faq-item">
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Do I need to install anything or create an account?</h3>
@@ -73,7 +88,7 @@ const canonical = 'https://zippywidgets.online/';
       </div>
       <div class="faq-item">
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);">Are the tools ad-free?</h3>
-        <p>The tools themselves are not ad-free — ZippyWidgets displays Google AdSense advertisements to fund the site. However, ads are deferred and isolated from the primary tool interface so they never block interaction or cause layout shifts. The core functionality is never gated behind ads.</p>
+        <p>ZippyWidgets keeps the core tool experience clean and free. If advertising is added in the future to help fund the site, it will be deferred and isolated from the primary tool interface so it never blocks interaction or causes layout shifts. The core functionality is never gated behind ads.</p>
       </div>
     </section>
 
@@ -84,7 +99,7 @@ const canonical = 'https://zippywidgets.online/';
         {
           "@type": "Question",
           "name": "Are ZippyWidgets tools really free?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers. The site is supported by display advertising, which keeps the tools free for everyone." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool on ZippyWidgets is completely free with no sign-up, no account, and no subscription. There are no hidden paywalls or premium tiers." }
         },
         {
           "@type": "Question",
@@ -109,32 +124,37 @@ const canonical = 'https://zippywidgets.online/';
         {
           "@type": "Question",
           "name": "Are the tools ad-free?",
-          "acceptedAnswer": { "@type": "Answer", "text": "The tools themselves are not ad-free — ZippyWidgets displays Google AdSense advertisements to fund the site. However, ads are deferred and isolated from the primary tool interface so they never block interaction or cause layout shifts. The core functionality is never gated behind ads." }
+          "acceptedAnswer": { "@type": "Answer", "text": "ZippyWidgets keeps the core tool experience clean and free. If advertising is added in the future to help fund the site, it will be deferred and isolated from the primary tool interface so it never blocks interaction or causes layout shifts. The core functionality is never gated behind ads." }
         }
       ]
     })} />
     </div>
 
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script is:inline>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
   </main>
 
   <Footer />

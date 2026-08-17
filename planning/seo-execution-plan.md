@@ -480,12 +480,13 @@ For each remaining tool:
 - **Create a content freshness calendar** to update "Last updated" dates and refresh stale articles quarterly.
 
 ### Deliverables
+- [x] `WebSite` + `SearchAction` schema live on homepage.
+- [x] Footer claim updated to be factually accurate.
+- [x] Cookie/ads consent banner implemented behind `FEATURES.adsEnabled` flag; banner and AdSense script only load when ads are enabled.
+- [x] PWA manifest + `theme-color` tags added.
+- [x] Resource hints added (`preconnect` for Google Fonts, `dns-prefetch` for analytics).
 - [ ] Decision recorded on `/tool/` index status.
-- [ ] `WebSite` + `SearchAction` schema live on homepage.
-- [ ] Footer claim updated to be factually accurate.
-- [ ] Cookie/ads consent banner implemented.
-- [ ] Logo optimized and layout shift eliminated.
-- [ ] PWA manifest + theme-color tags added.
+- [ ] Logo optimized and layout shift eliminated (still 387 KB PNG; convert to WebP/AVIF and add explicit width/height).
 - [ ] `HowTo` and `speakable` schema added to tool pages.
 - [ ] AI-citable answer blocks added to all tool pages.
 - [ ] Build-time schema validation documented or scripted.

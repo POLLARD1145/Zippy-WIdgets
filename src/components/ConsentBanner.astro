@@ -1,0 +1,105 @@
+---
+// Consent banner for advertising cookies. Only renders when ads are enabled.
+// It does not track users or load ad scripts until explicit consent is given.
+---
+
+<div id="consent-banner" class="consent-banner" role="dialog" aria-label="Cookie consent" aria-live="polite" style="display:none;">
+  <p>
+    This site uses cookies and similar technologies from Google to serve personalised ads.
+    You can accept or decline. Your choice is stored only in your browser.
+  </p>
+  <div class="consent-buttons">
+    <button type="button" class="btn btn-secondary" id="consent-decline">Decline</button>
+    <button type="button" class="btn btn-primary" id="consent-accept">Accept</button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const STORAGE_KEY = 'zw-consent-ads';
+    const banner = document.getElementById('consent-banner');
+    if (!banner) return;
+
+    function loadAdScript() {
+      if (window.__zwAdsLoaded) return;
+      window.__zwAdsLoaded = true;
+      const script = document.createElement('script');
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884221059402072';
+      document.head.appendChild(script);
+    }
+
+    function show() { banner.style.display = 'flex'; }
+    function hide() { banner.style.display = 'none'; }
+
+    const consent = localStorage.getItem(STORAGE_KEY);
+    if (consent === 'granted') {
+      loadAdScript();
+      hide();
+      return;
+    }
+    if (consent === 'denied') {
+      hide();
+      return;
+    }
+
+    show();
+
+    document.getElementById('consent-accept').addEventListener('click', function () {
+      localStorage.setItem(STORAGE_KEY, 'granted');
+      loadAdScript();
+      hide();
+    });
+
+    document.getElementById('consent-decline').addEventListener('click', function () {
+      localStorage.setItem(STORAGE_KEY, 'denied');
+      hide();
+    });
+  })();
+</script>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .consent-banner p {
+    margin: 0;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .consent-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  .consent-banner .btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--surface2);
+    color: var(--text);
+  }
+  .consent-banner .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+</style>

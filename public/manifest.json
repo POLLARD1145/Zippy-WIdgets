@@ -1,0 +1,17 @@
+{
+  "name": "ZippyWidgets",
+  "short_name": "ZippyWidgets",
+  "description": "Fast, free browser tools and games that run entirely on your device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1117",
+  "theme_color": "#0f1117",
+  "icons": [
+    {
+      "src": "/ZippyWidgets Logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
