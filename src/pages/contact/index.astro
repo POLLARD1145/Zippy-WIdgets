@@ -9,6 +9,18 @@ const canonical = 'https://zippywidgets.online/contact/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Contact Us",
+        "description": "Get in touch with ZippyWidgets. Report a bug, suggest a new tool, or just say hello.",
+        "url": "https://zippywidgets.online/contact/",
+        "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" }
+      }
+    </script>
+  </Fragment>
   <Nav />
 
 <main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">

@@ -407,22 +407,30 @@ For each remaining tool:
 
 ### Tasks
 1. **Set up tracking.**
-   - Confirm Google Search Console ownership.
-   - Submit sitemap after each deploy.
+   - Confirm Google Search Console ownership (requires the verification code/file from GSC).
+   - Submit `https://zippywidgets.online/sitemap.xml` after each deploy.
    - Watch the "AI Mode" / "AI Overview" filter in GSC when available.
 
 2. **Create an SEO dashboard.**
    - Clicks, impressions, CTR, average position per tool URL.
    - Track changes week-over-week from each phase.
 
-3. **Iterate based on data.**
+3. **Automate build-time SEO checks.**
+   - Run `npm run seo-audit` after every build.
+   - It currently checks: one `<h1>`, canonical with trailing slash, JSON-LD presence, and correct schema types for `/tool/*`, `/game/*`, and `/blog/*` pages.
+
+4. **Iterate based on data.**
    - If a title change hurts CTR, revert or A/B test alternatives.
    - Add more supporting copy to pages with high impressions but low clicks.
    - Expand clusters that show traction.
 
 ### Deliverables
-- [ ] GSC sitemap resubmitted.
+- [ ] GSC ownership confirmed and sitemap resubmitted.
 - [ ] Spreadsheet/dashboard tracking impressions, clicks, CTR, position per tool.
+- [x] Build-time SEO audit script (`scripts/seo-audit.mjs`) created and run after build.
+- [x] First audit run completed and issues resolved:
+  - Added a visible `<h1>` to `/game/aetherforge/`.
+  - Added `WebPage` JSON-LD schema to `/contact/`, `/disclaimer/`, and `/privacy-policy/`.
 - [ ] First iteration cycle completed (review data, pick 2–3 pages to improve).
 
 ---

@@ -9,6 +9,18 @@ const canonical = 'https://zippywidgets.online/privacy-policy/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Privacy Policy",
+        "description": "ZippyWidgets privacy policy. Learn how we handle your data, advertising cookies, and browser-based tool usage.",
+        "url": "https://zippywidgets.online/privacy-policy/",
+        "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" }
+      }
+    </script>
+  </Fragment>
   <Nav />
 
 <main class="tool-page max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">

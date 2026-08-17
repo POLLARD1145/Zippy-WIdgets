@@ -9,6 +9,7 @@
     "build": "astro build",
     "postbuild": "node scripts/postbuild.mjs",
     "preview": "astro preview",
+    "seo-audit": "node scripts/seo-audit.mjs",
     "astro": "astro"
   },
   "dependencies": {
