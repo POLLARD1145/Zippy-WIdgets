@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Free Favicon Generator — Convert Image to Favicon.ico Online';
 const description = 'Convert any PNG, JPG or SVG image into a favicon.ico file for your website. Generate 16x16, 32x32, 48x48 and 180x180 icons instantly in your browser. Free, no sign-up.';
@@ -9,6 +10,13 @@ const canonical = 'https://zippywidgets.online/tool/favicon-generator/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Favicon Generator', item: 'https://zippywidgets.online/tool/favicon-generator/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -18,8 +26,10 @@ const canonical = 'https://zippywidgets.online/tool/favicon-generator/';
     "name": "Free Favicon Generator",
     "url": "https://zippywidgets.online/tool/favicon-generator/",
     "description": "Convert PNG, JPG or SVG images into favicon.ico files for websites. Generate 16x16, 32x32, 48x48 and 180x180 icons instantly in your browser.",
-    "applicationCategory": "UtilitiesApplication",
+    "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires HTML5 Canvas and JavaScript",
+    "featureList": "PNG/JPG/SVG to favicon.ico, multi-resolution icons, Apple touch icon, HTML link tags",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -132,6 +142,13 @@ const canonical = 'https://zippywidgets.online/tool/favicon-generator/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
         <p>Your image is processed entirely in your browser using the HTML5 canvas API. It is never uploaded to a server, cloud storage, or any third party.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Related Tools & Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for tips on website performance and asset optimisation.
+      </p>
     </section>
   </main>
 

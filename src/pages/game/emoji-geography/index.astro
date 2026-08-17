@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Emoji Geography — Free Flag Quiz Online (No Login) | ZippyWidgets';
 const description = 'Guess the country from its flag emoji. 10 daily questions — same quiz for every player worldwide. Free mini game online, no login, works on any phone. One of the best free online games!';
@@ -10,6 +11,11 @@ const canonical = 'https://zippywidgets.online/game/emoji-geography/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+      { name: 'Emoji Geography', item: 'https://zippywidgets.online/game/emoji-geography/' },
+    ]} />
   <meta name="keywords" content='flag quiz game, emoji geography, guess the flag, best free online games, mini games online, free online games, online games free, country flag quiz, daily geography quiz, free flag game no login, world flags quiz online, online games no download' />
   <meta property="og:title" content='Emoji Geography — Free Flag Quiz Online' />
   <meta property="og:description" content='Free mini game online — 10 flags, 4 choices each. Same daily quiz worldwide. No login needed.' />

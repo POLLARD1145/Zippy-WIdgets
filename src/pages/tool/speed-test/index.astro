@@ -2,13 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Internet Speed Test | WiFi Speed, Ping, Jitter & Streamer Speed Check';
-const description = 'Free internet speed test — check download speed, upload speed, ping, jitter and ISP info instantly. Test Starlink speed, fiber broadband, 5G, gaming ping and streaming quality. No app, no sign-up.';
+const title = 'Internet Speed Test — WiFi, Ping, Jitter & Upload Check';
+const description = 'Free internet speed test for download, upload, ping and jitter. Works for fiber, Starlink, 5G and gaming. No app, no sign-up.';
 const canonical = 'https://zippywidgets.online/tool/speed-test/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Internet Speed Test', item: 'https://zippywidgets.online/tool/speed-test/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -17,9 +25,11 @@ const canonical = 'https://zippywidgets.online/tool/speed-test/';
     "@type": "WebApplication",
     "name": "Internet Speed Test",
     "url": "https://zippywidgets.online/tool/speed-test/",
-    "description": "Free internet speed test. Measure download speed, upload speed, ping, jitter and ISP info. Includes streamer mode, gaming ping test and broadband quality rating. No app or sign-up required.",
+    "description": "Free internet speed test for download, upload, ping and jitter. Works for fiber, Starlink, 5G and gaming. No app, no sign-up.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript and network access to Cloudflare edge endpoints",
+    "featureList": "Download speed test, upload speed test, ping test, jitter measurement, ISP info, results history",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -259,6 +269,13 @@ const canonical = 'https://zippywidgets.online/tool/speed-test/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">How the Test Works</h3>
         <p>Download speed is measured by fetching files of increasing size from Cloudflare's edge network and timing the transfer. Upload speed sends random data to Cloudflare's upload endpoint. Ping and jitter are calculated by making multiple timed requests to the Cloudflare endpoint and measuring the variance. All tests run entirely in your browser — no app, plugin, or server-side component is required.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Understanding Internet Speeds</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Read our guide on <a href="/blog/what-is-a-good-internet-speed/" style="color:var(--accent);">what is a good internet speed</a> to learn how download, upload, ping, and jitter affect streaming, gaming, and video calls.
+      </p>
     </section>
   </main>
 

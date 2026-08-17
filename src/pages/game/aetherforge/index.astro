@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'AetherForge: Chrono-Deck | Free Browser Roguelike Deckbuilder (No Login)';
 const description = 'Play AetherForge instantly in your browser. A free, daily roguelike card game with zero signups or logins required. Forge element combos and beat the daily seed!';
@@ -10,6 +11,11 @@ const canonical = 'https://zippywidgets.online/game/aetherforge/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+      { name: 'AetherForge', item: 'https://zippywidgets.online/game/aetherforge/' },
+    ]} />
   <meta name="keywords" content='free browser roguelike deckbuilder, online card games no login, no signup web games, daily browser puzzle game, games like Balatro in browser, single player web card game, unblocked roguelike games, free daily card game' />
   <meta property="og:title" content='AetherForge: Chrono-Deck | Free Browser Roguelike Deckbuilder' />
   <meta property="og:description" content='A free daily roguelike deckbuilder — no login, no download. Same seed worldwide every day. Can you beat today' />

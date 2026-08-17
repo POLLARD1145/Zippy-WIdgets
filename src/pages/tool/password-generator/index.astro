@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Strong Password Generator — Free & Secure, No Sign-up';
 const description = 'Generate strong, secure, random passwords instantly. Customise length and character types. No data stored, no sign-up, works 100% in your browser.';
@@ -9,6 +10,13 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Password Generator', item: 'https://zippywidgets.online/tool/password-generator/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -20,6 +28,8 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
     "description": "Generate strong, secure, random passwords instantly in your browser. Customise length and character types. No data stored, no sign-up required.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript and the Web Crypto API",
+    "featureList": "Random password generation, custom length, uppercase/lowercase letters, numbers, symbols, copy to clipboard, strength indicator",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -141,6 +151,13 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Pro Tip: Use a Password Manager</h3>
         <p>Generating a strong password is only half the battle — you also need to store it safely. Use a reputable password manager (Bitwarden, KeePass, 1Password, or your browser's built-in manager) to save and autofill your passwords. That way every account can have a unique, random password without you needing to remember any of them.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Related Tools & Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for more security and privacy tips.
+      </p>
     </section>
   </main>
 

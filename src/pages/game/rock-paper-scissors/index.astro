@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Rock Paper Scissors — Free Online Game vs Smart CPU | ZippyWidgets';
 const description = 'Play Rock Paper Scissors online free against a smart CPU. Best of 5 — Hard mode learns your patterns and adapts. Free mini game online, no login, works on any phone. One of the best free online games!';
@@ -10,6 +11,11 @@ const canonical = 'https://zippywidgets.online/game/rock-paper-scissors/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+      { name: 'Rock Paper Scissors', item: 'https://zippywidgets.online/game/rock-paper-scissors/' },
+    ]} />
   <meta name="keywords" content='rock paper scissors online, rock paper scissors game free, best free online games, free online games, mini games online, online games free, multiplayer online games, rps game free, play rock paper scissors cpu, rock paper scissors no login, online games no download' />
   <meta property="og:title" content='Rock Paper Scissors — Free Online Game vs Smart CPU' />
   <meta property="og:description" content='Free online game — best of 5 vs a smart CPU that learns your patterns. No login needed.' />

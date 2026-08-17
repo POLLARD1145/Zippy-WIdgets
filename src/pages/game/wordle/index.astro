@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Daily Wordle — Free Word Guessing Game Online (No Login) | ZippyWidgets';
 const description = 'Guess the hidden 5-letter word in 6 tries. Free daily Wordle-style game — no login required. Same word worldwide every day. Green, yellow and grey clues guide your guesses!';
@@ -10,6 +11,11 @@ const canonical = 'https://zippywidgets.online/game/wordle/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+      { name: 'Daily Wordle', item: 'https://zippywidgets.online/game/wordle/' },
+    ]} />
     <meta name="keywords" content="wordle game, free wordle, daily wordle, word guessing game, wordle online, 5 letter word game, wordle no login, wordle today" />
     <meta property="og:title" content="Daily Wordle — Free Word Guessing Game (No Login)" />
     <meta property="og:description" content="Guess the 5-letter word in 6 tries. Free daily wordle-style game — no signup. Same word worldwide every day." />

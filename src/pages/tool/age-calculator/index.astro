@@ -2,24 +2,34 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'How Many Days Old Am I? Free Days Old Calculator | ZippyWidgets';
-const description = 'Find out how many days old you are. Enter your date of birth for your exact age in years, months, weeks, total days and days until your next birthday.';
+const title = 'Age Calculator — How Many Days Old Am I? Free Online';
+const description = 'Find out exactly how many days old you are. Calculate age in years, months, weeks, days and hours, plus days until your next birthday. Free, no sign-up.';
 const canonical = 'https://zippywidgets.online/tool/age-calculator/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Age Calculator', item: 'https://zippywidgets.online/tool/age-calculator/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Days Old Calculator",
+    "name": "Age Calculator",
     "url": "https://zippywidgets.online/tool/age-calculator/",
-    "description": "Free days old calculator. Enter your birthdate to find your exact age in years, months, weeks, total days, and hours with a next birthday countdown.",
+    "description": "Find out exactly how many days old you are. Calculate age in years, months, weeks, days and hours, plus days until your next birthday. Free, no sign-up.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "featureList": "Age in years, months, weeks, days, hours, next birthday countdown, leap-year aware",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -117,6 +127,13 @@ const canonical = 'https://zippywidgets.online/tool/age-calculator/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
         <p>Your date of birth is used only for the calculation in your browser. It is never sent to any server or stored in any database. The date you enter is only held in memory for the duration of your visit and cleared when you press Clear or close the tab.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Related Tools & Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Explore more free tools in our <a href="/blog/" style="color:var(--accent);">blog</a> or try the <a href="/tool/word-counter/" style="color:var(--accent);">Word Counter</a> for essays and forms.
+      </p>
     </section>
   </main>
 

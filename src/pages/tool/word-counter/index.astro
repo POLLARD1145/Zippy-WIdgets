@@ -2,13 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Word Counter | Essay Word Count & Tweet Character Limit Checker';
-const description = 'Free word counter and character counter. Check essay word count, tweet character limit, and real-time limits for Instagram, LinkedIn, TikTok & SMS. No sign-up needed.';
+const title = 'Word Counter — Essay, Tweet & Character Limit Checker';
+const description = 'Free online word counter and character counter. Check essay word count, tweet and social media limits in real time. No sign-up needed.';
 const canonical = 'https://zippywidgets.online/tool/word-counter/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Word Counter', item: 'https://zippywidgets.online/tool/word-counter/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -17,9 +25,11 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
     "@type": "WebApplication",
     "name": "Word & Character Counter",
     "url": "https://zippywidgets.online/tool/word-counter/",
-    "description": "Free real-time word counter and character counter tool. Count words, characters, sentences, and paragraphs instantly.",
+    "description": "Free online word counter and character counter. Check essay word count, tweet and social media limits in real time. No sign-up needed.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "featureList": "Word count, character count, sentence and paragraph count, reading time estimate, platform-specific limits for Twitter, Instagram, LinkedIn, TikTok, SMS",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -135,6 +145,13 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
         <p>All text you paste into this tool is processed entirely in your browser using JavaScript. Nothing you type is sent to a server, logged, or stored. You can safely paste confidential documents, cover letters, or personal writing — it never leaves your device. The Clear button instantly removes all text from the editor.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Related Tools & Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for writing, SEO, and productivity tips.
+      </p>
     </section>
   </main>
 

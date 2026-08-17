@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Best Free Online Games — No Login, No Download | ZippyWidgets';
 const description = 'Play the best free online games instantly — no login, no signup, no download. Mini games online including word puzzles, memory, flag quizzes, card games and more. Same daily challenge worldwide.';
@@ -10,6 +11,10 @@ const canonical = 'https://zippywidgets.online/game/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+    ]} />
   <meta name="keywords" content='best free online games, free online games, online games free, free games online, mini games online, best online games, card games online free, word games online free, multiplayer online games, online games no download, free games no login, instant play games, unblocked games' />
   <meta property="og:title" content='Best Free Online Games — No Login | ZippyWidgets' />
   <meta property="og:description" content='The best free online games — no login, no download. Mini games, word puzzles, card games and more. Daily challenges same worldwide.' />

@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Emoji Memory Match — Free Card Game Online (No Login) | ZippyWidgets';
 const description = 'Flip and match emoji card pairs in the fewest moves. Free card game online — same daily emoji set for every player worldwide. No login, no download, works on any phone. One of the best free online games!';
@@ -10,6 +11,11 @@ const canonical = 'https://zippywidgets.online/game/emoji-memory/';
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Games', item: 'https://zippywidgets.online/game/' },
+      { name: 'Emoji Memory Match', item: 'https://zippywidgets.online/game/emoji-memory/' },
+    ]} />
   <meta name="keywords" content='emoji memory match, card games online free, free card game online, memory card game online, best free online games, mini games online, free memory game no login, daily memory game, flip cards browser game, concentration game online, online games free' />
   <meta property="og:title" content='Emoji Memory Match — Free Card Game Online' />
   <meta property="og:description" content='Free card game online — match all emoji pairs in the fewest flips. Daily seed, same puzzle worldwide. No login needed.' />
