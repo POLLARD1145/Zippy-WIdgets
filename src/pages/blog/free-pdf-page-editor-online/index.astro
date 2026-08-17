@@ -2,11 +2,14 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import AuthorBio from '@components/AuthorBio.astro';
+import { getAuthor } from '@data/authors.ts';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
 const title = 'Free PDF Page Editor Online — Reorder, Rotate, Delete & Extract Pages';
 const description = 'Edit PDF pages online for free. Reorder, rotate, delete, and extract pages in your browser. No upload, no sign-up, no watermark.';
 const canonical = 'https://zippywidgets.online/blog/free-pdf-page-editor-online/';
+const author = getAuthor('zippywidgets-team')!;
 const published = '2026-07-15';
 const updated = '2026-07-15';
 ---
@@ -27,7 +30,7 @@ const updated = '2026-07-15';
         "url": "https://zippywidgets.online/blog/free-pdf-page-editor-online/",
         "datePublished": "2026-07-15",
         "dateModified": "2026-07-15",
-        "author": { "@type": "Organization", "name": "ZippyWidgets" },
+        "author": { "@type": "Person", "@id": "https://zippywidgets.online/about/#zippywidgets-team" },
         "publisher": { "@type": "Organization", "name": "ZippyWidgets", "logo": { "@type": "ImageObject", "url": "https://zippywidgets.online/ZippyWidgets%20Logo.png" } },
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://zippywidgets.online/blog/free-pdf-page-editor-online/" }
       }
@@ -119,6 +122,8 @@ const updated = '2026-07-15';
         <li><a href="/blog/complete-guide-to-online-pdf-management/" style="color:var(--accent);">Complete Guide to Online PDF Management</a></li>
       </ul>
     </div>
+
+    <AuthorBio author={author} />
   </main>
 
   <Footer />

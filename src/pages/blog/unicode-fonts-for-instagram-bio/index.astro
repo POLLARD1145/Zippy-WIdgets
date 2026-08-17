@@ -2,10 +2,13 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import AuthorBio from '@components/AuthorBio.astro';
+import { getAuthor } from '@data/authors.ts';
 
 const title = 'How to Change Your Instagram Bio Font — Copy & Paste Guide | ZippyWidgets';
 const description = 'Learn how to change your Instagram bio font with copy-and-paste Unicode text. Choose bold, cursive, aesthetic, tiny caps or glitch styles, then paste them into your bio.';
 const canonical = 'https://zippywidgets.online/blog/unicode-fonts-for-instagram-bio/';
+const author = getAuthor('zippywidgets-team')!;
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -19,7 +22,7 @@ const canonical = 'https://zippywidgets.online/blog/unicode-fonts-for-instagram-
     "description": "Change your Instagram bio font without any app. Copy bold, cursive, aesthetic and glitch text styles and paste directly into Instagram, TikTok, Discord and Twitter. Free and instant.",
     "url": "https://zippywidgets.online/blog/unicode-fonts-for-instagram-bio/",
     "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
-    "author": { "@type": "Organization", "name": "ZippyWidgets" },
+    "author": { "@type": "Person", "@id": "https://zippywidgets.online/about/#zippywidgets-team" },
     "datePublished": "2026-07-10",
     "dateModified": "2026-07-10",
     "keywords": ["instagram bio fonts", "fancy fonts copy paste", "aesthetic fonts", "cursive text instagram", "bold text copy paste", "unicode fonts", "tiktok bio fonts", "discord fancy text", "font generator", "cool text generator"]
@@ -149,6 +152,8 @@ const canonical = 'https://zippywidgets.online/blog/unicode-fonts-for-instagram-
 
     </div>
 
+    <AuthorBio author={author} />
+
     <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
       <ins class="adsbygoogle"
            style="display:block"
@@ -196,7 +201,13 @@ const canonical = 'https://zippywidgets.online/blog/unicode-fonts-for-instagram-
         "description": "Change your Instagram bio font without any app. Copy bold, cursive, aesthetic and glitch text styles and paste directly into Instagram, TikTok, Discord and Twitter. Free and instant.",
         "url": "https://zippywidgets.online/blog/unicode-fonts-for-instagram-bio/",
         "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
-        "author": { "@type": "Organization", "name": "ZippyWidgets" },
+        "author": {
+          "@type": "Person",
+          "name": "ZippyWidgets Editorial Team",
+          "url": "https://zippywidgets.online/about/",
+          "jobTitle": "Editorial Team",
+          "worksFor": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" }
+        },
         "datePublished": "2026-07-10",
         "dateModified": "2026-07-10",
         "keywords": ["instagram bio fonts", "fancy fonts copy paste", "aesthetic fonts", "cursive text instagram", "bold text copy paste", "unicode fonts", "tiktok bio fonts", "discord fancy text", "font generator", "cool text generator"]

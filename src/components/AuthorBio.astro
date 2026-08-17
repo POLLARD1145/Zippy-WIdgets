@@ -1,0 +1,58 @@
+---
+import type { Author } from '@data/authors.ts';
+
+export interface Props {
+  author: Author;
+}
+
+const { author } = Astro.props;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://zippywidgets.online/about/#zippywidgets-team',
+  name: author.name,
+  jobTitle: author.jobTitle,
+  description: author.bio,
+  url: author.url,
+  worksFor: {
+    '@type': 'Organization',
+    name: author.worksFor.name,
+    url: author.worksFor.url,
+  },
+};
+---
+
+<div class="author-bio">
+  <div class="author-meta">
+    <span class="author-name">By <a href={author.url}>{author.name}</a></span>
+    <span class="author-title">{author.jobTitle}</span>
+  </div>
+  <p>{author.bio}</p>
+</div>
+
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+<style>
+  .author-bio {
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .author-bio p { margin: 0.75rem 0 0; }
+  .author-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+  }
+  .author-name { font-weight: 700; color: var(--text); }
+  .author-name a { color: var(--accent); text-decoration: none; }
+  .author-name a:hover { text-decoration: underline; }
+  .author-title { font-size: 0.8rem; color: var(--muted); }
+</style>

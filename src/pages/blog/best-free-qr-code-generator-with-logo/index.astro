@@ -2,10 +2,13 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import AuthorBio from '@components/AuthorBio.astro';
+import { getAuthor } from '@data/authors.ts';
 
 const title = 'Best Free QR Code Generator with Logo in 2026 — Top 5 Compared | ZippyWidgets';
 const description = 'Looking for the best free QR code generator with logo support? Compare the top 5 tools of 2026, including ZippyWidgets, QRCode Monkey, TQRCG, Hovercode, and Jotform.';
 const canonical = 'https://zippywidgets.online/blog/best-free-qr-code-generator-with-logo/';
+const author = getAuthor('zippywidgets-team')!;
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -19,7 +22,7 @@ const canonical = 'https://zippywidgets.online/blog/best-free-qr-code-generator-
     "description": "Compare the top 5 free QR code generators with logo support for 2026, including ZippyWidgets, QRCode Monkey, TQRCG, Hovercode, and Jotform.",
     "url": "https://zippywidgets.online/blog/best-free-qr-code-generator-with-logo/",
     "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
-    "author": { "@type": "Organization", "name": "ZippyWidgets" },
+    "author": { "@type": "Person", "@id": "https://zippywidgets.online/about/#zippywidgets-team" },
     "datePublished": "2026-07-12",
     "dateModified": "2026-07-12",
     "keywords": ["free QR code generator", "QR code with logo", "best QR code generator", "no watermark QR code", "custom QR code", "QR code generator comparison"]
@@ -245,6 +248,8 @@ const canonical = 'https://zippywidgets.online/blog/best-free-qr-code-generator-
 
     </div>
 
+    <AuthorBio author={author} />
+
     <div class="ad-slot" id="adSlot" style="margin-top:1.5rem;">
       <ins class="adsbygoogle"
            style="display:block"
@@ -300,7 +305,13 @@ const canonical = 'https://zippywidgets.online/blog/best-free-qr-code-generator-
         "description": "Compare the top 5 free QR code generators with logo support for 2026, including ZippyWidgets, QRCode Monkey, TQRCG, Hovercode, and Jotform.",
         "url": "https://zippywidgets.online/blog/best-free-qr-code-generator-with-logo/",
         "publisher": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" },
-        "author": { "@type": "Organization", "name": "ZippyWidgets" },
+        "author": {
+          "@type": "Person",
+          "name": "ZippyWidgets Editorial Team",
+          "url": "https://zippywidgets.online/about/",
+          "jobTitle": "Editorial Team",
+          "worksFor": { "@type": "Organization", "name": "ZippyWidgets", "url": "https://zippywidgets.online/" }
+        },
         "datePublished": "2026-07-12",
         "dateModified": "2026-07-12",
         "keywords": ["free QR code generator", "QR code with logo", "best QR code generator", "no watermark QR code", "custom QR code", "QR code generator comparison"]
