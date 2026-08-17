@@ -8,10 +8,31 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: 'complete-guide-to-online-pdf-management',
+    tag: 'PDF Tools',
+    title: 'Complete Guide to Online PDF Management — Merge, Edit & Convert Free',
+    description: 'Manage PDFs online for free: merge documents, edit pages, and convert images to PDF. Learn why browser-based PDF tools are faster, private, and require no sign-up.',
+    date: 'July 2026',
+  },
+  {
     slug: 'best-free-pdf-merger-online-no-limits',
     tag: 'PDF Tools',
     title: 'Best Free PDF Merger Online 2026 — No Limits, No Sign-up',
     description: 'Compare the top free PDF merger tools. Merge unlimited PDFs in your browser with no watermarks or account required.',
+    date: 'July 2026',
+  },
+  {
+    slug: 'jpg-to-pdf-converter-free-online',
+    tag: 'PDF Tools',
+    title: 'JPG to PDF Converter Free Online — No Sign-up, No Watermark',
+    description: 'Convert JPG and PNG images to PDF online for free. Combine multiple photos into one PDF, preserve quality, and keep your files private with browser-based processing.',
+    date: 'July 2026',
+  },
+  {
+    slug: 'free-pdf-page-editor-online',
+    tag: 'PDF Tools',
+    title: 'Free PDF Page Editor Online — Reorder, Rotate, Delete & Extract Pages',
+    description: 'Edit PDF pages online for free. Reorder, rotate, delete, and extract pages in your browser. No upload, no sign-up, no watermark.',
     date: 'July 2026',
   },
   {
