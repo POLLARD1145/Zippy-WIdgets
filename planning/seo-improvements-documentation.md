@@ -45,8 +45,7 @@ The companion execution plan (`seo-execution-plan.md`) breaks this into weekly, 
   - No formal pillar/cluster architecture (e.g. a master "PDF tools" hub).
   - Two-way links between `/tool/<slug>/` and `/blog/<slug>/` pages are inconsistent.
 - **URL / redirect gaps:**
-  - The suggested slug changes (`/tool/file-beam/`, `/tool/picker-wheel/`, `/tool/weather/`) have not been implemented.
-  - README still links to legacy bare URLs (`/pdf-merger/` instead of `/tool/pdf-merger/`).
+  - The suggested slug changes (`/tool/file-beam/`, `/tool/picker-wheel/`, `/tool/weather/`) have been implemented with Astro redirects and a Cloudflare Pages `_redirects` file. Hosting-level 301 rules still need to be active on the deployment platform if it is not Cloudflare Pages.
 - **Technical gaps:**
   - No URL-encoded shareable state (e.g. generated QR code, calculated age, speed result).
   - No AI-search / GEO instrumentation beyond standard analytics.

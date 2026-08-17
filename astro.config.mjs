@@ -36,6 +36,11 @@ const redirects = Object.fromEntries([
     `/games/${slug}/`,
     { status: 301, destination: `/game/${slug}/` },
   ]),
+
+  // SEO slug moves
+  ['/tool/file-beam/', { status: 301, destination: '/tool/wifi-file-transfer-online/' }],
+  ['/tool/picker-wheel/', { status: 301, destination: '/tool/random-name-picker-wheel/' }],
+  ['/tool/weather/', { status: 301, destination: '/tool/local-weather-7-day-forecast/' }],
 ]);
 
 // https://astro.build/config

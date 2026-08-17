@@ -1,0 +1,26 @@
+# Cloudflare Pages 301 redirects (also document of redirect intent for GitHub Pages users)
+# Legacy bare tool URLs -> /tool/<slug>/
+/age-calculator/ /tool/age-calculator/ 301
+/favicon-generator/ /tool/favicon-generator/ 301
+/font-generator/ /tool/font-generator/ 301
+/image-compressor/ /tool/image-compressor/ 301
+/json-formatter/ /tool/json-formatter/ 301
+/password-generator/ /tool/password-generator/ 301
+/pdf-merger/ /tool/pdf-merger/ 301
+/picker-wheel/ /tool/random-name-picker-wheel/ 301
+/qr-code-generator/ /tool/qr-code-generator/ 301
+/speed-test/ /tool/speed-test/ 301
+/word-counter/ /tool/word-counter/ 301
+
+# Legacy games plural -> /game/
+/games/ /game/ 301
+/games/aetherforge/ /game/aetherforge/ 301
+/games/emoji-geography/ /game/emoji-geography/ 301
+/games/emoji-memory/ /game/emoji-memory/ 301
+/games/rock-paper-scissors/ /game/rock-paper-scissors/ 301
+/games/word-scramble/ /game/word-scramble/ 301
+
+# SEO slug moves
+/tool/file-beam/ /tool/wifi-file-transfer-online/ 301
+/tool/picker-wheel/ /tool/random-name-picker-wheel/ 301
+/tool/weather/ /tool/local-weather-7-day-forecast/ 301

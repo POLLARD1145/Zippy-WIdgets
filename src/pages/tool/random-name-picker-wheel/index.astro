@@ -2,24 +2,34 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Random Winner Wheel — Free Raffle & Contest Winner Picker | ZippyWidgets';
-const description = 'Pick a random giveaway, raffle or contest winner with a free winner wheel. Add names, spin fairly and choose a winner instantly. No sign-up.';
-const canonical = 'https://zippywidgets.online/tool/picker-wheel/';
+const title = 'Random Name Picker Wheel — Spin & Pick a Winner Free';
+const description = 'Free random picker wheel for names, contests, classrooms and giveaways. Add entries, spin, and copy the winner instantly.';
+const canonical = 'https://zippywidgets.online/tool/random-name-picker-wheel/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Random Name Picker Wheel', item: 'https://zippywidgets.online/tool/random-name-picker-wheel/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Random Winner Wheel",
-    "url": "https://zippywidgets.online/tool/picker-wheel/",
-    "description": "Free online random winner wheel for giveaways, raffles, contests, classrooms, and custom choices.",
+    "name": "Random Name Picker Wheel",
+    "url": "https://zippywidgets.online/tool/random-name-picker-wheel/",
+    "description": "Free random picker wheel for names, contests, classrooms and giveaways. Add entries, spin, and copy the winner instantly.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires HTML5 Canvas and JavaScript",
+    "featureList": "Custom name list, fair random spin, winner announcement, copy result, classroom mode, contest mode",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>

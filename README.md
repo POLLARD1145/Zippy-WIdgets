@@ -44,7 +44,7 @@ Generate custom QR codes instantly in your browser. Supports custom foreground/b
 ### [Unicode Font Generator](https://zippywidgets.online/tool/font-generator/)
 Convert plain text into stylish Unicode fonts for Instagram bios, Twitter profiles, Discord usernames, and more. Copy and paste any font style in one click.
 
-### [Random Picker Wheel](https://zippywidgets.online/tool/picker-wheel/)
+### [Random Picker Wheel](https://zippywidgets.online/tool/random-name-picker-wheel/)
 Free spinning wheel for random name picking, decision making, classroom activities, and giveaways. Add your own entries, spin, and get a result instantly.
 
 ### [Age Calculator](https://zippywidgets.online/tool/age-calculator/)
@@ -130,7 +130,7 @@ Tips, guides, and explainers on internet tools and everyday tech topics:
 │       │   ├── password-generator/
 │       │   ├── json-formatter/
 │       │   ├── favicon-generator/
-│       │   ├── picker-wheel/
+│       │   ├── random-name-picker-wheel/
 │       │   ├── font-generator/
 │       │   ├── word-counter/
 │       │   ├── qr-code-generator/

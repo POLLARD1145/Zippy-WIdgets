@@ -9,7 +9,7 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
-    href: '/tool/weather/',
+    href: '/tool/local-weather-7-day-forecast/',
     icon: '🌤️',
     name: 'Weather Today & Forecast',
     description: 'Weather today, tomorrow and 7-day forecast for any city. Temperature, rain chance, wind, humidity & UV index — instant, no sign-up.',
@@ -33,7 +33,7 @@ export const tools: Tool[] = [
     tags: 'pdf editor reorder rotate delete extract pages page organizer',
   },
   {
-    href: '/tool/file-beam/',
+    href: '/tool/wifi-file-transfer-online/',
     icon: '📡',
     name: 'File Beam — Wi-Fi Transfer',
     description: 'Send files between phones, tablets and computers on the same Wi-Fi. Share a link to connect, then transfer both ways. No cloud, no file size limit, no sign-up.',
@@ -57,7 +57,7 @@ export const tools: Tool[] = [
     tags: 'jpg to pdf convert image to pdf png to pdf webp to pdf pdf converter merge images to pdf',
   },
   {
-    href: '/tool/picker-wheel/',
+    href: '/tool/random-name-picker-wheel/',
     icon: '🎡',
     name: 'Random Picker Wheel',
     description: 'Spin the wheel to randomly pick from your custom list of names, items, or options.',

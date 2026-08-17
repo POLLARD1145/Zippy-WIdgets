@@ -2,15 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Weather Today & Tomorrow — Free 7-Day Forecast for Any City | ZippyWidgets';
-const description = 'Check the weather today, weather tomorrow, and a free 7-day forecast for any city worldwide. Temperature, rain chance, wind, humidity, UV index. Instant, no sign-up. Works for London, Lagos, Mumbai, São Paulo and everywhere else.';
-const canonical = 'https://zippywidgets.online/tool/weather/';
+const title = 'Local Weather 7-Day Forecast — Any City, No Sign-up';
+const description = 'Check today\'s weather, hourly conditions and a 7-day forecast for any city. Temperature, rain, wind, humidity and UV. Instant, no sign-up.';
+const canonical = 'https://zippywidgets.online/tool/local-weather-7-day-forecast/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
   <Fragment slot="head">
     <!-- Keyword targeting: weather today, weather tomorrow, today weather, clima para amanhã, मौसम, कल का मौसम, previsão do tempo, cuaca -->
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Local Weather 7-Day Forecast', item: 'https://zippywidgets.online/tool/local-weather-7-day-forecast/' },
+    ]} />
     <meta name="keywords" content="weather today, weather tomorrow, today weather, weather forecast, 7 day forecast, weather this week, clima para amanhã, previsão do tempo, मौसम, कल का मौसम, aaj ka mausam, kal ka mausam, cuaca, weather by city, hourly forecast, rain forecast, UV index, wind speed, humidity, free weather app, weather online no signup" />
     <meta property="og:title" content="Weather Today & Tomorrow — Free 7-Day Forecast for Any City" />
     <meta property="og:description" content="Instant weather today and tomorrow for any city worldwide. 7-day forecast, hourly breakdown, rain chance, wind, UV index. No sign-up — works on any device." />
@@ -24,7 +30,7 @@ const canonical = 'https://zippywidgets.online/tool/weather/';
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Weather Today & Forecast",
-        "url": "https://zippywidgets.online/tool/weather/",
+        "url": "https://zippywidgets.online/tool/local-weather-7-day-forecast/",
         "description": "Free weather tool showing today's weather, tomorrow's forecast and a 7-day outlook for any city worldwide. Includes temperature, rain chance, wind speed, humidity, UV index, sunrise and sunset times.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
