@@ -2,24 +2,34 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'File Beam — Send Files Between Devices on Same Wi-Fi, No Cloud | ZippyWidgets';
-const description = 'Transfer files directly between phones, tablets and computers on the same Wi-Fi network. No cloud, no upload, no sign-up. Share a link to connect, then send files both ways.';
+const title = 'Wi-Fi File Transfer Online — Send Files Locally, No Cloud | ZippyWidgets';
+const description = 'Send files between phones, tablets and computers on the same Wi-Fi. Peer-to-peer, no upload, no file size limit, no sign-up.';
 const canonical = 'https://zippywidgets.online/tool/file-beam/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Wi-Fi File Transfer', item: 'https://zippywidgets.online/tool/file-beam/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "File Beam",
+    "name": "ZippyWidgets Local Wi-Fi File Beam",
     "url": "https://zippywidgets.online/tool/file-beam/",
-    "description": "Transfer files directly between devices on the same Wi-Fi network using browser-to-browser WebRTC. No cloud storage, no upload, no sign-up. Share a link to connect, then send files both ways.",
+    "description": "Send files between phones, tablets and computers on the same Wi-Fi. Peer-to-peer, no upload, no file size limit, no sign-up.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires WebRTC or local network connectivity",
+    "featureList": "Peer-to-peer file transfer, bidirectional sending, no file size limit, local network connection, WebRTC data channel",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -254,6 +264,13 @@ const canonical = 'https://zippywidgets.online/tool/file-beam/';
         <h3>Are my files uploaded to any server?</h3>
         <p>No. Files are transferred directly between the two devices using a WebRTC data channel. The only external request is to Google's STUN servers, which help the devices find each other — no file data ever touches a server.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Local File Transfer Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for more tips on sharing files privately without uploading to the cloud.
+      </p>
     </section>
   </main>
 

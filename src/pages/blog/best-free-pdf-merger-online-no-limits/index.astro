@@ -71,6 +71,11 @@ const canonical = 'https://zippywidgets.online/blog/best-free-pdf-merger-online-
         <p><strong>Try it:</strong> <a href="/tool/pdf-merger/" style="color:var(--accent);">zippywidgets.online/tool/pdf-merger/</a></p>
       </div>
 
+      <a href="/tool/pdf-merger/" class="tool-launch-banner">
+        <span class="tool-launch-icon">👉</span>
+        <span class="tool-launch-text">Launch the Free Browser-Based PDF Merger Tool</span>
+      </a>
+
       <h2>How We Evaluated These Tools</h2>
 
       <p>Every tool on this list was tested against the same criteria:</p>
@@ -267,5 +272,15 @@ const canonical = 'https://zippywidgets.online/blog/best-free-pdf-merger-online-
     .comparison-table th { background: var(--surface2); color: var(--text); font-weight: 600; }
     .check { color: var(--green); font-weight: 700; }
     .cross { color: var(--red); font-weight: 700; }
+    .tool-launch-banner {
+      display: flex; align-items: center; gap: .75rem;
+      background: var(--accent); color: #fff;
+      border-radius: var(--radius); padding: 1rem 1.2rem;
+      text-decoration: none; font-weight: 700;
+      transition: filter .2s;
+    }
+    .tool-launch-banner:hover { filter: brightness(1.1); }
+    .tool-launch-icon { font-size: 1.2rem; }
+    .tool-launch-text { flex: 1; }
   </style>
 </Layout>

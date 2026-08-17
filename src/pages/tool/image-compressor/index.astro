@@ -2,13 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Free Image Compressor — Compress JPG, PNG & WebP Online, No Limits';
-const description = 'Compress JPG, PNG and WebP images online for free. Reduce file size without losing quality. No upload limits, no watermarks, no sign-up. Works 100% in your browser.';
+const title = 'Free Image Compressor — Reduce JPG, PNG, WebP Online';
+const description = 'Shrink JPG, PNG and WebP file sizes in your browser. No upload, no watermark, no sign-up. Preview before downloading.';
 const canonical = 'https://zippywidgets.online/tool/image-compressor/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Image Compressor', item: 'https://zippywidgets.online/tool/image-compressor/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -17,9 +25,11 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
     "@type": "WebApplication",
     "name": "Free Image Compressor",
     "url": "https://zippywidgets.online/tool/image-compressor/",
-    "description": "Compress JPG, PNG and WebP images online for free. Reduce file size without losing quality. No limits, no watermarks, no sign-up required.",
-    "applicationCategory": "UtilitiesApplication",
+    "description": "Shrink JPG, PNG and WebP file sizes in your browser. No upload, no watermark, no sign-up. Preview before downloading.",
+    "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires HTML5 Canvas and JavaScript",
+    "featureList": "Compress JPG, compress PNG, compress WebP, convert image format, resize width, quality slider, before/after preview",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -170,6 +180,13 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
         <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin-top:.25rem;">Privacy</h3>
         <p>Your image is processed entirely in your browser using the HTML5 canvas API. It is never sent to a server, stored in a database, or shared with any third party. Once you close the tab, the image is gone.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Image Compression Guide</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Learn how to compress images for the web without losing quality in our <a href="/blog/compress-images-online-free-no-signup/" style="color:var(--accent);">free online image compressor guide</a>. Also see our <a href="/tool/jpg-to-pdf/" style="color:var(--accent);">JPG to PDF converter</a> for converting compressed images into a document.
+      </p>
     </section>
   </main>
 
