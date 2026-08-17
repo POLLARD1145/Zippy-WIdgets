@@ -2,13 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Free PDF Page Editor — Reorder, Rotate, Delete & Extract PDF Pages Online';
-const description = 'Edit PDF pages online for free. Reorder, rotate, delete and extract pages from any PDF. No sign-up, no upload — works 100% in your browser.';
+const title = 'Edit PDF Pages Online — Free Page Reorder & Delete Tool';
+const description = 'Rotate, delete, extract, and reorder PDF pages instantly in your web browser. Drag-and-drop simple, 100% private, no watermarks, and no login required.';
 const canonical = 'https://zippywidgets.online/tool/pdf-page-editor/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'PDF Page Editor', item: 'https://zippywidgets.online/tool/pdf-page-editor/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -17,9 +25,11 @@ const canonical = 'https://zippywidgets.online/tool/pdf-page-editor/';
     "@type": "WebApplication",
     "name": "Free PDF Page Editor",
     "url": "https://zippywidgets.online/tool/pdf-page-editor/",
-    "description": "Edit PDF pages online for free. Reorder, rotate, delete and extract pages from any PDF. No sign-up, no upload — works entirely in your browser.",
+    "description": "Rotate, delete, extract, and reorder PDF pages instantly in your web browser. Drag-and-drop simple, 100% private, no watermarks, and no login required.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires HTML5, JavaScript, pdf-lib, and PDF.js",
+    "featureList": "Reorder PDF pages, rotate pages, delete pages, extract selected pages, download edited PDF",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -157,6 +167,13 @@ const canonical = 'https://zippywidgets.online/tool/pdf-page-editor/';
         <h3>Can I extract specific pages from a PDF?</h3>
         <p>Yes. Click "Select pages", tap the pages you want, then click "Extract selected" to download only those pages as a new PDF.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Related PDF Tools & Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        For detailed instructions on processing large document batches without losing quality, read our full <a href="/blog/best-free-pdf-merger-online-no-limits/" style="color:var(--accent);">PDF Merger Optimization Guide</a>. You may also like our <a href="/tool/pdf-merger/" style="color:var(--accent);">free PDF Merger</a> and <a href="/tool/jpg-to-pdf/" style="color:var(--accent);">JPG to PDF converter</a>.
+      </p>
     </section>
   </main>
 

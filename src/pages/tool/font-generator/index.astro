@@ -2,24 +2,34 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'IG Font Generator — Instagram Bio Fonts & Fancy Text Copy Paste | ZippyWidgets';
-const description = 'Create Instagram bio fonts and fancy text instantly. Copy bold, cursive, aesthetic, small text, glitch and 20+ Unicode styles for Instagram, TikTok, Discord and X.';
+const title = 'Font Generator — 30+ Copy & Paste Unicode Styles';
+const description = 'Transform regular text into unique aesthetic fonts for Instagram, TikTok, and Twitter bios. Instant preview formatting with zero script lag.';
 const canonical = 'https://zippywidgets.online/tool/font-generator/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'Font Generator', item: 'https://zippywidgets.online/tool/font-generator/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
     {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Fancy Text Generator",
+    "name": "Font Generator",
     "url": "https://zippywidgets.online/tool/font-generator/",
-    "description": "Free online fancy text generator. Convert any text into stylish Unicode fonts for Instagram, TikTok, Discord, and Twitter bios.",
+    "description": "Transform regular text into unique aesthetic fonts for Instagram, TikTok, and Twitter bios. Instant preview formatting with zero script lag.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "featureList": "30+ Unicode font styles, instant preview, one-click copy, Instagram bio fonts, TikTok fonts, Discord fonts",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -166,6 +176,13 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
         <h3>Why do some characters appear as boxes?</h3>
         <p>A small number of Unicode blocks (like some mathematical alphanumeric symbols) are not included in every device font. Most modern phones and computers display all styles correctly.</p>
       </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Font Generator Guide</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Learn exactly how to style your Instagram, TikTok, and Discord profiles in our <a href="/blog/unicode-fonts-for-instagram-bio/" style="color:var(--accent);">Unicode Fonts for Instagram Bio</a> guide.
+      </p>
     </section>
   </main>
 
@@ -326,6 +343,7 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
             p.className = 'text-muted text-sm';
             p.textContent = 'Start typing above to see your text transformed.';
             list.appendChild(p);
+            updateHash('');
             return;
           }
           FONTS.forEach(f => {
@@ -347,6 +365,24 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
             row.appendChild(btn);
             list.appendChild(row);
           });
+          updateHash(input);
+        }
+
+        function updateHash(text) {
+          if (!text) {
+            history.replaceState(null, '', location.pathname + location.search);
+            return;
+          }
+          const params = new URLSearchParams();
+          params.set('text', text);
+          history.replaceState(null, '', '#' + params.toString());
+        }
+
+        function applyStateFromHash() {
+          if (!location.hash || location.hash.length < 2) return;
+          const params = new URLSearchParams(location.hash.slice(1));
+          const text = params.get('text');
+          if (text) document.getElementById('fontInput').value = text;
         }
 
         function copyFont(btn, text) {
@@ -356,5 +392,10 @@ const canonical = 'https://zippywidgets.online/tool/font-generator/';
             setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
           });
         }
+
+        window.addEventListener('load', () => {
+          applyStateFromHash();
+          updateFonts();
+        });
   </script>
 </Layout>

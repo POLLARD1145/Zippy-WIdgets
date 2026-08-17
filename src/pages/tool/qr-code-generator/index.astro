@@ -2,13 +2,21 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 
-const title = 'Free QR Code Generator | WiFi, URL, Menu & Custom Color QR Codes';
-const description = 'Free QR code generator — create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs and business cards. Choose size, foreground and background color. Download PNG instantly. No sign-up.';
+const title = 'Free Online QR Code Generator (High-Res PNG Downloads)';
+const description = 'Instantly convert text, links, or Wi-Fi passwords into downloadable QR codes. Custom color scaling with completely offline browser processing.';
 const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <BreadcrumbSchema items={[
+      { name: 'Home', item: 'https://zippywidgets.online/' },
+      { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
+      { name: 'QR Code Generator', item: 'https://zippywidgets.online/tool/qr-code-generator/' },
+    ]} />
+  </Fragment>
   <Nav />
 
   <script type="application/ld+json">
@@ -17,9 +25,11 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
     "@type": "WebApplication",
     "name": "QR Code Generator",
     "url": "https://zippywidgets.online/tool/qr-code-generator/",
-    "description": "Free online QR code generator. Convert any URL, text, or Wi-Fi password into a downloadable QR code instantly.",
-    "applicationCategory": "UtilitiesApplication",
+    "description": "Instantly convert text, links, or Wi-Fi passwords into downloadable QR codes. Custom color scaling with completely offline browser processing.",
+    "applicationCategory": "BusinessApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires HTML5 Canvas and JavaScript",
+    "featureList": "URL QR codes, WiFi QR codes, Google review QR codes, restaurant menu QR codes, custom colors, logo overlay, PNG download",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -345,6 +355,13 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
         <p>All QR codes are generated entirely in your browser using the QRCode.js library. Your URLs, WiFi passwords, and text content are never transmitted to any server. The PNG download is created locally on your device using the browser's Canvas API.</p>
       </div>
     </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">QR Code Guides</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:.92rem;">
+        Learn how to create a QR code for your business with our step-by-step guides: <a href="/blog/best-free-qr-code-generator-with-logo/" style="color:var(--accent);">Best Free QR Code Generator with Logo</a> and <a href="/blog/how-to-make-qr-code-for-wifi/" style="color:var(--accent);">How to Make a QR Code for WiFi</a>.
+      </p>
+    </section>
   </main>
 
   <Footer />
@@ -608,6 +625,7 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
               preview.style.display = 'block';
             }
             document.getElementById('downloadBtn').style.display = 'inline-flex';
+            updateHash();
           }, 200);
         }
     
@@ -671,10 +689,61 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
     
         /* Logo */
         document.getElementById('logoUpload').addEventListener('change', liveGenerate);
-    
-        /* Auto-generate on load with a placeholder so the preview is visible immediately */
+
+        /* ── Shareable URL state ── */
+        function updateHash() {
+          const params = new URLSearchParams();
+          params.set('mode', currentMode);
+          params.set('size', document.getElementById('qrSize').value);
+          if (currentMode === 'wifi') {
+            const ssid = document.getElementById('wifiSsid').value.trim();
+            const pass = document.getElementById('wifiPass').value.trim();
+            const sec  = document.getElementById('wifiSec').value;
+            if (ssid) params.set('ssid', ssid);
+            if (pass) params.set('pass', pass);
+            if (sec)  params.set('sec', sec);
+          } else if (currentMode === 'text') {
+            const val = document.getElementById('qrTextarea').value.trim();
+            if (val) params.set('text', val);
+          } else {
+            const val = document.getElementById('qrInput').value.trim();
+            if (val) params.set('text', val);
+          }
+          const hash = params.toString();
+          if (hash) history.replaceState(null, '', '#' + hash);
+        }
+
+        function applyStateFromHash() {
+          if (!location.hash || location.hash.length < 2) return false;
+          const params = new URLSearchParams(location.hash.slice(1));
+          const mode = params.get('mode');
+          if (!mode) return false;
+
+          if (['url', 'wifi', 'text', 'review', 'menu'].includes(mode)) {
+            setMode(mode);
+          }
+
+          const size = params.get('size');
+          if (size) document.getElementById('qrSize').value = size;
+
+          if (mode === 'wifi') {
+            if (params.has('ssid')) document.getElementById('wifiSsid').value = params.get('ssid');
+            if (params.has('pass')) document.getElementById('wifiPass').value = params.get('pass');
+            if (params.has('sec'))  document.getElementById('wifiSec').value = params.get('sec');
+          } else if (mode === 'text') {
+            if (params.has('text')) document.getElementById('qrTextarea').value = params.get('text');
+          } else {
+            if (params.has('text')) document.getElementById('qrInput').value = params.get('text');
+          }
+          return true;
+        }
+
+        /* Auto-generate on load: restore shared state, or use a placeholder */
         window.addEventListener('load', () => {
-          document.getElementById('qrInput').value = 'https://zippywidgets.online/';
+          const restored = applyStateFromHash();
+          if (!restored) {
+            document.getElementById('qrInput').value = 'https://zippywidgets.online/';
+          }
           generateQR();
         });
   </script>

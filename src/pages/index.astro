@@ -9,6 +9,17 @@ const description = 'Free online tools — spin a random winner wheel, generate 
 const canonical = 'https://zippywidgets.online/';
 ---
 <Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ZippyWidgets",
+      "alternateName": "ZippyWidgets.online",
+      "url": "https://zippywidgets.online/",
+      "logo": "https://zippywidgets.online/ZippyWidgets%20Logo.png",
+      "sameAs": []
+    })} />
+  </Fragment>
   <Nav />
 
   <main class="flex flex-col items-center w-full">

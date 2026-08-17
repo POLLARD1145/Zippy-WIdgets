@@ -23,37 +23,37 @@ Whether you need a **free PDF merger**, an **image compressor**, a **strong pass
 
 ## 🛠️ Free Online Tools
 
-### [Free PDF Merger](https://zippywidgets.online/pdf-merger/)
+### [Free PDF Merger](https://zippywidgets.online/tool/pdf-merger/)
 Combine multiple PDF files into one document instantly in your browser. No file size limits, no watermarks, no sign-up, and your files never leave your device.
 
-### [Free Image Compressor](https://zippywidgets.online/image-compressor/)
+### [Free Image Compressor](https://zippywidgets.online/tool/image-compressor/)
 Reduce JPG, PNG and WebP image file sizes in seconds. Choose quality, resize, and convert formats — all client-side, no upload to any server.
 
-### [Strong Password Generator](https://zippywidgets.online/password-generator/)
+### [Strong Password Generator](https://zippywidgets.online/tool/password-generator/)
 Generate secure, random passwords with a live strength meter. Customise length and character types. Uses the Web Crypto API and never stores your passwords.
 
-### [JSON Formatter & CSV Converter](https://zippywidgets.online/json-formatter/)
+### [JSON Formatter & CSV Converter](https://zippywidgets.online/tool/json-formatter/)
 Format, validate, minify and convert JSON to CSV or CSV to JSON. A clean, privacy-friendly editor for developers and data analysts.
 
-### [Favicon Generator](https://zippywidgets.online/favicon-generator/)
+### [Favicon Generator](https://zippywidgets.online/tool/favicon-generator/)
 Convert any PNG or JPG logo into a multi-resolution `favicon.ico` file plus an Apple touch icon. Generates the correct HTML tags for your website.
 
-### [Free QR Code Generator](https://zippywidgets.online/qr-code-generator/)
+### [Free QR Code Generator](https://zippywidgets.online/tool/qr-code-generator/)
 Generate custom QR codes instantly in your browser. Supports custom foreground/background colours, logo overlay, and rounded corner styles. No watermarks, no sign-up, completely free.
 
-### [Unicode Font Generator](https://zippywidgets.online/font-generator/)
+### [Unicode Font Generator](https://zippywidgets.online/tool/font-generator/)
 Convert plain text into stylish Unicode fonts for Instagram bios, Twitter profiles, Discord usernames, and more. Copy and paste any font style in one click.
 
-### [Random Picker Wheel](https://zippywidgets.online/picker-wheel/)
+### [Random Picker Wheel](https://zippywidgets.online/tool/picker-wheel/)
 Free spinning wheel for random name picking, decision making, classroom activities, and giveaways. Add your own entries, spin, and get a result instantly.
 
-### [Age Calculator](https://zippywidgets.online/age-calculator/)
+### [Age Calculator](https://zippywidgets.online/tool/age-calculator/)
 Calculate your exact age in years, months, and days from your date of birth. Also tells you if today is your birthday.
 
-### [Online Word Counter](https://zippywidgets.online/word-counter/)
+### [Online Word Counter](https://zippywidgets.online/tool/word-counter/)
 Count words, characters, sentences, and paragraphs in real time. Great for essays, social media captions, SEO meta descriptions, and more. Includes per-platform character limit warnings.
 
-### [Internet Speed Test](https://zippywidgets.online/speed-test/)
+### [Internet Speed Test](https://zippywidgets.online/tool/speed-test/)
 Test your broadband download and upload speed directly in the browser. No Flash, no extensions needed. Keeps a history of past results in local storage.
 
 ---

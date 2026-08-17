@@ -217,61 +217,6 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
   </style>
 
   <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Free Image Compressor",
-        "url": "https://zippywidgets.online/tool/image-compressor/",
-        "description": "Compress JPG, PNG and WebP images online for free. Reduce file size without losing quality. No limits, no watermarks, no sign-up required.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-  </script>
-
-  <script is:inline>
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is this image compressor free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The ZippyWidgets Image Compressor is completely free to use. There are no file size limits, no daily limits, no watermarks, and no sign-up required." }
-          },
-          {
-            "@type": "Question",
-            "name": "Do my images get uploaded to a server?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. All compression happens locally in your browser using the HTML5 canvas API. Your images are never uploaded to any server or cloud storage." }
-          },
-          {
-            "@type": "Question",
-            "name": "Which image formats are supported?",
-            "acceptedAnswer": { "@type": "Answer", "text": "You can compress and convert JPG, JPEG, PNG and WebP images. You can also convert between these formats — for example, converting a PNG to a smaller WebP file." }
-          },
-          {
-            "@type": "Question",
-            "name": "Will compression reduce image quality?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Some quality reduction is unavoidable with lossy formats like JPEG and WebP. The quality slider lets you choose the balance between file size and visual quality. PNG compression is lossless, so quality stays the same but file size reduction is smaller." }
-          }
-        ]
-      }
-  </script>
-
-  <script is:inline>
-    (function(){
-            var slot = document.getElementById('adSlot');
-            var obs = new IntersectionObserver(function(entries){
-              if(entries[0].isIntersecting){
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                obs.disconnect();
-              }
-            }, { rootMargin: '200px' });
-            obs.observe(slot);
-          })();
-  </script>
-
-  <script is:inline>
     'use strict';
     
         const dropZone = document.getElementById('dropZone');
