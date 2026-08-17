@@ -1,0 +1,37 @@
+---
+export interface Props {
+  tool: string;
+  what: string;
+  free?: string;
+  privacy?: string;
+}
+
+const { tool, what, free = 'Yes — it is 100% free, with no sign-up, no account, and no premium tier.', privacy = 'Yes — everything is processed locally in your browser. Your data never leaves your device unless the tool page clearly says otherwise.' } = Astro.props;
+---
+
+<div class="ai-answer">
+  <h2>Quick answers</h2>
+  <p><strong>What is the {tool}?</strong> {what}</p>
+  <p><strong>Is it free?</strong> {free}</p>
+  <p><strong>Is it private?</strong> {privacy}</p>
+</div>
+
+<style>
+  .ai-answer {
+    padding: 1rem 1.2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .ai-answer h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.75rem;
+  }
+  .ai-answer p { margin: 0 0 0.5rem; }
+  .ai-answer p:last-child { margin-bottom: 0; }
+</style>

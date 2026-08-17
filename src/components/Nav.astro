@@ -66,7 +66,11 @@ const isGamePage = pathname.startsWith('/game/') && pathname !== '/game/';
 ---
 <nav class="navbar">
   <a class="nav-brand" href="/">
-    <img src="/ZippyWidgets Logo.png" alt="ZippyWidgets" class="nav-logo" /> ZippyWidgets
+    <picture>
+      <source srcset="/ZippyWidgets Logo.webp" type="image/webp" />
+      <img src="/ZippyWidgets Logo-192.png" alt="ZippyWidgets" class="nav-logo" width="40" height="40" decoding="async" />
+    </picture>
+    ZippyWidgets
   </a>
   <div class="nav-search" id="navSearch">
     <span class="nav-search-icon" aria-hidden="true">🔍</span>

@@ -3,10 +3,14 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
+import AiAnswer from '@components/AiAnswer.astro';
+import LastUpdated from '@components/LastUpdated.astro';
+import { FEATURES } from '@data/config.ts';
 
 const title = 'Free PDF Merger — Combine PDF Files Online, No Limits, No Sign-up';
 const description = 'Merge multiple PDF files into one for free. No file size limits, no watermarks, no sign-up. Reorder pages and download your combined PDF instantly in your browser.';
 const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
+const updated = '2026-07-17';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -16,6 +20,18 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
       { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
       { name: 'PDF Merger', item: 'https://zippywidgets.online/tool/pdf-merger/' },
     ]} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to merge PDF files online",
+      "description": "Combine multiple PDF files into a single document in your browser, with no sign-up and no upload.",
+      "step": [
+        { "@type": "HowToStep", "name": "Upload your PDFs", "text": "Click the upload box or drag and drop your PDF files. You can add as many as you need." },
+        { "@type": "HowToStep", "name": "Reorder if needed", "text": "Use the up and down arrows next to each file to set the order of the merged PDF." },
+        { "@type": "HowToStep", "name": "Click Merge PDFs", "text": "The tool combines every page from every file into a single document." },
+        { "@type": "HowToStep", "name": "Download", "text": "Save the merged PDF to your device when the download button appears." }
+      ]
+    })} />
   </Fragment>
   <Nav />
 
@@ -30,6 +46,7 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
     "operatingSystem": "Any",
     "browserRequirements": "Requires HTML5, JavaScript, and pdf-lib",
     "featureList": "Merge multiple PDFs, drag-and-drop reorder, no file size limit, no watermark, instant download",
+    "dateModified": "2026-07-17",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -72,6 +89,12 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
       </div>
     </div>
 
+    <AiAnswer
+      tool="PDF Merger"
+      what="A free online tool that combines multiple PDF files into a single document. Reorder pages, merge unlimited files, and download the result — all in your browser with no sign-up, no watermark, and no file size limits."
+      privacy="Yes. PDFs are processed locally with pdf-lib and never uploaded to any server."
+    />
+
     <div class="card">
       <div class="drop-zone" id="dropZone">
         <div class="icon">📁</div>
@@ -91,26 +114,31 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
       </div>
     </div>
 
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script is:inline>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
 
     <section class="card" style="margin-top:1rem;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Merge PDF Files Online</h2>
@@ -141,6 +169,8 @@ const canonical = 'https://zippywidgets.online/tool/pdf-merger/';
         <p>For detailed instructions on processing large document batches without losing quality, read our full <a href="/blog/best-free-pdf-merger-online-no-limits/" style="color:var(--accent);">PDF Merger Optimization Guide</a>. You may also be interested in our <a href="/blog/complete-guide-to-online-pdf-management/" style="color:var(--accent);">Complete Guide to Online PDF Management</a>, <a href="/tool/pdf-page-editor/" style="color:var(--accent);">PDF Page Editor</a>, and <a href="/tool/jpg-to-pdf/" style="color:var(--accent);">JPG to PDF converter</a>.</p>
       </div>
     </section>
+
+    <LastUpdated date={updated} />
   </main>
 
   <Footer />

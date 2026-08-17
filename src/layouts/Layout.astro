@@ -11,7 +11,7 @@ export interface Props {
   ogImage?: string;
 }
 
-const { title, description, canonical, ogType = 'website', ogImage = 'https://zippywidgets.online/ZippyWidgets%20Logo.png' } = Astro.props;
+const { title, description, canonical, ogType = 'website', ogImage = 'https://zippywidgets.online/ZippyWidgets%20Logo-1200.jpg' } = Astro.props;
 const canonicalUrl = canonical || `https://zippywidgets.online${Astro.url.pathname.replace(/\/$/, '')}/`;
 ---
 <!DOCTYPE html>
@@ -38,8 +38,8 @@ const canonicalUrl = canonical || `https://zippywidgets.online${Astro.url.pathna
   <link rel="stylesheet" href="/style.css" />
   <link rel="manifest" href="/manifest.json" />
   <script is:inline src="/theme.js"></script>
-  <link rel="icon" type="image/png" href="/ZippyWidgets Logo.png" />
-  <link rel="apple-touch-icon" href="/ZippyWidgets Logo.png" />
+  <link rel="icon" type="image/png" href="/ZippyWidgets Logo-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="/ZippyWidgets Logo-192.png" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
   <link rel="alternate" type="application/rss+xml" title="ZippyWidgets Blog RSS" href="/rss.xml" />
   {FEATURES.adsEnabled && <meta name="google-adsense-account" content="ca-pub-6884221059402072" />}

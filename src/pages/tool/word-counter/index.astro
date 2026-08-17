@@ -3,10 +3,14 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
+import AiAnswer from '@components/AiAnswer.astro';
+import LastUpdated from '@components/LastUpdated.astro';
+import { FEATURES } from '@data/config.ts';
 
 const title = 'Word Counter — Essay, Tweet & Character Limit Checker';
 const description = 'Free online word counter and character counter. Check essay word count, tweet and social media limits in real time. No sign-up needed.';
 const canonical = 'https://zippywidgets.online/tool/word-counter/';
+const updated = '2026-07-17';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -16,6 +20,18 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
       { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
       { name: 'Word Counter', item: 'https://zippywidgets.online/tool/word-counter/' },
     ]} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to count words and characters",
+      "description": "Count words, characters, sentences, and paragraphs in your text, and check platform-specific limits in real time.",
+      "step": [
+        { "@type": "HowToStep", "name": "Paste your text", "text": "Type or paste your text into the editor. All statistics update instantly as you type." },
+        { "@type": "HowToStep", "name": "Read the stats", "text": "See word count, characters with and without spaces, sentences, paragraphs, lines, and reading time." },
+        { "@type": "HowToStep", "name": "Check platform limits", "text": "The Platform Limits panel shows your character count against Twitter, Instagram, LinkedIn, TikTok, SMS, and meta description limits." },
+        { "@type": "HowToStep", "name": "Edit and copy", "text": "Trim your text to fit, then use Copy Text to take it elsewhere. Clear removes everything." }
+      ]
+    })} />
   </Fragment>
   <Nav />
 
@@ -30,6 +46,7 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript",
     "featureList": "Word count, character count, sentence and paragraph count, reading time estimate, platform-specific limits for Twitter, Instagram, LinkedIn, TikTok, SMS",
+    "dateModified": "2026-07-17",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -72,6 +89,12 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
       </div>
     </div>
 
+    <AiAnswer
+      tool="Word Counter"
+      what="A free online word and character counter that updates in real time as you type. It tracks words, characters, sentences, paragraphs, lines, and reading time, and checks your text against platform limits for Twitter, Instagram, LinkedIn, TikTok, SMS, and meta descriptions. No sign-up."
+      privacy="Yes. All text is processed in your browser and never sent to a server."
+    />
+
     <div class="wc-layout">
     <div class="card wc-editor">
       <textarea id="wcTextarea" rows="10" placeholder="Paste or type your text here…" oninput="updateWordCount()"></textarea>
@@ -104,26 +127,31 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
       </ul>
     </aside>
     </div>
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
 
     <section class="card" style="margin-top:1rem;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the Word & Character Counter</h2>
@@ -153,6 +181,8 @@ const canonical = 'https://zippywidgets.online/tool/word-counter/';
         Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for writing, SEO, and productivity tips.
       </p>
     </section>
+
+    <LastUpdated date={updated} />
   </main>
 
   <Footer />

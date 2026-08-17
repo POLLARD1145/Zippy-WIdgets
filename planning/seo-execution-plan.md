@@ -485,8 +485,11 @@ For each remaining tool:
 - [x] Cookie/ads consent banner implemented behind `FEATURES.adsEnabled` flag; banner and AdSense script only load when ads are enabled.
 - [x] PWA manifest + `theme-color` tags added.
 - [x] Resource hints added (`preconnect` for Google Fonts, `dns-prefetch` for analytics).
-- [ ] Decision recorded on `/tool/` index status.
-- [ ] Logo optimized and layout shift eliminated (still 387 KB PNG; convert to WebP/AVIF and add explicit width/height).
+- [x] Logo optimized: WebP (22 KB) + sized PNG icons (192/512) + JPG OG image; nav uses `<picture>` with explicit dimensions and `decoding="async"`.
+- [x] HowTo schema added to PDF Merger, Image Compressor, QR Code Generator, Password Generator, Word Counter.
+- [x] AI-citable answer blocks added to the same five tools.
+- [x] `dateModified` added to WebApplication schema and visible "Last updated" dates added to tool pages and blog articles.
+- [ ] Decision recorded on `/tool/` index status (currently `noindex, nofollow`; treated as an internal search hub, not a public listing).
 - [ ] `HowTo` and `speakable` schema added to tool pages.
 - [ ] AI-citable answer blocks added to all tool pages.
 - [ ] Build-time schema validation documented or scripted.

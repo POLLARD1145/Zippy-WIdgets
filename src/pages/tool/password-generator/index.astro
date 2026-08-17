@@ -3,10 +3,14 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
+import AiAnswer from '@components/AiAnswer.astro';
+import LastUpdated from '@components/LastUpdated.astro';
+import { FEATURES } from '@data/config.ts';
 
 const title = 'Strong Password Generator — Free & Secure, No Sign-up';
 const description = 'Generate strong, secure, random passwords instantly. Customise length and character types. No data stored, no sign-up, works 100% in your browser.';
 const canonical = 'https://zippywidgets.online/tool/password-generator/';
+const updated = '2026-07-17';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -16,6 +20,18 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
       { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
       { name: 'Password Generator', item: 'https://zippywidgets.online/tool/password-generator/' },
     ]} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to generate a strong password",
+      "description": "Create a cryptographically random password in your browser with custom length and character types.",
+      "step": [
+        { "@type": "HowToStep", "name": "Set the length", "text": "Use the slider to choose a password length between 6 and 64 characters. 16 or more is recommended." },
+        { "@type": "HowToStep", "name": "Pick character types", "text": "Tick uppercase, lowercase, numbers, and symbols. More variety means a stronger password." },
+        { "@type": "HowToStep", "name": "Generate", "text": "Click Generate Password to create a cryptographically random password using the Web Crypto API." },
+        { "@type": "HowToStep", "name": "Copy and store", "text": "Click Copy to Clipboard, then paste the password into a password manager for safe storage." }
+      ]
+    })} />
   </Fragment>
   <Nav />
 
@@ -30,6 +46,7 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript and the Web Crypto API",
     "featureList": "Random password generation, custom length, uppercase/lowercase letters, numbers, symbols, copy to clipboard, strength indicator",
+    "dateModified": "2026-07-17",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -66,6 +83,12 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
         <p>Generate strong, random passwords instantly. Choose length and character types. No data stored, no sign-up, 100% browser-based.</p>
       </div>
     </div>
+
+    <AiAnswer
+      tool="Password Generator"
+      what="A free online tool that creates cryptographically random passwords using the Web Crypto API. Choose length (6–64 characters) and character types — uppercase, lowercase, numbers, symbols — with a live strength meter and copy-to-clipboard. No sign-up, no storage."
+      privacy="Yes. Passwords are generated locally with the Web Crypto API and never leave your device."
+    />
 
     <div class="card">
       <div class="password-display" id="passwordDisplay"></div>
@@ -108,26 +131,31 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
       </div>
     </div>
 
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
 
     <section class="card" style="margin-top:1rem;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Create a Strong Password</h2>
@@ -159,6 +187,8 @@ const canonical = 'https://zippywidgets.online/tool/password-generator/';
         Browse our <a href="/blog/" style="color:var(--accent);">free tool guides</a> for more security and privacy tips.
       </p>
     </section>
+
+    <LastUpdated date={updated} />
   </main>
 
   <Footer />

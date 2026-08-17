@@ -1,0 +1,17 @@
+---
+export interface Props {
+  date: string;
+}
+
+const { date } = Astro.props;
+---
+
+<p class="last-updated">Last updated: <time datetime={date}>{date}</time></p>
+
+<style>
+  .last-updated {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+</style>

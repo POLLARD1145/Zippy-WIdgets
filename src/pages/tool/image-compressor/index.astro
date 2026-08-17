@@ -3,10 +3,14 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
+import AiAnswer from '@components/AiAnswer.astro';
+import LastUpdated from '@components/LastUpdated.astro';
+import { FEATURES } from '@data/config.ts';
 
 const title = 'Free Image Compressor — Reduce JPG, PNG, WebP Online';
 const description = 'Shrink JPG, PNG and WebP file sizes in your browser. No upload, no watermark, no sign-up. Preview before downloading.';
 const canonical = 'https://zippywidgets.online/tool/image-compressor/';
+const updated = '2026-07-17';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -16,6 +20,19 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
       { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
       { name: 'Image Compressor', item: 'https://zippywidgets.online/tool/image-compressor/' },
     ]} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to compress images online",
+      "description": "Reduce JPG, PNG, and WebP file sizes in your browser with no upload and no sign-up.",
+      "step": [
+        { "@type": "HowToStep", "name": "Upload your image", "text": "Click the upload box or drag and drop a JPG, PNG, or WebP file." },
+        { "@type": "HowToStep", "name": "Choose your format", "text": "Keep the original format or convert to JPEG, PNG, or WebP." },
+        { "@type": "HowToStep", "name": "Adjust quality", "text": "Lower the quality slider for a smaller file. Around 70-85% is usually the sweet spot for photos." },
+        { "@type": "HowToStep", "name": "Resize if needed", "text": "Reduce the max width to shrink the image for web use or social media." },
+        { "@type": "HowToStep", "name": "Download", "text": "Preview the result, then save the compressed image to your device." }
+      ]
+    })} />
   </Fragment>
   <Nav />
 
@@ -30,6 +47,7 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
     "operatingSystem": "Any",
     "browserRequirements": "Requires HTML5 Canvas and JavaScript",
     "featureList": "Compress JPG, compress PNG, compress WebP, convert image format, resize width, quality slider, before/after preview",
+    "dateModified": "2026-07-17",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -71,6 +89,12 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
         <p>Compress and convert images online with no file size limits, no watermarks, and no sign-up. Adjust quality and download smaller images instantly.</p>
       </div>
     </div>
+
+    <AiAnswer
+      tool="Image Compressor"
+      what="A free online tool that shrinks JPG, PNG, and WebP file sizes in your browser. Adjust quality, resize, convert formats, and preview before downloading — no sign-up, no watermark, no upload."
+      privacy="Yes. Images are processed locally with the HTML5 Canvas API and never sent to a server."
+    />
 
     <div class="card">
       <div class="drop-zone" id="dropZone">
@@ -134,26 +158,31 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
       <div class="status-msg" id="statusMsg"></div>
     </div>
 
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
 
     <section class="card" style="margin-top:1rem;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Compress Images Online</h2>
@@ -188,6 +217,8 @@ const canonical = 'https://zippywidgets.online/tool/image-compressor/';
         Learn how to compress images for the web without losing quality in our <a href="/blog/compress-images-online-free-no-signup/" style="color:var(--accent);">free online image compressor guide</a>. Also see our <a href="/tool/jpg-to-pdf/" style="color:var(--accent);">JPG to PDF converter</a> for converting compressed images into a document.
       </p>
     </section>
+
+    <LastUpdated date={updated} />
   </main>
 
   <Footer />

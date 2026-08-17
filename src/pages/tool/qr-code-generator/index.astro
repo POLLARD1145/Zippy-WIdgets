@@ -4,10 +4,14 @@ import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import BreadcrumbSchema from '@components/BreadcrumbSchema.astro';
 import RatingWidget from '@components/RatingWidget.astro';
+import AiAnswer from '@components/AiAnswer.astro';
+import LastUpdated from '@components/LastUpdated.astro';
+import { FEATURES } from '@data/config.ts';
 
 const title = 'Free Online QR Code Generator (High-Res PNG Downloads)';
 const description = 'Instantly convert text, links, or Wi-Fi passwords into downloadable QR codes. Custom color scaling with completely offline browser processing.';
 const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
+const updated = '2026-07-17';
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -17,6 +21,18 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
       { name: 'Tools', item: 'https://zippywidgets.online/tool/' },
       { name: 'QR Code Generator', item: 'https://zippywidgets.online/tool/qr-code-generator/' },
     ]} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to generate a QR code online",
+      "description": "Create custom color QR codes for WiFi passwords, URLs, menus, reviews, or plain text in your browser.",
+      "step": [
+        { "@type": "HowToStep", "name": "Pick a content type", "text": "Choose URL, WiFi, Google Review, Restaurant Menu, or Plain Text from the tabs at the top." },
+        { "@type": "HowToStep", "name": "Fill in the fields", "text": "Enter the URL, network name and password, review link, menu link, or text content for the selected mode." },
+        { "@type": "HowToStep", "name": "Customise colors and size", "text": "Use the foreground and background color pickers and choose a size from 128px to 1024px." },
+        { "@type": "HowToStep", "name": "Generate and download", "text": "Click Generate QR Code, then Download PNG to save the high-resolution image to your device." }
+      ]
+    })} />
   </Fragment>
   <Nav />
 
@@ -31,6 +47,7 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
     "operatingSystem": "Any",
     "browserRequirements": "Requires HTML5 Canvas and JavaScript",
     "featureList": "URL QR codes, WiFi QR codes, Google review QR codes, restaurant menu QR codes, custom colors, logo overlay, PNG download",
+    "dateModified": "2026-07-17",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
@@ -77,6 +94,12 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
         <p>Create custom color QR codes for WiFi passwords, restaurant menus, Google reviews, URLs, and business cards. Choose size and colors — download PNG instantly. No sign-up.</p>
       </div>
     </div>
+
+    <AiAnswer
+      tool="QR Code Generator"
+      what="A free online tool that creates downloadable QR codes for URLs, WiFi passwords, Google review links, restaurant menus, and plain text. Pick a content type, customise colors and size, and download a high-resolution PNG instantly — no sign-up."
+      privacy="Yes. QR codes are generated locally with QRCode.js and the Canvas API. Your URLs, WiFi passwords, and text never leave your device."
+    />
 
     <div class="card">
 
@@ -310,26 +333,31 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
 
       <p class="text-muted text-sm mt-2">Generated entirely in your browser — no data is sent to any server.</p>
     </div>
-    <div class="ad-slot" id="adSlot">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6884221059402072"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script>
-      (function(){
-        var slot = document.getElementById('adSlot');
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            obs.disconnect();
-          }
-        }, { rootMargin: '200px' });
-        obs.observe(slot);
-      })();
-    </script>
+    {FEATURES.adsEnabled && (
+      <>
+        <div class="ad-slot" id="adSlot">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-6884221059402072"
+               data-ad-slot="auto"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script is:inline>
+          (function(){
+            var slot = document.getElementById('adSlot');
+            if (!slot) return;
+            var obs = new IntersectionObserver(function(entries){
+              if(entries[0].isIntersecting){
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                obs.disconnect();
+              }
+            }, { rootMargin: '200px' });
+            obs.observe(slot);
+          })();
+        </script>
+      </>
+    )}
 
     <section class="card" style="margin-top:1rem;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">How to Use the QR Code Generator</h2>
@@ -363,6 +391,8 @@ const canonical = 'https://zippywidgets.online/tool/qr-code-generator/';
         Learn how to create a QR code for your business with our step-by-step guides: <a href="/blog/best-free-qr-code-generator-with-logo/" style="color:var(--accent);">Best Free QR Code Generator with Logo</a> and <a href="/blog/how-to-make-qr-code-for-wifi/" style="color:var(--accent);">How to Make a QR Code for WiFi</a>.
       </p>
     </section>
+
+    <LastUpdated date={updated} />
 
     <RatingWidget toolSlug="qr-code-generator" />
   </main>
