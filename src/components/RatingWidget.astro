@@ -1,0 +1,110 @@
+---
+export interface Props {
+  toolSlug: string;
+}
+
+const { toolSlug } = Astro.props;
+const storageKey = `zippywidgets-rating-${toolSlug}`;
+---
+
+<div class="rating-widget" data-tool={toolSlug} data-storage-key={storageKey}>
+  <p class="rating-prompt">Was this tool helpful?</p>
+  <div class="rating-buttons" role="group" aria-label="Rate this tool">
+    <button type="button" class="rating-btn rating-up" aria-label="Thumbs up" data-value="1">👍</button>
+    <button type="button" class="rating-btn rating-down" aria-label="Thumbs down" data-value="0">👎</button>
+  </div>
+  <p class="rating-feedback" aria-live="polite"></p>
+</div>
+
+<script>
+  (() => {
+    const widget = document.currentScript?.closest('.rating-widget');
+    if (!widget) return;
+    const storageKey = widget.dataset.storageKey!;
+    const feedback = widget.querySelector('.rating-feedback') as HTMLElement;
+    const buttons = widget.querySelectorAll('.rating-btn');
+
+    function getVotes() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        return raw ? JSON.parse(raw) : { up: 0, down: 0 };
+      } catch {
+        return { up: 0, down: 0 };
+      }
+    }
+
+    function saveVotes(votes: { up: number; down: number }) {
+      try { localStorage.setItem(storageKey, JSON.stringify(votes)); } catch {}
+    }
+
+    function render(votes: { up: number; down: number }) {
+      const total = votes.up + votes.down;
+      if (total === 0) {
+        feedback.textContent = 'Your vote helps us improve.';
+        return;
+      }
+      const pct = Math.round((votes.up / total) * 100);
+      feedback.textContent = `Thanks! ${pct}% of ${total} voter${total === 1 ? '' : 's'} found this helpful.`;
+    }
+
+    const votes = getVotes();
+    render(votes);
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const v = getVotes();
+        if (btn.classList.contains('rating-up')) v.up++;
+        else v.down++;
+        saveVotes(v);
+        render(v);
+        buttons.forEach((b) => (b.disabled = true));
+      });
+    });
+  })();
+</script>
+
+<style>
+  .rating-widget {
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  .rating-prompt {
+    margin: 0 0 0.6rem;
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .rating-buttons {
+    display: inline-flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  .rating-btn {
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.2s;
+  }
+  .rating-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    transform: scale(1.05);
+  }
+  .rating-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .rating-feedback {
+    margin: 0.6rem 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    min-height: 1.25rem;
+  }
+</style>

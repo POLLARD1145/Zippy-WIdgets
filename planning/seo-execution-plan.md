@@ -392,13 +392,14 @@ For each remaining tool:
    - Add to Picker Wheel, QR Code Generator, and Font Generator first.
 
 ### Deliverables
-- [ ] User rating widget implemented on 3+ tools.
-- [ ] `AggregateRating` schema added to those tools and sourced from real votes.
+- [x] User rating widget implemented on 3+ tools.
+- [ ] `AggregateRating` schema added to those tools and sourced from real votes. **Gated:** localStorage votes are per-device and do not represent a true aggregate across all visitors. AggregateRating schema will only be added once a backend or third-party service can collect cross-user ratings.
 
 ### Verification
 - Build passes.
-- Schema Markup Validator confirms `AggregateRating` is valid.
-- Rating values change when votes are cast.
+- Rating widget renders on the three selected tools.
+- Votes persist in namespaced localStorage and the displayed percentage updates.
+- No fake `AggregateRating` schema is emitted.
 
 ---
 
